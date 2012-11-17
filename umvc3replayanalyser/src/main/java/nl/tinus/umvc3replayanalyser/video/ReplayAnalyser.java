@@ -64,6 +64,9 @@ public class ReplayAnalyser {
         ExecutorService executorService = Executors.newFixedThreadPool(NUM_CONSUMERS + 1);
 
         try {
+            FrameProducer producer = new FrameProducer(videoUrl, queue);
+            Future<IError> producerFuture = executorService.submit(producer);
+            
             List<FrameConsumer> consumers = new ArrayList<>(NUM_CONSUMERS);
             List<Future<Game>> consumerFutures = new ArrayList<>(NUM_CONSUMERS);
             for (int i = 0; i != NUM_CONSUMERS; i++) {
@@ -72,9 +75,6 @@ public class ReplayAnalyser {
                 Future<Game> future = executorService.submit(consumer);
                 consumerFutures.add(future);
             }
-
-            FrameProducer producer = new FrameProducer(videoUrl, queue);
-            Future<IError> producerFuture = executorService.submit(producer);
 
             // Continue until either a result has been found and/or all consumers are done.
             // As soon as a consumer is done both it and its future are removed from the lists.
