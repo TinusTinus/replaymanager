@@ -1,0 +1,12 @@
+# Eclipse metadata
+.metadata
+.classpath
+.project
+.settings
+
+# untracked projects (for now)
+sandbox
+xugglertest
+
+# output directory for Maven / eclipse
+target
