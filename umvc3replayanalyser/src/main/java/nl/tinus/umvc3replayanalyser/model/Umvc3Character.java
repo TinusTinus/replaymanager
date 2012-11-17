@@ -41,7 +41,6 @@ public enum Umvc3Character {
     MODOK("M.O.D.O.K.", "MODOK", "Barrier", "Balloon Bomb", "Psionic Blast"),
     MORRIGAN("Morrigan", "Morrigan", "Shadow Blade", "Soul Fist", "Dark Harmonizer"),
     NEMESIS("Nemesis T-Type", "Nemesis", "Clothesline Rocket", "Launcher Slam", "Rocket Launcher"),
-    // TODO check Nova's assists in-game; strategy guide and Shoryuken contradict
     NOVA("Nova", "Nova", "Gravimetric Pulse", "Centurion Rush", "Nova Strike"),
     PHOENIX("Phoenix", "Phoenix", "TK Shot", "TK Overdrive", "TK Trap"),
     PHOENIX_WRIGHT("Phoenix Wright", "Wright", "Paperwork High", "Press the Witness", "Get 'Em, Missile"),
