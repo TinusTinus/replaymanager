@@ -129,9 +129,7 @@ public class ReplayAnalyser {
                         throw new ReplayAnalysisException("Replay analysis failed.");
                     }
                 } catch (InterruptedException | ExecutionException e) {
-                    ReplayAnalysisException newException = new ReplayAnalysisException("Replay analysis failed.");
-                    newException.addSuppressed(e);
-                    throw newException;
+                    throw new ReplayAnalysisException("Replay analysis failed.", e);
                 }
             }
         } finally {
