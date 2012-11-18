@@ -11,7 +11,7 @@
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<java.version>1.7</java.version>
-		<javafx.version>2.0</javafx.version>
+		<javafx.version>2</javafx.version>
 		<junit.version>4.10</junit.version>
 		<lombok.version>0.11.2</lombok.version>
 		<slf4j.version>1.7.2</slf4j.version>
@@ -23,7 +23,7 @@
 	<dependencies>
 		<!-- GUI -->
 		<!-- The JavaFX dependency assumes jfxrt.jar is in the JRE's lib directory. 
-			This is the case from JDK 1.7u6 onwards. -->
+			This is the case from JDK 1.7u6 onwards. Tested with JDK 1.7u7. -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx</artifactId>
