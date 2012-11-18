@@ -54,6 +54,18 @@ public class ReplayAnalyserIntegrationTest {
     }
     
     /**
+     * Attempts to analyse a file that is not a video file. This is expectd to fail with a nice ReplayAnalysisException.
+     * 
+     * @throws ReplayAnalysisException
+     *             unexpected
+     */
+    @Test(expected = ReplayAnalysisException.class)
+    public void testTextFile() throws ReplayAnalysisException {
+        ReplayAnalyser analyser = new ReplayAnalyser(this.versusScreenAnalyser);
+        analyser.analyse("src/test/resources/test.txt");
+    }
+    
+    /**
      * Checks the given player name.
      * 
      * @param expected
