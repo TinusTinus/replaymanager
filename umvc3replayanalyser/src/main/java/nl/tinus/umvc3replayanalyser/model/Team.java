@@ -122,8 +122,7 @@ public class Team {
     }
 
     /**
-     * Returns a name for the team, including (if known) which assists are being used. Assists are represented by
-     * "alpha", "beta" or "gamma".
+     * Returns a name for the team, including (if known) which assists are being used.
      * 
      * The result's format is of "Point Character / Second Character / Anchor". For example:
      * "Wolverine (gamma) / Zero (alpha) / Doctor Doom (gamma)".
