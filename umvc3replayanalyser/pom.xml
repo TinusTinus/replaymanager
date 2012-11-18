@@ -10,6 +10,7 @@
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
 		<commons-lang3.version>3.1</commons-lang3.version>
+		<javafx.version>2.0</javafx.version>
 		<junit.version>4.10</junit.version>
 		<lombok.version>0.11.2</lombok.version>
 		<slf4j.version>1.7.2</slf4j.version>
@@ -19,6 +20,15 @@
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
 		the properties instead! -->
 	<dependencies>
+		<!-- GUI -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javafx</artifactId>
+            <version>${javafx.version}</version>
+            <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+		
 		<!-- Video decoding -->
 		<dependency>
 			<groupId>xuggle</groupId>
