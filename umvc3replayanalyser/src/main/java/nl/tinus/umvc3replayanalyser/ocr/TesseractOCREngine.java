@@ -117,8 +117,8 @@ public class TesseractOCREngine implements OCREngine {
         // TODO Test if this works on Linux / Mac.
         // This version uses quotes to deal with spaces in directory names on Windows,
         // but I'm not sure if this works on Linux.
-        String command = "\"" + TESSERACT_EXECUTABLE + "\" \"" + imageFile.getAbsolutePath() + "\" \"" + outbase
-                + "\"";
+        String command = String.format("\"%s\" \"%s\" \"%s\"", TESSERACT_EXECUTABLE, imageFile.getAbsolutePath(), outbase);
+        
         log.debug("Executing command: " + command);
         Process tesseractProcess = runtime.exec(command);
 
