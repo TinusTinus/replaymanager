@@ -42,7 +42,7 @@ public class TesseractOCREngine implements OCREngine {
         // anything goes wrong, bu we will try to delete them at the end of this method.
         List<File> tempFilesToBeDeleted = new ArrayList<>(2);
 
-        String result = ""; // TODO
+        String result;
         try {
             // Store the image as a temporary file.
             File imageFile = createTempFile("ocrimage", IMAGE_SUFFIX);
