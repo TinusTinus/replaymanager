@@ -10,6 +10,7 @@
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
 		<commons-lang3.version>3.1</commons-lang3.version>
+		<java.version>1.7</java.version>
 		<javafx.version>2.0</javafx.version>
 		<junit.version>4.10</junit.version>
 		<lombok.version>0.11.2</lombok.version>
@@ -21,22 +22,22 @@
 		the properties instead! -->
 	<dependencies>
 		<!-- GUI -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>javafx</artifactId>
-            <version>${javafx.version}</version>
-            <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-            <scope>system</scope>
-        </dependency>
-		
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx</artifactId>
+			<version>${javafx.version}</version>
+			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+
 		<!-- Video decoding -->
 		<dependency>
 			<groupId>xuggle</groupId>
 			<artifactId>xuggle-xuggler</artifactId>
 			<version>${xuggler.version}</version>
 			<exclusions>
-				<!-- exclude logback and slf4j, since I'm already using log4j and xuggler uses 
-					slf4j -->
+				<!-- exclude logback and slf4j, since I'm already using log4j and xuggler 
+					uses slf4j -->
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
@@ -91,6 +92,31 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 	<repositories>
 		<repository>
