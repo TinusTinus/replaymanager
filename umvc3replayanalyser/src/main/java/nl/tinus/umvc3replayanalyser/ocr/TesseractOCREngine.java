@@ -71,17 +71,6 @@ public class TesseractOCREngine implements OCREngine {
                             + ". This file should be deleted when the JVM is stopped.");
                 }
             }
-            
-            
-            // TODO remove
-            if (result.equals("woimmz")) {
-                try {
-                    ImageIO.write(image, "png", new File("C:\\temp\\temp.png"));
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
         }
 
         log.info("Read text: " + result);
