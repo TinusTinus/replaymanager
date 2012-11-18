@@ -69,7 +69,7 @@ public class ReplayAnalyser {
             
             List<FrameConsumer> consumers = new ArrayList<>(NUM_CONSUMERS);
             List<Future<Game>> consumerFutures = new ArrayList<>(NUM_CONSUMERS);
-            for (int i = 0; i != NUM_CONSUMERS; i++) {
+            while(consumers.size() != NUM_CONSUMERS) {
                 FrameConsumer consumer = new FrameConsumer(versusScreenAnalyser, queue);
                 consumers.add(consumer);
                 Future<Game> future = executorService.submit(consumer);
