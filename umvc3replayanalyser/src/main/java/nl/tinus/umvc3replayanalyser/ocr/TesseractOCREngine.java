@@ -31,9 +31,9 @@ public class TesseractOCREngine implements OCREngine {
     private static final String IMAGE_SUFFIX = "." + IMAGE_FORMAT;
     /** Suffix for temporary text files. */
     private static final String TEXT_SUFFIX = ".txt";
-    /** Tesseract installation directory. */
+    /** Location of the Tesseract executable. */
     // TODO instead of having this hard-coded, package Tesseract with the application and refer to the correct location
-    private static final String TESSERACT_INSTALL_DIR = "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\";
+    private static final String TESSERACT_EXECUTABLE = "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
 
     /** {@inheritDoc} */
     @Override
@@ -117,8 +117,8 @@ public class TesseractOCREngine implements OCREngine {
         // TODO Test if this works on Linux / Mac.
         // This version uses quotes to deal with spaces in directory names on Windows,
         // but I'm not sure if this works on Linux.
-        String command = "\"" + TESSERACT_INSTALL_DIR + "tesseract.exe\" \"" + imageFile.getAbsolutePath() + "\" \""
-                + outbase + "\"";
+        String command = "\"" + TESSERACT_EXECUTABLE + "\" \"" + imageFile.getAbsolutePath() + "\" \"" + outbase
+                + "\"";
         log.debug("Executing command: " + command);
         Process tesseractProcess = runtime.exec(command);
 
