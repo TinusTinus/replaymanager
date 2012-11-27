@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="192.0" prefWidth="837.0" text="Filters" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="14.0">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="833.0">
+          <children>
+            <Label text="Player" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+            <Label text="Character 1" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="40.0" />
+            <Label text="Character 2" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="67.0" />
+            <Label text="Character 3" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="95.0" />
+            <TextField prefWidth="359.0" promptText="any player" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="11.0" />
+            <TextField prefWidth="359.0" promptText="any player" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
+            <ComboBox prefHeight="21.0" prefWidth="177.0" promptText="any character" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="38.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox disable="true" layoutX="271.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox layoutX="89.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox disable="true" layoutX="271.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox layoutX="89.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox disable="true" layoutX="271.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox layoutX="460.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox layoutX="460.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox layoutX="460.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox disable="true" layoutX="642.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox disable="true" layoutX="642.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox disable="true" layoutX="642.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <CheckBox layoutX="89.0" layoutY="122.0" mnemonicParsing="false" text="Maintain player order" />
+            <CheckBox layoutX="89.0" layoutY="145.0" mnemonicParsing="false" text="Maintain character order" />
+          </children>
+        </AnchorPane>
+      </content>
+    </TitledPane>
+    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="509.0" prefWidth="837.0" text="Replays" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="215.0">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="424.0" prefWidth="479.0">
+          <children>
+            <TableView prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Date / time" />
+                <TableColumn prefWidth="75.0" text="Player 1" />
+                <TableColumn prefWidth="75.0" text="Point" />
+                <TableColumn prefWidth="75.0" text="Second" />
+                <TableColumn prefWidth="75.0" text="Anchor" />
+                <TableColumn prefWidth="75.0" text="Player 2" />
+                <TableColumn prefWidth="75.0" text="Point" />
+                <TableColumn prefWidth="75.0" text="Second" />
+                <TableColumn prefWidth="75.0" text="Anchor" />
+              </columns>
+            </TableView>
+          </children>
+        </AnchorPane>
+      </content>
+    </TitledPane>
+    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="361.0" prefWidth="538.0" text="Preview image" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <ImageView id="vs" layoutX="-340.0" layoutY="-192.0" pickOnBounds="true">
+              <image>
+                <Image url="file:/C:/temp/vs.png" preserveRatio="true" smooth="true" />
+              </image>
+            </ImageView>
+          </children>
+        </AnchorPane>
+      </content>
+    </TitledPane>
+    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="337.0" prefWidth="538.0" text="Replay details" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="387.0">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </TitledPane>
+  </children>
+</AnchorPane>
