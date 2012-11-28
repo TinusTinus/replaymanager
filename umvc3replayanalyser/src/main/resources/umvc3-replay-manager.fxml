@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tinus.umvc3replayanalyser.controller.Umvc3ReplayManagerController">
   <children>
     <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="192.0" prefWidth="837.0" text="Filters" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="14.0">
       <content>
@@ -138,7 +138,7 @@
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="424.0" prefWidth="479.0">
           <children>
-            <TableView prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Date / time" />
                 <TableColumn prefWidth="75.0" text="Player 1" />
@@ -157,11 +157,11 @@
     </TitledPane>
     <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="361.0" prefWidth="538.0" text="Preview image" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane id="Content" fx:id="previewImageAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
           <children>
-            <ImageView id="previewImageView" layoutX="0" layoutY="0" pickOnBounds="true">
+            <ImageView id="previewImageView" fx:id="previewImageView" layoutX="0" layoutY="0" pickOnBounds="true">
               <image>
-                <Image url="/ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" />
+                <Image fx:id="defaultPreviewImage" url="/ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" />
               </image>
             </ImageView>
           </children>
