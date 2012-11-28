@@ -141,7 +141,7 @@
           <children>
             <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="120.0" text="Date / time">
+                <TableColumn fx:id="creationTimeColumn" prefWidth="120.0" text="Date / time">
                   <cellValueFactory>
                     <PropertyValueFactory property="creationTimeString" />
                   </cellValueFactory>
@@ -187,6 +187,9 @@
                   </cellValueFactory>
                 </TableColumn>
               </columns>
+              <sortOrder>
+                <fx:reference source="creationTimeColumn"/>
+              </sortOrder> 
             </TableView>
           </children>
         </AnchorPane>

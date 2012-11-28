@@ -84,7 +84,7 @@ public class Umvc3ReplayManagerController {
         // Initialise the table view.
         // TODO load from storage; for now, we create a dummy list containing two games
         List<Replay> replays = new ArrayList<>();
-        replays.add(new Replay(new Date(), new Game(new Player("MvdR"), new Team(Umvc3Character.WOLVERINE,
+        replays.add(new Replay(new Date(System.currentTimeMillis() + 1000), new Game(new Player("MvdR"), new Team(Umvc3Character.WOLVERINE,
                 Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM), new Player("mistermkl"), new Team(
                 Umvc3Character.MORRIGAN, Umvc3Character.HAGGAR, Umvc3Character.SHUMA_GORATH)), "/badhyper-vs-MvdR.mp4",
                 "/vs.png"));
