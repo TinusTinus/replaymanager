@@ -4,6 +4,7 @@
 <?import java.util.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
@@ -140,8 +141,14 @@
           <children>
             <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Date / time" />
-                <TableColumn prefWidth="75.0" text="Player 1" />
+                <TableColumn prefWidth="75.0" text="Date / time">
+                  
+                </TableColumn>
+                <TableColumn prefWidth="75.0" text="Player 1">
+                <cellValueFactory>
+                    <PropertyValueFactory property="playerOne" />
+                  </cellValueFactory>
+                </TableColumn>
                 <TableColumn prefWidth="75.0" text="Point" />
                 <TableColumn prefWidth="75.0" text="Second" />
                 <TableColumn prefWidth="75.0" text="Anchor" />
