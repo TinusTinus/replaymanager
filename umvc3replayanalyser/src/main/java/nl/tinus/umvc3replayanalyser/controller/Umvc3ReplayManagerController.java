@@ -82,7 +82,8 @@ public class Umvc3ReplayManagerController {
     /** Fills the tableview with data. */
     private void fillTableView() {
         // Initialise the table view.
-        // TODO load from storage; for now, we create a dummy list containing two games
+        // TODO load from storage, store in a field and make a copy to add to the table view.
+        // For now, we create a dummy list containing two games.
         List<Replay> replays = new ArrayList<>();
         replays.add(new Replay(new Date(System.currentTimeMillis() + 1000), new Game(new Player("MvdR"), new Team(Umvc3Character.WOLVERINE,
                 Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM), new Player("mistermkl"), new Team(
@@ -94,5 +95,8 @@ public class Umvc3ReplayManagerController {
                 "/vswithoutnames.png"));
 
         replayTableView.setItems(FXCollections.observableList(replays));
+        
+        // Set default sort order.
+        replayTableView.getSortOrder().add(replayTableView.getColumns().get(0));
     }
 }

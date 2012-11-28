@@ -187,9 +187,6 @@
                   </cellValueFactory>
                 </TableColumn>
               </columns>
-              <sortOrder>
-                <fx:reference source="creationTimeColumn"/>
-              </sortOrder> 
             </TableView>
           </children>
         </AnchorPane>
