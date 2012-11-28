@@ -47,7 +47,7 @@ public class Umvc3ReplayManager extends Application {
     public void start(Stage stage) {
         try {
             log.info("Starting application.");
-            Parent root = FXMLLoader.load(getClass().getResource("/ui.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/umvc3-replay-manager.fxml"));
 
             log.info("Fxml loaded, performing additional initialisation.");
             stage.setTitle(TITLE);
