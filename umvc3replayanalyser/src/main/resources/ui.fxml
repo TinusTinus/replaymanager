@@ -159,9 +159,9 @@
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
           <children>
-            <ImageView id="vs" layoutX="-340.0" layoutY="-192.0" pickOnBounds="true">
+            <ImageView id="previewImageView" layoutX="0" layoutY="0" pickOnBounds="true">
               <image>
-                <Image url="file:/C:/temp/vs.png" preserveRatio="true" smooth="true" />
+                <Image url="/ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" />
               </image>
             </ImageView>
           </children>
