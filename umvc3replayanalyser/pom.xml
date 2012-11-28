@@ -30,6 +30,7 @@
 			<version>${javafx.version}</version>
 			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
 			<scope>system</scope>
+			<!-- javadoc: http://docs.oracle.com/javafx/2/api/ -->
 		</dependency>
 
 		<!-- Video decoding -->
@@ -52,6 +53,7 @@
 					<artifactId>logback-classic</artifactId>
 				</exclusion>
 			</exclusions>
+			<!-- javadoc: http://build.xuggle.com/view/Stable/job/xuggler_jdk5_stable/javadoc/java/api/ -->
 		</dependency>
 
 		<!-- Useful utilities -->
