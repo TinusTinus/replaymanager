@@ -63,6 +63,12 @@ public class Umvc3ReplayManager extends Application {
             handleExceptionOnStartup(stage, e);
         }
     }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void stop() {
+        log.info("Stopping application.");
+    }
 
     /**
      * Handles an exception that caused program startup to fail, by showing an error message to the user.
@@ -74,7 +80,9 @@ public class Umvc3ReplayManager extends Application {
      */
     private void handleExceptionOnStartup(Stage stage, Exception exception) {
         log.info("Showing error message dialog to indicate that startup failed.");
-        
+
+        // Create the error dialog programatically without relying on FXML, to minimize the chances of further failure.
+
         stage.setTitle(TITLE + " - failed to start up");
 
         // Error message text.
@@ -146,7 +154,7 @@ public class Umvc3ReplayManager extends Application {
         // Default size should also be the minimum size.
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());
-        
+
         log.info("Error dialog displayed.");
     }
 }
