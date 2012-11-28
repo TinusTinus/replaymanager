@@ -141,21 +141,51 @@
           <children>
             <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Date / time">
-                  
+                <TableColumn prefWidth="120.0" text="Date / time">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="creationTimeString" />
+                  </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Player 1">
-                <cellValueFactory>
+                <TableColumn prefWidth="85.0" text="Player 1">
+                  <cellValueFactory>
                     <PropertyValueFactory property="playerOne" />
                   </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.0" text="Point" />
-                <TableColumn prefWidth="75.0" text="Second" />
-                <TableColumn prefWidth="75.0" text="Anchor" />
-                <TableColumn prefWidth="75.0" text="Player 2" />
-                <TableColumn prefWidth="75.0" text="Point" />
-                <TableColumn prefWidth="75.0" text="Second" />
-                <TableColumn prefWidth="75.0" text="Anchor" />
+                <TableColumn prefWidth="90.0" text="Point">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="teamOneFirstCharacter" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="90.0" text="Second">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="teamOneSecondCharacter" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="90.0" text="Anchor">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="teamOneThirdCharacter" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="85.0" text="Player 2">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="playerTwo" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="90.0" text="Point">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="teamTwoFirstCharacter" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="90.0" text="Second">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="teamTwoSecondCharacter" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="90.0" text="Anchor">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="teamTwoThirdCharacter" />
+                  </cellValueFactory>
+                </TableColumn>
               </columns>
             </TableView>
           </children>
