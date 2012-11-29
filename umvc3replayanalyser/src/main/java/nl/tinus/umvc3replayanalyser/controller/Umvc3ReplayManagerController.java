@@ -98,7 +98,7 @@ public class Umvc3ReplayManagerController {
                 "/vswithoutnames.png"));
 
         replayTableView.setItems(FXCollections.observableList(replays));
-        
+
         // Set default sort order.
         replayTableView.getSortOrder().add(replayTableView.getColumns().get(0));
 
@@ -107,19 +107,46 @@ public class Umvc3ReplayManagerController {
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Replay> observable, Replay oldValue, Replay newValue) {
-                handleSelectedItemChanged(oldValue, newValue);
+                handleSelectedReplayChanged(oldValue, newValue);
             }
         });
     }
-    
+
     /**
      * Handles the case where the selection in the replay table changes.
      * 
-     * @param oldValue old value
-     * @param newValue new value
+     * @param oldValue
+     *            old value
+     * @param newValue
+     *            new value
      */
-    private void handleSelectedItemChanged(Replay oldValue, Replay newValue) {
-        // TODO
-        log.info("old value: " + oldValue + ", new value: " + newValue);
+    private void handleSelectedReplayChanged(Replay oldValue, Replay newValue) {
+        if (log.isDebugEnabled()) {
+            log.debug("Selection changed, old value: " + oldValue + ", new value: " + newValue);
+        }
+
+        // Update the preview image.
+        if (newValue != null) {
+            // A new replay was selected.
+            
+            // For now, newValue.previewImageLocation contains a reference to the absolute path of the image.
+            // This will eventually be a path relative to the application's data directory.
+            // TODO add data directory to create a full absolute path
+            try {
+                if (log.isDebugEnabled()) {
+                    log.debug("Loading image: " + newValue.getPreviewImageLocation());
+                }
+                Image previewImage = new Image(newValue.getPreviewImageLocation());
+                previewImageView.setImage(previewImage);
+            } catch (IllegalArgumentException e) {
+                log.warn("Unable to load image: " + newValue.getPreviewImageLocation(), e);
+                previewImageView.setImage(defaultPreviewImage);
+            }
+        } else {
+            // Item was deselected.
+            previewImageView.setImage(defaultPreviewImage);
+        }
+
+        // TODO also update contents of the replay details pane
     }
 }
