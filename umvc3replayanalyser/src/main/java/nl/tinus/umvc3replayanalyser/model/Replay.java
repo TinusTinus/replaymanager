@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * Representation of an Ultimate Marvel vs Capcom 3 replay.
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Replay {
     /**
      * Thread-local variable holding the date format. This variable is stored as a thread-local instead of just a
