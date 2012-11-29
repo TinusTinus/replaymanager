@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -46,7 +48,7 @@ public class Umvc3ReplayManagerController {
         log.info("Performing controller initialisation.");
         bindPreviewImageView();
         disableColumnSwapping();
-        fillTableView();
+        initTableView();
         log.info("Initialisation complete.");
     }
 
@@ -80,9 +82,9 @@ public class Umvc3ReplayManagerController {
         });
     }
 
-    /** Fills the tableview with data. */
-    private void fillTableView() {
-        // Initialise the table view.
+    /** Intialises the table view. */
+    private void initTableView() {
+        // Initialise the table view's data.
         // TODO load from storage, store in a field and make a copy to add to the table view.
         // For now, we create a dummy list containing two games.
         List<Replay> replays = new ArrayList<>();
@@ -96,8 +98,28 @@ public class Umvc3ReplayManagerController {
                 "/vswithoutnames.png"));
 
         replayTableView.setItems(FXCollections.observableList(replays));
-
+        
         // Set default sort order.
         replayTableView.getSortOrder().add(replayTableView.getColumns().get(0));
+
+        // Set listener for item selection.
+        replayTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Replay>() {
+            /** {@inheritDoc} */
+            @Override
+            public void changed(ObservableValue<? extends Replay> observable, Replay oldValue, Replay newValue) {
+                handleSelectedItemChanged(oldValue, newValue);
+            }
+        });
+    }
+    
+    /**
+     * Handles the case where the selection in the replay table changes.
+     * 
+     * @param oldValue old value
+     * @param newValue new value
+     */
+    private void handleSelectedItemChanged(Replay oldValue, Replay newValue) {
+        // TODO
+        log.info("old value: " + oldValue + ", new value: " + newValue);
     }
 }
