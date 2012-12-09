@@ -1,5 +1,9 @@
 package nl.tinus.umvc3replayanalyser.model;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -62,6 +66,15 @@ public class Game {
             throw new IllegalArgumentException("Unexpected side: " + side);
         }
         return result;
+    }
+    
+    /**
+     * Returns an unmodifiable list containing all players.
+     * 
+     * @return characters
+     */
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(Arrays.asList(playerOne, playerTwo));
     }
 
     /** @return the losing side, or null in case of a draw game */
