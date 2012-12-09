@@ -129,8 +129,8 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <CheckBox layoutX="89.0" layoutY="122.0" mnemonicParsing="false" text="Maintain player order" />
-            <CheckBox layoutX="89.0" layoutY="145.0" mnemonicParsing="false" text="Maintain character order" />
+            <CheckBox fx:id="maintainPlayerOrderCheckBox" layoutX="89.0" layoutY="122.0" mnemonicParsing="false" text="Maintain player order" />
+            <CheckBox fx:id="maintainCharacterOrderCheckBox" layoutX="89.0" layoutY="145.0" mnemonicParsing="false" text="Maintain character order" />
           </children>
         </AnchorPane>
       </content>

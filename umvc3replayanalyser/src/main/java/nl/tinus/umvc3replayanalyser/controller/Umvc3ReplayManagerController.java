@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -22,9 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Replay;
+import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.GamertagPrefixReplayPredicate;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -57,6 +61,12 @@ public class Umvc3ReplayManagerController {
     /** Second text field for player name. */
     @FXML
     private TextField playerTwoTextField;
+    /** Check box indicating that the info filled in in the left column should only be matched to player one. */
+    @FXML
+    private CheckBox maintainPlayerOrderCheckBox;
+    /** Check box indicating that the characters should only be matched in the given order. */
+    @FXML
+    private CheckBox maintainCharacterOrderCheckBox;
 
     /** Initialisation method. */
     @FXML
@@ -190,10 +200,23 @@ public class Umvc3ReplayManagerController {
     
     /** Handles the case where any of the inputs have changed in the filters panel. */
     private void handleFiltersChanged() {
+        Side sideOne;
+        Side sideTwo;
+        if (maintainPlayerOrderCheckBox.isSelected()) {
+            sideOne = Side.PLAYER_ONE;
+            sideTwo = Side.PLAYER_TWO;
+        } else {
+            sideOne = null;
+            sideTwo = null;
+        }
+        
         Collection<Predicate<Replay>> components = new HashSet<Predicate<Replay>>();
-        // TODO process side
-        components.add(new GamertagPrefixReplayPredicate(playerOneTextField.getText(), null));
-        components.add(new GamertagPrefixReplayPredicate(playerTwoTextField.getText(), null));
+        if (!StringUtils.isEmpty(playerOneTextField.getText())) {
+            components.add(new GamertagPrefixReplayPredicate(playerOneTextField.getText(), sideOne));
+        }
+        if (!StringUtils.isEmpty(playerTwoTextField.getText())) {
+            components.add(new GamertagPrefixReplayPredicate(playerTwoTextField.getText(), sideTwo));
+        }
         
         Predicate<Replay> predicate = Predicates.and(components);
         
@@ -204,5 +227,7 @@ public class Umvc3ReplayManagerController {
         for (Replay replay: filteredReplays) {
             viewReplays.add(replay);
         }
+        // TODO re-sort the table
+        // TODO re-select the selected replay
     }
 }
