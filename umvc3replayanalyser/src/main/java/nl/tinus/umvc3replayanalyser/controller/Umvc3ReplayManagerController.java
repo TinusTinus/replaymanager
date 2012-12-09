@@ -200,6 +200,7 @@ public class Umvc3ReplayManagerController {
     
     /** Handles the case where any of the inputs have changed in the filters panel. */
     private void handleFiltersChanged() {
+        // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
         
         Side sideOne;
