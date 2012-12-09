@@ -360,7 +360,7 @@ public class Umvc3ReplayManagerController {
                     comboBox.getItems().add(new Assist(type, selectedCharacter));
                 }
             }
-            // TODO clear selection
+            // TODO handle selection correctly, see http://stackoverflow.com/questions/12142518/combobox-clearing-value-issue
             comboBox.setDisable(selectedCharacter == null);
         }
     }
