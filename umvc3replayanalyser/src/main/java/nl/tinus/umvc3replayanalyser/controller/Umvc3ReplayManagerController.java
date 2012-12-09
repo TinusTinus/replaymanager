@@ -178,7 +178,7 @@ public class Umvc3ReplayManagerController {
      */
     private void handleSelectedReplayChanged(Replay oldValue, Replay newValue) {
         if (log.isDebugEnabled()) {
-            log.debug("Selection changed, old value: " + oldValue + ", new value: " + newValue);
+            log.debug("Replay selection changed, old value: " + oldValue + ", new value: " + newValue);
         }
 
         // Update the preview image.
