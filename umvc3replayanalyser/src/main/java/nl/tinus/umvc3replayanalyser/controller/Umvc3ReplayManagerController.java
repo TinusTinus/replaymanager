@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -219,28 +218,26 @@ public class Umvc3ReplayManagerController {
     
     /** Adds listeners to the filter input fields. */
     private void initFilterListeners() {
-        ChangeListener<String> listener = new ChangeListener<String>() {
+        ChangeListener<Object> listener = new ChangeListener<Object>() {
             /** {@inheritDoc} */
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+                if (log.isDebugEnabled()) {
+                    log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
+                }
+                
                 handleFiltersChanged();
             }
         };
-        ChangeListener<SingleSelectionModel<Umvc3Character>> characterListener = new ChangeListener<SingleSelectionModel<Umvc3Character>>() {
-            /** {@inheritDoc} */
-            @Override
-            public void changed(ObservableValue<? extends SingleSelectionModel<Umvc3Character>> observable, SingleSelectionModel<Umvc3Character> oldValue, SingleSelectionModel<Umvc3Character> newValue) {
-                handleFiltersChanged();
-            }
-        };
+        
         playerOneTextField.textProperty().addListener(listener);
         playerTwoTextField.textProperty().addListener(listener);
-        playerOneCharacterOneComboBox.selectionModelProperty().addListener(characterListener);
-        playerOneCharacterTwoComboBox.selectionModelProperty().addListener(characterListener);
-        playerOneCharacterThreeComboBox.selectionModelProperty().addListener(characterListener);
-        playerTwoCharacterOneComboBox.selectionModelProperty().addListener(characterListener);
-        playerTwoCharacterTwoComboBox.selectionModelProperty().addListener(characterListener);
-        playerTwoCharacterThreeComboBox.selectionModelProperty().addListener(characterListener);
+        playerOneCharacterOneComboBox.valueProperty().addListener(listener);
+        playerOneCharacterTwoComboBox.valueProperty().addListener(listener);
+        playerOneCharacterThreeComboBox.valueProperty().addListener(listener);
+        playerTwoCharacterOneComboBox.valueProperty().addListener(listener);
+        playerTwoCharacterTwoComboBox.valueProperty().addListener(listener);
+        playerTwoCharacterThreeComboBox.valueProperty().addListener(listener);
     }
     
     /** Handles the case where any of the inputs have changed in the filters panel. */
@@ -283,7 +280,5 @@ public class Umvc3ReplayManagerController {
         // Attempt to reselect the originally selected replay.
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
         replayTableView.getSelectionModel().select(newIndex);
-        
-        log.info("" + playerOneCharacterOneComboBox.getSelectionModel().getSelectedItem());
     }
 }
