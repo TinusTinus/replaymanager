@@ -238,6 +238,8 @@ public class Umvc3ReplayManagerController {
         playerTwoCharacterOneComboBox.valueProperty().addListener(listener);
         playerTwoCharacterTwoComboBox.valueProperty().addListener(listener);
         playerTwoCharacterThreeComboBox.valueProperty().addListener(listener);
+        maintainPlayerOrderCheckBox.selectedProperty().addListener(listener);
+        maintainCharacterOrderCheckBox.selectedProperty().addListener(listener);
     }
     
     /** Handles the case where any of the inputs have changed in the filters panel. */
