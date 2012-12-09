@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,8 +47,6 @@ import com.google.common.collect.Iterables;
  */
 @Slf4j
 public class Umvc3ReplayManagerController {
-    /** Replays. */
-    private List<Replay> replays;
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -107,6 +107,10 @@ public class Umvc3ReplayManagerController {
     /** Check box indicating that the characters should only be matched in the given order. */
     @FXML
     private CheckBox maintainCharacterOrderCheckBox;
+    /** Replays. */
+    private List<Replay> replays;
+    /** Indicates which character value each assist combo box depends on. */
+    private Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes;
 
     /** Initialisation method. */
     @FXML
@@ -117,6 +121,7 @@ public class Umvc3ReplayManagerController {
         disableColumnSwapping();
         initTableView();
         initCharacterComboBoxValues();
+        initAssistComboBoxes();
         initFilterListeners();
         log.info("Initialisation complete.");
     }
@@ -236,6 +241,17 @@ public class Umvc3ReplayManagerController {
         }
     }
     
+    /** Initialises the mapping of the assist combo boxes. */
+    private void initAssistComboBoxes() {
+        assistComboBoxes = new HashMap<>();
+        assistComboBoxes.put(playerOneCharacterOneComboBox.valueProperty(), playerOneAssistOneComboBox);
+        assistComboBoxes.put(playerOneCharacterTwoComboBox.valueProperty(), playerOneAssistTwoComboBox);
+        assistComboBoxes.put(playerOneCharacterThreeComboBox.valueProperty(), playerOneAssistThreeComboBox);
+        assistComboBoxes.put(playerTwoCharacterOneComboBox.valueProperty(), playerTwoAssistOneComboBox);
+        assistComboBoxes.put(playerTwoCharacterTwoComboBox.valueProperty(), playerTwoAssistTwoComboBox);
+        assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
+    }
+    
     /** Adds listeners to the filter input fields. */
     private void initFilterListeners() {
         ChangeListener<Object> listener = new ChangeListener<Object>() {
@@ -251,7 +267,7 @@ public class Umvc3ReplayManagerController {
                         log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
                     }
 
-                    handleFiltersChanged();
+                    handleFiltersChanged(observable);
                     
                     suspended = false;
                 }
@@ -276,12 +292,17 @@ public class Umvc3ReplayManagerController {
         maintainCharacterOrderCheckBox.selectedProperty().addListener(listener);
     }
     
-    /** Handles the case where any of the inputs have changed in the filters panel. */
-    private void handleFiltersChanged() {
+    /**
+     * Handles the case where any of the inputs have changed in the filters panel.
+     * 
+     * @param observable
+     *            value that has changed
+     */
+    private void handleFiltersChanged(ObservableValue<? extends Object> observable) {
         // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
 
-        updateAssistComboBoxes();
+        updateAssistComboBox(observable);
         
         Side sideOne;
         Side sideTwo;
@@ -320,27 +341,18 @@ public class Umvc3ReplayManagerController {
         replayTableView.getSelectionModel().select(newIndex);
     }
     
-    /** Updates the assist combo boxes based on the character selections. */
-    private void updateAssistComboBoxes() {
-        // TODO simpler and more efficient implementation of this using a property -> assist combo box mapping
-        updateAssistComboBox(playerOneCharacterOneComboBox.getValue(), playerOneAssistOneComboBox);
-        updateAssistComboBox(playerOneCharacterTwoComboBox.getValue(), playerOneAssistTwoComboBox);
-        updateAssistComboBox(playerOneCharacterThreeComboBox.getValue(), playerOneAssistThreeComboBox);
-        updateAssistComboBox(playerTwoCharacterOneComboBox.getValue(), playerTwoAssistOneComboBox);
-        updateAssistComboBox(playerTwoCharacterTwoComboBox.getValue(), playerTwoAssistTwoComboBox);
-        updateAssistComboBox(playerTwoCharacterThreeComboBox.getValue(), playerTwoAssistThreeComboBox);
-    }
-    
     /**
-     * Updates an assist combo boxes based on the character selection.
+     * If observable is a character, updates the corresponding assist combo box.
      * 
-     * @param selectedCharacter character that has been selected in the corresponding character combo box
-     * @param comboBox combo box to be updated
+     * @param observable
+     *            observable whose value has changed
      */
-    private void updateAssistComboBox(Umvc3Character selectedCharacter, ComboBox<Assist> comboBox) {
-        if ((selectedCharacter == null && !comboBox.isDisabled())
-                || (selectedCharacter != null && (comboBox.isDisabled() || comboBox.getItems().get(1).getCharacter() != selectedCharacter))) {
+    private void updateAssistComboBox(ObservableValue<? extends Object> observable) {
+        ComboBox<Assist> comboBox = this.assistComboBoxes.get(observable);
+        if (comboBox != null) {
             // Character value has changed. Rebuild the contents of the combo box.
+            Umvc3Character selectedCharacter = (Umvc3Character) observable.getValue();
+            
             comboBox.getItems().clear();
             comboBox.getItems().add(null);
             if (selectedCharacter != null) {
