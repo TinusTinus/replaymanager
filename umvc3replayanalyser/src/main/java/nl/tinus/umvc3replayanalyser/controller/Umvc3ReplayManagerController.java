@@ -29,6 +29,8 @@ import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
  */
 @Slf4j
 public class Umvc3ReplayManagerController {
+    /** Replays. */
+    private List<Replay> replays;
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -46,10 +48,30 @@ public class Umvc3ReplayManagerController {
     @FXML
     private void initialize() {
         log.info("Performing controller initialisation.");
+        loadReplays();
         bindPreviewImageView();
         disableColumnSwapping();
         initTableView();
         log.info("Initialisation complete.");
+    }
+    
+    /** Loads the replays from storage. */
+    private void loadReplays() {
+        if (replays != null) {
+            throw new IllegalStateException("Replays already loaded.");
+        }
+        
+        // TODO load from storage
+        // For now, we create a dummy list containing some games.
+        replays = new ArrayList<>();
+        replays.add(new Replay(new Date(System.currentTimeMillis() + 1000), new Game(new Player("MvdR"), new Team(
+                Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM), new Player("mistermkl"),
+                new Team(Umvc3Character.MORRIGAN, Umvc3Character.HAGGAR, Umvc3Character.SHUMA_GORATH)),
+                "/badhyper-vs-MvdR.mp4", "/vs.png"));
+        replays.add(new Replay(new Date(), new Game(new Player("Yipes"), new Team(Umvc3Character.NOVA,
+                Umvc3Character.SPENCER, Umvc3Character.DOCTOR_STRANGE), new Player("PR Rog"), new Team(
+                Umvc3Character.WOLVERINE, Umvc3Character.DOCTOR_DOOM, Umvc3Character.VERGIL)), "/badhyper-vs-MvdR.mp4",
+                "/vswithoutnames.png"));
     }
 
     /** Binds the image size to the size of its parent. */
@@ -59,7 +81,7 @@ public class Umvc3ReplayManagerController {
     }
 
     /** Disables column swapping on the table view. */
-    // As far as I know there is no easy way to do this directly in the FXML yet, so we do this using a Java hack.
+    // As far as I know there is no easy way to do this directly in the FXML (yet?), so we do this using a Java hack.
     private void disableColumnSwapping() {
         // First make a copy of the columns.
         final ObservableList<TableColumn<Replay, ?>> columns = FXCollections.observableList(new ArrayList<>(
@@ -84,20 +106,8 @@ public class Umvc3ReplayManagerController {
 
     /** Intialises the table view. */
     private void initTableView() {
-        // Initialise the table view's data.
-        // TODO load from storage, store in a field and make a copy to add to the table view.
-        // For now, we create a dummy list containing two games.
-        List<Replay> replays = new ArrayList<>();
-        replays.add(new Replay(new Date(System.currentTimeMillis() + 1000), new Game(new Player("MvdR"), new Team(
-                Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM), new Player("mistermkl"),
-                new Team(Umvc3Character.MORRIGAN, Umvc3Character.HAGGAR, Umvc3Character.SHUMA_GORATH)),
-                "/badhyper-vs-MvdR.mp4", "/vs.png"));
-        replays.add(new Replay(new Date(), new Game(new Player("Yipes"), new Team(Umvc3Character.NOVA,
-                Umvc3Character.SPENCER, Umvc3Character.DOCTOR_STRANGE), new Player("PR Rog"), new Team(
-                Umvc3Character.WOLVERINE, Umvc3Character.DOCTOR_DOOM, Umvc3Character.VERGIL)), "/badhyper-vs-MvdR.mp4",
-                "/vswithoutnames.png"));
-
-        replayTableView.setItems(FXCollections.observableList(replays));
+        List<Replay> replaysView = new ArrayList<>(replays);
+        replayTableView.setItems(FXCollections.observableList(replaysView));
 
         // Set default sort order.
         replayTableView.getSortOrder().add(replayTableView.getColumns().get(0));
