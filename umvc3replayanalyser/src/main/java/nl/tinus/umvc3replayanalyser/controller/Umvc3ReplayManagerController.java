@@ -1,6 +1,7 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -13,6 +14,8 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -61,6 +64,24 @@ public class Umvc3ReplayManagerController {
     /** Second text field for player name. */
     @FXML
     private TextField playerTwoTextField;
+    /** Character selection combo box. */
+    @FXML
+    private ComboBox<Umvc3Character> playerOneCharacterOneComboBox;
+    /** Character selection combo box. */
+    @FXML
+    private ComboBox<Umvc3Character> playerOneCharacterTwoComboBox;
+    /** Character selection combo box. */
+    @FXML
+    private ComboBox<Umvc3Character> playerOneCharacterThreeComboBox;
+    /** Character selection combo box. */
+    @FXML
+    private ComboBox<Umvc3Character> playerTwoCharacterOneComboBox;
+    /** Character selection combo box. */
+    @FXML
+    private ComboBox<Umvc3Character> playerTwoCharacterTwoComboBox;
+    /** Character selection combo box. */
+    @FXML
+    private ComboBox<Umvc3Character> playerTwoCharacterThreeComboBox;
     /** Check box indicating that the info filled in in the left column should only be matched to player one. */
     @FXML
     private CheckBox maintainPlayerOrderCheckBox;
@@ -76,6 +97,7 @@ public class Umvc3ReplayManagerController {
         bindPreviewImageView();
         disableColumnSwapping();
         initTableView();
+        initCharacterComboBoxValues();
         initFilterListeners();
         log.info("Initialisation complete.");
     }
@@ -184,6 +206,16 @@ public class Umvc3ReplayManagerController {
 
         // TODO also update contents of the replay details pane
     }
+
+    /** Initialises the character combo box values. */
+    private void initCharacterComboBoxValues() {
+        for (ComboBox<Umvc3Character> comboBox : Arrays.asList(playerOneCharacterOneComboBox,
+                playerOneCharacterTwoComboBox, playerOneCharacterThreeComboBox, playerTwoCharacterOneComboBox,
+                playerTwoCharacterTwoComboBox, playerTwoCharacterThreeComboBox)) {
+            comboBox.getItems().add(null);
+            comboBox.getItems().addAll(Umvc3Character.values());
+        }
+    }
     
     /** Adds listeners to the filter input fields. */
     private void initFilterListeners() {
@@ -194,8 +226,21 @@ public class Umvc3ReplayManagerController {
                 handleFiltersChanged();
             }
         };
+        ChangeListener<SingleSelectionModel<Umvc3Character>> characterListener = new ChangeListener<SingleSelectionModel<Umvc3Character>>() {
+            /** {@inheritDoc} */
+            @Override
+            public void changed(ObservableValue<? extends SingleSelectionModel<Umvc3Character>> observable, SingleSelectionModel<Umvc3Character> oldValue, SingleSelectionModel<Umvc3Character> newValue) {
+                handleFiltersChanged();
+            }
+        };
         playerOneTextField.textProperty().addListener(listener);
         playerTwoTextField.textProperty().addListener(listener);
+        playerOneCharacterOneComboBox.selectionModelProperty().addListener(characterListener);
+        playerOneCharacterTwoComboBox.selectionModelProperty().addListener(characterListener);
+        playerOneCharacterThreeComboBox.selectionModelProperty().addListener(characterListener);
+        playerTwoCharacterOneComboBox.selectionModelProperty().addListener(characterListener);
+        playerTwoCharacterTwoComboBox.selectionModelProperty().addListener(characterListener);
+        playerTwoCharacterThreeComboBox.selectionModelProperty().addListener(characterListener);
     }
     
     /** Handles the case where any of the inputs have changed in the filters panel. */
@@ -238,5 +283,7 @@ public class Umvc3ReplayManagerController {
         // Attempt to reselect the originally selected replay.
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
         replayTableView.getSelectionModel().select(newIndex);
+        
+        log.info("" + playerOneCharacterOneComboBox.getSelectionModel().getSelectedItem());
     }
 }

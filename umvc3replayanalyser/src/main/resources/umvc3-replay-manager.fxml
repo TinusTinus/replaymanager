@@ -21,114 +21,18 @@
             <Label text="Character 3" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="95.0" />
             <TextField fx:id="playerOneTextField" prefWidth="359.0" promptText="any player" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="11.0" />
             <TextField fx:id="playerTwoTextField" prefWidth="359.0" promptText="any player" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
-            <ComboBox prefHeight="21.0" prefWidth="177.0" promptText="any character" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="38.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox disable="true" layoutX="271.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox layoutX="89.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox disable="true" layoutX="271.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox layoutX="89.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox disable="true" layoutX="271.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox layoutX="460.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox layoutX="460.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox layoutX="460.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any character">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox disable="true" layoutX="642.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox disable="true" layoutX="642.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox disable="true" layoutX="642.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="playerOneCharacterOneComboBox" prefHeight="21.0" prefWidth="177.0" promptText="any character" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="38.0" />
+            <ComboBox fx:id="playerOneAssistOneComboBox" disable="true" layoutX="271.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
+            <ComboBox fx:id="playerOneCharacterTwoComboBox" layoutX="89.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" />
+            <ComboBox fx:id="playerOneAssistTwoComboBox" disable="true" layoutX="271.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
+            <ComboBox fx:id="playerOneCharacterThreeComboBox" layoutX="89.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" />
+            <ComboBox fx:id="playerOneAssistThreeComboBox" disable="true" layoutX="271.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
+            <ComboBox fx:id="playerTwoCharacterOneComboBox" layoutX="460.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" />
+            <ComboBox fx:id="playerTwoCharacterTwoComboBox" layoutX="460.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" />
+            <ComboBox fx:id="playerTwoCharacterThreeComboBox" layoutX="460.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" />
+            <ComboBox fx:id="playerTwoAssistOneComboBox" disable="true" layoutX="642.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
+            <ComboBox fx:id="playerTwoAssistTwoComboBox" disable="true" layoutX="642.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
+            <ComboBox fx:id="playerTwoAssistThreeComboBox" disable="true" layoutX="642.0" layoutY="93.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
             <CheckBox fx:id="maintainPlayerOrderCheckBox" layoutX="89.0" layoutY="122.0" mnemonicParsing="false" text="Maintain player order" />
             <CheckBox fx:id="maintainCharacterOrderCheckBox" layoutX="89.0" layoutY="145.0" mnemonicParsing="false" text="Maintain character order" />
           </children>
