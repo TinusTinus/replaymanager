@@ -19,8 +19,8 @@
             <Label text="Character 1" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="40.0" />
             <Label text="Character 2" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="67.0" />
             <Label text="Character 3" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="95.0" />
-            <TextField prefWidth="359.0" promptText="any player" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="11.0" />
-            <TextField prefWidth="359.0" promptText="any player" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
+            <TextField fx:id="playerOneTextField" prefWidth="359.0" promptText="any player" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="11.0" />
+            <TextField fx:id="playerTwoTextField" prefWidth="359.0" promptText="any player" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
             <ComboBox prefHeight="21.0" prefWidth="177.0" promptText="any character" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="38.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">

@@ -1,5 +1,6 @@
 package nl.tinus.umvc3replayanalyser.model.predicate;
 
+import lombok.ToString;
 import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.model.Side;
@@ -12,6 +13,7 @@ import com.google.common.collect.Iterables;
  * 
  * @author Martijn van de Rijdt
  */
+@ToString
 public class GamertagPrefixReplayPredicate implements Predicate<Replay> {
     /** Predicate for checking a player's gamertag. */
     private final GamertagPrefixPlayerPredicate playerPredicate;

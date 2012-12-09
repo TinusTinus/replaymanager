@@ -1,7 +1,9 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -12,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +24,11 @@ import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
+import nl.tinus.umvc3replayanalyser.model.predicate.GamertagPrefixReplayPredicate;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 
 /**
  * Main controller class for this JavaFX application. Referenced from the corresponding fxml.
@@ -43,6 +51,12 @@ public class Umvc3ReplayManagerController {
     /** The main table view. */
     @FXML
     private TableView<Replay> replayTableView;
+    /** First text field for player name. */
+    @FXML
+    private TextField playerOneTextField;
+    /** Second text field for player name. */
+    @FXML
+    private TextField playerTwoTextField;
 
     /** Initialisation method. */
     @FXML
@@ -52,6 +66,7 @@ public class Umvc3ReplayManagerController {
         bindPreviewImageView();
         disableColumnSwapping();
         initTableView();
+        initFilterListeners();
         log.info("Initialisation complete.");
     }
     
@@ -158,5 +173,36 @@ public class Umvc3ReplayManagerController {
         }
 
         // TODO also update contents of the replay details pane
+    }
+    
+    /** Adds listeners to the filter input fields. */
+    private void initFilterListeners() {
+        ChangeListener<String> listener = new ChangeListener<String>() {
+            /** {@inheritDoc} */
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                handleFiltersChanged();
+            }
+        };
+        playerOneTextField.textProperty().addListener(listener);
+        playerTwoTextField.textProperty().addListener(listener);
+    }
+    
+    /** Handles the case where any of the inputs have changed in the filters panel. */
+    private void handleFiltersChanged() {
+        Collection<Predicate<Replay>> components = new HashSet<Predicate<Replay>>();
+        // TODO process side
+        components.add(new GamertagPrefixReplayPredicate(playerOneTextField.getText(), null));
+        components.add(new GamertagPrefixReplayPredicate(playerTwoTextField.getText(), null));
+        
+        Predicate<Replay> predicate = Predicates.and(components);
+        
+        Iterable<Replay> filteredReplays = Iterables.filter(replays, predicate);
+        
+        List<Replay> viewReplays = replayTableView.getItems();
+        viewReplays.clear();
+        for (Replay replay: filteredReplays) {
+            viewReplays.add(replay);
+        }
     }
 }

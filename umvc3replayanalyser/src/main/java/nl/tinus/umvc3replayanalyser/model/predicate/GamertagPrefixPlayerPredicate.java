@@ -2,6 +2,7 @@ package nl.tinus.umvc3replayanalyser.model.predicate;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import nl.tinus.umvc3replayanalyser.model.Player;
 
 import com.google.common.base.Predicate;
@@ -12,6 +13,7 @@ import com.google.common.base.Predicate;
  * @author Martijn van de Rijdt
  */
 @RequiredArgsConstructor
+@ToString
 public class GamertagPrefixPlayerPredicate implements Predicate<Player> {
     /** Name prefix to be matched. */
     @NonNull
