@@ -200,6 +200,8 @@ public class Umvc3ReplayManagerController {
     
     /** Handles the case where any of the inputs have changed in the filters panel. */
     private void handleFiltersChanged() {
+        Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
+        
         Side sideOne;
         Side sideTwo;
         if (maintainPlayerOrderCheckBox.isSelected()) {
@@ -227,7 +229,11 @@ public class Umvc3ReplayManagerController {
         for (Replay replay: filteredReplays) {
             viewReplays.add(replay);
         }
+        
         // TODO re-sort the table
-        // TODO re-select the selected replay
+        
+        // Attempt to reselect the originally selected replay.
+        int newIndex = replayTableView.getItems().indexOf(selectedReplay);
+        replayTableView.getSelectionModel().select(newIndex);
     }
 }
