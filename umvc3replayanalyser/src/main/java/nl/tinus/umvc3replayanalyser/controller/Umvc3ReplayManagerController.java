@@ -239,14 +239,22 @@ public class Umvc3ReplayManagerController {
     /** Adds listeners to the filter input fields. */
     private void initFilterListeners() {
         ChangeListener<Object> listener = new ChangeListener<Object>() {
+            /** Used to prevent infinite recursion. */
+            private boolean suspended = false;
+            
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
+                if (!suspended) {
+                    suspended = true;
+                    if (log.isDebugEnabled()) {
+                        log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
+                    }
+
+                    handleFiltersChanged();
+                    
+                    suspended = false;
                 }
-                
-                handleFiltersChanged();
             }
         };
         
@@ -258,6 +266,12 @@ public class Umvc3ReplayManagerController {
         playerTwoCharacterOneComboBox.valueProperty().addListener(listener);
         playerTwoCharacterTwoComboBox.valueProperty().addListener(listener);
         playerTwoCharacterThreeComboBox.valueProperty().addListener(listener);
+        playerOneAssistOneComboBox.valueProperty().addListener(listener);
+        playerOneAssistTwoComboBox.valueProperty().addListener(listener);
+        playerOneAssistThreeComboBox.valueProperty().addListener(listener);
+        playerTwoAssistOneComboBox.valueProperty().addListener(listener);
+        playerTwoAssistTwoComboBox.valueProperty().addListener(listener);
+        playerTwoAssistThreeComboBox.valueProperty().addListener(listener);
         maintainPlayerOrderCheckBox.selectedProperty().addListener(listener);
         maintainCharacterOrderCheckBox.selectedProperty().addListener(listener);
     }
@@ -308,7 +322,7 @@ public class Umvc3ReplayManagerController {
     
     /** Updates the assist combo boxes based on the character selections. */
     private void updateAssistComboBoxes() {
-        // TODO simpler implementation of this using a property -> assist combo box mapping
+        // TODO simpler and more efficient implementation of this using a property -> assist combo box mapping
         updateAssistComboBox(playerOneCharacterOneComboBox.getValue(), playerOneAssistOneComboBox);
         updateAssistComboBox(playerOneCharacterTwoComboBox.getValue(), playerOneAssistTwoComboBox);
         updateAssistComboBox(playerOneCharacterThreeComboBox.getValue(), playerOneAssistThreeComboBox);
