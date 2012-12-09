@@ -1,5 +1,7 @@
 package nl.tinus.umvc3replayanalyser.model.predicate;
 
+import org.apache.commons.lang3.StringUtils;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -22,6 +24,6 @@ public class GamertagPrefixPlayerPredicate implements Predicate<Player> {
     /** {@inheritDoc} */
     @Override
     public boolean apply(Player player) {
-        return player.getGamertag().startsWith(prefix);
+        return StringUtils.startsWithIgnoreCase(player.getGamertag(), prefix);
     }
 }

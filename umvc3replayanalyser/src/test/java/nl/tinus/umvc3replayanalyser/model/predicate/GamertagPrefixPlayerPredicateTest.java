@@ -32,6 +32,14 @@ public class GamertagPrefixPlayerPredicateTest {
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("te");
         Assert.assertTrue(predicate.apply(player));
     }
+    
+    /** Tests the apply method. */
+    @Test
+    public void testPrefixCase() {
+        Player player = new Player("test");
+        GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("TE");
+        Assert.assertTrue(predicate.apply(player));
+    }
 
     /** Tests the apply method. */
     @Test
