@@ -353,14 +353,15 @@ public class Umvc3ReplayManagerController {
             // Character value has changed. Rebuild the contents of the combo box.
             Umvc3Character selectedCharacter = (Umvc3Character) observable.getValue();
             
+            comboBox.getSelectionModel().clearSelection();
+            
             comboBox.getItems().clear();
-            comboBox.getItems().add(null);
             if (selectedCharacter != null) {
+                comboBox.getItems().add(null);
                 for (AssistType type: AssistType.values()) {
                     comboBox.getItems().add(new Assist(type, selectedCharacter));
                 }
             }
-            // TODO handle selection correctly, see http://stackoverflow.com/questions/12142518/combobox-clearing-value-issue
             comboBox.setDisable(selectedCharacter == null);
         }
     }
