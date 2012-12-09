@@ -22,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.model.Assist;
+import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Replay;
@@ -81,6 +83,24 @@ public class Umvc3ReplayManagerController {
     /** Character selection combo box. */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterThreeComboBox;
+    /** Assist selection combo box. */
+    @FXML
+    private ComboBox<Assist> playerOneAssistOneComboBox;
+    /** Assist selection combo box. */
+    @FXML
+    private ComboBox<Assist> playerOneAssistTwoComboBox;
+    /** Assist selection combo box. */
+    @FXML
+    private ComboBox<Assist> playerOneAssistThreeComboBox;
+    /** Assist selection combo box. */
+    @FXML
+    private ComboBox<Assist> playerTwoAssistOneComboBox;
+    /** Assist selection combo box. */
+    @FXML
+    private ComboBox<Assist> playerTwoAssistTwoComboBox;
+    /** Assist selection combo box. */
+    @FXML
+    private ComboBox<Assist> playerTwoAssistThreeComboBox;
     /** Check box indicating that the info filled in in the left column should only be matched to player one. */
     @FXML
     private CheckBox maintainPlayerOrderCheckBox;
@@ -246,6 +266,8 @@ public class Umvc3ReplayManagerController {
     private void handleFiltersChanged() {
         // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
+
+        updateAssistComboBoxes();
         
         Side sideOne;
         Side sideTwo;
@@ -282,5 +304,38 @@ public class Umvc3ReplayManagerController {
         // Attempt to reselect the originally selected replay.
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
         replayTableView.getSelectionModel().select(newIndex);
+    }
+    
+    /** Updates the assist combo boxes based on the character selections. */
+    private void updateAssistComboBoxes() {
+        // TODO simpler implementation of this using a property -> assist combo box mapping
+        updateAssistComboBox(playerOneCharacterOneComboBox.getValue(), playerOneAssistOneComboBox);
+        updateAssistComboBox(playerOneCharacterTwoComboBox.getValue(), playerOneAssistTwoComboBox);
+        updateAssistComboBox(playerOneCharacterThreeComboBox.getValue(), playerOneAssistThreeComboBox);
+        updateAssistComboBox(playerTwoCharacterOneComboBox.getValue(), playerTwoAssistOneComboBox);
+        updateAssistComboBox(playerTwoCharacterTwoComboBox.getValue(), playerTwoAssistTwoComboBox);
+        updateAssistComboBox(playerTwoCharacterThreeComboBox.getValue(), playerTwoAssistThreeComboBox);
+    }
+    
+    /**
+     * Updates an assist combo boxes based on the character selection.
+     * 
+     * @param selectedCharacter character that has been selected in the corresponding character combo box
+     * @param comboBox combo box to be updated
+     */
+    private void updateAssistComboBox(Umvc3Character selectedCharacter, ComboBox<Assist> comboBox) {
+        if ((selectedCharacter == null && !comboBox.isDisabled())
+                || (selectedCharacter != null && (comboBox.isDisabled() || comboBox.getItems().get(1).getCharacter() != selectedCharacter))) {
+            // Character value has changed. Rebuild the contents of the combo box.
+            comboBox.getItems().clear();
+            comboBox.getItems().add(null);
+            if (selectedCharacter != null) {
+                for (AssistType type: AssistType.values()) {
+                    comboBox.getItems().add(new Assist(type, selectedCharacter));
+                }
+            }
+            // TODO clear selection
+            comboBox.setDisable(selectedCharacter == null);
+        }
     }
 }
