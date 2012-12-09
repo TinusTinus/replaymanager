@@ -230,7 +230,9 @@ public class Umvc3ReplayManagerController {
             viewReplays.add(replay);
         }
         
-        // TODO re-sort the table
+        // Force a re-sort of the table.
+        List<TableColumn<Replay, ?>> sortOrder = new ArrayList<>(replayTableView.getSortOrder());
+        replayTableView.getSortOrder().setAll(sortOrder);
         
         // Attempt to reselect the originally selected replay.
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
