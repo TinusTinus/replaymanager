@@ -17,112 +17,93 @@ import org.junit.Test;
  * 
  * @author Martijn van de Rijdt
  */
-public class GamertagPrefixReplayPredicateTest {
+public class MatchReplayPredicateTest {
     /** Tests the constructor. */
     @Test(expected = NullPointerException.class)
     public void testNullPrefix() {
-        new GamertagPrefixReplayPredicate(null, null);
+        new MatchReplayPredicate(null, null, null, null, null, null, null, false, Side.PLAYER_ONE);
+    }
+
+    /** Tests the constructor. */
+    @Test(expected = NullPointerException.class)
+    public void testNullSide() {
+        new MatchReplayPredicate("prefix", null, null, null, null, null, null, false, null);
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchAnyPlayerOne() {
+    public void testMatchPlayerOneGamertagMatch() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test1", null);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("test1", null, null, null, null, null, null, false,
+                Side.PLAYER_ONE);
         Assert.assertTrue(predicate.apply(replay));
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchAnyPlayerTwo() {
+    public void testMatchPlayerOneGamertagOther() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test2", null);
-        Assert.assertTrue(predicate.apply(replay));
-    }
-
-    /** Tests the apply method. */
-    @Test
-    public void testMatchAnyPlayerBoth() {
-        Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test", null);
-        Assert.assertTrue(predicate.apply(replay));
-    }
-
-    /** Tests the apply method. */
-    @Test
-    public void testMatchAnyPlayerNeither() {
-        Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("nomatch", null);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("test2", null, null, null, null, null, null, false,
+                Side.PLAYER_ONE);
         Assert.assertFalse(predicate.apply(replay));
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchPlayerOneMatch() {
+    public void testMatchPlayerOneGamertagNeither() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test1", Side.PLAYER_ONE);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("nomatch", null, null, null, null, null, null, false,
+                Side.PLAYER_ONE);
+        Assert.assertFalse(predicate.apply(replay));
+    }
+
+    /** Tests the apply method. */
+    @Test
+    public void testMatchPlayerOneGamertagBoth() {
+        Replay replay = createReplay("test1", "test2");
+        MatchReplayPredicate predicate = new MatchReplayPredicate("test", null, null, null, null, null, null, false,
+                Side.PLAYER_ONE);
         Assert.assertTrue(predicate.apply(replay));
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchPlayerOneOther() {
+    public void testMatchPlayerTwoGamertagMatch() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test2", Side.PLAYER_ONE);
-        Assert.assertFalse(predicate.apply(replay));
-    }
-
-    /** Tests the apply method. */
-    @Test
-    public void testMatchPlayerOneNeither() {
-        Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("nomatch", Side.PLAYER_ONE);
-        Assert.assertFalse(predicate.apply(replay));
-    }
-
-    /** Tests the apply method. */
-    @Test
-    public void testMatchPlayerOneBoth() {
-        Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test", Side.PLAYER_ONE);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("test2", null, null, null, null, null, null, false,
+                Side.PLAYER_TWO);
         Assert.assertTrue(predicate.apply(replay));
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchPlayerTwoMatch() {
+    public void testMatchPlayerTwoGamertagOther() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test2", Side.PLAYER_TWO);
-        Assert.assertTrue(predicate.apply(replay));
-    }
-
-    /** Tests the apply method. */
-    @Test
-    public void testMatchPlayerTwoOther() {
-        Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test1", Side.PLAYER_TWO);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("test1", null, null, null, null, null, null, false,
+                Side.PLAYER_TWO);
         Assert.assertFalse(predicate.apply(replay));
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchPlayerTwoNeither() {
+    public void testMatchPlayerTwoGamertagNeither() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("nomatch", Side.PLAYER_TWO);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("nomatch", null, null, null, null, null, null, false,
+                Side.PLAYER_TWO);
         Assert.assertFalse(predicate.apply(replay));
     }
 
     /** Tests the apply method. */
     @Test
-    public void testMatchPlayerTwoBoth() {
+    public void testMatchPlayerTwoGamertagBoth() {
         Replay replay = createReplay("test1", "test2");
-        GamertagPrefixReplayPredicate predicate = new GamertagPrefixReplayPredicate("test", Side.PLAYER_TWO);
+        MatchReplayPredicate predicate = new MatchReplayPredicate("test", null, null, null, null, null, null, false,
+                Side.PLAYER_TWO);
         Assert.assertTrue(predicate.apply(replay));
     }
 
     /**
-     * Creates a replay where the players have the given gamertags. Other fields are filled with mock values, since
-     * those are not the focus in these tests.
+     * Creates a replay where the players have the given gamertags. Other fields are filled with mock values.
      * 
      * @param gamertagPlayerOne
      *            gamertag for player one
