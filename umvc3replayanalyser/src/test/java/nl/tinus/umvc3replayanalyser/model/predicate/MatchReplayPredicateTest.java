@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for GamertagPrefixReplayPredicate.
+ * Test class for MatchReplayPredicate.
  * 
  * @author Martijn van de Rijdt
  */
@@ -101,6 +101,8 @@ public class MatchReplayPredicateTest {
                 Side.PLAYER_TWO);
         Assert.assertTrue(predicate.apply(replay));
     }
+    
+    // TODO add test cases for characters and assists
 
     /**
      * Creates a replay where the players have the given gamertags. Other fields are filled with mock values.
