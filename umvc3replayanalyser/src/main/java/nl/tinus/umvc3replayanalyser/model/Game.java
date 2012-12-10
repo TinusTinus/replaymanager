@@ -69,6 +69,25 @@ public class Game {
     }
     
     /**
+     * Returns the team played on the given side.
+     * 
+     * @param side
+     *            side
+     * @return team
+     */
+    public Team getTeam(Side side) {
+        Team result;
+        if (side == Side.PLAYER_ONE) {
+            result = teamOne;
+        } else if (side == Side.PLAYER_TWO) {
+            result = teamTwo;
+        } else {
+            throw new IllegalArgumentException("Unexpected side: " + side);
+        }
+        return result;
+    }
+    
+    /**
      * Returns an unmodifiable list containing all players.
      * 
      * @return characters
