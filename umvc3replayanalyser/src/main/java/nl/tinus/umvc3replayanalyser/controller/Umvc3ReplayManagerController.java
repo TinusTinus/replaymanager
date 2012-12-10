@@ -33,6 +33,8 @@ import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.GamertagPrefixReplayPredicate;
+import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
+import nl.tinus.umvc3replayanalyser.model.predicate.MatchTeamPredicate;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -303,26 +305,34 @@ public class Umvc3ReplayManagerController {
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
 
         updateAssistComboBox(observable);
-        
-        Side sideOne;
-        Side sideTwo;
-        if (maintainPlayerOrderCheckBox.isSelected()) {
-            sideOne = Side.PLAYER_ONE;
-            sideTwo = Side.PLAYER_TWO;
-        } else {
-            sideOne = null;
-            sideTwo = null;
+
+        // Construct the filter predicate
+        Predicate<Replay> sideOnePredicate = new MatchReplayPredicate(playerOneTextField.getText(),
+                playerOneCharacterOneComboBox.getValue(), playerOneCharacterTwoComboBox.getValue(),
+                playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
+                getType(playerOneAssistTwoComboBox.getValue()), getType(playerOneAssistThreeComboBox.getValue()),
+                maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
+        Predicate<Replay> sideTwoPredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
+                playerTwoCharacterOneComboBox.getValue(), playerTwoCharacterTwoComboBox.getValue(),
+                playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
+                getType(playerTwoAssistTwoComboBox.getValue()), getType(playerTwoAssistThreeComboBox.getValue()),
+                maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
+        Predicate<Replay> predicate = Predicates.and(sideOnePredicate, sideTwoPredicate);
+
+        if (!maintainPlayerOrderCheckBox.isSelected()) {
+            sideOnePredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
+                    playerTwoCharacterOneComboBox.getValue(), playerTwoCharacterTwoComboBox.getValue(),
+                    playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
+                    getType(playerTwoAssistTwoComboBox.getValue()), getType(playerTwoAssistThreeComboBox.getValue()),
+                    maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
+            sideTwoPredicate = new MatchReplayPredicate(playerOneTextField.getText(),
+                    playerOneCharacterOneComboBox.getValue(), playerOneCharacterTwoComboBox.getValue(),
+                    playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
+                    getType(playerOneAssistTwoComboBox.getValue()), getType(playerOneAssistThreeComboBox.getValue()),
+                    maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
+            
+            predicate = Predicates.or(predicate, Predicates.and(sideOnePredicate, sideTwoPredicate));
         }
-        
-        Collection<Predicate<Replay>> components = new HashSet<Predicate<Replay>>();
-        if (!StringUtils.isEmpty(playerOneTextField.getText())) {
-            components.add(new GamertagPrefixReplayPredicate(playerOneTextField.getText(), sideOne));
-        }
-        if (!StringUtils.isEmpty(playerTwoTextField.getText())) {
-            components.add(new GamertagPrefixReplayPredicate(playerTwoTextField.getText(), sideTwo));
-        }
-        
-        Predicate<Replay> predicate = Predicates.and(components);
         
         Iterable<Replay> filteredReplays = Iterables.filter(replays, predicate);
         
@@ -339,6 +349,23 @@ public class Umvc3ReplayManagerController {
         // Attempt to reselect the originally selected replay.
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
         replayTableView.getSelectionModel().select(newIndex);
+    }
+    
+    /**
+     * Gets the assist type, while handling null values.
+     * 
+     * @param assist
+     *            assist, may be null
+     * @return assist type, or null if the given assist is null
+     */
+    private AssistType getType(Assist assist) {
+        AssistType result;
+        if (assist == null) {
+            result = null;
+        } else {
+            result = assist.getType();
+        }
+        return result;
     }
     
     /**
