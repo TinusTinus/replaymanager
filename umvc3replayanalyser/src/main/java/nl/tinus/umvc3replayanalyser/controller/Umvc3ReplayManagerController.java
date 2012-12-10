@@ -2,10 +2,8 @@ package nl.tinus.umvc3replayanalyser.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +30,7 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
-import nl.tinus.umvc3replayanalyser.model.predicate.GamertagPrefixReplayPredicate;
 import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
-import nl.tinus.umvc3replayanalyser.model.predicate.MatchTeamPredicate;
-
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
