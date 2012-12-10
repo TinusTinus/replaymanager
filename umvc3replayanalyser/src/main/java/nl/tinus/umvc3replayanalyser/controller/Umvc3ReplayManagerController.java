@@ -263,7 +263,8 @@ public class Umvc3ReplayManagerController {
                         log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
                     }
 
-                    handleFiltersChanged(observable);
+                    updateAssistComboBox(observable);
+                    updateReplayTable();
                     
                     suspended = false;
                 }
@@ -287,19 +288,37 @@ public class Umvc3ReplayManagerController {
         maintainPlayerOrderCheckBox.selectedProperty().addListener(listener);
         maintainCharacterOrderCheckBox.selectedProperty().addListener(listener);
     }
-    
+
     /**
-     * Handles the case where any of the inputs have changed in the filters panel.
+     * If observable is a character, updates the corresponding assist combo box.
      * 
      * @param observable
-     *            value that has changed
+     *            observable whose value has changed
      */
-    private void handleFiltersChanged(ObservableValue<? extends Object> observable) {
+    private void updateAssistComboBox(ObservableValue<? extends Object> observable) {
+        ComboBox<Assist> comboBox = this.assistComboBoxes.get(observable);
+        if (comboBox != null) {
+            // Character value has changed. Rebuild the contents of the combo box.
+            Umvc3Character selectedCharacter = (Umvc3Character) observable.getValue();
+            
+            comboBox.getSelectionModel().clearSelection();
+            
+            comboBox.getItems().clear();
+            if (selectedCharacter != null) {
+                comboBox.getItems().add(null);
+                for (AssistType type: AssistType.values()) {
+                    comboBox.getItems().add(new Assist(type, selectedCharacter));
+                }
+            }
+            comboBox.setDisable(selectedCharacter == null);
+        }
+    }
+    
+    /** Updates the replay table. */
+    private void updateReplayTable() {
         // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
-
-        updateAssistComboBox(observable);
-
+        
         // Construct the filter predicate
         Predicate<Replay> sideOnePredicate = new MatchReplayPredicate(playerOneTextField.getText(),
                 playerOneCharacterOneComboBox.getValue(), playerOneCharacterTwoComboBox.getValue(),
@@ -360,30 +379,5 @@ public class Umvc3ReplayManagerController {
             result = assist.getType();
         }
         return result;
-    }
-    
-    /**
-     * If observable is a character, updates the corresponding assist combo box.
-     * 
-     * @param observable
-     *            observable whose value has changed
-     */
-    private void updateAssistComboBox(ObservableValue<? extends Object> observable) {
-        ComboBox<Assist> comboBox = this.assistComboBoxes.get(observable);
-        if (comboBox != null) {
-            // Character value has changed. Rebuild the contents of the combo box.
-            Umvc3Character selectedCharacter = (Umvc3Character) observable.getValue();
-            
-            comboBox.getSelectionModel().clearSelection();
-            
-            comboBox.getItems().clear();
-            if (selectedCharacter != null) {
-                comboBox.getItems().add(null);
-                for (AssistType type: AssistType.values()) {
-                    comboBox.getItems().add(new Assist(type, selectedCharacter));
-                }
-            }
-            comboBox.setDisable(selectedCharacter == null);
-        }
     }
 }
