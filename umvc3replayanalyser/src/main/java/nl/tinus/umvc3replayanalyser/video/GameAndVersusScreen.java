@@ -2,6 +2,7 @@ package nl.tinus.umvc3replayanalyser.video;
 
 import java.awt.image.BufferedImage;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import nl.tinus.umvc3replayanalyser.model.Game;
  * 
  * @author Martijn van de Rijdt
  */
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
 @ToString
 @EqualsAndHashCode
