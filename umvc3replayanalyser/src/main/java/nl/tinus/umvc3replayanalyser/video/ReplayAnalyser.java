@@ -16,7 +16,6 @@ import java.util.concurrent.Future;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
-import nl.tinus.umvc3replayanalyser.model.Game;
 
 import com.xuggle.xuggler.IError;
 
@@ -51,12 +50,12 @@ public class ReplayAnalyser {
      * @throws ReplayAnalysisException
      *             in case analysis fails
      */
-    public Game analyse(String videoUrl) throws ReplayAnalysisException {
+    public GameAndVersusScreen analyse(String videoUrl) throws ReplayAnalysisException {
         log.info("Analysing: " + videoUrl);
         
         long startTime = System.currentTimeMillis();
 
-        Game result = null;
+        GameAndVersusScreen result = null;
 
         // Create a producer, which reads the replay and produces individual frames as BufferedImages,
         // and a number of consumers, which process the images and attempt to read the Game information.
@@ -68,11 +67,11 @@ public class ReplayAnalyser {
             Future<IError> producerFuture = executorService.submit(producer);
             
             List<FrameConsumer> consumers = new ArrayList<>(NUM_CONSUMERS);
-            List<Future<Game>> consumerFutures = new ArrayList<>(NUM_CONSUMERS);
+            List<Future<GameAndVersusScreen>> consumerFutures = new ArrayList<>(NUM_CONSUMERS);
             while(consumers.size() != NUM_CONSUMERS) {
                 FrameConsumer consumer = new FrameConsumer(versusScreenAnalyser, queue);
                 consumers.add(consumer);
-                Future<Game> future = executorService.submit(consumer);
+                Future<GameAndVersusScreen> future = executorService.submit(consumer);
                 consumerFutures.add(future);
             }
 
@@ -88,15 +87,15 @@ public class ReplayAnalyser {
                 // Check if any of the consumers are done.
                 int i = 0;
                 while (i != consumerFutures.size()) {
-                    Future<Game> future = consumerFutures.get(i);
+                    Future<GameAndVersusScreen> future = consumerFutures.get(i);
                     if (future.isDone()) {
                         consumerFutures.remove(i);
                         consumers.remove(i);
 
                         try {
-                            Game game = future.get();
-                            if (game != null) {
-                                result = game;
+                            GameAndVersusScreen gameAndVersusScreen = future.get();
+                            if (gameAndVersusScreen != null) {
+                                result = gameAndVersusScreen;
                             }
                         } catch (ExecutionException | InterruptedException e) {
                             log.error("Consumer failed.", e);
@@ -151,19 +150,19 @@ public class ReplayAnalyser {
      *            directory
      * @return map of succesfully analysed files to their game information
      */
-    public Map<File, Game> analyse(File directory) {
+    public Map<File, GameAndVersusScreen> analyse(File directory) {
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
 
-        Map<File, Game> result = new HashMap<>();
+        Map<File, GameAndVersusScreen> result = new HashMap<>();
 
         for (File file : directory.listFiles()) {
             if (file.isDirectory()) {
                 result.putAll(analyse(file));
             } else {
                 try {
-                    Game game = analyse(file.getAbsolutePath());
+                    GameAndVersusScreen game = analyse(file.getAbsolutePath());
                     result.put(file, game);
                 } catch (ReplayAnalysisException e) {
                     log.warn("Replay could not be analysed: " + file, e);

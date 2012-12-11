@@ -39,8 +39,9 @@ public class ReplayAnalyserIntegrationTest {
     public void test() throws ReplayAnalysisException {
         ReplayAnalyser analyser = new ReplayAnalyser(this.versusScreenAnalyser);
 
-        Game game = analyser.analyse("src/test/resources/badhyper-vs-MvdR.mp4");
-
+        GameAndVersusScreen gameAndVersusScreen = analyser.analyse("src/test/resources/badhyper-vs-MvdR.mp4");
+        Game game = gameAndVersusScreen.getGame();
+        
         Assert.assertEquals(Umvc3Character.FELICIA, game.getTeamOne().getFirstCharacter());
         Assert.assertEquals(Umvc3Character.THOR, game.getTeamOne().getSecondCharacter());
         Assert.assertEquals(Umvc3Character.WESKER, game.getTeamOne().getThirdCharacter());

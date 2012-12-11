@@ -15,7 +15,7 @@ import nl.tinus.umvc3replayanalyser.ocr.OCRException;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-class FrameConsumer implements Callable<Game> {
+class FrameConsumer implements Callable<GameAndVersusScreen> {
     /** Wait time between polling attempts when no new frame is available, in milliseconds. */
     private static final long WAIT_TIME_BETWEEN_POLLS = 100;
     /** Versus screen analyser. */
@@ -44,13 +44,14 @@ class FrameConsumer implements Callable<Game> {
 
     /** {@inheritDoc} */
     @Override
-    public Game call() throws InterruptedException {
-        Game game = null;
-        while (game == null && !consumptionCanStop && !(producerStopped && queue.isEmpty())) {
+    public GameAndVersusScreen call() throws InterruptedException {
+        GameAndVersusScreen result = null;
+        while (result == null && !consumptionCanStop && !(producerStopped && queue.isEmpty())) {
             BufferedImage image = queue.poll();
             if (image != null) {
                 try {
-                    game = versusScreenAnalyser.analyse(image);
+                    Game game = versusScreenAnalyser.analyse(image);
+                    result = new GameAndVersusScreen(game, image);
                 } catch (OCRException e) {
                     log.debug("Could not analyse frame. This frame is most likely not the versus screen.", e);
                 }
@@ -61,7 +62,7 @@ class FrameConsumer implements Callable<Game> {
         
         log.info("Done.");
         
-        return game;
+        return result;
     }
 
     /** Indicates that the producer is no longer producing items. */
