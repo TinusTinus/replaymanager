@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +23,8 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 public class ImportReplayPopupController {
     /** Task to be performed. */
     private final ImportReplayTask task;
+    /** Boolean property which will be set to false once done. */
+    private final BooleanProperty working;
 
     /** Progress bar. */
     @FXML
@@ -37,10 +40,13 @@ public class ImportReplayPopupController {
      *            directory to load replays from
      * @param replays
      *            list of replays, to which newly loaded replays will be added
+     * @param working
+     *            will be set to false once importing is done
      */
-    public ImportReplayPopupController(File directory, List<Replay> replays) {
+    public ImportReplayPopupController(File directory, List<Replay> replays, BooleanProperty working) {
         super();
         this.task = new ImportReplayTask(directory, replays);
+        this.working = working;
     }
 
     /** Initialisation method. */
@@ -60,6 +66,7 @@ public class ImportReplayPopupController {
                     log.error("Unable to load replays.", e);
                 }
 
+                working.set(false);
                 getApplicationWindow().hide();
             }
         };
@@ -68,7 +75,7 @@ public class ImportReplayPopupController {
         task.setOnFailed(eventHandler);
         new Thread(task, "Replay Import Thread").start();
     }
-    
+
     /**
      * Returns the popup window.
      * 

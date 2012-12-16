@@ -118,7 +118,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="Import New Replays" onAction="#handleImportAction" />
+            <MenuItem fx:id="importMenuItem" mnemonicParsing="false" text="Import New Replays" onAction="#handleImportAction" />
             <MenuItem mnemonicParsing="false" text="Exit" onAction="#handleExitAction" />
           </items>
         </Menu>

@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -113,6 +114,9 @@ public class Umvc3ReplayManagerController {
     /** Check box indicating that the characters should only be matched in the given order. */
     @FXML
     private CheckBox maintainCharacterOrderCheckBox;
+    /** Menu item for importing new replays.*/
+    @FXML
+    private MenuItem importMenuItem;
     /** Replays. */
     private ObservableList<Replay> replays;
     /** Indicates which character value each assist combo box depends on. */
@@ -453,7 +457,8 @@ public class Umvc3ReplayManagerController {
         // TODO prevent import popup from being shown multiple times
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
-        fxmlLoader.setController(new ImportReplayPopupController(directory, this.replays));
+        fxmlLoader.setController(new ImportReplayPopupController(directory, this.replays, this.importMenuItem
+                .disableProperty()));
         
         try {
             Parent root = (Parent) fxmlLoader.load();
@@ -463,6 +468,8 @@ public class Umvc3ReplayManagerController {
             stage.setTitle("Importing replays");
             stage.setScene(new Scene(root));
 
+            importMenuItem.setDisable(true);
+            
             log.info("Showing UI.");
             stage.show();
 

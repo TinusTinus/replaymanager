@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,7 +32,7 @@ public class ImportReplayPopupMain extends Application {
         log.info("Starting application.");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
-        fxmlLoader.setController(new ImportReplayPopupController(new File(REPLAY_DIRECTORY), new ArrayList<Replay>()));
+        fxmlLoader.setController(new ImportReplayPopupController(new File(REPLAY_DIRECTORY), new ArrayList<Replay>(), new SimpleBooleanProperty()));
         Parent root = (Parent) fxmlLoader.load();
 
         log.info("Fxml loaded, performing additional initialisation.");
