@@ -1,12 +1,15 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -26,7 +29,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
+
+import javax.imageio.ImageIO;
+
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -36,6 +43,9 @@ import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
+import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
+import nl.tinus.umvc3replayanalyser.video.GameAndVersusScreen;
+import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -321,6 +331,8 @@ public class Umvc3ReplayManagerController {
     
     /** Updates the replay table. */
     private void updateReplayTable() {
+        log.debug("Updating replay table.");
+        
         // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
         
@@ -352,12 +364,21 @@ public class Umvc3ReplayManagerController {
             predicate = Predicates.or(predicate, Predicates.and(sideOnePredicate, sideTwoPredicate));
         }
         
+        if (log.isDebugEnabled()) {
+            log.debug("Using predicate to filter replays: " + predicate);
+        }
+        
         Iterable<Replay> filteredReplays = Iterables.filter(replays, predicate);
         
         List<Replay> viewReplays = replayTableView.getItems();
         viewReplays.clear();
         for (Replay replay: filteredReplays) {
             viewReplays.add(replay);
+        }
+        
+        if (log.isDebugEnabled()) {
+            log.debug(String.format("Filtered replays. Displaying %s of %s replays.", ""
+                    + viewReplays.size(), "" + this.replays.size()));
         }
         
         // Force a re-sort of the table.
@@ -411,10 +432,55 @@ public class Umvc3ReplayManagerController {
         
         log.info("Selected Directory: " + selectedDirectory + ".");
         
-        // TODO also check this is not the data directory
         if (selectedDirectory != null) {
-            // TODO import replays from selectedDirectory
+            importReplays(selectedDirectory);      
         }
+    }
+
+    /**
+     * Imports the replays from the given directory.
+     * 
+     * @param directory directory to be imported from
+     */
+    private void importReplays(File directory) {
+        // TODO check directory does not contain the data directory
+        // TODO show a popup with a progress bar?
+        // TODO inject these somehow?
+        // TODO save the preview image and the replay to the data directory
+        log.info("Importing games from directory: " + directory);
+        ReplayAnalyser replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine()));
+        Map<File, GameAndVersusScreen> games = replayAnalyser.analyse(directory);
+        log.info("Imported games: " + games);
+
+        List<Replay> newReplays = new ArrayList<Replay>();
+        
+        for (Entry<File, GameAndVersusScreen> gameEntry : games.entrySet()) {
+            try {
+                File replayFile = gameEntry.getKey();
+                Game game = gameEntry.getValue().getGame();
+                BufferedImage versusScreen = gameEntry.getValue().getVersusScreen();
+                
+                // save the preview image in a temp directory
+                File previewImageFile = File.createTempFile("previewimage", ".png");
+                // Note: the following seems to cause the JVM to be unable to shut down properly if this preview image file is displayed on shutdown.
+                // This should be fixed after the preview image is no longer stored as a temporary file.
+                previewImageFile.deleteOnExit();
+                ImageIO.write(versusScreen, "png", previewImageFile);
+                
+                // create the replay
+                Date creationTime = new Date(replayFile.lastModified());
+                Replay replay = new Replay(creationTime, game, "file:///" +  replayFile.getAbsolutePath(),
+                        "file:///" + previewImageFile.getAbsolutePath());
+                newReplays.add(replay);
+            } catch (IOException e) {
+                log.error("Failed to prcess game: " + gameEntry, e);
+            }
+        }
+        
+        log.info("Imported replays: " + newReplays);
+
+        this.replays.addAll(newReplays);
+        updateReplayTable();
     }
     
     /**
