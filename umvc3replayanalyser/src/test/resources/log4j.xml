@@ -13,8 +13,11 @@
   <logger name="nl.tinus">
     <level value="debug" />
   </logger>
+  <logger name="nl.tinus.umvc3replayanalyser.image">
+    <level value="warn" />
+  </logger>
   <logger name="nl.tinus.umvc3replayanalyser.ocr">
-    <level value="info" />
+    <level value="warn" />
   </logger>
   <logger name="nl.tinus.umvc3replayanalyser.video">
     <level value="info" />
