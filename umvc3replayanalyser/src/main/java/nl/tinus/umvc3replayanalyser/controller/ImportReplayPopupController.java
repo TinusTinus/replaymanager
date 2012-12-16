@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 
@@ -20,12 +19,9 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-@RequiredArgsConstructor
 public class ImportReplayPopupController {
-    /** Directory to load replays from. */
-    private final File directory;
-    /** Listeners. */
-    private final List<ImportReplayListener> listeners;
+    /** Task to be performed. */
+    private final Task<List<Replay>> task;
     
     /** Progress bar. */
     @FXML
@@ -34,12 +30,21 @@ public class ImportReplayPopupController {
     @FXML
     private TextArea textArea;
     
+    /**
+     * Constructor.
+     * 
+     * @param directory directory to load replays from
+     * @param listeners listeners
+     */
+    public ImportReplayPopupController(File directory, List<ImportReplayListener> listeners) {
+        super();
+        this.task = new ImportReplayTask(directory, listeners);
+    }
+    
     /** Initialisation method. */
     @FXML
     private void initialize() {
         log.info("Performing controller initialisation.");
-        
-        final Task<List<Replay>> task = new ImportReplayTask(directory, listeners);
         
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
@@ -53,7 +58,7 @@ public class ImportReplayPopupController {
                     log.error("Unable to load replays.", e);
                 }
                 
-                // TODO close this window?
+                // TODO close this window
             }
         };
         task.setOnSucceeded(eventHandler);
