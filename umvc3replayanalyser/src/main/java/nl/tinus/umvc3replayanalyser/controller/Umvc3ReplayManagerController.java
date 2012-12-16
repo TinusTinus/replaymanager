@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
@@ -406,13 +407,22 @@ public class Umvc3ReplayManagerController {
         
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Import Replays - Ultimate Marvel vs Capcom 3 Replay Manager");
-        File selectedDirectory = chooser.showDialog(null); // TODO set owner
+        File selectedDirectory = chooser.showDialog(getApplicationWindow());
         
         log.info("Selected Directory: " + selectedDirectory + ".");
         
         // TODO also check this is not the data directory
         if (selectedDirectory != null) {
-            // TODO import replays
+            // TODO import replays from selectedDirectory
         }
+    }
+    
+    /**
+     * Returns the main window of this application.
+     * 
+     * @return window
+     */
+    private Window getApplicationWindow() {
+        return this.replayTableView.getScene().getWindow();
     }
 }
