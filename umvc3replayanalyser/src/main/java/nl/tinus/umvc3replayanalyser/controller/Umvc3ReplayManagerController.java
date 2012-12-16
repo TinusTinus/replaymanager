@@ -52,7 +52,7 @@ import com.google.common.collect.Iterables;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-public class Umvc3ReplayManagerController implements ImportReplayListener {
+public class Umvc3ReplayManagerController {
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -114,7 +114,7 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
     @FXML
     private CheckBox maintainCharacterOrderCheckBox;
     /** Replays. */
-    private List<Replay> replays;
+    private ObservableList<Replay> replays;
     /** Indicates which character value each assist combo box depends on. */
     private Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes;
 
@@ -140,7 +140,7 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
         
         // TODO load from storage
         // For now, we create a dummy list containing some games.
-        replays = new ArrayList<>();
+        replays = FXCollections.observableList(new ArrayList<Replay>());
         replays.add(new Replay(new Date(System.currentTimeMillis() + 1000), new Game(new Player("MvdR"), new Team(
                 Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM), new Player("mistermkl"),
                 new Team(Umvc3Character.MORRIGAN, Umvc3Character.HAGGAR, Umvc3Character.SHUMA_GORATH)),
@@ -149,6 +149,16 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
                 Umvc3Character.SPENCER, Umvc3Character.DOCTOR_STRANGE), new Player("PR Rog"), new Team(
                 Umvc3Character.WOLVERINE, Umvc3Character.DOCTOR_DOOM, Umvc3Character.VERGIL)), "/badhyper-vs-MvdR.mp4",
                 "/vswithoutnames.png"));
+        replays.addListener(new ListChangeListener<Replay>() {
+            /** {@inheritDoc} */
+            @Override
+            public void onChanged(Change<? extends Replay> change) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Replay list changed: " + change);
+                }
+                updateReplayTable();
+            }
+        });
     }
 
     /** Binds the image size to the size of its parent. */
@@ -443,7 +453,7 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
         // TODO prevent import popup from being shown multiple times
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
-        fxmlLoader.setController(new ImportReplayPopupController(directory, Arrays.<ImportReplayListener>asList(this)));
+        fxmlLoader.setController(new ImportReplayPopupController(directory, this.replays));
         
         try {
             Parent root = (Parent) fxmlLoader.load();
@@ -462,14 +472,6 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
         } catch (IOException e) {
             throw new IllegalStateException("Unable to parse FXML.", e);
         }
-    }
-    
-    /** @inheritDoc} */
-    @Override
-    public void replayImported(Replay replay) {
-        log.info("Imported replay: " + replay);
-        this.replays.add(replay);
-        updateReplayTable();
     }
     
     /**

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,31 +20,33 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 @Slf4j
 public class ImportReplayPopupController {
     /** Task to be performed. */
-    private final Task<List<Replay>> task;
-    
+    private final ImportReplayTask task;
+
     /** Progress bar. */
     @FXML
     private ProgressBar progressBar;
     /** Text area. */
     @FXML
     private TextArea textArea;
-    
+
     /**
      * Constructor.
      * 
-     * @param directory directory to load replays from
-     * @param listeners listeners
+     * @param directory
+     *            directory to load replays from
+     * @param replays
+     *            list of replays, to which newly loaded replays will be added
      */
-    public ImportReplayPopupController(File directory, List<ImportReplayListener> listeners) {
+    public ImportReplayPopupController(File directory, List<Replay> replays) {
         super();
-        this.task = new ImportReplayTask(directory, listeners);
+        this.task = new ImportReplayTask(directory, replays);
     }
-    
+
     /** Initialisation method. */
     @FXML
     private void initialize() {
         log.info("Performing controller initialisation.");
-        
+
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
         EventHandler<WorkerStateEvent> eventHandler = new EventHandler<WorkerStateEvent>() {
@@ -57,7 +58,7 @@ public class ImportReplayPopupController {
                 } catch (InterruptedException | ExecutionException e) {
                     log.error("Unable to load replays.", e);
                 }
-                
+
                 // TODO close this window
             }
         };

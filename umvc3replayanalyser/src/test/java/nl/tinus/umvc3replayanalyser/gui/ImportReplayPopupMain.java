@@ -2,7 +2,7 @@ package nl.tinus.umvc3replayanalyser.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.controller.ImportReplayListener;
 import nl.tinus.umvc3replayanalyser.controller.ImportReplayPopupController;
+import nl.tinus.umvc3replayanalyser.model.Replay;
 
 /**
  * Main class which lets us test the import replay popup as a standalone application.
@@ -31,7 +31,7 @@ public class ImportReplayPopupMain extends Application {
         log.info("Starting application.");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
-        fxmlLoader.setController(new ImportReplayPopupController(new File(REPLAY_DIRECTORY), Collections.<ImportReplayListener>emptyList()));
+        fxmlLoader.setController(new ImportReplayPopupController(new File(REPLAY_DIRECTORY), new ArrayList<Replay>()));
         Parent root = (Parent) fxmlLoader.load();
 
         log.info("Fxml loaded, performing additional initialisation.");

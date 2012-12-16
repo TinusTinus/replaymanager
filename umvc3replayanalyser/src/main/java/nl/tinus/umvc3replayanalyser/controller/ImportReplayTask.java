@@ -32,8 +32,8 @@ class ImportReplayTask extends Task<List<Replay>> {
     private final File directory;
     /** Replay analyser. */
     private final ReplayAnalyser replayAnalyser;
-    /** Listeners to be notified after a replay has been imported. */
-    private final List<ImportReplayListener> listeners;
+    /** List of replays, to which the newly loaded replays will be added. */
+    private final List<Replay> replays;
     /** Message. */
     private String message;
     
@@ -42,16 +42,16 @@ class ImportReplayTask extends Task<List<Replay>> {
      * 
      * @param directory
      *            directory
-     * @param listeners
-     *            listeners to be notified whenever a replay has been imported
+     * @param replays
+     *            list of replays, to which the newly loaded replays will be added
      */
-    ImportReplayTask(File directory, List<ImportReplayListener> listeners) {
+    ImportReplayTask(File directory, List<Replay> replays) {
         super();
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
         this.directory = directory;
-        this.listeners = listeners;
+        this.replays = replays;
         // TODO inject the replay analyser?
         this.replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine()));
         this.message = "";
@@ -62,24 +62,19 @@ class ImportReplayTask extends Task<List<Replay>> {
     protected List<Replay> call() {
         logMessage("Importing replays from " + directory);
         List<File> files = createFileList(directory);
-        List<Replay> result = new ArrayList<Replay>();
         int workDone = 0;
         for (File file: files) {
             logMessage("Trying to import: " + file);
             try {
                 final Replay replay = importReplay(file);
                 logMessage("Imported replay: " + replay.getGame());
-                result.add(replay);
-                
+
                 Platform.runLater(new Runnable() {
                     /** {@inheritDoc} */
                     @Override
                     public void run() {
-                        for (ImportReplayListener listener: listeners) {
-                            listener.replayImported(replay);
-                        }
+                        replays.add(replay);
                     }
-                    
                 });
             } catch (ReplayAnalysisException | IOException e) {
                 logMessage(String.format("Unable to import file: %s. ", file, e.getMessage()));
@@ -89,7 +84,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             updateProgress(workDone, files.size());
         }
         logMessage("Done.");
-        return result;
+        return replays;
     }
     
     /**
