@@ -9,6 +9,8 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
  * 
  * @author Martijn van de Rijdt
  */
+// TODO This interface may be unnecessary.
+// It could be replaced by turning Umvc3ReplayManagerController.replays into an observable list.
 public interface ImportReplayListener {
     /**
      * Called when new replays have been imported.

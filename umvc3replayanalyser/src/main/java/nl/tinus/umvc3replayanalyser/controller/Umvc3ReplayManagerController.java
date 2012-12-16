@@ -440,7 +440,7 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
     private void importReplays(File directory) {
         // TODO check directory does not contain the data directory
         // TODO move the FXML loading and initialisation to a class in the gui package
-        // TODO prevent import popup form being shown multiple times
+        // TODO prevent import popup from being shown multiple times
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
         fxmlLoader.setController(new ImportReplayPopupController(directory, Arrays.<ImportReplayListener>asList(this)));
@@ -470,7 +470,6 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
         log.info("Imported replays: " + replays);
         this.replays.addAll(replays);
         updateReplayTable();
-        // TODO destroy popup?
     }
     
     /**

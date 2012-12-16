@@ -1,7 +1,6 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -40,7 +39,7 @@ public class ImportReplayPopupController {
     private void initialize() {
         log.info("Performing controller initialisation.");
         
-        final Task<List<Replay>> task = new ImportReplayTask(directory);
+        final Task<List<Replay>> task = new ImportReplayTask(directory, listeners);
         
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
@@ -48,18 +47,13 @@ public class ImportReplayPopupController {
             /** {@inheritDoc} */
             @Override
             public void handle(WorkerStateEvent event) {
-                List<Replay> replays;
                 try {
-                    replays = task.get();
-                    log.info("Loaded replays: " + replays);
+                    task.get();
                 } catch (InterruptedException | ExecutionException e) {
                     log.error("Unable to load replays.", e);
-                    replays = Collections.emptyList();
                 }
                 
-                for (ImportReplayListener listener: listeners) {
-                    listener.replaysImported(replays);
-                }
+                // TODO close this window?
             }
         };
         task.setOnSucceeded(eventHandler);

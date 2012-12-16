@@ -4,9 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 import javax.imageio.ImageIO;
@@ -31,15 +33,26 @@ class ImportReplayTask extends Task<List<Replay>> {
     private final File directory;
     /** Replay analyser. */
     private final ReplayAnalyser replayAnalyser;
+    /** Listeners to be notified after a replay has been imported. */
+    private final List<ImportReplayListener> listeners;
     /** Message. */
     private String message;
     
-    ImportReplayTask(File directory) {
+    /**
+     * Constructor.
+     * 
+     * @param directory
+     *            directory
+     * @param listeners
+     *            listeners to be notified whenever a replay has been imported
+     */
+    ImportReplayTask(File directory, List<ImportReplayListener> listeners) {
         super();
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
         this.directory = directory;
+        this.listeners = listeners;
         // TODO inject the replay analyser?
         this.replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine()));
         this.message = "";
@@ -55,9 +68,20 @@ class ImportReplayTask extends Task<List<Replay>> {
         for (File file: files) {
             logMessage("Trying to import: " + file);
             try {
-                Replay replay = importReplay(file);
+                final Replay replay = importReplay(file);
                 logMessage("Imported replay: " + replay.getGame());
                 result.add(replay);
+                
+                Platform.runLater(new Runnable() {
+                    /** {@inheritDoc} */
+                    @Override
+                    public void run() {
+                        for (ImportReplayListener listener: listeners) {
+                            listener.replaysImported(Arrays.asList(replay));
+                        }
+                    }
+                    
+                });
             } catch (ReplayAnalysisException | IOException e) {
                 logMessage(String.format("Unable to import file: %s. ", file, e.getMessage()));
                 log.info("Exception: ", e);
