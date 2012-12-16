@@ -59,8 +59,7 @@ public class ReplayAnalysisException extends Exception {
      *            cause
      */
     public ReplayAnalysisException(Throwable cause) {
-        super(cause);
-        this.xuggleError = null;
+        this("Replay analysis failed.", cause);
     }
 
     /**
