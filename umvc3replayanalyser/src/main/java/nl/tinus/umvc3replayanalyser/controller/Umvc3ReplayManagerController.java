@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -379,5 +381,26 @@ public class Umvc3ReplayManagerController {
             result = assist.getType();
         }
         return result;
+    }
+    
+    /** Action handler which exits the application. */
+    @FXML
+    private void handleExitAction(final ActionEvent event) {
+        log.info("Close menu item selected; stopping the application.");
+        Platform.exit();
+    }
+    
+    /** Action handler which shows the about box. */
+    @FXML
+    private void handleAboutAction(final ActionEvent event) {
+        log.info("About menu item selected. About box not implemented yet.");
+        // TODO show an awesome about box!
+    }
+    
+    /** Action handler to import replays. */
+    @FXML
+    private void handleImportAction(final ActionEvent event) {
+        log.info("Import menu item selected. Not implemented yet.");
+        // TODO show directory chooser, then import replays from the given directory
     }
 }
