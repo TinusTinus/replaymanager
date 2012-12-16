@@ -36,10 +36,10 @@ public class Umvc3ReplayManager extends Application {
      * Main method, starts the application.
      * 
      * @param args
-     *            command line parameters, which are compleyely ignored
+     *            command line parameters, which are passed on to JavaFX
      */
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
     /** {@inheritDoc} */
