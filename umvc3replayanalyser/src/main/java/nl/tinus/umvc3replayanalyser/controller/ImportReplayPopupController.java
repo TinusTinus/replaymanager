@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 
@@ -59,12 +60,21 @@ public class ImportReplayPopupController {
                     log.error("Unable to load replays.", e);
                 }
 
-                // TODO close this window
+                getApplicationWindow().hide();
             }
         };
         task.setOnSucceeded(eventHandler);
         task.setOnCancelled(eventHandler);
         task.setOnFailed(eventHandler);
         new Thread(task, "Replay Import Thread").start();
+    }
+    
+    /**
+     * Returns the popup window.
+     * 
+     * @return window
+     */
+    private Window getApplicationWindow() {
+        return this.progressBar.getScene().getWindow();
     }
 }
