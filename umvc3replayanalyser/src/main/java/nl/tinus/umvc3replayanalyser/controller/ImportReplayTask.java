@@ -62,7 +62,9 @@ class ImportReplayTask extends Task<List<Replay>> {
     protected List<Replay> call() {
         logMessage("Importing replays from " + directory);
         List<File> files = createFileList(directory);
+        logMessage(files.size() + " file(s) found.");
         int workDone = 0;
+        updateProgress(workDone, files.size());
         for (File file: files) {
             logMessage("Trying to import: " + file);
             try {
