@@ -104,12 +104,15 @@ public class ReplayAnalyser {
                 }
             }
 
+            // A result has been found and/or all consumers are done.
+            // Signal any active workers that they can stop their computation.
             producer.stopProduction();
             for (FrameConsumer consumer : consumers) {
                 consumer.stopConsumption();
             }
 
             if (result == null) {
+                // No game found. Throw a ReplayAnalysisException with meaningful info.
                 try {
                     IError error = producerFuture.get();
                     if (error != null) {
