@@ -37,28 +37,7 @@ public class ImportReplayPopupController {
     private void initialize() {
         log.info("Performing controller initialisation.");
         
-        final Task<List<Replay>> task = new Task<List<Replay>>() {
-            /** {@inheritDoc} */
-            @Override
-            protected List<Replay> call() throws InterruptedException {
-                log.info("Importing replays from " + directory);
-                // TODO actually import replays
-                String message = "";
-                
-                int numTurns = 100;
-                for (int i = 0; i != numTurns; i++) {
-                    updateProgress(i, numTurns);
-                    message = message + i + "\n";
-                    updateMessage(message);
-                    Thread.sleep(5000 / numTurns);
-                }
-                updateProgress(numTurns, numTurns);
-                message = message + "Done!";
-                updateMessage(message);
-                
-                return null;
-            }
-        };
+        final Task<List<Replay>> task = new ImportReplayTask(directory);
         
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
