@@ -1,5 +1,6 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
@@ -400,7 +402,17 @@ public class Umvc3ReplayManagerController {
     /** Action handler to import replays. */
     @FXML
     private void handleImportAction(final ActionEvent event) {
-        log.info("Import menu item selected. Not implemented yet.");
-        // TODO show directory chooser, then import replays from the given directory
+        log.info("Import menu item selected.");
+        
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Import Replays - Ultimate Marvel vs Capcom 3 Replay Manager");
+        File selectedDirectory = chooser.showDialog(null); // TODO set owner
+        
+        log.info("Selected Directory: " + selectedDirectory + ".");
+        
+        // TODO also check this is not the data directory
+        if (selectedDirectory != null) {
+            // TODO import replays
+        }
     }
 }
