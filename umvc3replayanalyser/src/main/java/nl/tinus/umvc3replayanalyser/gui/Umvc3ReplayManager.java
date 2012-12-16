@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
