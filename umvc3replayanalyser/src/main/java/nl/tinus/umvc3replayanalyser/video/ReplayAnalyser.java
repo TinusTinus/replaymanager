@@ -1,11 +1,8 @@
 package nl.tinus.umvc3replayanalyser.video;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
@@ -139,38 +136,6 @@ public class ReplayAnalyser {
         long timeTaken = endTime - startTime;
 
         log.info(String.format("Game analysed: %s (time spent: %s ms)", result, "" + timeTaken));
-
-        return result;
-    }
-
-    /**
-     * Recursively analyses all of the files in the given directory.
-     * 
-     * @param directory
-     *            directory
-     * @return map of succesfully analysed files to their game information
-     */
-    public Map<File, GameAndVersusScreen> analyse(File directory) {
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Not a directory: " + directory);
-        }
-
-        Map<File, GameAndVersusScreen> result = new HashMap<>();
-
-        for (File file : directory.listFiles()) {
-            if (file.isDirectory()) {
-                result.putAll(analyse(file));
-            } else {
-                try {
-                    GameAndVersusScreen game = analyse(file.getAbsolutePath());
-                    result.put(file, game);
-                } catch (ReplayAnalysisException e) {
-                    log.warn("Replay could not be analysed: " + file, e);
-                }
-            }
-        }
-        
-        log.info("Analysed directory: " + result);
 
         return result;
     }
