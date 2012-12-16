@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -53,10 +54,14 @@ public class Umvc3ReplayManager extends Application {
             stage.setTitle(TITLE);
             stage.setScene(new Scene(root));
             stage.getIcons().add(new Image(ICON));
-
+            
             log.info("Showing UI.");
             stage.show();
-
+            
+            // Default size should also be the minimum size.
+            stage.setMinWidth(stage.getWidth());
+            stage.setMinHeight(stage.getHeight());
+            
             log.info("Application started.");
         } catch (Exception e) {
             log.error("Unable to start application.", e);
