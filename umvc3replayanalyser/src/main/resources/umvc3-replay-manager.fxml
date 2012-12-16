@@ -127,7 +127,6 @@
             <MenuItem mnemonicParsing="false" text="About" onAction="#handleAboutAction" />
           </items>
         </Menu>
-        
       </menus>
     </MenuBar>
   </children>
