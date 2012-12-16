@@ -1,6 +1,5 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -19,6 +17,9 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -28,12 +29,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
-
-import javax.imageio.ImageIO;
-
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -43,9 +41,6 @@ import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
-import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
-import nl.tinus.umvc3replayanalyser.video.GameAndVersusScreen;
-import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -57,7 +52,7 @@ import com.google.common.collect.Iterables;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-public class Umvc3ReplayManagerController {
+public class Umvc3ReplayManagerController implements ImportReplayListener {
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -444,43 +439,38 @@ public class Umvc3ReplayManagerController {
      */
     private void importReplays(File directory) {
         // TODO check directory does not contain the data directory
-        // TODO show a popup with a progress bar?
-        // TODO inject these somehow?
-        // TODO save the preview image and the replay to the data directory
-        log.info("Importing games from directory: " + directory);
-        ReplayAnalyser replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine()));
-        Map<File, GameAndVersusScreen> games = replayAnalyser.analyse(directory);
-        log.info("Imported games: " + games);
-
-        List<Replay> newReplays = new ArrayList<Replay>();
+        // TODO move the FXML loading and initialisation to a class in the gui package
+        // TODO prevent import popup form being shown multiple times
         
-        for (Entry<File, GameAndVersusScreen> gameEntry : games.entrySet()) {
-            try {
-                File replayFile = gameEntry.getKey();
-                Game game = gameEntry.getValue().getGame();
-                BufferedImage versusScreen = gameEntry.getValue().getVersusScreen();
-                
-                // save the preview image in a temp directory
-                File previewImageFile = File.createTempFile("previewimage", ".png");
-                // Note: the following seems to cause the JVM to be unable to shut down properly if this preview image file is displayed on shutdown.
-                // This should be fixed after the preview image is no longer stored as a temporary file.
-                previewImageFile.deleteOnExit();
-                ImageIO.write(versusScreen, "png", previewImageFile);
-                
-                // create the replay
-                Date creationTime = new Date(replayFile.lastModified());
-                Replay replay = new Replay(creationTime, game, "file:///" +  replayFile.getAbsolutePath(),
-                        "file:///" + previewImageFile.getAbsolutePath());
-                newReplays.add(replay);
-            } catch (IOException e) {
-                log.error("Failed to prcess game: " + gameEntry, e);
-            }
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
+        fxmlLoader.setController(new ImportReplayPopupController(directory, Arrays.<ImportReplayListener>asList(this)));
+        
+        try {
+            Parent root = (Parent) fxmlLoader.load();
+
+            log.info("Fxml loaded, performing additional initialisation.");
+            Stage stage = new Stage();
+            stage.setTitle("Importing replays");
+            stage.setScene(new Scene(root));
+
+            log.info("Showing UI.");
+            stage.show();
+
+            // Default size should also be the minimum size.
+            stage.setMinWidth(stage.getWidth());
+            stage.setMinHeight(stage.getHeight());
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to parse FXML.", e);
         }
-        
-        log.info("Imported replays: " + newReplays);
-
-        this.replays.addAll(newReplays);
+    }
+    
+    /** @inheritDoc} */
+    @Override
+    public void replaysImported(List<Replay> replays) {
+        log.info("Imported replays: " + replays);
+        this.replays.addAll(replays);
         updateReplayTable();
+        // TODO destroy popup?
     }
     
     /**

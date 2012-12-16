@@ -1,6 +1,7 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -24,6 +25,8 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 public class ImportReplayPopupController {
     /** Directory to load replays from. */
     private final File directory;
+    /** Listeners. */
+    private final List<ImportReplayListener> listeners;
     
     /** Progress bar. */
     @FXML
@@ -45,12 +48,17 @@ public class ImportReplayPopupController {
             /** {@inheritDoc} */
             @Override
             public void handle(WorkerStateEvent event) {
+                List<Replay> replays;
                 try {
-                    List<Replay> replays = task.get();
+                    replays = task.get();
                     log.info("Loaded replays: " + replays);
-                    // TODO pass these on to the Umvc3ReplayManagerController
                 } catch (InterruptedException | ExecutionException e) {
                     log.error("Unable to load replays.", e);
+                    replays = Collections.emptyList();
+                }
+                
+                for (ImportReplayListener listener: listeners) {
+                    listener.replaysImported(replays);
                 }
             }
         };
