@@ -27,16 +27,6 @@ import com.xuggle.xuggler.IError;
 @Slf4j
 @RequiredArgsConstructor
 public class ReplayAnalyser {
-    /** Number of consumers. */
-    // More than the number of cores in the machine seems pointless.
-    private static final int NUM_CONSUMERS = Runtime.getRuntime().availableProcessors();
-    /** Capacity for the queue. */
-    // Performance-wise this value does not seem to matter all that much.
-    // Theoretically all consumers could be looking for a new frame, so choosing this value equal to the amount of
-    // consumers seems like a sensible value. More than that is just a waste of memory.
-    // In practice it does not seem to affect time performance that much even if set to 1 or 2, simply because the
-    // producer is not the performance bottleneck at all.
-    private static final int QUEUE_CAPACITY = NUM_CONSUMERS;
     /** Time to wait in between polling attempts, in milliseconds. */
     private static final long TIME_BETWEEN_POLLS = 100;
 
@@ -59,16 +49,18 @@ public class ReplayAnalyser {
 
         // Create a producer, which reads the replay and produces individual frames as BufferedImages,
         // and a number of consumers, which process the images and attempt to read the Game information.
-        BlockingQueue<BufferedImage> queue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
-        ExecutorService executorService = Executors.newFixedThreadPool(NUM_CONSUMERS + 1);
+        int numConsumers = Runtime.getRuntime().availableProcessors();
+        int queueCapacity = numConsumers;
+        BlockingQueue<BufferedImage> queue = new ArrayBlockingQueue<>(queueCapacity);
+        ExecutorService executorService = Executors.newFixedThreadPool(numConsumers + 1);
 
         try {
             FrameProducer producer = new FrameProducer(videoUrl, queue);
             Future<IError> producerFuture = executorService.submit(producer);
             
-            List<FrameConsumer> consumers = new ArrayList<>(NUM_CONSUMERS);
-            List<Future<GameAndVersusScreen>> consumerFutures = new ArrayList<>(NUM_CONSUMERS);
-            while(consumers.size() != NUM_CONSUMERS) {
+            List<FrameConsumer> consumers = new ArrayList<>(numConsumers);
+            List<Future<GameAndVersusScreen>> consumerFutures = new ArrayList<>(numConsumers);
+            while(consumers.size() != numConsumers) {
                 FrameConsumer consumer = new FrameConsumer(versusScreenAnalyser, queue);
                 consumers.add(consumer);
                 Future<GameAndVersusScreen> future = executorService.submit(consumer);
