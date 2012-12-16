@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 
 import com.xuggle.xuggler.IError;
+import com.xuggle.xuggler.IError.Type;
 
 /**
  * Analyses an Ultimate Marvel vs Capcom 3 replay.
@@ -115,7 +116,14 @@ public class ReplayAnalyser {
                 try {
                     IError error = producerFuture.get();
                     if (error != null) {
-                        throw new ReplayAnalysisException(error);
+                        String message;
+                        if (Type.ERROR_EOF == error.getType()) {
+                            message = "Replay analysis failed. No versus screen found in the video file.";
+                        } else {
+                            message = "Replay analysis failed. Xuggle error: " + error + ", type: " + error.getType();
+                        }
+                        
+                        throw new ReplayAnalysisException(message, error);
                     } else {
                         throw new ReplayAnalysisException("Replay analysis failed.");
                     }

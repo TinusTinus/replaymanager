@@ -55,10 +55,24 @@ public class ReplayAnalyserIntegrationTest {
     }
     
     /**
-     * Attempts to analyse a file that is not a video file. This is expectd to fail with a nice ReplayAnalysisException.
+     * Attempts to analyse a file which can be decoded just fine, but does not contain a versus screen. This is expected
+     * to fail with a nice ReplayAnalysisException.
      * 
      * @throws ReplayAnalysisException
-     *             unexpected
+     *             expected exception
+     */
+    @Test(expected = ReplayAnalysisException.class)
+    public void testEOF() throws ReplayAnalysisException {
+        ReplayAnalyser analyser = new ReplayAnalyser(this.versusScreenAnalyser);
+        // Xuggle can handle png files, and interprets them as a single frame video.
+        analyser.analyse("src/test/resources/vswithoutnames.png");
+    }
+    
+    /**
+     * Attempts to analyse a file that is not a video file. This is expected to fail with a nice ReplayAnalysisException.
+     * 
+     * @throws ReplayAnalysisException
+     *             expected exception
      */
     @Test(expected = ReplayAnalysisException.class)
     public void testTextFile() throws ReplayAnalysisException {
