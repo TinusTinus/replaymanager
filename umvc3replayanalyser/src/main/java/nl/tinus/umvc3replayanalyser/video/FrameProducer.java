@@ -3,6 +3,7 @@ package nl.tinus.umvc3replayanalyser.video;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,12 +75,15 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
         if (image == null) {
             log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
         } else {
-            try {
-                queue.put(image);
-            } catch (InterruptedException e) {
-                log.error(
-                        String.format("Skipping image with timestamp %s due to an unexpected exception.",
-                                event.getTimeStamp()), e);
+            boolean success = false;
+            while (!success && !productionCanStop) {
+                try {
+                    success = queue.offer(image, 1, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    log.error(
+                            String.format("Skipping image with timestamp %s due to an unexpected exception.",
+                                    event.getTimeStamp()), e);
+                }
             }
         }
     }

@@ -105,11 +105,8 @@ class ImportReplayTask extends Task<List<Replay>> {
         BufferedImage versusScreen = gameAndVersusScreen.getVersusScreen();
 
         // TODO Save the preview image and move the replay to the data directory.
-        // For now, save the preview image in a temp directory adn leave the replay where it is.
+        // For now, save the preview image in a temp directory and leave the replay where it is.
         File previewImageFile = File.createTempFile("previewimage", ".png");
-        // Note: the following seems to cause the JVM to be unable to shut down properly if this preview image file is
-        // displayed on shutdown.
-        // This should be fixed after the preview image is no longer stored as a temporary file.
         previewImageFile.deleteOnExit();
         ImageIO.write(versusScreen, "png", previewImageFile);
 
