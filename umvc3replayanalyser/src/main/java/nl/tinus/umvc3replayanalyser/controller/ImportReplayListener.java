@@ -1,7 +1,5 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
-import java.util.List;
-
 import nl.tinus.umvc3replayanalyser.model.Replay;
 
 /**
@@ -18,5 +16,5 @@ public interface ImportReplayListener {
      * @param replays
      *            newly imported replays
      */
-    public void replaysImported(List<Replay> replays);
+    public void replayImported(Replay replay);
 }

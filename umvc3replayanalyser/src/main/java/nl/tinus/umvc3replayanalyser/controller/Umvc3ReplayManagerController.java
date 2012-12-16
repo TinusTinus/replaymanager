@@ -466,9 +466,9 @@ public class Umvc3ReplayManagerController implements ImportReplayListener {
     
     /** @inheritDoc} */
     @Override
-    public void replaysImported(List<Replay> replays) {
-        log.info("Imported replays: " + replays);
-        this.replays.addAll(replays);
+    public void replayImported(Replay replay) {
+        log.info("Imported replay: " + replay);
+        this.replays.add(replay);
         updateReplayTable();
     }
     

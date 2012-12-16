@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +76,7 @@ class ImportReplayTask extends Task<List<Replay>> {
                     @Override
                     public void run() {
                         for (ImportReplayListener listener: listeners) {
-                            listener.replaysImported(Arrays.asList(replay));
+                            listener.replayImported(replay);
                         }
                     }
                     
