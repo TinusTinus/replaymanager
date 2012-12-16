@@ -79,7 +79,7 @@ class ImportReplayTask extends Task<List<Replay>> {
                     }
                 });
             } catch (ReplayAnalysisException | IOException e) {
-                logMessage(String.format("Unable to import file: %s. ", file, e.getMessage()));
+                logMessage(String.format("Unable to import file: %s. %s", file, e.getMessage()));
                 log.info("Exception: ", e);
             }
             workDone++;
