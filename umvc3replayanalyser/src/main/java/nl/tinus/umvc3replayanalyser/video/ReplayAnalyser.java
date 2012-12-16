@@ -29,7 +29,7 @@ import com.xuggle.xuggler.IError;
 public class ReplayAnalyser {
     /** Number of consumers. */
     // More than the number of cores in the machine seems pointless.
-    private static final int NUM_CONSUMERS = 8;
+    private static final int NUM_CONSUMERS = Runtime.getRuntime().availableProcessors();
     /** Capacity for the queue. */
     // Performance-wise this value does not seem to matter all that much.
     // Theoretically all consumers could be looking for a new frame, so choosing this value equal to the amount of
