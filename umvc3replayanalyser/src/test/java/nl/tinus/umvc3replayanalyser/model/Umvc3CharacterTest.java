@@ -1,10 +1,11 @@
 package nl.tinus.umvc3replayanalyser.model;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
 import lombok.extern.slf4j.Slf4j;
 
-import nl.tinus.umvc3replayanalyser.model.AssistType;
-import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
-
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,5 +46,29 @@ public class Umvc3CharacterTest {
                 log.info(String.format("  %5s: %s", type, character.getAssistName(type)));
             }
         }
+    }
+    
+    /** 
+     * Tests converting a value to a JSON string and back. 
+     * 
+     * @throws IOException unexpected
+     */
+    @Test
+    public void testJson() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Umvc3Character character = Umvc3Character.CHUN_LI;
+        
+        // marshal
+        StringWriter writer = new StringWriter();
+        
+        mapper.writeValue(writer, character);
+        String string = writer.toString();
+        Assert.assertNotNull(string);
+        log.info("JSON: " + string);
+        
+        // unmarshal
+        Umvc3Character unmarshalled = mapper.readValue(string, Umvc3Character.class);
+        
+        Assert.assertEquals(character, unmarshalled);
     }
 }

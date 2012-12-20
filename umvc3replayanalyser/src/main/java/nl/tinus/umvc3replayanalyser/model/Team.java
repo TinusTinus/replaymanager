@@ -7,7 +7,10 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * A team in Ultimate Marvel vs Capcom 3. Each match has two of these fighting each other.
@@ -15,7 +18,6 @@ import lombok.RequiredArgsConstructor;
  * @author Martijn van de Rijdt
  */
 @Getter
-@RequiredArgsConstructor
 @EqualsAndHashCode
 public class Team {
     /** Point character. */
@@ -49,10 +51,37 @@ public class Team {
     }
 
     /**
+     * Constructor.
+     * 
+     * @param firstCharacter
+     *            point character
+     * @param secondCharacter
+     *            second character
+     * @param thirdCharacter
+     *            anchor
+     */
+    @JsonCreator
+    public Team(@JsonProperty("firstCharacter") Umvc3Character firstCharacter,
+            @JsonProperty("firstAssist") AssistType firstAssist,
+            @JsonProperty("secondCharacter") Umvc3Character secondCharacter,
+            @JsonProperty("secondAssist") AssistType secondAssist,
+            @JsonProperty("thirdCharacter") Umvc3Character thirdCharacter,
+            @JsonProperty("thirdAssist") AssistType thirdAssist) {
+        super();
+        this.firstCharacter = firstCharacter;
+        this.firstAssist = firstAssist;
+        this.secondCharacter = secondCharacter;
+        this.secondAssist = secondAssist;
+        this.thirdCharacter = thirdCharacter;
+        this.thirdAssist = thirdAssist;
+    }
+
+    /**
      * Returns an unmodifiable list containing all three characters.
      * 
      * @return characters
      */
+    @JsonIgnore
     public List<Umvc3Character> getCharacters() {
         return Collections.unmodifiableList(Arrays.asList(firstCharacter, secondCharacter, thirdCharacter));
     }
@@ -62,6 +91,7 @@ public class Team {
      * 
      * @return assist types
      */
+    @JsonIgnore
     public List<AssistType> getAssists() {
         return Collections.unmodifiableList(Arrays.asList(firstAssist, secondAssist, thirdAssist));
     }
@@ -78,6 +108,7 @@ public class Team {
      * 
      * @return team name
      */
+    @JsonIgnore
     public String getName() {
         String result;
         if (firstCharacter == Umvc3Character.VERGIL && secondCharacter == Umvc3Character.DANTE
@@ -105,6 +136,7 @@ public class Team {
      * 
      * @return team name including assists
      */
+    @JsonIgnore
     public String getNameWithAssists() {
         return getNameWithAssists(false);
     }
@@ -117,6 +149,7 @@ public class Team {
      * 
      * @return team name including assists
      */
+    @JsonIgnore
     public String getNameWithAssistMoveNames() {
         return getNameWithAssists(true);
     }
@@ -133,6 +166,7 @@ public class Team {
      * 
      * @return team name including assists
      */
+    @JsonIgnore
     public String getNameWithAssists(boolean useAssistNames) {
         String result;
 
@@ -159,6 +193,7 @@ public class Team {
      *            greek letter (e.g. alpha)
      * @return String representation of the character and the assist
      */
+    @JsonIgnore
     private String getCharacterNameWithAssist(Umvc3Character character, AssistType assist, boolean useAssistName) {
         String result = character.getName();
         if (assist != null) {

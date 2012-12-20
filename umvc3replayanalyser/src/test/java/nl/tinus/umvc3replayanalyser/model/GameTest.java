@@ -1,5 +1,10 @@
 package nl.tinus.umvc3replayanalyser.model;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
+import lombok.extern.slf4j.Slf4j;
+
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Player;
@@ -7,6 +12,7 @@ import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +21,7 @@ import org.junit.Test;
  * 
  * @author Martijn van de Rijdt
  */
+@Slf4j
 public class GameTest {
     /** Tests the constructor and a bunch of methods in the Game class. */
     @Test
@@ -98,5 +105,37 @@ public class GameTest {
         Game game2 = new Game(djAlbertoLara2, teamDjAlbertoLara2, tinus2, teamTinus2, Side.PLAYER_ONE);
 
         Assert.assertEquals(game1, game2);
+    }
+    
+    /** 
+     * Tests converting a value to a JSON string and back. 
+     * 
+     * @throws IOException unexpected
+     */
+    @Test
+    public void testJson() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Player djAlbertoLara = new Player("DJ Alberto Lara");
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Player tinus = new Player("MvdR");
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
+        
+        // marshal
+        StringWriter writer = new StringWriter();
+        
+        mapper.writeValue(writer, game);
+        String string = writer.toString();
+        Assert.assertNotNull(string);
+        log.info("JSON: " + string);
+        
+        // unmarshal
+        Game unmarshalled = mapper.readValue(string, Game.class);
+        
+        Assert.assertNotSame(game, unmarshalled);
+        Assert.assertEquals(game, unmarshalled);
     }
 }

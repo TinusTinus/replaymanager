@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,7 +49,9 @@ public class Game {
      * @param teamTwo
      *            player two's team
      */
-    public Game(Player playerOne, Team teamOne, Player playerTwo, Team teamTwo) {
+    @JsonCreator
+    public Game(@JsonProperty("playerOne") Player playerOne, @JsonProperty("teamOne") Team teamOne,
+            @JsonProperty("playerTwo") Player playerTwo, @JsonProperty("teamTwo") Team teamTwo) {
         this(playerOne, teamOne, playerTwo, teamTwo, null);
     }
 
@@ -92,11 +98,13 @@ public class Game {
      * 
      * @return characters
      */
+    @JsonIgnore
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(Arrays.asList(playerOne, playerTwo));
     }
 
     /** @return the losing side, or null in case of a draw game */
+    @JsonIgnore
     public Side getLosingSide() {
         Side result;
         if (winningSide != null) {
@@ -108,6 +116,7 @@ public class Game {
     }
 
     /** @return the winning player, or null in case of a draw game */
+    @JsonIgnore
     public Player getWinningPlayer() {
         Player result;
         if (winningSide != null) {
@@ -119,6 +128,7 @@ public class Game {
     }
 
     /** @return the winning player, or null in case of a draw game */
+    @JsonIgnore
     public Player getLosingPlayer() {
         Player result;
         Side losingSide = getLosingSide();
