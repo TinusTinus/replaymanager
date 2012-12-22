@@ -4,6 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -16,13 +20,12 @@ import lombok.ToString;
  * @author Martijn van de Rijdt
  */
 @Getter
-@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class Replay {
     /**
-     * Thread-local variable holding the date format. This variable is stored as a thread-local instead of just a
-     * single constant, because SimpleDateFormat is not threadsafe.
+     * Thread-local variable holding the date format. This variable is stored as a thread-local instead of just a single
+     * constant, because SimpleDateFormat is not threadsafe.
      */
     private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
         /** {@inheritDoc} */
@@ -46,10 +49,34 @@ public class Replay {
     private String previewImageLocation;
 
     /**
+     * Constructor.
+     * 
+     * @param creationTime
+     *            moment the replay was created (meaning when the game was played)
+     * @param game
+     *            data about the game
+     * @param videoLocation
+     *            location of the replay video
+     * @param previewImageLocation
+     *            location of the replay's preview image
+     */
+    @JsonCreator
+    public Replay(@JsonProperty("creationTime") Date creationTime, @JsonProperty("game") Game game,
+            @JsonProperty("videoLocation") String videoLocation,
+            @JsonProperty("previewImageLocation") String previewImageLocation) {
+        super();
+        this.creationTime = creationTime;
+        this.game = game;
+        this.videoLocation = videoLocation;
+        this.previewImageLocation = previewImageLocation;
+    }
+
+    /**
      * Returns a string representation of the game's creation time.
      * 
      * @return creation time
      */
+    @JsonIgnore
     public String getCreationTimeString() {
         return DATE_FORMAT.get().format(creationTime);
     }
@@ -59,6 +86,7 @@ public class Replay {
      * 
      * @return player one
      */
+    @JsonIgnore
     public Player getPlayerOne() {
         return this.game.getPlayerOne();
     }
@@ -68,6 +96,7 @@ public class Replay {
      * 
      * @return player two
      */
+    @JsonIgnore
     public Player getPlayerTwo() {
         return this.game.getPlayerTwo();
     }
@@ -77,6 +106,7 @@ public class Replay {
      * 
      * @return character
      */
+    @JsonIgnore
     public Umvc3Character getTeamOneFirstCharacter() {
         return this.game.getTeamOne().getFirstCharacter();
     }
@@ -86,6 +116,7 @@ public class Replay {
      * 
      * @return character
      */
+    @JsonIgnore
     public Umvc3Character getTeamOneSecondCharacter() {
         return this.game.getTeamOne().getSecondCharacter();
     }
@@ -95,6 +126,7 @@ public class Replay {
      * 
      * @return character
      */
+    @JsonIgnore
     public Umvc3Character getTeamOneThirdCharacter() {
         return this.game.getTeamOne().getThirdCharacter();
     }
@@ -104,6 +136,7 @@ public class Replay {
      * 
      * @return character
      */
+    @JsonIgnore
     public Umvc3Character getTeamTwoFirstCharacter() {
         return this.game.getTeamTwo().getFirstCharacter();
     }
@@ -113,6 +146,7 @@ public class Replay {
      * 
      * @return character
      */
+    @JsonIgnore
     public Umvc3Character getTeamTwoSecondCharacter() {
         return this.game.getTeamTwo().getSecondCharacter();
     }
@@ -122,6 +156,7 @@ public class Replay {
      * 
      * @return character
      */
+    @JsonIgnore
     public Umvc3Character getTeamTwoThirdCharacter() {
         return this.game.getTeamTwo().getThirdCharacter();
     }
