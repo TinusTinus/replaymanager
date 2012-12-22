@@ -64,6 +64,21 @@ public class Replay {
             @JsonProperty("videoLocation") String videoLocation,
             @JsonProperty("previewImageLocation") String previewImageLocation) {
         super();
+        
+        // null checks
+        if (creationTime == null) {
+            throw new NullPointerException("creationTime");
+        }
+        if (game == null) {
+            throw new NullPointerException("game");
+        }
+        if (videoLocation == null) {
+            throw new NullPointerException("videoLocation");
+        }
+        if (previewImageLocation == null) {
+            throw new NullPointerException("previewImageLocation");
+        }
+        
         this.creationTime = creationTime;
         this.game = game;
         this.videoLocation = videoLocation;
