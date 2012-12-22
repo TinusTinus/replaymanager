@@ -1,7 +1,6 @@
 package nl.tinus.umvc3replayanalyser.model;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Date;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +35,8 @@ public class ReplayTest {
         Replay replay = new Replay(new Date(), game, "video", "preview");
         
         // marshal
-        StringWriter writer = new StringWriter();
-        
-        mapper.writeValue(writer, replay);
-        String string = writer.toString();
+        String string = mapper.writeValueAsString(replay);
+
         Assert.assertNotNull(string);
         log.info("JSON: " + string);
         

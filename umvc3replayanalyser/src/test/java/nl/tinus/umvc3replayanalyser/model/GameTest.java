@@ -1,16 +1,8 @@
 package nl.tinus.umvc3replayanalyser.model;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import lombok.extern.slf4j.Slf4j;
-
-import nl.tinus.umvc3replayanalyser.model.AssistType;
-import nl.tinus.umvc3replayanalyser.model.Game;
-import nl.tinus.umvc3replayanalyser.model.Player;
-import nl.tinus.umvc3replayanalyser.model.Side;
-import nl.tinus.umvc3replayanalyser.model.Team;
-import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
@@ -125,10 +117,8 @@ public class GameTest {
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
         
         // marshal
-        StringWriter writer = new StringWriter();
-        
-        mapper.writeValue(writer, game);
-        String string = writer.toString();
+        String string = mapper.writeValueAsString(game);
+
         Assert.assertNotNull(string);
         log.info("JSON: " + string);
         

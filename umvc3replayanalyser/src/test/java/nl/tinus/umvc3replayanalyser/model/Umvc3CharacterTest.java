@@ -1,7 +1,6 @@
 package nl.tinus.umvc3replayanalyser.model;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,10 +58,8 @@ public class Umvc3CharacterTest {
         Umvc3Character character = Umvc3Character.CHUN_LI;
         
         // marshal
-        StringWriter writer = new StringWriter();
-        
-        mapper.writeValue(writer, character);
-        String string = writer.toString();
+        String string = mapper.writeValueAsString(character);
+
         Assert.assertNotNull(string);
         log.info("JSON: " + string);
         
