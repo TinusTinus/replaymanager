@@ -68,6 +68,17 @@ public class Team {
             @JsonProperty("thirdCharacter") Umvc3Character thirdCharacter,
             @JsonProperty("thirdAssist") AssistType thirdAssist) {
         super();
+        
+        if (firstCharacter == null) {
+            throw new NullPointerException("firstCharacter");
+        }
+        if (secondCharacter == null) {
+            throw new NullPointerException("secondCharacter");
+        }
+        if (thirdCharacter == null) {
+            throw new NullPointerException("thirdCharacter");
+        }
+        
         this.firstCharacter = firstCharacter;
         this.firstAssist = firstAssist;
         this.secondCharacter = secondCharacter;
