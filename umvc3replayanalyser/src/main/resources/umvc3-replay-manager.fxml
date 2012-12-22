@@ -44,6 +44,7 @@
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="424.0" prefWidth="479.0">
           <children>
             <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <placeholder><Label text="No matching replays." /></placeholder>
               <columns>
                 <TableColumn prefWidth="120.0" text="Date / time" fx:id="creationTimeColumn">
                   <cellValueFactory>
