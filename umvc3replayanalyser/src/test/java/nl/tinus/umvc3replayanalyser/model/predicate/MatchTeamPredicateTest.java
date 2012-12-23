@@ -1,5 +1,6 @@
 package nl.tinus.umvc3replayanalyser.model.predicate;
 
+import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
@@ -16,7 +17,8 @@ public class MatchTeamPredicateTest {
     @Test
     public void testMatchAny() {
         MatchTeamPredicate predicate = new MatchTeamPredicate(null, null, null, null, null, null, false);
-        Team team = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
         Assert.assertTrue(predicate.apply(team));
     }
@@ -25,7 +27,8 @@ public class MatchTeamPredicateTest {
     @Test
     public void testMatchAnyMaintainOrder() {
         MatchTeamPredicate predicate = new MatchTeamPredicate(null, null, null, null, null, null, true);
-        Team team = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
         Assert.assertTrue(predicate.apply(team));
     }
@@ -35,7 +38,8 @@ public class MatchTeamPredicateTest {
     public void testMatchCharacters() {
         MatchTeamPredicate predicate = new MatchTeamPredicate(Umvc3Character.WOLVERINE, Umvc3Character.ZERO,
                 Umvc3Character.DOCTOR_DOOM, null, null, null, false);
-        Team team = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
         Assert.assertTrue(predicate.apply(team));
     }
@@ -45,7 +49,8 @@ public class MatchTeamPredicateTest {
     public void testMatchCharactersMaintainOrder() {
         MatchTeamPredicate predicate = new MatchTeamPredicate(Umvc3Character.WOLVERINE, Umvc3Character.ZERO,
                 Umvc3Character.DOCTOR_DOOM, null, null, null, true);
-        Team team = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
         Assert.assertTrue(predicate.apply(team));
     }
@@ -55,7 +60,8 @@ public class MatchTeamPredicateTest {
     public void testMatchCharactersShuffled() {
         MatchTeamPredicate predicate = new MatchTeamPredicate(Umvc3Character.ZERO, Umvc3Character.WOLVERINE,
                 Umvc3Character.DOCTOR_DOOM, null, null, null, false);
-        Team team = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
         Assert.assertTrue(predicate.apply(team));
     }
@@ -65,7 +71,48 @@ public class MatchTeamPredicateTest {
     public void testMatchCharactersShuffledMaintainOrder() {
         MatchTeamPredicate predicate = new MatchTeamPredicate(Umvc3Character.ZERO, Umvc3Character.WOLVERINE,
                 Umvc3Character.DOCTOR_DOOM, null, null, null, true);
-        Team team = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
+
+        Assert.assertFalse(predicate.apply(team));
+    }
+    
+    /** Tests the apply method. */
+    @Test
+    public void testMatchOneCharacter() {
+        MatchTeamPredicate predicate = new MatchTeamPredicate(Umvc3Character.WOLVERINE, null, null, null, null, null, false);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
+
+        Assert.assertTrue(predicate.apply(team));
+    }
+    
+    /** Tests the apply method. */
+    @Test
+    public void testMatchOneCharacterMaintainOrder() {
+        MatchTeamPredicate predicate = new MatchTeamPredicate(Umvc3Character.WOLVERINE, null, null, null, null, null, true);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
+
+        Assert.assertTrue(predicate.apply(team));
+    }
+    
+    /** Tests the apply method. */
+    @Test
+    public void testMatchOneCharacterShuffled() {
+        MatchTeamPredicate predicate = new MatchTeamPredicate(null, Umvc3Character.WOLVERINE, null, null, null, null, false);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
+
+        Assert.assertTrue(predicate.apply(team));
+    }
+    
+    /** Tests the apply method. */
+    @Test
+    public void testMatchOneCharacterShuffledMaintainOrder() {
+        MatchTeamPredicate predicate = new MatchTeamPredicate(null, Umvc3Character.WOLVERINE, null, null, null, null, true);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
         Assert.assertFalse(predicate.apply(team));
     }
