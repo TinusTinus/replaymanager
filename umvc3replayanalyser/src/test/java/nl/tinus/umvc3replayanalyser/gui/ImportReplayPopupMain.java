@@ -25,6 +25,16 @@ public class ImportReplayPopupMain extends Application {
     // TODO use a directory in the workspace / repository
     private static final String REPLAY_DIRECTORY = "C:\\temp\\replays\\2replays";
 
+    /**
+     * Main method.
+     * 
+     * @param args
+     *            command line parameters, which are passed on to JavaFX
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void start(Stage stage) throws IOException {
@@ -47,15 +57,5 @@ public class ImportReplayPopupMain extends Application {
         ImportReplayPopup.show(stage, controller);
 
         log.info("Application started.");
-    }
-
-    /**
-     * Main class.
-     * 
-     * @param args
-     *            command line parameters, which are passed on to JavaFX
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }
