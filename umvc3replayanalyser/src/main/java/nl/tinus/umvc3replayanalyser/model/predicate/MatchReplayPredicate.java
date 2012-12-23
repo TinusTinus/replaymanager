@@ -9,6 +9,7 @@ import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
 /**
  * Predicate for matching a replay.
@@ -50,14 +51,23 @@ public class MatchReplayPredicate implements Predicate<Replay> {
             Umvc3Character character3, AssistType assist1, AssistType assist2, AssistType assist3,
             boolean maintainCharacterOrder, Side side) {
         super();
-        
+
         if (side == null) {
             throw new NullPointerException("side");
         }
-        
-        this.playerPredicate = new GamertagPrefixPlayerPredicate(prefix);
-        this.teamPredicate = new MatchTeamPredicate(character1, character2, character3, assist1, assist2, assist3,
-                maintainCharacterOrder);
+
+        if ("".equals(prefix)) {
+            this.playerPredicate = Predicates.alwaysTrue();
+        } else {
+            this.playerPredicate = new GamertagPrefixPlayerPredicate(prefix);
+        }
+
+        if (character1 == null && character2 == null && character3 == null) {
+            this.teamPredicate = Predicates.alwaysTrue();
+        } else {
+            this.teamPredicate = new MatchTeamPredicate(character1, character2, character3, assist1, assist2, assist3,
+                    maintainCharacterOrder);
+        }
         this.side = side;
     }
 
