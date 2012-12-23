@@ -3,6 +3,8 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,18 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
  */
 @Slf4j
 class ImportReplayTask extends Task<List<Replay>> {
+    /**
+     * Thread-local variable holding the date format. This variable is stored as a thread-local instead of just a single
+     * constant, because SimpleDateFormat is not threadsafe.
+     */
+    private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
+        /** {@inheritDoc} */
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("HH:mm:ss,SSS");
+        }
+    };
+    
     /** The directory from which to import replays. */
     private final File directory;
     /** Replay analyser. */
@@ -148,6 +162,6 @@ class ImportReplayTask extends Task<List<Replay>> {
      */
     private void logMessage(String message) {
         log.info(message);
-        updateMessage(getMessage() + "\n" + message);
+        updateMessage(getMessage() + "\n" + DATE_FORMAT.get().format(new Date()) + " - " + message);
     }
 }
