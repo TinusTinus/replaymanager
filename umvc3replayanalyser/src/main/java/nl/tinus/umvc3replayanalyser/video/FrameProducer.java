@@ -26,6 +26,9 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
 
     /** Queue to place items into. */
     private final BlockingQueue<BufferedImage> queue;
+    
+    /** Null by default. If a frame cannot be placed into the queue, this field is set to a non-null error message text. */
+    private String errorMessage;
 
     /** Indicates whether production is still needed. */
     private boolean productionCanStop;
@@ -43,15 +46,18 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
         this.videoUrl = videoUrl;
         this.queue = queue;
         this.productionCanStop = false;
+        this.errorMessage = null;
     }
 
     /**
      * Starts the producer.
      * 
      * @returns the IError that caused prodcution to be halted, or null if no such error occurred
+     * @throws ReplayAnalysisException
+     *             in case the video cannot be processed
      */
     @Override
-    public IError call() {
+    public IError call() throws ReplayAnalysisException {
         IMediaReader reader = ToolFactory.makeReader(this.videoUrl);
         reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
         reader.addListener(this);
@@ -61,6 +67,10 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
             // Whenever readPacket results in a complete picture, it will trigger the onVideoPicture method.
             error = reader.readPacket();
             log.debug("Read packet.");
+        }
+        
+        if (this.errorMessage != null) {
+            throw new ReplayAnalysisException(this.errorMessage);
         }
         
         log.info("Done.");
@@ -77,11 +87,12 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
             log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
         } else if (image.getWidth() != VersusScreenAnalyser.SCREEN_WIDTH
                 || image.getHeight() != VersusScreenAnalyser.SCREEN_HEIGHT) {
-            // TODO eliminate this check once the VersusScreenAnalyser supports other resolutions
-            log.warn(String.format("Image size must be %s x %s, was %s x %s", ""
+            // Video has the wrong size; there's no point in offering any of its frames to the consumers.
+            // TODO Eliminate this check once the VersusScreenAnalyser supports other resolutions.
+            this.errorMessage = String.format("Video size must be %s x %s, was %s x %s", ""
                     + VersusScreenAnalyser.SCREEN_WIDTH, "" + VersusScreenAnalyser.SCREEN_HEIGHT,
-                    "" + image.getWidth(), "" + image.getHeight()));
-            productionCanStop = true;
+                    "" + image.getWidth(), "" + image.getHeight() + ".");
+            this.productionCanStop = true;
         } else {
             boolean success = false;
             while (!success && !productionCanStop) {

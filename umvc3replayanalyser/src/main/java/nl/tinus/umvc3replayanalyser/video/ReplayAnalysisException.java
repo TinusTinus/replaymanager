@@ -17,12 +17,50 @@ public class ReplayAnalysisException extends Exception {
     @Getter
     private final IError xuggleError;
 
+    /**
+     * Returns an error message based on the given cause. If any of the exceptions in the given throwable's cause chain
+     * are a ReplayAnalysisException as well, the error message of that exception will be copied over. Otherwise a
+     * generic exception message is returned.
+     * 
+     * @param throwable
+     *            throwable whose cause chain is to be examined
+     * 
+     * @return exception message
+     */
+    private static String getMessage(Throwable throwable) {
+        String result = null;
+        Throwable t = throwable;
+        while (result == null && t != null) {
+            if (t instanceof ReplayAnalysisException) {
+                result = t.getMessage();
+            }
+            t = t.getCause();
+        }
+        
+        if (result == null) {
+            result = "Replay analysis failed.";
+        }
+        
+        return result;
+    }
+    
     /** Constructor. */
     public ReplayAnalysisException() {
         super();
         xuggleError = null;
     }
-
+    
+    /**
+     * Constructor.
+     * 
+     * @param cause
+     *            cause
+     */
+    public ReplayAnalysisException(Throwable cause) {
+        super(getMessage(cause), cause);
+        xuggleError = null;
+    }
+    
     /** Constructor. */
     public ReplayAnalysisException(IError error) {
         this("Replay analysis failed. Xuggle error: " + error, error);
@@ -50,16 +88,6 @@ public class ReplayAnalysisException extends Exception {
     public ReplayAnalysisException(String message, IError error) {
         super(message);
         this.xuggleError = error;
-    }
-
-    /**
-     * Constructor.
-     * 
-     * @param cause
-     *            cause
-     */
-    public ReplayAnalysisException(Throwable cause) {
-        this("Replay analysis failed.", cause);
     }
 
     /**
