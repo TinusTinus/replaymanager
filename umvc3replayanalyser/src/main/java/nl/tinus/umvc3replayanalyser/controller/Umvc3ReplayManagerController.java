@@ -449,9 +449,9 @@ public class Umvc3ReplayManagerController {
      */
     private void importReplays(File directory) {
         // TODO first check that directory does not contain the data directory
-        this.importMenuItem.setDisable(true);
         ImportReplayTask task = new ImportReplayTask(directory, this.replays);
-        ImportReplayPopupController controller = new ImportReplayPopupController(task, this.importMenuItem.disableProperty(), "Replay Import Thread");
+        ImportReplayPopupController controller = new ImportReplayPopupController(task,
+                this.importMenuItem.disableProperty(), "Replay Import Thread");
         ImportReplayPopup.show(controller);
     }
     

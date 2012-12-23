@@ -27,7 +27,7 @@ public class ImportReplayPopupController {
     /** Task to be performed. */
     @NonNull
     private final Task<?> task;
-    /** Boolean property which will be set to false once done. */
+    /** Boolean property which will be set to true upon initialisation, and to false once the task is done. */
     @NonNull
     private final BooleanProperty working;
     /** Name for the newly constructed thread that will perform the task. */
@@ -63,6 +63,7 @@ public class ImportReplayPopupController {
         task.setOnSucceeded(eventHandler);
         task.setOnCancelled(eventHandler);
         task.setOnFailed(eventHandler);
+        working.set(true);
         new Thread(task, threadName).start();
     }
 

@@ -41,7 +41,7 @@ public class ImportReplayPopupMain extends Application {
 
         final ArrayList<Replay> replays = new ArrayList<Replay>();
         
-        SimpleBooleanProperty working = new SimpleBooleanProperty(true);
+        SimpleBooleanProperty working = new SimpleBooleanProperty();
         working.addListener(new ChangeListener<Boolean>() {
             /** {@inheritDoc} */
             @Override
