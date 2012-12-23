@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.stage.Window;
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 // Note: both this controller and the corresponding FXML form have no knowledge of what type of task is being performed.
 // They would be very easy to convert into a general "perform task popup" and its controller.
 @Slf4j
-@RequiredArgsConstructor
-public class ImportReplayPopupController {
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+class ImportReplayPopupController {
     /** Task to be performed. */
     @NonNull
     private final Task<?> task;
