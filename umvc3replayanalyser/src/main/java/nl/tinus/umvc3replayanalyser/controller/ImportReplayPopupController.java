@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.stage.Window;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ImportReplayPopupController {
     /** Task to be performed. */
+    @NonNull
     private final Task<?> task;
     /** Boolean property which will be set to false once done. */
+    @NonNull
     private final BooleanProperty working;
 
     /** Progress bar. */
