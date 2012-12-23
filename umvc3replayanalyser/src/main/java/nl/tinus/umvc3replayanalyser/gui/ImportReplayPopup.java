@@ -39,7 +39,7 @@ public class ImportReplayPopup {
      * @param controller
      *            controller for this popup window, typically an ImportReplayPopupController
      */
-    static void show(Stage stage, Object controller) {
+    public static void show(Stage stage, Object controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(ImportReplayPopup.class.getResource("/import-replay-popup.fxml"));
         fxmlLoader.setController(controller);
         try {

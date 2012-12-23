@@ -1,18 +1,17 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
-import java.io.File;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.stage.Window;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.model.Replay;
 
 /**
  * Controller for the import replay view.
@@ -20,9 +19,10 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
  * @author Martijn van de Rijdt
  */
 @Slf4j
+@RequiredArgsConstructor
 public class ImportReplayPopupController {
     /** Task to be performed. */
-    private final ImportReplayTask task;
+    private final Task<?> task;
     /** Boolean property which will be set to false once done. */
     private final BooleanProperty working;
 
@@ -32,22 +32,6 @@ public class ImportReplayPopupController {
     /** Text area. */
     @FXML
     private TextArea textArea;
-
-    /**
-     * Constructor.
-     * 
-     * @param directory
-     *            directory to load replays from
-     * @param replays
-     *            list of replays, to which newly loaded replays will be added
-     * @param working
-     *            will be set to false once importing is done
-     */
-    public ImportReplayPopupController(File directory, List<Replay> replays, BooleanProperty working) {
-        super();
-        this.task = new ImportReplayTask(directory, replays);
-        this.working = working;
-    }
 
     /** Initialisation method. */
     @FXML

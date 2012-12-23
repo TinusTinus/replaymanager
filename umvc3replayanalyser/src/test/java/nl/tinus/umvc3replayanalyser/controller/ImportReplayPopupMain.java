@@ -1,4 +1,4 @@
-package nl.tinus.umvc3replayanalyser.gui;
+package nl.tinus.umvc3replayanalyser.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.controller.ImportReplayPopupController;
+import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 
 /**
@@ -51,8 +51,8 @@ public class ImportReplayPopupMain extends Application {
             }
         });
 
-        ImportReplayPopupController controller = new ImportReplayPopupController(new File(REPLAY_DIRECTORY), replays,
-                working);
+        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays);
+        ImportReplayPopupController controller = new ImportReplayPopupController(task, working);
 
         ImportReplayPopup.show(stage, controller);
 
