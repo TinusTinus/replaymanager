@@ -19,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author Martijn van de Rijdt
  */
-// Note: apart from the thread name, both this controller and the corresponding FXML form have no knowledge of what type
-// of task is being performed.
+// Note: both this controller and the corresponding FXML form have no knowledge of what type of task is being performed.
 // They would be very easy to convert into a general "perform task popup" and its controller.
 @Slf4j
 @RequiredArgsConstructor
@@ -31,6 +30,8 @@ public class ImportReplayPopupController {
     /** Boolean property which will be set to false once done. */
     @NonNull
     private final BooleanProperty working;
+    /** Name for the newly constructed thread that will perform the task. */
+    private final String threadName;
 
     /** Progress bar. */
     @FXML
@@ -53,9 +54,8 @@ public class ImportReplayPopupController {
                 try {
                     task.get();
                 } catch (InterruptedException | ExecutionException e) {
-                    log.error("Unable to load replays.", e);
+                    log.error("Unable to perform task succesfully.", e);
                 }
-
                 working.set(false);
                 getApplicationWindow().hide();
             }
@@ -63,7 +63,7 @@ public class ImportReplayPopupController {
         task.setOnSucceeded(eventHandler);
         task.setOnCancelled(eventHandler);
         task.setOnFailed(eventHandler);
-        new Thread(task, "Replay Import Thread").start();
+        new Thread(task, threadName).start();
     }
 
     /**

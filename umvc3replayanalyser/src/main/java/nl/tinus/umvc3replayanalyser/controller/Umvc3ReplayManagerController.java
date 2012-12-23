@@ -435,7 +435,7 @@ public class Umvc3ReplayManagerController {
         chooser.setTitle("Import Replays - Ultimate Marvel vs Capcom 3 Replay Manager");
         File selectedDirectory = chooser.showDialog(getApplicationWindow());
         
-        log.info("Selected Directory: " + selectedDirectory + ".");
+        log.info("Selected directory: " + selectedDirectory + ".");
         
         if (selectedDirectory != null) {
             importReplays(selectedDirectory);      
@@ -451,7 +451,7 @@ public class Umvc3ReplayManagerController {
         // TODO first check that directory does not contain the data directory
         this.importMenuItem.setDisable(true);
         ImportReplayTask task = new ImportReplayTask(directory, this.replays);
-        ImportReplayPopupController controller = new ImportReplayPopupController(task, this.importMenuItem.disableProperty());
+        ImportReplayPopupController controller = new ImportReplayPopupController(task, this.importMenuItem.disableProperty(), "Replay Import Thread");
         ImportReplayPopup.show(controller);
     }
     

@@ -52,10 +52,16 @@ public class ImportReplayPopupMain extends Application {
         });
 
         ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays);
-        ImportReplayPopupController controller = new ImportReplayPopupController(task, working);
+        ImportReplayPopupController controller = new ImportReplayPopupController(task, working, "Replay Import Thread");
 
         ImportReplayPopup.show(stage, controller);
 
         log.info("Application started.");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void stop() {
+        log.info("Stopping application.");
     }
 }
