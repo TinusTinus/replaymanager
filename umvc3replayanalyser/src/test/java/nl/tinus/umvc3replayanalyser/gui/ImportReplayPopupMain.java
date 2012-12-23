@@ -22,8 +22,7 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 public class ImportReplayPopupMain extends Application {
 
     /** Directory from which replays are loaded. */
-    // TODO use a directory in the workspace / repository
-    private static final String REPLAY_DIRECTORY = "C:\\temp\\replays\\2replays";
+    private static final String REPLAY_DIRECTORY = "src/test/resources";
 
     /**
      * Main method.
@@ -47,7 +46,8 @@ public class ImportReplayPopupMain extends Application {
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Boolean> value, Boolean oldValue, Boolean newValue) {
-                log.info("working changed from " + oldValue + " to " + newValue + "; replays: " + replays);
+                log.info("working changed from " + oldValue + " to " + newValue + "; " + replays.size() + " replays: "
+                        + replays);
             }
         });
 
