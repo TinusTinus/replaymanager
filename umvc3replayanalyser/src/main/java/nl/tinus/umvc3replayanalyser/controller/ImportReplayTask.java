@@ -55,7 +55,6 @@ class ImportReplayTask extends Task<List<Replay>> {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
         
-        
         this.directory = directory;
         this.replays = replays;
         // TODO inject the replay analyser?
