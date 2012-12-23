@@ -31,10 +31,10 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
 @Slf4j
 class ImportReplayTask extends Task<List<Replay>> {
     /**
-     * Thread-local variable holding the date format. This variable is stored as a thread-local instead of just a single
-     * constant, because SimpleDateFormat is not threadsafe.
+     * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
+     * of just a single constant, because SimpleDateFormat is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
+    private static final ThreadLocal<DateFormat> LOG_MESSAGE_TIME_FORMAT = new ThreadLocal<DateFormat>() {
         /** {@inheritDoc} */
         @Override
         protected SimpleDateFormat initialValue() {
@@ -162,6 +162,6 @@ class ImportReplayTask extends Task<List<Replay>> {
      */
     private void logMessage(String message) {
         log.info(message);
-        updateMessage(getMessage() + "\n" + DATE_FORMAT.get().format(new Date()) + " - " + message);
+        updateMessage(getMessage() + "\n" + LOG_MESSAGE_TIME_FORMAT.get().format(new Date()) + " - " + message);
     }
 }
