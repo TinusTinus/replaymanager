@@ -18,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author Martijn van de Rijdt
  */
+// Note: apart from the thread name, both this controller and the corresponding FXML form have no knowledge of what type
+// of task is being performed.
+// They would be very easy to convert into a general "perform task popup" and its controller.
 @Slf4j
 @RequiredArgsConstructor
 public class ImportReplayPopupController {
