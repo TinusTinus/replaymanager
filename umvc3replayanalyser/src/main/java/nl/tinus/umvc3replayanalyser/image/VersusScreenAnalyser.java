@@ -56,7 +56,7 @@ public class VersusScreenAnalyser {
     /** Width of a character name. */
     private static final int CHARACTER_WIDTH = 192;
     /** Height of a character name. */
-    private static final int CHARACTER_HEIGHT = 43; // TODO
+    private static final int CHARACTER_HEIGHT = 43;
 
     /** OCR Engine. */
     private final OCREngine engine;
