@@ -48,6 +48,8 @@ class ImportReplayTask extends Task<List<Replay>> {
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
     private final List<Replay> replays;
+    /** Message. */
+    private String message;
     
     /**
      * Constructor.
@@ -73,6 +75,7 @@ class ImportReplayTask extends Task<List<Replay>> {
         this.replays = replays;
         // TODO inject the replay analyser?
         this.replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine()));
+        this.message = "";
     }
     
     /** {@inheritDoc} */
@@ -162,6 +165,7 @@ class ImportReplayTask extends Task<List<Replay>> {
      */
     private void logMessage(String message) {
         log.info(message);
-        updateMessage(getMessage() + "\n" + LOG_MESSAGE_TIME_FORMAT.get().format(new Date()) + " - " + message);
+        this.message = this.message + "\n" + LOG_MESSAGE_TIME_FORMAT.get().format(new Date()) + " - " + message;
+        updateMessage(this.message);
     }
 }
