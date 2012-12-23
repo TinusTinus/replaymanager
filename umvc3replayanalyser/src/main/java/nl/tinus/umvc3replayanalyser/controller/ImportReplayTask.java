@@ -45,9 +45,17 @@ class ImportReplayTask extends Task<List<Replay>> {
      */
     ImportReplayTask(File directory, List<Replay> replays) {
         super();
+        if (directory == null) {
+            throw new NullPointerException("directory");
+        }
+        if (replays == null) {
+            throw new NullPointerException("replays");
+        }
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
+        
+        
         this.directory = directory;
         this.replays = replays;
         // TODO inject the replay analyser?
