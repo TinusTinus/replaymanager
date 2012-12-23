@@ -22,9 +22,9 @@ import nl.tinus.umvc3replayanalyser.ocr.OCRException;
 @Slf4j
 public class VersusScreenAnalyser {
     /** Width of the vs screen. */
-    private static final int SCREEN_WIDTH = 1280;
+    public static final int SCREEN_WIDTH = 1280;
     /** Height of the vs screen. */
-    private static final int SCREEN_HEIGHT = 720;
+    public static final int SCREEN_HEIGHT = 720;
     /** Width of a gamertag. */
     private static final int PLAYER_WIDTH = 261;
     /** Height of a gamertag. */
@@ -71,7 +71,7 @@ public class VersusScreenAnalyser {
      *             in case image analysis fails
      */
     // TODO drop the image size requirement by having all sizes be a percentage of the total image size.
-    // Don't forget to fix Javadoc as well
+    // Don't forget to fix Javadoc as well and reduce visibility of SCREEN_WIDTH and SCREEN_HEIGHT.
     public Game analyse(BufferedImage versusImage) throws OCRException {
         // Check the image size.
         if (versusImage.getWidth() != SCREEN_WIDTH || versusImage.getHeight() != SCREEN_HEIGHT) {

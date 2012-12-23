@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 
 import com.xuggle.mediatool.IMediaReader;
 import com.xuggle.mediatool.MediaListenerAdapter;
@@ -74,6 +75,13 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
         BufferedImage image = event.getImage();
         if (image == null) {
             log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
+        } else if (image.getWidth() != VersusScreenAnalyser.SCREEN_WIDTH
+                || image.getHeight() != VersusScreenAnalyser.SCREEN_HEIGHT) {
+            // TODO eliminate this check once the VersusScreenAnalyser supports other resolutions
+            log.warn(String.format("Image size must be %s x %s, was %s x %s", ""
+                    + VersusScreenAnalyser.SCREEN_WIDTH, "" + VersusScreenAnalyser.SCREEN_HEIGHT,
+                    "" + image.getWidth(), "" + image.getHeight()));
+            productionCanStop = true;
         } else {
             boolean success = false;
             while (!success && !productionCanStop) {
