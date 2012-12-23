@@ -1,7 +1,6 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -17,9 +16,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
@@ -30,9 +26,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -452,33 +448,10 @@ public class Umvc3ReplayManagerController {
      * @param directory directory to be imported from
      */
     private void importReplays(File directory) {
-        // TODO check directory does not contain the data directory
-        // TODO move the FXML loading and initialisation to a class in the gui package
-        // TODO prevent import popup from being shown multiple times
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
-        fxmlLoader.setController(new ImportReplayPopupController(directory, this.replays, this.importMenuItem
-                .disableProperty()));
-        
-        try {
-            Parent root = (Parent) fxmlLoader.load();
-
-            log.info("Fxml loaded, performing additional initialisation.");
-            Stage stage = new Stage();
-            stage.setTitle("Importing replays");
-            stage.setScene(new Scene(root));
-
-            importMenuItem.setDisable(true);
-            
-            log.info("Showing UI.");
-            stage.show();
-
-            // Default size should also be the minimum size.
-            stage.setMinWidth(stage.getWidth());
-            stage.setMinHeight(stage.getHeight());
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to parse FXML.", e);
-        }
+        // TODO first check that directory does not contain the data directory
+        importMenuItem.setDisable(true);
+        ImportReplayPopupController controller = new ImportReplayPopupController(directory, this.replays, this.importMenuItem.disableProperty());
+        ImportReplayPopup.show(controller);
     }
     
     /**

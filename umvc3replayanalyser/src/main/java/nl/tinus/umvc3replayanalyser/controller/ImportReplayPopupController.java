@@ -53,7 +53,7 @@ public class ImportReplayPopupController {
     @FXML
     private void initialize() {
         log.info("Performing controller initialisation.");
-
+        
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
         EventHandler<WorkerStateEvent> eventHandler = new EventHandler<WorkerStateEvent>() {

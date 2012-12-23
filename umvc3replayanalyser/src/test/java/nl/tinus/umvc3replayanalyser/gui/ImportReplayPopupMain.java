@@ -6,9 +6,8 @@ import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.controller.ImportReplayPopupController;
@@ -25,26 +24,27 @@ public class ImportReplayPopupMain extends Application {
     /** Directory from which replays are loaded. */
     // TODO use a directory in the workspace / repository
     private static final String REPLAY_DIRECTORY = "C:\\temp\\replays\\2replays";
-    
+
     /** {@inheritDoc} */
     @Override
     public void start(Stage stage) throws IOException {
         log.info("Starting application.");
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/import-replay-popup.fxml"));
-        fxmlLoader.setController(new ImportReplayPopupController(new File(REPLAY_DIRECTORY), new ArrayList<Replay>(), new SimpleBooleanProperty()));
-        Parent root = (Parent) fxmlLoader.load();
+        final ArrayList<Replay> replays = new ArrayList<Replay>();
+        
+        SimpleBooleanProperty working = new SimpleBooleanProperty(true);
+        working.addListener(new ChangeListener<Boolean>() {
+            /** {@inheritDoc} */
+            @Override
+            public void changed(ObservableValue<? extends Boolean> value, Boolean oldValue, Boolean newValue) {
+                log.info("working changed from " + oldValue + " to " + newValue + "; replays: " + replays);
+            }
+        });
 
-        log.info("Fxml loaded, performing additional initialisation.");
-        stage.setTitle("Replay import popup tester");
-        stage.setScene(new Scene(root));
+        ImportReplayPopupController controller = new ImportReplayPopupController(new File(REPLAY_DIRECTORY), replays,
+                working);
 
-        log.info("Showing UI.");
-        stage.show();
-
-        // Default size should also be the minimum size.
-        stage.setMinWidth(stage.getWidth());
-        stage.setMinHeight(stage.getHeight());
+        ImportReplayPopup.show(stage, controller);
 
         log.info("Application started.");
     }
@@ -52,7 +52,8 @@ public class ImportReplayPopupMain extends Application {
     /**
      * Main class.
      * 
-     * @param args command line parameters, which are passed on to JavaFX
+     * @param args
+     *            command line parameters, which are passed on to JavaFX
      */
     public static void main(String[] args) {
         launch(args);
