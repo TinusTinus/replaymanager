@@ -711,13 +711,6 @@ public class TesseractOCREngineTest {
         testOcrCharacter("src/test/resources/zero-inverted.png", Umvc3Character.ZERO);
     }
     
-    // TODO Rocket Raccoon
-    // TODO MODOK
-    // TODO Iron Man
-    // TODO Firebrand
-    // TODO Chris
-    // TODO Hsien-Ko
-
     /**
      * Attempts to read a file containing a character name.
      * 
