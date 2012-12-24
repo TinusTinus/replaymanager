@@ -32,14 +32,14 @@ public class MatchReplayPredicate implements Predicate<Replay> {
      *            prefix to be matched to the player's gamertag; may not be null
      * @param character1
      *            character 1
-     * @param character2
-     *            character 2
-     * @param character3
-     *            character 3
      * @param assist1
      *            assist type for character 1
+     * @param character2
+     *            character 2
      * @param assist2
      *            assist type for character 2
+     * @param character3
+     *            character 3
      * @param assist3
      *            assist type for character 3
      * @param maintainCharacterOrder
@@ -47,8 +47,8 @@ public class MatchReplayPredicate implements Predicate<Replay> {
      * @param side
      *            side; may not be null
      */
-    public MatchReplayPredicate(String prefix, Umvc3Character character1, Umvc3Character character2,
-            Umvc3Character character3, AssistType assist1, AssistType assist2, AssistType assist3,
+    public MatchReplayPredicate(String prefix, Umvc3Character character1, AssistType assist1,
+            Umvc3Character character2, AssistType assist2, Umvc3Character character3, AssistType assist3,
             boolean maintainCharacterOrder, Side side) {
         super();
 
@@ -65,7 +65,7 @@ public class MatchReplayPredicate implements Predicate<Replay> {
         if (character1 == null && character2 == null && character3 == null) {
             this.teamPredicate = Predicates.alwaysTrue();
         } else {
-            this.teamPredicate = new MatchTeamPredicate(character1, character2, character3, assist1, assist2, assist3,
+            this.teamPredicate = new MatchTeamPredicate(character1, assist1, character2, assist2, character3, assist3,
                     maintainCharacterOrder);
         }
         this.side = side;

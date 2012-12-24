@@ -29,21 +29,21 @@ public class MatchTeamPredicate implements Predicate<Team> {
      * 
      * @param character1
      *            character 1
-     * @param character2
-     *            character 2
-     * @param character3
-     *            character 3
      * @param assist1
      *            assist type for character 1
+     * @param character2
+     *            character 2
      * @param assist2
      *            assist type for character 2
+     * @param character3
+     *            character 3
      * @param assist3
      *            assist type for character 3
      * @param meaintainCharacterOrder
      *            whether character order needs to be respected when matching against a team
      */
-    public MatchTeamPredicate(Umvc3Character character1, Umvc3Character character2, Umvc3Character character3,
-            AssistType assist1, AssistType assist2, AssistType assist3, boolean maintainCharacterOrder) {
+    public MatchTeamPredicate(Umvc3Character character1, AssistType assist1, Umvc3Character character2,
+            AssistType assist2, Umvc3Character character3, AssistType assist3, boolean maintainCharacterOrder) {
         super();
         this.characters = Arrays.asList(character1, character2, character3);
         this.assists = Arrays.asList(assist1, assist2, assist3);

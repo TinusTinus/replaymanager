@@ -343,29 +343,28 @@ public class Umvc3ReplayManagerController {
         
         // Construct the filter predicate
         Predicate<Replay> sideOnePredicate = new MatchReplayPredicate(playerOneTextField.getText(),
-                playerOneCharacterOneComboBox.getValue(), playerOneCharacterTwoComboBox.getValue(),
-                playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
-                getType(playerOneAssistTwoComboBox.getValue()), getType(playerOneAssistThreeComboBox.getValue()),
+                playerOneCharacterOneComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
+                playerOneCharacterTwoComboBox.getValue(), getType(playerOneAssistTwoComboBox.getValue()),
+                playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistThreeComboBox.getValue()),
                 maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
         Predicate<Replay> sideTwoPredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
-                playerTwoCharacterOneComboBox.getValue(), playerTwoCharacterTwoComboBox.getValue(),
-                playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
-                getType(playerTwoAssistTwoComboBox.getValue()), getType(playerTwoAssistThreeComboBox.getValue()),
+                playerTwoCharacterOneComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
+                playerTwoCharacterTwoComboBox.getValue(), getType(playerTwoAssistTwoComboBox.getValue()),
+                playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistThreeComboBox.getValue()),
                 maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
         Predicate<Replay> predicate = Predicates.and(sideOnePredicate, sideTwoPredicate);
 
         if (!maintainPlayerOrderCheckBox.isSelected()) {
             sideOnePredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
-                    playerTwoCharacterOneComboBox.getValue(), playerTwoCharacterTwoComboBox.getValue(),
-                    playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
-                    getType(playerTwoAssistTwoComboBox.getValue()), getType(playerTwoAssistThreeComboBox.getValue()),
+                    playerTwoCharacterOneComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
+                    playerTwoCharacterTwoComboBox.getValue(), getType(playerTwoAssistTwoComboBox.getValue()),
+                    playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistThreeComboBox.getValue()),
                     maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
             sideTwoPredicate = new MatchReplayPredicate(playerOneTextField.getText(),
-                    playerOneCharacterOneComboBox.getValue(), playerOneCharacterTwoComboBox.getValue(),
-                    playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
-                    getType(playerOneAssistTwoComboBox.getValue()), getType(playerOneAssistThreeComboBox.getValue()),
+                    playerOneCharacterOneComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
+                    playerOneCharacterTwoComboBox.getValue(), getType(playerOneAssistTwoComboBox.getValue()),
+                    playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistThreeComboBox.getValue()),
                     maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
-            
             predicate = Predicates.or(predicate, Predicates.and(sideOnePredicate, sideTwoPredicate));
         }
         
