@@ -150,7 +150,7 @@ public class Umvc3ReplayManager extends Application {
         // Use a standard program icon if possible.
         try {
             stage.getIcons().add(getIcon());
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalStateException e) {
             log.warn("Failed to load icon for error dialog; proceeding with default JavaFX icon.", e);
         }
 
