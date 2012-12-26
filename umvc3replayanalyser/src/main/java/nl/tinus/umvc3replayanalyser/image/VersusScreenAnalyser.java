@@ -1,9 +1,11 @@
 package nl.tinus.umvc3replayanalyser.image;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Side;
@@ -57,6 +59,31 @@ public class VersusScreenAnalyser {
     private static final int CHARACTER_WIDTH = 192;
     /** Height of a character name. */
     private static final int CHARACTER_HEIGHT = 43;
+    /** Background colour for characters with assist type alpha. */
+    private static final Color COLOR_ALPHA_ASSIST = new Color(162, 0, 222);
+    /** Background colour for characters with assist type beta. */
+    private static final Color COLOR_BETA_ASSIST = new Color(93, 158, 137);
+    /** Background colour for characters with assist type gamma. */
+    private static final Color COLOR_GAMMA_ASSIST = new Color(4, 87, 175);
+    /** Margin of error when matching assist colour. */
+    private static final int COLOR_MARGIN = 30;
+
+    // TODO The following is pretty character-specific so it will not work for every character. Figure out
+    // character-specific exceptions.
+    /** X coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_PLAYER_ONE_CHARACTER_ONE_X = 237;
+    /** X coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_PLAYER_ONE_CHARACTER_TWO_X = 88;
+    /** X coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_PLAYER_ONE_CHARACTER_THREE_X = 455;
+    /** X coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_PLAYER_TWO_CHARACTER_ONE_X = 857;
+    /** X coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_PLAYER_TWO_CHARACTER_TWO_X = 689;
+    /** X coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_PLAYER_TWO_CHARACTER_THREE_X = 1071;
+    /** Y coordinate of the pixel to be inspected to figure out the assist type. */
+    private static final int BACKGROUND_Y = 120;
 
     /** OCR Engine. */
     private final OCREngine engine;
@@ -123,11 +150,27 @@ public class VersusScreenAnalyser {
         Umvc3Character thirdCharacterTeamTwo = getCharacter(versusImage, Side.PLAYER_TWO, 3, CHARACTER_3_PLAYER_TWO_X,
                 CHARACTER_3_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT);
 
+        AssistType firstAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
+                BACKGROUND_PLAYER_ONE_CHARACTER_ONE_X, BACKGROUND_Y)));
+        AssistType secondAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
+                BACKGROUND_PLAYER_ONE_CHARACTER_TWO_X, BACKGROUND_Y)));
+        AssistType thirdAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
+                BACKGROUND_PLAYER_ONE_CHARACTER_THREE_X, BACKGROUND_Y)));
+
+        AssistType firstAssistTeamTwo = getAssistType(new Color(versusImage.getRGB(
+                BACKGROUND_PLAYER_TWO_CHARACTER_ONE_X, BACKGROUND_Y)));
+        AssistType secondAssistTeamTwo = getAssistType(new Color(versusImage.getRGB(
+                BACKGROUND_PLAYER_TWO_CHARACTER_TWO_X, BACKGROUND_Y)));
+        AssistType thirdAssistTeamTwo = getAssistType(new Color(versusImage.getRGB(
+                BACKGROUND_PLAYER_TWO_CHARACTER_THREE_X, BACKGROUND_Y)));
+
         Player playerOne = new Player(playerOneGamertag);
         Player playerTwo = new Player(playerTwoGamertag);
 
-        Team teamOne = new Team(firstCharacterTeamOne, secondCharacterTeamOne, thirdCharacterTeamOne);
-        Team teamTwo = new Team(firstCharacterTeamTwo, secondCharacterTeamTwo, thirdCharacterTeamTwo);
+        Team teamOne = new Team(firstCharacterTeamOne, firstAssistTeamOne, secondCharacterTeamOne, secondAssistTeamOne,
+                thirdCharacterTeamOne, thirdAssistTeamOne);
+        Team teamTwo = new Team(firstCharacterTeamTwo, firstAssistTeamTwo, secondCharacterTeamTwo, secondAssistTeamTwo,
+                thirdCharacterTeamTwo, thirdAssistTeamTwo);
 
         Game game = new Game(playerOne, teamOne, playerTwo, teamTwo);
 
@@ -190,5 +233,54 @@ public class VersusScreenAnalyser {
         log.info(String.format("%s's character %s: %s", side, "" + characterNumber, result));
 
         return result;
+    }
+
+    /**
+     * Retrieves the assist type, based on the character portrait's background colour.
+     * 
+     * @param backgroundColor
+     *            background colour
+     * @return assist type, or null if the assist type cannot be determined
+     */
+    private AssistType getAssistType(Color backgroundColor) {
+        AssistType result;
+        if (equalsWithinMargin(backgroundColor, COLOR_ALPHA_ASSIST)) {
+            result = AssistType.ALPHA;
+        } else if (equalsWithinMargin(backgroundColor, COLOR_BETA_ASSIST)) {
+            result = AssistType.BETA;
+        } else if (equalsWithinMargin(backgroundColor, COLOR_GAMMA_ASSIST)) {
+            result = AssistType.GAMMA;
+        } else {
+            result = null;
+        }
+        return result;
+    }
+
+    /**
+     * Checks that the given colours are equal, within the allowed margin for error.
+     * 
+     * @param left
+     *            left value
+     * @param right
+     *            right value
+     * @return whether left and right are equal within the margin for error
+     */
+    private boolean equalsWithinMargin(Color left, Color right) {
+        return equalsWithinMargin(left.getRed(), right.getRed())
+                && equalsWithinMargin(left.getGreen(), right.getGreen())
+                && equalsWithinMargin(left.getBlue(), right.getBlue());
+    }
+
+    /**
+     * Checks that the absoloute difference between left and right is at most COLOR_MARGIN.
+     * 
+     * @param left
+     *            left value
+     * @param right
+     *            right value
+     * @return whether left and right are equal within the margin for error
+     */
+    private boolean equalsWithinMargin(int left, int right) {
+        return Math.abs(left - right) <= COLOR_MARGIN;
     }
 }
