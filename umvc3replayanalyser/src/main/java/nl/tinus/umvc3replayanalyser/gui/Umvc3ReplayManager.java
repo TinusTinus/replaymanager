@@ -1,5 +1,7 @@
 package nl.tinus.umvc3replayanalyser.gui;
 
+import java.util.Random;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,6 +19,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
+import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
@@ -26,9 +30,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  */
 @Slf4j
 public class Umvc3ReplayManager extends Application {
-    /** URL of the program icon. */
-    // TODO resize this icon, or replace it by a better one
-    private static final String ICON = "ultimate-marvel-vs-capcom-3.jpg";
     /** Title of the application. */
     private static final String TITLE = "Ultimate Marvel vs Capcom 3 Replay Manager";
 
@@ -52,7 +53,7 @@ public class Umvc3ReplayManager extends Application {
             log.info("Fxml loaded, performing additional initialisation.");
             stage.setTitle(TITLE);
             stage.setScene(new Scene(root));
-            stage.getIcons().add(new Image(ICON));
+            stage.getIcons().add(getIcon());
             
             log.info("Showing UI.");
             stage.show();
@@ -67,7 +68,7 @@ public class Umvc3ReplayManager extends Application {
             handleExceptionOnStartup(stage, e);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void stop() {
@@ -146,9 +147,9 @@ public class Umvc3ReplayManager extends Application {
 
         stage.setScene(new Scene(root));
 
-        // Use the standard program icon if possible.
+        // Use a standard program icon if possible.
         try {
-            stage.getIcons().add(new Image(ICON));
+            stage.getIcons().add(getIcon());
         } catch (IllegalArgumentException | NullPointerException e) {
             log.warn("Failed to load icon for error dialog; proceeding with default JavaFX icon.", e);
         }
@@ -160,5 +161,30 @@ public class Umvc3ReplayManager extends Application {
         stage.setMinHeight(stage.getHeight());
 
         log.info("Error dialog displayed.");
+    }
+    
+    /** 
+     * Randomly selects an icon for this instance of the application.
+     *  
+     * @return icon
+     */
+    private Image getIcon() {
+        Random random = new Random();
+        
+        String url;
+        
+        
+        boolean useIcon = random.nextBoolean();
+        if (useIcon) {
+            url = "icon-";
+        } else {
+            url = "portrait-";
+        }
+        
+        int characterIndex = random.nextInt(Umvc3Character.values().length);
+        Umvc3Character character = Umvc3Character.values()[characterIndex];
+        url = url + character.getShortName() + ".png";
+        
+        return new Image(url);
     }
 }
