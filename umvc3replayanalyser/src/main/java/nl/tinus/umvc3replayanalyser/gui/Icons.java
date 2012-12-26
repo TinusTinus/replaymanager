@@ -11,7 +11,7 @@ import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
  * 
  * @author Martijn van de Rijdt
  */
-public class Icons {
+class Icons {
     /** Singleton instance. */
     private static Icons INSTANCE = new Icons();
 
@@ -32,7 +32,7 @@ public class Icons {
      * 
      * @return singleton instance
      */
-    public static Icons get() {
+    static Icons get() {
         return INSTANCE;
     }
 
@@ -68,7 +68,7 @@ public class Icons {
      *            character
      * @return portrait image
      */
-    public Image getPortrait(Umvc3Character character) {
+    Image getPortrait(Umvc3Character character) {
         return getCached(portraits, character, "portrait-");
     }
 
@@ -77,9 +77,9 @@ public class Icons {
      * 
      * @param character
      *            character
-     * @return portrait image
+     * @return icon image
      */
-    public Image getIcon(Umvc3Character character) {
+    Image getIcon(Umvc3Character character) {
         return getCached(icons, character, "icon-");
     }
 }
