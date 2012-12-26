@@ -66,7 +66,7 @@ public class VersusScreenAnalyser {
     /** Background colour for characters with assist type gamma. */
     private static final Color COLOR_GAMMA_ASSIST = new Color(4, 87, 175);
     /** Margin of error when matching assist colour. */
-    private static final int COLOR_MARGIN = 30;
+    private static final int COLOR_MARGIN = 50;
 
     // TODO The following is pretty character-specific so it will not work for every character. Figure out
     // character-specific exceptions.

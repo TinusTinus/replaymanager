@@ -82,17 +82,20 @@ public class VersusScreenAnalyserIntegrationTest {
 
         // check characters
         Assert.assertEquals(Umvc3Character.WOLVERINE, game.getTeamOne().getFirstCharacter());
-        Assert.assertEquals(AssistType.GAMMA, game.getTeamOne().getFirstAssist());
         Assert.assertEquals(Umvc3Character.ZERO, game.getTeamOne().getSecondCharacter());
-        Assert.assertEquals(AssistType.ALPHA, game.getTeamOne().getSecondAssist());
         Assert.assertEquals(Umvc3Character.DOCTOR_DOOM, game.getTeamOne().getThirdCharacter());
-        Assert.assertEquals(AssistType.ALPHA, game.getTeamOne().getThirdAssist());
 
         Assert.assertEquals(Umvc3Character.MORRIGAN, game.getTeamTwo().getFirstCharacter());
-        Assert.assertEquals(AssistType.GAMMA, game.getTeamTwo().getFirstAssist());
         Assert.assertEquals(Umvc3Character.HAGGAR, game.getTeamTwo().getSecondCharacter());
-        Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssist());
         Assert.assertEquals(Umvc3Character.SHUMA_GORATH, game.getTeamTwo().getThirdCharacter());
+
+        // check assists
+        Assert.assertEquals(AssistType.GAMMA, game.getTeamOne().getFirstAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamOne().getSecondAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamOne().getThirdAssist());
+
+        Assert.assertEquals(AssistType.GAMMA, game.getTeamTwo().getFirstAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssist());
         // TODO Shuma covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
         // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getThirdAssist());
     }
@@ -124,6 +127,16 @@ public class VersusScreenAnalyserIntegrationTest {
         Assert.assertEquals(Umvc3Character.MORRIGAN, game.getTeamTwo().getFirstCharacter());
         Assert.assertEquals(Umvc3Character.HAGGAR, game.getTeamTwo().getSecondCharacter());
         Assert.assertEquals(Umvc3Character.SHUMA_GORATH, game.getTeamTwo().getThirdCharacter());
+
+        // check assists
+        Assert.assertEquals(AssistType.GAMMA, game.getTeamOne().getFirstAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamOne().getSecondAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamOne().getThirdAssist());
+
+        Assert.assertEquals(AssistType.GAMMA, game.getTeamTwo().getFirstAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssist());
+        // TODO Shuma covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
+        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getThirdAssist());
     }
 
     /**
@@ -145,6 +158,8 @@ public class VersusScreenAnalyserIntegrationTest {
         Assert.assertEquals("MvdR", game.getPlayerOne().getGamertag());
         Assert.assertEquals("Training Dummy", game.getPlayerTwo().getGamertag());
 
+        System.out.println(game.getDescription(true, false));
+
         // check characters
         Assert.assertEquals(Umvc3Character.STRIDER_HIRYU, game.getTeamOne().getFirstCharacter());
         Assert.assertEquals(Umvc3Character.NEMESIS, game.getTeamOne().getSecondCharacter());
@@ -153,5 +168,19 @@ public class VersusScreenAnalyserIntegrationTest {
         Assert.assertEquals(Umvc3Character.SUPER_SKRULL, game.getTeamTwo().getFirstCharacter());
         Assert.assertEquals(Umvc3Character.ROCKET_RACCOON, game.getTeamTwo().getSecondCharacter());
         Assert.assertEquals(Umvc3Character.DOCTOR_STRANGE, game.getTeamTwo().getThirdCharacter());
+
+        // check assists
+        Assert.assertEquals(AssistType.GAMMA, game.getTeamOne().getFirstAssist());
+        // TODO Nemesis covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
+        // Assert.assertEquals(AssistType.BETA, game.getTeamOne().getSecondAssist());
+
+        // Joe's assist type is not checked, because it is covered up by the lightning bolt in this specific screenshot.
+        // It happens, this is exactly why the assist type is optional.
+
+        // TODO Skrull covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
+        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getFirstAssist());
+        // TODO Raccoon covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
+        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssist());
+        Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getThirdAssist());
     }
 }
