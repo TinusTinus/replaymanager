@@ -170,7 +170,7 @@ public class VersusScreenAnalyser {
      * @param side
      *            side
      * @param characterNumber
-     *            should be 1, 2 or 3
+     *            should be 1, 2 or 3; purely for logging
      * @param x
      *            x-coordinate of the upper left corner of the rectangle where the gamertag is located
      * @param y
