@@ -54,14 +54,14 @@ public class Umvc3ReplayManager extends Application {
             stage.setTitle(TITLE);
             stage.setScene(new Scene(root));
             stage.getIcons().add(getIcon());
-            
+
             log.info("Showing UI.");
             stage.show();
-            
+
             // Default size should also be the minimum size.
             stage.setMinWidth(stage.getWidth());
             stage.setMinHeight(stage.getHeight());
-            
+
             log.info("Application started.");
         } catch (Exception e) {
             log.error("Unable to start application.", e);
@@ -162,29 +162,18 @@ public class Umvc3ReplayManager extends Application {
 
         log.info("Error dialog displayed.");
     }
-    
-    /** 
+
+    /**
      * Randomly selects an icon for this instance of the application.
-     *  
+     * 
      * @return icon
      */
     private Image getIcon() {
+        // Select a random character and use that character's portrait as the icon.
         Random random = new Random();
-        
-        String url;
-        
-        
-        boolean useIcon = random.nextBoolean();
-        if (useIcon) {
-            url = "icon-";
-        } else {
-            url = "portrait-";
-        }
-        
         int characterIndex = random.nextInt(Umvc3Character.values().length);
         Umvc3Character character = Umvc3Character.values()[characterIndex];
-        url = url + character.getShortName() + ".png";
-        
+        String url = "portrait-" + character.getShortName() + ".png";
         return new Image(url);
     }
 }
