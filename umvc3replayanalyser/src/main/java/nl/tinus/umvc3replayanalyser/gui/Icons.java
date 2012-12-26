@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 /**
- * Wrapper for loading and caching classes.
+ * Wrapper for loading and caching icons.
  * 
  * @author Martijn van de Rijdt
  */
