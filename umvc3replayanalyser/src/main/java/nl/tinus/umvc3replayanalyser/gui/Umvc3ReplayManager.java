@@ -173,7 +173,6 @@ public class Umvc3ReplayManager extends Application {
         Random random = new Random();
         int characterIndex = random.nextInt(Umvc3Character.values().length);
         Umvc3Character character = Umvc3Character.values()[characterIndex];
-        String url = "portrait-" + character.getShortName() + ".png";
-        return new Image(url);
+        return Icons.get().getPortrait(character);
     }
 }
