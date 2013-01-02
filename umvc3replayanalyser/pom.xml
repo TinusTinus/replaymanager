@@ -18,7 +18,7 @@
 	</properties>
 
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
-		the properties instead! -->
+		dependency management in the parent pom instead! -->
 	<dependencies>
 		<!-- GUI -->
 		<dependency>
