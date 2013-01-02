@@ -13,7 +13,6 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
@@ -26,7 +25,6 @@ import org.apache.commons.lang3.StringUtils;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-@RequiredArgsConstructor
 public class TesseractOCREngine implements OCREngine {
     /** Image format used to temporarily store images. */
     private static final String IMAGE_FORMAT = "png";
@@ -38,7 +36,34 @@ public class TesseractOCREngine implements OCREngine {
 
     /** Configuration. */
     private final Configuration configuration;
-    
+
+    /**
+     * Constructor.
+     * 
+     * @param configuration
+     *            configuration
+     */
+    public TesseractOCREngine(Configuration configuration) {
+        super();
+        this.configuration = configuration;
+
+        // Check that the given configuration contains a working tesseract executable.
+        String command = String.format("\"%s\" -v", configuration.getTesseractExecutablePath());
+        log.debug("Executing command: " + command);
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process tesseractProcess = runtime.exec(command);
+            int tesseractExitCode = tesseractProcess.waitFor();
+            if (tesseractExitCode != 0) {
+                throw new IllegalArgumentException(
+                        "Tesseract failed. Please check the configuration. Tesseract exit code: " + tesseractExitCode
+                                + ", tesseract command: " + command);
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new IllegalArgumentException("Unable to invoke Tesseract. Please check the configuration.");
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
     public String ocrLine(BufferedImage image) throws OCRException {
@@ -121,8 +146,9 @@ public class TesseractOCREngine implements OCREngine {
         // TODO Test if this works on Linux / Mac.
         // This version uses quotes to deal with spaces in directory names on Windows,
         // but I'm not sure if this works on Linux.
-        String command = String.format("\"%s\" \"%s\" \"%s\"", configuration.getTesseractExecutablePath(), imageFile.getAbsolutePath(), outbase);
-        
+        String command = String.format("\"%s\" \"%s\" \"%s\"", configuration.getTesseractExecutablePath(),
+                imageFile.getAbsolutePath(), outbase);
+
         log.debug("Executing command: " + command);
         Process tesseractProcess = runtime.exec(command);
 
