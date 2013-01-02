@@ -15,6 +15,7 @@ import javafx.concurrent.Task;
 import javax.imageio.ImageIO;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
@@ -73,8 +74,16 @@ class ImportReplayTask extends Task<List<Replay>> {
         
         this.directory = directory;
         this.replays = replays;
-        // TODO inject the replay analyser?
-        this.replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine()));
+        // TODO inject the replay analyser and/or configuration
+        // TODO load from property file instead of this inner class
+        Configuration configuration = new Configuration() {
+            /** {@inheritDoc} */
+            @Override
+            public String getTesseractExecutablePath() {
+                return "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
+            }
+        };
+        this.replayAnalyser = new ReplayAnalyser(new VersusScreenAnalyser(new TesseractOCREngine(configuration)));
         this.message = "";
     }
     

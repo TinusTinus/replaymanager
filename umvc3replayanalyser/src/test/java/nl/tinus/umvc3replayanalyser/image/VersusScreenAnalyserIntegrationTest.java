@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
@@ -29,7 +30,15 @@ public class VersusScreenAnalyserIntegrationTest {
     /** Setup method. */
     @Before
     public void setUp() {
-        TesseractOCREngine ocrEngine = new TesseractOCREngine();
+        // TODO load from property file instead of this inner class
+        Configuration configuration = new Configuration() {
+            /** {@inheritDoc} */
+            @Override
+            public String getTesseractExecutablePath() {
+                return "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
+            }
+        };
+        TesseractOCREngine ocrEngine = new TesseractOCREngine(configuration);
         this.analyser = new VersusScreenAnalyser(ocrEngine);
     }
 

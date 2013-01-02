@@ -13,7 +13,9 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author Martijn van de Rijdt
  */
 @Slf4j
+@RequiredArgsConstructor
 public class TesseractOCREngine implements OCREngine {
     /** Image format used to temporarily store images. */
     private static final String IMAGE_FORMAT = "png";
@@ -32,9 +35,10 @@ public class TesseractOCREngine implements OCREngine {
     /** Suffix for temporary text files. */
     private static final String TEXT_SUFFIX = ".txt";
     /** Location of the Tesseract executable. */
-    // TODO instead of having this hard-coded, package Tesseract with the application and refer to the correct location
-    private static final String TESSERACT_EXECUTABLE = "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
 
+    /** Configuration. */
+    private final Configuration configuration;
+    
     /** {@inheritDoc} */
     @Override
     public String ocrLine(BufferedImage image) throws OCRException {
@@ -117,7 +121,7 @@ public class TesseractOCREngine implements OCREngine {
         // TODO Test if this works on Linux / Mac.
         // This version uses quotes to deal with spaces in directory names on Windows,
         // but I'm not sure if this works on Linux.
-        String command = String.format("\"%s\" \"%s\" \"%s\"", TESSERACT_EXECUTABLE, imageFile.getAbsolutePath(), outbase);
+        String command = String.format("\"%s\" \"%s\" \"%s\"", configuration.getTesseractExecutablePath(), imageFile.getAbsolutePath(), outbase);
         
         log.debug("Executing command: " + command);
         Process tesseractProcess = runtime.exec(command);
