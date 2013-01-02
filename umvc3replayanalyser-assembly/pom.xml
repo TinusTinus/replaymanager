@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- TODO add a common parent for this and the replay analyser project -->
+
+	<groupId>nl.tinus.umvc3replayanalyser</groupId>
+	<artifactId>umvc3replayanalyser-assembly</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
+		<!-- TODO use project.version instead once there is a common parent project -->
+		<umvc3replayanalyser.version>1.0-SNAPSHOT</umvc3replayanalyser.version>
+	</properties>
+
+	<!-- Dependencies. Please do not specify version numbers here; refer to 
+		the properties instead! -->
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>umvc3replayanalyser</artifactId>
+			<version>${umvc3replayanalyser.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly-win.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
