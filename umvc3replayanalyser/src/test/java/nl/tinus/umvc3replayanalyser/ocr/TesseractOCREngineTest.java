@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import nl.tinus.umvc3replayanalyser.config.Configuration;
+import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 import org.junit.Assert;
@@ -58,14 +59,7 @@ public class TesseractOCREngineTest {
      *             unexpected
      */
     private void testOcrLine(String filename, String expectedText) throws OCRException, IOException {
-        // TODO load from property file instead of this inner class
-        Configuration configuration = new Configuration() {
-            /** {@inheritDoc} */
-            @Override
-            public String getTesseractExecutablePath() {
-                return "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
-            }
-        };
+        Configuration configuration = new PropertiesConfiguration();
         TesseractOCREngine engine = new TesseractOCREngine(configuration);
 
         BufferedImage image = ImageIO.read(new File(filename));
@@ -85,14 +79,7 @@ public class TesseractOCREngineTest {
      */
     @Test(expected = OCRException.class)
     public void testOcrLineMvdRTwoLines() throws OCRException, IOException {
-        // TODO load from property file instead of this inner class
-        Configuration configuration = new Configuration() {
-            /** {@inheritDoc} */
-            @Override
-            public String getTesseractExecutablePath() {
-                return "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
-            }
-        };
+        Configuration configuration = new PropertiesConfiguration();
         TesseractOCREngine engine = new TesseractOCREngine(configuration);
 
         BufferedImage image = ImageIO.read(new File("src/test/resources/MvdR-twolines.png"));
@@ -110,14 +97,7 @@ public class TesseractOCREngineTest {
      */
     @Test(expected = OCRException.class)
     public void testOcrLineEmpty() throws OCRException, IOException {
-        // TODO load from property file instead of this inner class
-        Configuration configuration = new Configuration() {
-            /** {@inheritDoc} */
-            @Override
-            public String getTesseractExecutablePath() {
-                return "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
-            }
-        };
+        Configuration configuration = new PropertiesConfiguration();
         TesseractOCREngine engine = new TesseractOCREngine(configuration);
 
         BufferedImage image = ImageIO.read(new File("src/test/resources/empty.png"));
@@ -749,14 +729,7 @@ public class TesseractOCREngineTest {
      *             unexpected
      */
     private void testOcrCharacter(String filename, Umvc3Character expectedCharacter) throws OCRException, IOException {
-        // TODO load from property file instead of this inner class
-        Configuration configuration = new Configuration() {
-            /** {@inheritDoc} */
-            @Override
-            public String getTesseractExecutablePath() {
-                return "C:\\tesseract-ocr-3.02-win32-portable\\Tesseract-OCR\\tesseract.exe";
-            }
-        };
+        Configuration configuration = new PropertiesConfiguration();
         TesseractOCREngine engine = new TesseractOCREngine(configuration);
 
         BufferedImage image = ImageIO.read(new File(filename));
