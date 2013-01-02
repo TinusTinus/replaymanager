@@ -2,7 +2,7 @@
 <assembly xmlns="http://maven.apache.org/POM/4.0.0"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/assembly-1.1.0-SNAPSHOT.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<id>full</id>
+	<id>windows-x64</id>
 	<formats>
 		<format>zip</format>
 	</formats>

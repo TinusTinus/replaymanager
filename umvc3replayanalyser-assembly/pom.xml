@@ -55,6 +55,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<finalName>replaymanager-${project.version}</finalName>
 					<descriptors>
 						<descriptor>assembly-win.xml</descriptor>
 					</descriptors>
