@@ -7,8 +7,23 @@
 		<format>zip</format>
 	</formats>
 	<baseDirectory>replaymanager</baseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${basedir}/win</directory>
+			<!-- lineEnding>unix</lineEnding> <filtered>true</filtered -->
+			<outputDirectory>/</outputDirectory>
+			<!-- fileMode>0755</fileMode> <directoryMode>0755</directoryMode -->
+		</fileSet>
+	</fileSets>
 	<dependencySets>
 		<dependencySet>
+			<outputDirectory>/lib</outputDirectory>
+		</dependencySet>
+		<dependencySet>
+			<scope>system</scope>
+			<includes>
+				<include>*:jar</include>
+			</includes>
 			<outputDirectory>/lib</outputDirectory>
 		</dependencySet>
 	</dependencySets>
