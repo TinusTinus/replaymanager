@@ -21,7 +21,7 @@
 
 	<!-- loggers -->
 	<logger name="nl.tinus">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	<logger name="nl.tinus.umvc3replayanalyser.image">
 		<level value="warn" />
