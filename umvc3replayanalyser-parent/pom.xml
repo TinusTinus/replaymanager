@@ -6,6 +6,7 @@
 	<artifactId>umvc3replayanalyser-parent</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<name>Ultimate Marvel vs Capcom 3 Replay Analyser Parent Project</name>
 
 	<modules>
 		<module>../umvc3replayanalyser</module>

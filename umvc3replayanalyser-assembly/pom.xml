@@ -11,6 +11,7 @@
 	<groupId>${parent.groupId}</groupId>
 	<artifactId>umvc3replayanalyser-assembly</artifactId>
 	<packaging>pom</packaging>
+	<name>Ultimate Marvel vs Capcom 3 Replay Analyser Assembly</name>
 
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
 		dependency management in the parent pom instead! -->
@@ -57,7 +58,7 @@
 				<configuration>
 					<finalName>replaymanager-${project.version}</finalName>
 					<descriptors>
-						<descriptor>assembly-win.xml</descriptor>
+						<descriptor>assembly-windows-x86.xml</descriptor>
 					</descriptors>
 				</configuration>
 			</plugin>

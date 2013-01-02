@@ -11,6 +11,7 @@
 	<groupId>${parent.groupId}</groupId>
 	<artifactId>umvc3replayanalyser</artifactId>
 	<packaging>jar</packaging>
+	<name>Ultimate Marvel vs Capcom 3 Replay Analyser</name>
 
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
