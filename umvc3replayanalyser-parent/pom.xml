@@ -80,6 +80,7 @@
 				<version>${xuggler.version}</version>
 			</dependency>
 			<dependency>
+				<!-- Xuggler implementation for 64-bit Windows -->
 				<!-- Note that, although this jar is available in the Xuggle repository
 					directory, its location does not follow Maven conventions.
 					
@@ -91,6 +92,21 @@
 				-->
 				<groupId>xuggle</groupId>
 				<artifactId>xuggle-xuggler-arch-x86_64-w64-mingw32</artifactId>
+				<version>${xuggler.version}</version>
+			</dependency>
+			<dependency>
+				<!-- Xuggler implementation for 32-bit Windows -->
+				<!-- Note that, although this jar is available in the Xuggle repository
+					directory, its location does not follow Maven conventions.
+					
+					To get this dependency, first download it here:
+						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-w64-mingw32.jar
+					Then manually install it into your local Maven repository using
+					the following command:
+						mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-w64-mingw32.jar -DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-w64-mingw32 -Dversion=5.4 -Dpackaging=jar
+				-->
+				<groupId>xuggle</groupId>
+				<artifactId>xuggle-xuggler-arch-i686-w64-mingw32</artifactId>
 				<version>${xuggler.version}</version>
 			</dependency>
 			<dependency>
