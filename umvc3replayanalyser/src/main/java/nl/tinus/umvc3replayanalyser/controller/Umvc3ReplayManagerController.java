@@ -28,7 +28,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.config.Configuration;
+import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -38,6 +41,9 @@ import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
+import nl.tinus.umvc3replayanalyser.ocr.OCREngine;
+import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
+import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -113,6 +119,8 @@ public class Umvc3ReplayManagerController {
     /** Menu item for importing new replays.*/
     @FXML
     private MenuItem importMenuItem;
+    /** replay analyser. */
+    private ReplayAnalyser replayAnalyser;
     /** Replays. */
     private ObservableList<Replay> replays;
     /** Indicates which character value each assist combo box depends on. */
@@ -122,6 +130,7 @@ public class Umvc3ReplayManagerController {
     @FXML
     private void initialize() {
         log.info("Performing controller initialisation.");
+        initReplayAnalyser();
         loadReplays();
         bindPreviewImageView();
         disableColumnSwapping();
@@ -130,6 +139,14 @@ public class Umvc3ReplayManagerController {
         initAssistComboBoxes();
         initFilterListeners();
         log.info("Initialisation complete.");
+    }
+    
+    /** Initialises the replay analyser. */
+    private void initReplayAnalyser() {
+        Configuration configuration = new PropertiesConfiguration();
+        OCREngine ocrEngine = new TesseractOCREngine(configuration);
+        VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
+        this.replayAnalyser = new ReplayAnalyser(versusScreenAnalyser);
     }
     
     /** Loads the replays from storage. */
@@ -448,7 +465,7 @@ public class Umvc3ReplayManagerController {
      */
     private void importReplays(File directory) {
         // TODO first check that directory does not contain the data directory
-        ImportReplayTask task = new ImportReplayTask(directory, this.replays);
+        ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task,
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
         ImportReplayPopup.show(controller);

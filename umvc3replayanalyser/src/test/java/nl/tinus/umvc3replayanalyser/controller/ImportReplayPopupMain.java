@@ -10,8 +10,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.config.Configuration;
+import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Replay;
+import nl.tinus.umvc3replayanalyser.ocr.OCREngine;
+import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
+import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 
 /**
  * Main class which lets us test the import replay popup as a standalone application.
@@ -51,7 +57,11 @@ public class ImportReplayPopupMain extends Application {
             }
         });
 
-        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays);
+        Configuration configuration = new PropertiesConfiguration();
+        OCREngine ocrEngine = new TesseractOCREngine(configuration);
+        VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
+        ReplayAnalyser replayAnalyser = new ReplayAnalyser(versusScreenAnalyser);
+        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task, working, "Replay Import Thread");
 
         ImportReplayPopup.show(stage, controller);

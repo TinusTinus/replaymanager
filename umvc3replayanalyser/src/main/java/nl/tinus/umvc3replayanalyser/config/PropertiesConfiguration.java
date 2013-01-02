@@ -2,13 +2,17 @@ package nl.tinus.umvc3replayanalyser.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map.Entry;
 import java.util.Properties;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implementation of the configuration interface, using a properties file by the name of CONFIG_FILE_NAME.
  * 
  * @author Martijn van de Rijdt
  */
+@Slf4j
 public class PropertiesConfiguration implements Configuration {
     /** Filename of the configuration file. */
     private static final String CONFIG_FILE_NAME = "/configuration.properties";
@@ -20,6 +24,7 @@ public class PropertiesConfiguration implements Configuration {
     public PropertiesConfiguration() {
         super();
         
+        log.info("Loading configuration from " + CONFIG_FILE_NAME);
         InputStream stream = this.getClass().getResourceAsStream(CONFIG_FILE_NAME);
         if (stream == null) {
             throw new IllegalStateException(
@@ -36,6 +41,15 @@ public class PropertiesConfiguration implements Configuration {
                             "Unable to read configuration from file: %s. Please check the contents and permissions of this file in the etc directory.",
                             CONFIG_FILE_NAME), e);
         }
+        
+        log.info("Properties loaded. Property values:");
+        for (Entry<Object, Object> entry: this.properties.entrySet()) {
+            log.info(String.format("  %s = %s", entry.getKey(), entry.getValue()));
+        }
+        
+        // Fail fast: check that each of the configuration properties can be retrieved.
+        getTesseractExecutablePath();
+        // Add any other configuration properties here!
     }
 
     /**
