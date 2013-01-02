@@ -2,35 +2,31 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- TODO add a common parent for this and the replay analyser project -->
+	<parent>
+		<groupId>nl.tinus.umvc3replayanalyser</groupId>		
+		<artifactId>umvc3replayanalyser-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
-	<groupId>nl.tinus.umvc3replayanalyser</groupId>
+	<groupId>${parent.groupId}</groupId>
 	<artifactId>umvc3replayanalyser-assembly</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<properties>
-		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
-		<!-- TODO use project.version instead once there is a common parent project -->
-		<umvc3replayanalyser.version>1.0-SNAPSHOT</umvc3replayanalyser.version>
-		<javafx.version>2</javafx.version>
-	</properties>
-
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
-		the properties instead! -->
+		dependency management in the parent pom instead! -->
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>${parent.groupId}</groupId>
 			<artifactId>umvc3replayanalyser</artifactId>
-			<version>${umvc3replayanalyser.version}</version>
+			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx</artifactId>
-			<version>${javafx.version}</version>
-			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-			<scope>system</scope>
-			<!-- javadoc: http://docs.oracle.com/javafx/2/api/ -->
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 	</dependencies>
 

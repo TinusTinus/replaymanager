@@ -2,114 +2,77 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>nl.tinus.umvc3replayanalyser</groupId>
+	<parent>
+		<groupId>nl.tinus.umvc3replayanalyser</groupId>		
+		<artifactId>umvc3replayanalyser-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>${parent.groupId}</groupId>
 	<artifactId>umvc3replayanalyser</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
-		<commons-lang3.version>3.1</commons-lang3.version>
-		<guava.version>13.0.1</guava.version>
-		<jackson.version>1.9.9</jackson.version>
 		<java.version>1.7</java.version>
-		<javafx.version>2</javafx.version>
-		<junit.version>4.10</junit.version>
-		<lombok.version>0.11.2</lombok.version>
-		<slf4j.version>1.7.2</slf4j.version>
-		<xuggler.version>5.4</xuggler.version>
 	</properties>
 
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
 		the properties instead! -->
 	<dependencies>
 		<!-- GUI -->
-		<!-- The JavaFX dependency assumes jfxrt.jar is in the JRE's lib directory. 
-			This is the case from JDK 1.7u6 onwards. Tested with JDK 1.7u7. -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>javafx</artifactId>
-			<version>${javafx.version}</version>
-			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-			<scope>system</scope>
-			<!-- javadoc: http://docs.oracle.com/javafx/2/api/ -->
 		</dependency>
 
 		<!-- Video decoding -->
 		<dependency>
 			<groupId>xuggle</groupId>
 			<artifactId>xuggle-xuggler</artifactId>
-			<version>${xuggler.version}</version>
-			<exclusions>
-				<!-- exclude logback and slf4j, since I'm already using slf4j with log4j -->
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-			</exclusions>
-			<!-- javadoc: http://build.xuggle.com/view/Stable/job/xuggler_jdk5_stable/javadoc/java/api/ -->
 		</dependency>
 
 		<!-- JSON -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 
 		<!-- Useful utilities -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
 		</dependency>
 
 		<!-- Compile-time assistance -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
-			<scope>provided</scope>
-			<!-- Note: Lombok is only needed at compile time. There is no need to 
-				provide it on the classpath at runtime. -->
 		</dependency>
 
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
