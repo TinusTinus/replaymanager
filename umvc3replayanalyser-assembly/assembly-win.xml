@@ -10,9 +10,11 @@
 	<fileSets>
 		<fileSet>
 			<directory>${basedir}/win</directory>
-			<!-- lineEnding>unix</lineEnding> <filtered>true</filtered -->
 			<outputDirectory>/</outputDirectory>
-			<!-- fileMode>0755</fileMode> <directoryMode>0755</directoryMode -->
+		</fileSet>
+		<fileSet>
+			<directory>${basedir}/common</directory>
+			<outputDirectory>/</outputDirectory>
 		</fileSet>
 	</fileSets>
 	<dependencySets>
