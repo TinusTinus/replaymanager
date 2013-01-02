@@ -50,6 +50,14 @@
 			<groupId>xuggle</groupId>
 			<artifactId>xuggle-xuggler-arch-i686-w64-mingw32</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>xuggle</groupId>
+			<artifactId>xuggle-xuggler-arch-i686-pc-linux-gnu</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>xuggle</groupId>
+			<artifactId>xuggle-xuggler-arch-x86_64-pc-linux-gnu</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -71,6 +79,8 @@
 					<descriptors>
 						<descriptor>assembly-windows-x86.xml</descriptor>
 						<descriptor>assembly-windows-x64.xml</descriptor>
+						<descriptor>assembly-linux-x86.xml</descriptor>
+						<descriptor>assembly-linux-x64.xml</descriptor>
 					</descriptors>
 				</configuration>
 			</plugin>
