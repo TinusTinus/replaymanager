@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>nl.tinus.umvc3replayanalyser</groupId>		
+		<groupId>nl.tinus.umvc3replayanalyser</groupId>
 		<artifactId>umvc3replayanalyser-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
@@ -27,6 +27,16 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- Note: if you have any problems, see the parent pom's dependencyManagement 
+			on how to obtain the Xuggle dependencies. -->
+		<dependency>
+			<groupId>xuggle</groupId>
+			<artifactId>xuggle-xuggler-noarch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>xuggle</groupId>
+			<artifactId>xuggle-xuggler-arch-x86_64-w64-mingw32</artifactId>
 		</dependency>
 	</dependencies>
 
