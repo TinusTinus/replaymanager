@@ -65,8 +65,9 @@
 			</dependency>
 			<dependency>
 				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions. To get
-					this dependency, first download it here:
+					directory, its location does not follow Maven conventions.
+					
+					To get this dependency, first download it here:
 						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-noarch-5.4.jar
 					Then manually install it into your local Maven repository using
 					the following command:
@@ -78,8 +79,9 @@
 			</dependency>
 			<dependency>
 				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions. To get
-					this dependency, first download it here:
+					directory, its location does not follow Maven conventions.
+					
+					To get this dependency, first download it here:
 						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-w64-mingw32.jar
 					Then manually install it into your local Maven repository using
 					the following command:
