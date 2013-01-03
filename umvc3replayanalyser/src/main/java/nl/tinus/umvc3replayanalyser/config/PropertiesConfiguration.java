@@ -23,7 +23,7 @@ public class PropertiesConfiguration implements Configuration {
     /** Constructor. */
     public PropertiesConfiguration() {
         super();
-        
+
         log.info("Loading configuration from " + CONFIG_FILE_NAME);
         InputStream stream = this.getClass().getResourceAsStream(CONFIG_FILE_NAME);
         if (stream == null) {
@@ -41,14 +41,16 @@ public class PropertiesConfiguration implements Configuration {
                             "Unable to read configuration from file: %s. Please check the contents and permissions of this file in the etc directory.",
                             CONFIG_FILE_NAME), e);
         }
-        
-        log.info("Properties loaded. Property values:");
-        for (Entry<Object, Object> entry: this.properties.entrySet()) {
+
+        log.info("Properties loaded. Values in file (not necessarily in this order):");
+        for (Entry<Object, Object> entry : this.properties.entrySet()) {
             log.info(String.format("  %s = %s", entry.getKey(), entry.getValue()));
         }
-        
-        // Fail fast: check that each of the configuration properties can be retrieved.
-        getTesseractExecutablePath();
+
+        // Fail fast: check that each of the configuration properties can be retrieved; log them as well.
+        log.info("Tesseract executable path: " + getTesseractExecutablePath());
+        log.info("Data directory path: " + getDataDirectoryPath());
+        log.info("Move video files to data directory: " + isMoveVideoFilesToDataDirectory());
         // Add any other configuration properties here!
     }
 
@@ -61,11 +63,28 @@ public class PropertiesConfiguration implements Configuration {
      * @return property value
      */
     private String getProperty(String key) {
+        return getProperty(key, null);
+    }
+
+    /**
+     * Retrieves a property from the properties; if the property value is null, this method returns the given default,
+     * or throws an IllegalStateException if there is no default.
+     * 
+     * @param key
+     *            a key, for which there is no meaningful default value
+     * @param defaultValue
+     *            the default value to be returned if the propeties do not contain the given key; may be null if there
+     *            is no sensible default
+     * @return property value
+     */
+    private String getProperty(String key, String defaultValue) {
         String result = properties.getProperty(key);
-        if (result == null) {
+        if (result == null && defaultValue != null) {
+            result = defaultValue;
+        } else if (result == null) {
             throw new IllegalStateException(
                     String.format(
-                            "Missing property value: %s. Please make sure this property is defined in %s, located in the etc directory.",
+                            "Missing property value without default: %s. Please make sure this property is defined in %s, located in the etc directory.",
                             key, CONFIG_FILE_NAME));
         }
         return result;
@@ -75,5 +94,18 @@ public class PropertiesConfiguration implements Configuration {
     @Override
     public String getTesseractExecutablePath() {
         return getProperty("tesseract-executable-path");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getDataDirectoryPath() {
+        return getProperty("data-directory-path", "../data");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean isMoveVideoFilesToDataDirectory() {
+        String string = getProperty("move-video-files", "true");
+        return Boolean.valueOf(string).booleanValue();
     }
 }

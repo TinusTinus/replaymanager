@@ -20,16 +20,16 @@ import org.junit.Test;
  */
 public class TesseractOCREngineTest {
 
-    /** Attempts to pass in an invalid configuration. */
+    /** Attempts to pass in a null value for the configuration. */
     @Test(expected = NullPointerException.class)
     public void testNullConfiguration() {
         new TesseractOCREngine(null);
     }
-    
+
     /** Attempts to pass in an invalid configuration. */
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidConfiguration() {
-        Configuration configuration = new Configuration() {
+        Configuration configuration = new PropertiesConfiguration() {
             /** (@inheritDoc) */
             @Override
             public String getTesseractExecutablePath() {
@@ -38,7 +38,7 @@ public class TesseractOCREngineTest {
         };
         new TesseractOCREngine(configuration);
     }
-    
+
     /**
      * Attempts to read a file.
      * 
@@ -757,7 +757,7 @@ public class TesseractOCREngineTest {
 
         Assert.assertEquals(expectedCharacter, character);
     }
-    
+
     /**
      * Tests the getTesseractVersion method.
      * 

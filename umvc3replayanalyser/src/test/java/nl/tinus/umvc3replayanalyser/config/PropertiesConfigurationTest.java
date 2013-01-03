@@ -14,5 +14,7 @@ public class PropertiesConfigurationTest {
     public void test() {
         PropertiesConfiguration configuration = new PropertiesConfiguration();
         Assert.assertNotNull(configuration.getTesseractExecutablePath());
+        Assert.assertNotNull(configuration.getDataDirectoryPath());
+        configuration.isMoveVideoFilesToDataDirectory();
     }
 }
