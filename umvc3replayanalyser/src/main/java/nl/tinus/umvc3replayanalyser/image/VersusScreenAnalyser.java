@@ -201,7 +201,9 @@ public class VersusScreenAnalyser {
     private String getGamerTag(BufferedImage versusImage, Side side, int x, int y, int w, int h) throws OCRException {
         BufferedImage image = versusImage.getSubimage(x, y, w, h);
         String result = this.engine.ocrLine(image);
-        log.info(side + "'s gamertag: " + result);
+        if (log.isDebugEnabled()) {
+            log.debug(side + "'s gamertag: " + result);
+        }
         return result;
     }
 
@@ -230,7 +232,9 @@ public class VersusScreenAnalyser {
             int h) throws OCRException {
         BufferedImage image = versusImage.getSubimage(x, y, w, h);
         Umvc3Character result = this.engine.ocrCharacter(image);
-        log.info(String.format("%s's character %s: %s", side, "" + characterNumber, result));
+        if (log.isDebugEnabled()) {
+            log.debug(String.format("%s's character %s: %s", side, "" + characterNumber, result));
+        }
 
         return result;
     }

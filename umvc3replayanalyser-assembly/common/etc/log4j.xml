@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
 <log4j:configuration>
-	<!-- Sys out appender -->
+	<!-- Standard out appender -->
 	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p [%t] (%F:%L) - %m%n" />
@@ -18,20 +18,6 @@
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p [%t] (%F:%L) - %m%n" />
 		</layout>
 	</appender>
-
-	<!-- loggers -->
-	<logger name="nl.tinus">
-		<level value="info" />
-	</logger>
-	<logger name="nl.tinus.umvc3replayanalyser.image">
-		<level value="warn" />
-	</logger>
-	<logger name="nl.tinus.umvc3replayanalyser.ocr">
-		<level value="info" />
-	</logger>
-	<logger name="nl.tinus.umvc3replayanalyser.video">
-		<level value="info" />
-	</logger>
 
 	<!-- root -->
 	<root>
