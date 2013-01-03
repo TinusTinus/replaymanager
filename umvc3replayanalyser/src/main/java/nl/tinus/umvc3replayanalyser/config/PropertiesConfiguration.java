@@ -22,15 +22,26 @@ public class PropertiesConfiguration implements Configuration {
 
     /** Constructor. */
     public PropertiesConfiguration() {
+        this(CONFIG_FILE_NAME);
+    }
+
+    /**
+     * Constructor that allows to pass in the configuration file name. Default visibility since this is intended only to
+     * be used in test cases. Otherwise just use the default constructor.
+     * 
+     * @param configFileName
+     *            filename of the configuration file
+     */
+    PropertiesConfiguration(String configFileName) {
         super();
 
-        log.info("Loading configuration from " + CONFIG_FILE_NAME);
-        InputStream stream = this.getClass().getResourceAsStream(CONFIG_FILE_NAME);
+        log.info("Loading configuration from " + configFileName);
+        InputStream stream = this.getClass().getResourceAsStream(configFileName);
         if (stream == null) {
             throw new IllegalStateException(
                     String.format(
                             "No configuration file found by the name of %s. Please make sure such a file exists in the etc directory.",
-                            CONFIG_FILE_NAME));
+                            configFileName));
         }
         this.properties = new Properties();
         try {
@@ -39,7 +50,7 @@ public class PropertiesConfiguration implements Configuration {
             throw new IllegalStateException(
                     String.format(
                             "Unable to read configuration from file: %s. Please check the contents and permissions of this file in the etc directory.",
-                            CONFIG_FILE_NAME), e);
+                            configFileName), e);
         }
 
         log.info("Properties loaded. Values in file (not necessarily in this order):");
@@ -80,6 +91,9 @@ public class PropertiesConfiguration implements Configuration {
     private String getProperty(String key, String defaultValue) {
         String result = properties.getProperty(key);
         if (result == null && defaultValue != null) {
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("Missing property value: %s. Using default: %s", key, defaultValue));
+            }
             result = defaultValue;
         } else if (result == null) {
             throw new IllegalStateException(
@@ -101,7 +115,7 @@ public class PropertiesConfiguration implements Configuration {
     public String getDataDirectoryPath() {
         return getProperty("data-directory-path", "../data");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isMoveVideoFilesToDataDirectory() {

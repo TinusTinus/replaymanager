@@ -17,4 +17,19 @@ public class PropertiesConfigurationTest {
         Assert.assertNotNull(configuration.getDataDirectoryPath());
         configuration.isMoveVideoFilesToDataDirectory();
     }
+
+    /** Creates a new PropertiesConfiguration where a mandatory property has been omitted. */
+    @Test(expected = IllegalStateException.class)
+    public void testMissingTesseractExecutable() {
+        new PropertiesConfiguration("/config-no-tesseract.properties");
+    }
+
+    /** Creates a new PropertiesConfiguration where non-mandatory properties have been omitted. */
+    @Test
+    public void testDefaults() {
+        PropertiesConfiguration configuration = new PropertiesConfiguration("/config-defaults.properties");
+        Assert.assertNotNull(configuration.getTesseractExecutablePath());
+        Assert.assertEquals("../data", configuration.getDataDirectoryPath());
+        Assert.assertTrue(configuration.isMoveVideoFilesToDataDirectory());
+    }
 }
