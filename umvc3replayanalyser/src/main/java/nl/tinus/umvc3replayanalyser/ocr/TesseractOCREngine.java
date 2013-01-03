@@ -203,7 +203,7 @@ public class TesseractOCREngine implements OCREngine {
                 throw new OCRException("Command failed, exit code: " + exitCode + ", command: " + command);
             }
         } catch (IOException | InterruptedException e) {
-            throw new OCRException();
+            throw new OCRException(e);
         }
         return firstLine;
     }
