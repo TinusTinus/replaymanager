@@ -1,8 +1,10 @@
 package nl.tinus.umvc3replayanalyser.ocr;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -49,10 +51,20 @@ public class TesseractOCREngine implements OCREngine {
 
         // Check that the given configuration contains a working tesseract executable.
         String command = String.format("\"%s\" -v", configuration.getTesseractExecutablePath());
-        log.debug("Executing command: " + command);
+        log.info("Executing command: " + command);
         Runtime runtime = Runtime.getRuntime();
         try {
             Process tesseractProcess = runtime.exec(command);
+            
+            // Log Tesseract's output
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(tesseractProcess.getErrorStream()))) {
+                String line = reader.readLine();
+                while (line != null) {
+                    log.info("tesseract: " + line);
+                    line = reader.readLine();
+                }
+            }
+            
             int tesseractExitCode = tesseractProcess.waitFor();
             if (tesseractExitCode != 0) {
                 throw new IllegalArgumentException(
