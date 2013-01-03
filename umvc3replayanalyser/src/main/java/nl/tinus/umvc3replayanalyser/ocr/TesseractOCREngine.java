@@ -118,7 +118,7 @@ public class TesseractOCREngine implements OCREngine {
             }
         }
 
-        log.info("Read text: " + result);
+        log.debug("Read text: " + result);
         return result;
     }
 
@@ -245,7 +245,7 @@ public class TesseractOCREngine implements OCREngine {
     public Umvc3Character ocrCharacter(BufferedImage image) throws OCRException {
         String text = ocrLine(image);
         Umvc3Character result = matchToCharacterName(text);
-        log.info("Read character: " + result);
+        log.debug("Read character: " + result);
         return result;
     }
 

@@ -27,7 +27,7 @@
 		<level value="warn" />
 	</logger>
 	<logger name="nl.tinus.umvc3replayanalyser.ocr">
-		<level value="warn" />
+		<level value="info" />
 	</logger>
 	<logger name="nl.tinus.umvc3replayanalyser.video">
 		<level value="info" />
