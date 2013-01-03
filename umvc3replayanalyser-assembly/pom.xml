@@ -77,10 +77,10 @@
 				<configuration>
 					<finalName>replaymanager-${project.version}</finalName>
 					<descriptors>
-						<descriptor>assembly-windows-x86.xml</descriptor>
 						<descriptor>assembly-windows-x64.xml</descriptor>
-						<descriptor>assembly-linux-x86.xml</descriptor>
+						<descriptor>assembly-windows-x86.xml</descriptor>
 						<descriptor>assembly-linux-x64.xml</descriptor>
+						<descriptor>assembly-linux-x86.xml</descriptor>
 					</descriptors>
 				</configuration>
 			</plugin>
