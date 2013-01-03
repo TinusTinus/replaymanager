@@ -1,0 +1,5 @@
+# This file is here because git does not track empty direcories.
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore

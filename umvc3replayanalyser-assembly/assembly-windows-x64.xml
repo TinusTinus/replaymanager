@@ -15,6 +15,9 @@
 		<fileSet>
 			<directory>${basedir}/common</directory>
 			<outputDirectory>/</outputDirectory>
+			<excludes>
+				<exclude>**/.gitignore</exclude>
+			</excludes>
 		</fileSet>
 	</fileSets>
 	<dependencySets>
