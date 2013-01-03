@@ -50,29 +50,12 @@ public class TesseractOCREngine implements OCREngine {
         this.configuration = configuration;
 
         // Check that the given configuration contains a working tesseract executable.
+        // TODO check that the use of quotes works on Linux / Mac.
         String command = String.format("\"%s\" -v", configuration.getTesseractExecutablePath());
-        log.info("Executing command: " + command);
-        Runtime runtime = Runtime.getRuntime();
         try {
-            Process tesseractProcess = runtime.exec(command);
-            
-            // Log Tesseract's output
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(tesseractProcess.getErrorStream()))) {
-                String line = reader.readLine();
-                while (line != null) {
-                    log.info("tesseract: " + line);
-                    line = reader.readLine();
-                }
-            }
-            
-            int tesseractExitCode = tesseractProcess.waitFor();
-            if (tesseractExitCode != 0) {
-                throw new IllegalArgumentException(
-                        "Tesseract failed. Please check the configuration. Tesseract exit code: " + tesseractExitCode
-                                + ", tesseract command: " + command);
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new IllegalArgumentException("Unable to invoke Tesseract. Please check the configuration.");
+            execute(command);
+        } catch (IOException | InterruptedException | OCRException e) {
+            throw new IllegalArgumentException("Unable to invoke Tesseract. Please check the configuration.", e);
         }
     }
 
@@ -152,7 +135,6 @@ public class TesseractOCREngine implements OCREngine {
      *             in case Tesseract execution fails
      */
     private void runTesseract(File imageFile, File textFile) throws IOException, InterruptedException, OCRException {
-        Runtime runtime = Runtime.getRuntime();
         String outbase = textFile.getAbsolutePath().substring(0,
                 textFile.getAbsolutePath().length() - TEXT_SUFFIX.length());
         // TODO Test if this works on Linux / Mac.
@@ -161,14 +143,46 @@ public class TesseractOCREngine implements OCREngine {
         String command = String.format("\"%s\" \"%s\" \"%s\"", configuration.getTesseractExecutablePath(),
                 imageFile.getAbsolutePath(), outbase);
 
-        log.debug("Executing command: " + command);
-        Process tesseractProcess = runtime.exec(command);
+        execute(command);
+    }
 
-        int tesseractExitCode = tesseractProcess.waitFor();
-        if (tesseractExitCode != 0) {
-            throw new OCRException("Tesseract failed, exit code: " + tesseractExitCode + ", tesseract command: "
+    /**
+     * Executes the given command.
+     * 
+     * @param command
+     *            command to be executed
+     * @throws IOException
+     *             if an I/O error occurs
+     * @throws InterruptedException
+     *             unexpected interrupt
+     * @throws OCRException
+     *             if the command returns a nonzero exit code
+     * @return the first line of the command's output
+     */
+    private String execute(String command) throws IOException, InterruptedException, OCRException {
+        log.debug("Executing command: " + command);
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec(command);
+
+        // Log Tesseract's output and capture the first line.
+        String firstLine;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+            String line = reader.readLine();
+            firstLine = line;
+            if (log.isDebugEnabled()) {
+                while (line != null) {
+                    log.debug("tesseract: " + line);
+                    line = reader.readLine();
+                }
+            }
+        }
+        
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new OCRException("Command failed, exit code: " + exitCode + ", command: "
                     + command);
         }
+        return firstLine;
     }
 
     /**
