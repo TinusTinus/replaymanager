@@ -757,4 +757,17 @@ public class TesseractOCREngineTest {
 
         Assert.assertEquals(expectedCharacter, character);
     }
+    
+    /**
+     * Tests the getTesseractVersion method.
+     * 
+     * @throws OCRException
+     *             unexpected
+     */
+    @Test
+    public void testGetVersion() throws OCRException {
+        Configuration configuration = new PropertiesConfiguration();
+        TesseractOCREngine engine = new TesseractOCREngine(configuration);
+        Assert.assertEquals("3.02", engine.getTesseractVersion());
+    }
 }

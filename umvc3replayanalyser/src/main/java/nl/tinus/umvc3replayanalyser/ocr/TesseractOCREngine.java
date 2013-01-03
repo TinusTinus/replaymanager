@@ -49,14 +49,35 @@ public class TesseractOCREngine implements OCREngine {
         super();
         this.configuration = configuration;
 
-        // Check that the given configuration contains a working tesseract executable.
-        // TODO check that the use of quotes works on Linux / Mac.
-        String command = String.format("\"%s\" -v", configuration.getTesseractExecutablePath());
+        // Check that the given configuration contains a working tesseract executable by attempting to retrieve Tesseract's version number.
         try {
-            execute(command);
-        } catch (IOException | InterruptedException | OCRException e) {
+            log.info("Tesseract version: " + getTesseractVersion());
+        } catch (OCRException e) {
             throw new IllegalArgumentException("Unable to invoke Tesseract. Please check the configuration.", e);
         }
+    }
+
+    /**
+     * Retrieves Tesseract's version number.
+     * 
+     * @throws OCRException
+     *             in case the version number cannot be retrieved
+     * @return Tesseract's version number
+     */
+    public String getTesseractVersion() throws OCRException {
+        // TODO check that the use of quotes works on Linux / Mac.
+        String command = String.format("\"%s\" -v", configuration.getTesseractExecutablePath());
+        String firstLine = execute(command);
+        if (firstLine == null) {
+            throw new OCRException("Unable to determine Tesseract version number; Tesseract did not write anything to its output.");
+        }
+        String result;
+        if (firstLine.startsWith("tesseract ")) {
+            result = firstLine.substring(10);
+        } else {
+            result = firstLine;
+        }
+        return result;
     }
 
     /** {@inheritDoc} */
@@ -82,7 +103,7 @@ public class TesseractOCREngine implements OCREngine {
 
             // Read the contents of the text file.
             result = readLineFromFile(textFile);
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             throw new OCRException(e);
         } finally {
             // Clean up the temporary files.
@@ -134,7 +155,7 @@ public class TesseractOCREngine implements OCREngine {
      * @throws OCRException
      *             in case Tesseract execution fails
      */
-    private void runTesseract(File imageFile, File textFile) throws IOException, InterruptedException, OCRException {
+    private void runTesseract(File imageFile, File textFile) throws OCRException {
         String outbase = textFile.getAbsolutePath().substring(0,
                 textFile.getAbsolutePath().length() - TEXT_SUFFIX.length());
         // TODO Test if this works on Linux / Mac.
@@ -151,36 +172,37 @@ public class TesseractOCREngine implements OCREngine {
      * 
      * @param command
      *            command to be executed
-     * @throws IOException
-     *             if an I/O error occurs
-     * @throws InterruptedException
-     *             unexpected interrupt
      * @throws OCRException
      *             if the command returns a nonzero exit code
      * @return the first line of the command's output
      */
-    private String execute(String command) throws IOException, InterruptedException, OCRException {
-        log.debug("Executing command: " + command);
-        Runtime runtime = Runtime.getRuntime();
-        Process process = runtime.exec(command);
-
-        // Log Tesseract's output and capture the first line.
+    private String execute(String command) throws OCRException {
+        if (log.isDebugEnabled()) {
+            log.debug("Executing command: " + command);
+        }
         String firstLine;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
-            String line = reader.readLine();
-            firstLine = line;
-            if (log.isDebugEnabled()) {
-                while (line != null) {
-                    log.debug("tesseract: " + line);
-                    line = reader.readLine();
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            Process process = runtime.exec(command);
+
+            // Log the process's output and capture the first line.
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                String line = reader.readLine();
+                firstLine = line;
+                if (log.isDebugEnabled()) {
+                    while (line != null) {
+                        log.debug("tesseract: " + line);
+                        line = reader.readLine();
+                    }
                 }
             }
-        }
-        
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            throw new OCRException("Command failed, exit code: " + exitCode + ", command: "
-                    + command);
+
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new OCRException("Command failed, exit code: " + exitCode + ", command: " + command);
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new OCRException();
         }
         return firstLine;
     }
