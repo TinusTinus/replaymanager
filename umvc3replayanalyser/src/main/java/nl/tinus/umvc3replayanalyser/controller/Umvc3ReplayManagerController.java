@@ -163,11 +163,9 @@ public class Umvc3ReplayManagerController {
     /** Loads the replays from storage. */
     private void loadReplays() {
         if (replays != null) {
-            throw new IllegalStateException("Replays already loaded.");
+            throw new IllegalStateException("Replays already loaded: " + replays);
         }
         
-        // TODO load from storage
-        // For now, we create a dummy list containing some games.
         replays = FXCollections.observableList(new ArrayList<Replay>());
         
         File dataDirectory = new File(this.configuration.getDataDirectoryPath());
@@ -190,6 +188,10 @@ public class Umvc3ReplayManagerController {
                     replays.add(replay);
                 } catch (IOException e) {
                     log.warn("Failed to import replay from " + file, e);
+                }
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("Skipping file: " + file);
                 }
             }
         }
