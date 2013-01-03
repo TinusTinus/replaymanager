@@ -119,7 +119,10 @@ public class Umvc3ReplayManagerController {
     /** Menu item for importing new replays.*/
     @FXML
     private MenuItem importMenuItem;
-    /** replay analyser. */
+    
+    /** Application configuration. */
+    private Configuration configuration;
+    /** Replay analyser. */
     private ReplayAnalyser replayAnalyser;
     /** Replays. */
     private ObservableList<Replay> replays;
@@ -130,6 +133,7 @@ public class Umvc3ReplayManagerController {
     @FXML
     private void initialize() {
         log.info("Performing controller initialisation.");
+        loadConfiguration();
         initReplayAnalyser();
         loadReplays();
         bindPreviewImageView();
@@ -140,15 +144,23 @@ public class Umvc3ReplayManagerController {
         initFilterListeners();
         log.info("Initialisation complete.");
     }
+
+    /** Loads the configuration. */
+    private void loadConfiguration() {
+        if (this.configuration != null) {
+            throw new IllegalStateException("Configuration already loaded.");
+        }
+        this.configuration = new PropertiesConfiguration();
+    }
+
     
     /** Initialises the replay analyser. */
     private void initReplayAnalyser() {
-        Configuration configuration = new PropertiesConfiguration();
-        OCREngine ocrEngine = new TesseractOCREngine(configuration);
+        OCREngine ocrEngine = new TesseractOCREngine(this.configuration);
         VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
         this.replayAnalyser = new ReplayAnalyser(versusScreenAnalyser);
     }
-    
+
     /** Loads the replays from storage. */
     private void loadReplays() {
         if (replays != null) {
