@@ -1,9 +1,9 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,16 +34,15 @@ import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
-import nl.tinus.umvc3replayanalyser.model.Game;
-import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.model.Side;
-import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
 import nl.tinus.umvc3replayanalyser.ocr.OCREngine;
 import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -170,14 +169,31 @@ public class Umvc3ReplayManagerController {
         // TODO load from storage
         // For now, we create a dummy list containing some games.
         replays = FXCollections.observableList(new ArrayList<Replay>());
-        replays.add(new Replay(new Date(System.currentTimeMillis() + 1000), new Game(new Player("MvdR"), new Team(
-                Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM), new Player("mistermkl"),
-                new Team(Umvc3Character.MORRIGAN, Umvc3Character.HAGGAR, Umvc3Character.SHUMA_GORATH)),
-                "/badhyper-vs-MvdR.mp4", "/vs.png"));
-        replays.add(new Replay(new Date(), new Game(new Player("Yipes"), new Team(Umvc3Character.NOVA,
-                Umvc3Character.SPENCER, Umvc3Character.DOCTOR_STRANGE), new Player("PR Rog"), new Team(
-                Umvc3Character.WOLVERINE, Umvc3Character.DOCTOR_DOOM, Umvc3Character.VERGIL)), "/badhyper-vs-MvdR.mp4",
-                "/vswithoutnames.png"));
+        
+        File dataDirectory = new File(this.configuration.getDataDirectoryPath());
+        if (!dataDirectory.exists()) {
+            throw new IllegalStateException("Not an existing path: " + dataDirectory + ". Check your configuration.");
+        }
+        if (!dataDirectory.isDirectory()) {
+            throw new IllegalStateException("Not a directory: " + dataDirectory + ". Check your configuration.");
+        }
+        
+        ObjectMapper mapper = new ObjectMapper();
+        for (File file: dataDirectory.listFiles()) {
+            if (file.getName().endsWith(".replay")) {
+                try {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Attempting to load: " + file);
+                    }
+                    Replay replay = mapper.readValue(file, Replay.class);
+                    log.info("Loaded from " + file + ": " + replay.getGame());
+                    replays.add(replay);
+                } catch (IOException e) {
+                    log.warn("Failed to import replay from " + file, e);
+                }
+            }
+        }
+        
         replays.addListener(new ListChangeListener<Replay>() {
             /** {@inheritDoc} */
             @Override
