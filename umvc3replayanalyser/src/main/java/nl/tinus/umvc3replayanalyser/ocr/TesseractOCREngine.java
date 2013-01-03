@@ -173,7 +173,8 @@ public class TesseractOCREngine implements OCREngine {
      * @param command
      *            command to be executed
      * @throws OCRException
-     *             if the command returns a nonzero exit code
+     *             if the command returns a nonzero exit code, the command is interrupted or there is an unexpected I/O
+     *             exception
      * @return the first line of the command's output
      */
     private String execute(String command) throws OCRException {
