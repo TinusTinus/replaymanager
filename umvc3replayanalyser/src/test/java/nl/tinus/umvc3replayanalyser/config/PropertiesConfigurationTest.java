@@ -17,6 +17,7 @@ public class PropertiesConfigurationTest {
         Assert.assertNotNull("src/test/resources/data", configuration.getDataDirectoryPath());
         Assert.assertFalse(configuration.isMoveVideoFilesToDataDirectory());
         Assert.assertFalse(configuration.isSavePreviewImageToDataDirectory());
+        Assert.assertTrue(configuration.isPrettyPrintReplays());
     }
 
     /** Creates a new PropertiesConfiguration where a mandatory property has been omitted. */
@@ -33,5 +34,6 @@ public class PropertiesConfigurationTest {
         Assert.assertEquals("../data", configuration.getDataDirectoryPath());
         Assert.assertTrue(configuration.isMoveVideoFilesToDataDirectory());
         Assert.assertTrue(configuration.isSavePreviewImageToDataDirectory());
+        Assert.assertFalse(configuration.isPrettyPrintReplays());
     }
 }

@@ -30,7 +30,14 @@ public class ImportReplayTaskTest {
         // Create task to be tested.
         File dataDirectory = new File("src/test/resources/data");
         List<Replay> replays = Collections.emptyList();
-        ImportReplayTask task = new ImportReplayTask(dataDirectory, replays, new ConfigurationDummy(), new ReplayAnalyserDummy());
+        ConfigurationDummy configuration = new ConfigurationDummy() {
+            /** {@inheritDoc} */
+            @Override
+            public boolean isPrettyPrintReplays() {
+                return false;
+            }
+        };
+        ImportReplayTask task = new ImportReplayTask(dataDirectory, replays, configuration, new ReplayAnalyserDummy());
         
         Date creationTime = new GregorianCalendar(2012, 0, 4, 18, 25, 46).getTime();
         Player djAlbertoLara = new Player("DJ Alberto Lara");

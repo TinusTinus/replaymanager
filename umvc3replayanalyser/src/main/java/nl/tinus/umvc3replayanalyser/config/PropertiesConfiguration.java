@@ -63,6 +63,7 @@ public class PropertiesConfiguration implements Configuration {
         log.info("Data directory path: " + getDataDirectoryPath());
         log.info("Move video files to data directory: " + isMoveVideoFilesToDataDirectory());
         log.info("Save preview images to data direcory: " + isSavePreviewImageToDataDirectory());
+        log.info("Pretty print replays: " + isPrettyPrintReplays());
         // Add any other configuration properties here!
     }
 
@@ -128,6 +129,13 @@ public class PropertiesConfiguration implements Configuration {
     @Override
     public boolean isSavePreviewImageToDataDirectory() {
         String string = getProperty("save-preview-images", "true");
+        return Boolean.valueOf(string).booleanValue();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPrettyPrintReplays() {
+        String string = getProperty("pretty-print-replays", "false");
         return Boolean.valueOf(string).booleanValue();
     }
 }

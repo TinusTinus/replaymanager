@@ -35,4 +35,12 @@ public interface Configuration {
      * @return whether preview images should be saved to the data directory
      */
     boolean isSavePreviewImageToDataDirectory();
+
+    /**
+     * Indicates whether the contents of .replay files should be pretty printed. Pretty printing makes these files more
+     * readily human-readable, but increases the file size significantly.
+     * 
+     * @return whether pretty printing should be used
+     */
+    boolean isPrettyPrintReplays();
 }

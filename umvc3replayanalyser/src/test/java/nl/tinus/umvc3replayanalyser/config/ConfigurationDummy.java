@@ -29,4 +29,10 @@ public class ConfigurationDummy implements Configuration {
     public boolean isSavePreviewImageToDataDirectory() {
         throw new UnsupportedOperationException("Not implemented.");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPrettyPrintReplays() {
+        throw new UnsupportedOperationException("Not implemented.");
+    }
 }

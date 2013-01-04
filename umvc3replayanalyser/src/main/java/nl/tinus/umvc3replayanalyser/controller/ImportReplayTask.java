@@ -108,7 +108,13 @@ class ImportReplayTask extends Task<List<Replay>> {
         this.replays = replays;
         this.replayAnalyser = analyser;
         this.configuration = configuration;
-        this.writer = new ObjectMapper().writer();
+        
+        ObjectMapper mapper = new ObjectMapper();
+        if (this.configuration.isPrettyPrintReplays()) {
+            this.writer = mapper.writerWithDefaultPrettyPrinter();
+        } else {
+            this.writer = mapper.writer();
+        }
 
         this.message = "";
     }
