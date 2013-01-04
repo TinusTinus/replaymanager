@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import nl.tinus.umvc3replayanalyser.config.Configuration;
+import nl.tinus.umvc3replayanalyser.config.ConfigurationDummy;
 import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
@@ -29,7 +30,7 @@ public class TesseractOCREngineTest {
     /** Attempts to pass in an invalid configuration. */
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidConfiguration() {
-        Configuration configuration = new PropertiesConfiguration() {
+        Configuration configuration = new ConfigurationDummy() {
             /** (@inheritDoc) */
             @Override
             public String getTesseractExecutablePath() {

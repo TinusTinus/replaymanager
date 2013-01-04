@@ -18,6 +18,7 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.ocr.OCREngine;
 import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
+import nl.tinus.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
 /**
  * Main class which lets us test the import replay popup as a standalone application.
@@ -60,7 +61,7 @@ public class ImportReplayPopupMain extends Application {
         Configuration configuration = new PropertiesConfiguration();
         OCREngine ocrEngine = new TesseractOCREngine(configuration);
         VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
-        ReplayAnalyser replayAnalyser = new ReplayAnalyser(versusScreenAnalyser);
+        ReplayAnalyser replayAnalyser = new ReplayAnalyserImpl(versusScreenAnalyser);
         ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, configuration, replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task, working, "Replay Import Thread");
 

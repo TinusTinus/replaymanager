@@ -39,7 +39,7 @@ public class ReplayAnalyserIntegrationTest {
      */
     @Test
     public void test() throws ReplayAnalysisException {
-        ReplayAnalyser analyser = new ReplayAnalyser(this.versusScreenAnalyser);
+        ReplayAnalyserImpl analyser = new ReplayAnalyserImpl(this.versusScreenAnalyser);
 
         GameAndVersusScreen gameAndVersusScreen = analyser.analyse("src/test/resources/badhyper-vs-MvdR.mp4");
         Game game = gameAndVersusScreen.getGame();
@@ -65,7 +65,7 @@ public class ReplayAnalyserIntegrationTest {
      */
     @Test(expected = ReplayAnalysisException.class)
     public void testEOF() throws ReplayAnalysisException {
-        ReplayAnalyser analyser = new ReplayAnalyser(this.versusScreenAnalyser);
+        ReplayAnalyserImpl analyser = new ReplayAnalyserImpl(this.versusScreenAnalyser);
         // Xuggle can handle png files, and interprets them as a single frame video.
         analyser.analyse("src/test/resources/vswithoutnames.png");
     }
@@ -78,7 +78,7 @@ public class ReplayAnalyserIntegrationTest {
      */
     @Test(expected = ReplayAnalysisException.class)
     public void testTextFile() throws ReplayAnalysisException {
-        ReplayAnalyser analyser = new ReplayAnalyser(this.versusScreenAnalyser);
+        ReplayAnalyserImpl analyser = new ReplayAnalyserImpl(this.versusScreenAnalyser);
         analyser.analyse("src/test/resources/test.txt");
     }
     

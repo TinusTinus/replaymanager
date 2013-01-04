@@ -41,6 +41,7 @@ import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
 import nl.tinus.umvc3replayanalyser.ocr.OCREngine;
 import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
+import nl.tinus.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -157,7 +158,7 @@ public class Umvc3ReplayManagerController {
     private void initReplayAnalyser() {
         OCREngine ocrEngine = new TesseractOCREngine(this.configuration);
         VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
-        this.replayAnalyser = new ReplayAnalyser(versusScreenAnalyser);
+        this.replayAnalyser = new ReplayAnalyserImpl(versusScreenAnalyser);
     }
 
     /** Loads the replays from storage. */

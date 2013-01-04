@@ -15,15 +15,16 @@ import javafx.concurrent.Task;
 
 import javax.imageio.ImageIO;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
+import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.video.GameAndVersusScreen;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * Task for importing replays.
@@ -45,6 +46,17 @@ class ImportReplayTask extends Task<List<Replay>> {
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("HH:mm:ss,SSS");
+        }
+    };
+    /**
+     * Thread-local variable holding the time format for output filenames. This variable is stored as a thread-local instead
+     * of just a single constant, because SimpleDateFormat is not threadsafe.
+     */
+    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<DateFormat>() {
+        /** {@inheritDoc} */
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyyMMddHHmmss");
         }
     };
 
@@ -165,13 +177,11 @@ class ImportReplayTask extends Task<List<Replay>> {
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
 
-        // TODO choose a more meaningful name!
-        String baseFilename = file.getName();
-
         Date creationTime = new Date(file.lastModified());
-
         Game game = gameAndVersusScreen.getGame();
         BufferedImage versusScreen = gameAndVersusScreen.getVersusScreen();
+        
+        String baseFilename = getBaseFilename(game, creationTime);
 
         // Save the preview image.
         File previewImageFile;
@@ -204,8 +214,6 @@ class ImportReplayTask extends Task<List<Replay>> {
             }
 
             videoFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + videoFileExtension);
-
-            // TODO wait for producer thread to release the video!
 
             // Note that move will fail with an IOException if videoFile aleady exists.
             Files.move(file.toPath(), videoFile.toPath());
@@ -241,5 +249,34 @@ class ImportReplayTask extends Task<List<Replay>> {
         log.info(message);
         this.message = this.message + "\n" + LOG_MESSAGE_TIME_FORMAT.get().format(new Date()) + " - " + message;
         updateMessage(this.message);
+    }
+    
+    /**
+     * Constructs the base filename, without the extension, to be used for preview image, video file and replay file.
+     * 
+     * @param game
+     *            game
+     * @param creationTime
+     *            creation time
+     * @return base filename
+     */
+    // default visibility for unit tests
+    String getBaseFilename(Game game, Date creationTime) {
+        String time = FILENAME_TIME_FORMAT.get().format(creationTime);
+        String playerOne = game.getPlayerOne().getGamertag().replace(' ', '_');
+        Team teamOne = game.getTeamOne();
+        String teamOneCharacterOne = teamOne.getFirstCharacter().getShortName();
+        String teamOneCharacterTwo = teamOne.getSecondCharacter().getShortName();
+        String teamOneCharacterThree = teamOne.getThirdCharacter().getShortName();
+        String playerTwo = game.getPlayerTwo().getGamertag().replace(' ', '_');
+        Team teamTwo = game.getTeamTwo();
+        String teamTwoCharacterOne = teamTwo.getFirstCharacter().getShortName();
+        String teamTwoCharacterTwo = teamTwo.getSecondCharacter().getShortName();
+        String teamTwoCharacterThree = teamTwo.getThirdCharacter().getShortName();
+
+        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOne, teamOneCharacterOne,
+                teamOneCharacterTwo, teamOneCharacterThree, playerTwo, teamTwoCharacterOne, teamTwoCharacterTwo,
+                teamTwoCharacterThree);
+        return result;
     }
 }

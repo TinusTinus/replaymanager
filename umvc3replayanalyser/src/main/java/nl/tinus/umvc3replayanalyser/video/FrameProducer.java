@@ -26,7 +26,7 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
 
     /** Queue to place items into. */
     private final BlockingQueue<BufferedImage> queue;
-    
+
     /** Null by default. If a frame cannot be placed into the queue, this field is set to a non-null error message text. */
     private String errorMessage;
 
@@ -58,22 +58,24 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
      */
     @Override
     public IError call() throws ReplayAnalysisException {
-        IMediaReader reader = ToolFactory.makeReader(this.videoUrl);
-        reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
-        reader.addListener(this);
-
         IError error = null;
-        while (error == null && !productionCanStop) {
-            // Whenever readPacket results in a complete picture, it will trigger the onVideoPicture method.
-            error = reader.readPacket();
-            log.debug("Read packet.");
+        IMediaReader reader = ToolFactory.makeReader(this.videoUrl);
+        try {
+            reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
+            reader.addListener(this);
+            while (error == null && !productionCanStop) {
+                // Whenever readPacket results in a complete picture, it will trigger the onVideoPicture method.
+                error = reader.readPacket();
+                log.debug("Read packet.");
+            }
+        } finally {
+            reader.close();
         }
-        reader.close();
-        
+
         if (this.errorMessage != null) {
             throw new ReplayAnalysisException(this.errorMessage);
         }
-        
+
         log.info("Done.");
 
         return error;
