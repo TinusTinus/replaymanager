@@ -174,16 +174,15 @@ class ImportReplayTask extends Task<List<Replay>> {
         // Save the preview image.
         File previewImageFile;
         if (this.configuration.isSavePreviewImageToDataDirectory()) {
-            // TODO create file in the data directory
-            // For now, use a temp file
-            previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
-            previewImageFile.deleteOnExit();
+            // Create preview image file in the data directory.
+            previewImageFile = new File(configuration.getDataDirectoryPath() + "/" + baseFilename + "." + IMAGE_FORMAT);
         } else {
             // Save the preview image as a temporary file.
             previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         }
         ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
+        logMessage("Saved preview image: " + previewImageFile);
 
         File videoFile;
         if (this.configuration.isMoveVideoFilesToDataDirectory()) {
