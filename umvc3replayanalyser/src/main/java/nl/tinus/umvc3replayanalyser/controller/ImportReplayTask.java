@@ -25,6 +25,7 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 
 /**
  * Task for importing replays.
@@ -68,8 +69,8 @@ class ImportReplayTask extends Task<List<Replay>> {
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
     private final List<Replay> replays;
-    /** JSON object mapper, used to save replays as files. */
-    private final ObjectMapper mapper;
+    /** JSON object writer, used to save replays as files. */
+    private final ObjectWriter writer;
     /** Message. */
     private String message;
 
@@ -107,7 +108,7 @@ class ImportReplayTask extends Task<List<Replay>> {
         this.replays = replays;
         this.replayAnalyser = analyser;
         this.configuration = configuration;
-        this.mapper = new ObjectMapper();
+        this.writer = new ObjectMapper().writer();
 
         this.message = "";
     }
@@ -232,7 +233,7 @@ class ImportReplayTask extends Task<List<Replay>> {
         if (replayFile.exists()) {
             throw new IOException("Replay already exists: " + replayFile);
         } else {
-            this.mapper.writeValue(replayFile, replay);
+            this.writer.writeValue(replayFile, replay);
             logMessage("Saved replay file: " + replayFile);
         }
 
