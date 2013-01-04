@@ -68,6 +68,7 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
             error = reader.readPacket();
             log.debug("Read packet.");
         }
+        reader.close();
         
         if (this.errorMessage != null) {
             throw new ReplayAnalysisException(this.errorMessage);
