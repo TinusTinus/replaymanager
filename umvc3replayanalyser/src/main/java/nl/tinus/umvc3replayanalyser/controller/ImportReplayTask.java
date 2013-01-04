@@ -14,6 +14,8 @@ import javafx.concurrent.Task;
 
 import javax.imageio.ImageIO;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -143,11 +145,14 @@ class ImportReplayTask extends Task<List<Replay>> {
      * @throws ReplayAnalysisException
      *             in case the replay cannot be analysed
      * @throws IOException
-     *             if unable to save the preview image or replay video
+     *             if unable to save the preview image, video file or replay file
      */
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
 
+        // TODO choose a more meaningful name!
+        String baseFilename = file.getName();
+        
         Date creationTime = new Date(file.lastModified());
         
         Game game = gameAndVersusScreen.getGame();
@@ -178,8 +183,16 @@ class ImportReplayTask extends Task<List<Replay>> {
         
         Replay replay = new Replay(creationTime, game, "file:///" + videoFile.getAbsolutePath(), "file:///"
                 + previewImageFile.getAbsolutePath());
-        
-        // TODO save replay to the data directory
+
+        // Save replay to the data directory.
+        File replayFile = new File(configuration.getDataDirectoryPath() + "/" + baseFilename + ".replay");
+        if (replayFile.exists()) {
+            throw new IOException("Replay already exists: " + replayFile);
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(replayFile, replay);
+            logMessage("Saved replay file: " + replayFile);
+        }
         
         return replay;
     }
