@@ -3,6 +3,7 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
  */
 @Slf4j
 class ImportReplayTask extends Task<List<Replay>> {
+    /** Name of the image format to be used when saving preview images. */
+    private static final String IMAGE_FORMAT = "png";
     /**
      * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
      * of just a single constant, because SimpleDateFormat is not threadsafe.
@@ -173,19 +176,35 @@ class ImportReplayTask extends Task<List<Replay>> {
         if (this.configuration.isSavePreviewImageToDataDirectory()) {
             // TODO create file in the data directory
             // For now, use a temp file
-            previewImageFile = File.createTempFile("previewimage", ".png");
+            previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         } else {
             // Save the preview image as a temporary file.
-            previewImageFile = File.createTempFile("previewimage", ".png");
+            previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         }
-        ImageIO.write(versusScreen, "png", previewImageFile);
+        ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
 
         File videoFile;
         if (this.configuration.isMoveVideoFilesToDataDirectory()) {
-            // TODO Move the replay to the data directory. For now, just leave it where it is.
-            videoFile = file;
+            // Move the replay to the data directory.
+            
+            String videoFileExtension;
+            int index = file.getName().lastIndexOf('.');
+            if (0 < index) {
+                videoFileExtension = file.getName().substring(index).toLowerCase();
+            } else {
+                // No extension.
+                videoFileExtension = "";
+            }
+            
+            videoFile = new File(configuration.getDataDirectoryPath() + "/" + baseFilename + videoFileExtension);
+            
+            // TODO wait for producer thread to release the video!
+            
+            Files.move(file.toPath(), videoFile.toPath());
+            
+            logMessage("Moved video file to: " + videoFile);
         } else {
             // Leave the video file where it is.
             videoFile = file;
