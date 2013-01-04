@@ -53,7 +53,9 @@ public class TesseractOCREngine implements OCREngine {
         try {
             log.info("Tesseract version: " + getTesseractVersion());
         } catch (OCRException e) {
-            throw new IllegalArgumentException("Unable to invoke Tesseract. Please check the configuration.", e);
+            throw new IllegalArgumentException(
+                    "Unable to invoke Tesseract. Please check if the configuration in /etc/configuration.properties is correct and/or that the Tesseract executable is available at "
+                            + configuration.getTesseractExecutablePath(), e);
         }
     }
 
