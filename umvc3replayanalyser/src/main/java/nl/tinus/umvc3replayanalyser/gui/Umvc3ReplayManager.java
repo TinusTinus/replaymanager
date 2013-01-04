@@ -1,7 +1,5 @@
 package nl.tinus.umvc3replayanalyser.gui;
 
-import java.util.Random;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,8 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-
-import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -181,9 +177,6 @@ public class Umvc3ReplayManager extends Application {
      */
     private Image getIcon() {
         // Select a random character and use that character's portrait as the icon.
-        Random random = new Random();
-        int characterIndex = random.nextInt(Umvc3Character.values().length);
-        Umvc3Character character = Umvc3Character.values()[characterIndex];
-        return Icons.get().getPortrait(character);
+        return Icons.get().getRandomPortrait();
     }
 }

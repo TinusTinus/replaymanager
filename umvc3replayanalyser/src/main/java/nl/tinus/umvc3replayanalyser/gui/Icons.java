@@ -2,6 +2,7 @@ package nl.tinus.umvc3replayanalyser.gui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
@@ -16,15 +17,18 @@ class Icons {
     private static Icons INSTANCE = new Icons();
 
     /** Map. */
-    private Map<Umvc3Character, Image> portraits;
+    private final Map<Umvc3Character, Image> portraits;
     /** Map. */
-    private Map<Umvc3Character, Image> icons;
+    private final Map<Umvc3Character, Image> icons;
+    /** Random. */
+    private final Random random;
 
     /** Private constructor since this is a singleton class. */
     private Icons() {
         super();
         this.portraits = new HashMap<>(Umvc3Character.values().length);
         this.icons = new HashMap<>(Umvc3Character.values().length);
+        this.random = new Random();
     }
 
     /**
@@ -81,5 +85,17 @@ class Icons {
      */
     Image getIcon(Umvc3Character character) {
         return getCached(icons, character, "icon-");
+    }
+    
+    /**
+     * Randomly returns a character's portrait.
+     * 
+     * @return protrait
+     */
+    Image getRandomPortrait() {
+        // Select a random character and use that character's portrait as the icon.
+        int characterIndex = random.nextInt(Umvc3Character.values().length);
+        Umvc3Character character = Umvc3Character.values()[characterIndex];
+        return getPortrait(character);
     }
 }

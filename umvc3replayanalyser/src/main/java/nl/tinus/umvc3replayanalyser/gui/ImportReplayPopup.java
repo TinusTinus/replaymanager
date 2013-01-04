@@ -48,6 +48,7 @@ public class ImportReplayPopup {
             log.info("Fxml loaded, performing additional initialisation.");
             stage.setTitle("Importing replays");
             stage.setScene(new Scene(root));
+            stage.getIcons().add(Icons.get().getRandomPortrait());
 
             log.info("Showing UI.");
             stage.show();
