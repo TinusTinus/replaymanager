@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author Martijn van de Rijdt
  */
-// private constructor to prevent utility class instantiation
+// private constructor to prevent multiple instantiations of singleton class
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public class ImportReplayPopup {
