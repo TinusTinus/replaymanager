@@ -51,6 +51,8 @@ class ImportReplayTask extends Task<List<Replay>> {
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
     private final List<Replay> replays;
+    /** JSON object mapper, used to save replays as files. */
+    private final ObjectMapper mapper;
     /** Message. */
     private String message;
 
@@ -74,6 +76,12 @@ class ImportReplayTask extends Task<List<Replay>> {
         if (replays == null) {
             throw new NullPointerException("replays");
         }
+        if (configuration == null) {
+            throw new NullPointerException("configuration");
+        }
+        if (analyser == null) {
+            throw new NullPointerException("analyser");
+        }
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
@@ -82,6 +90,8 @@ class ImportReplayTask extends Task<List<Replay>> {
         this.replays = replays;
         this.replayAnalyser = analyser;
         this.configuration = configuration;
+        this.mapper = new ObjectMapper();
+        
         this.message = "";
     }
 
@@ -189,8 +199,7 @@ class ImportReplayTask extends Task<List<Replay>> {
         if (replayFile.exists()) {
             throw new IOException("Replay already exists: " + replayFile);
         } else {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(replayFile, replay);
+            this.mapper.writeValue(replayFile, replay);
             logMessage("Saved replay file: " + replayFile);
         }
         
