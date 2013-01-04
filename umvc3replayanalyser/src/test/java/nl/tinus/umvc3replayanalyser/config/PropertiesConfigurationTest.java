@@ -13,9 +13,10 @@ public class PropertiesConfigurationTest {
     @Test
     public void test() {
         PropertiesConfiguration configuration = new PropertiesConfiguration();
-        Assert.assertNotNull(configuration.getTesseractExecutablePath());
-        Assert.assertNotNull(configuration.getDataDirectoryPath());
-        configuration.isMoveVideoFilesToDataDirectory();
+        Assert.assertEquals("../umvc3replayanalyser-assembly/win/tesseract/tesseract.exe", configuration.getTesseractExecutablePath());
+        Assert.assertNotNull("src/test/resources/data", configuration.getDataDirectoryPath());
+        Assert.assertFalse(configuration.isMoveVideoFilesToDataDirectory());
+        Assert.assertFalse(configuration.isSavePreviewImageToDataDirectory());
     }
 
     /** Creates a new PropertiesConfiguration where a mandatory property has been omitted. */
@@ -31,5 +32,6 @@ public class PropertiesConfigurationTest {
         Assert.assertNotNull(configuration.getTesseractExecutablePath());
         Assert.assertEquals("../data", configuration.getDataDirectoryPath());
         Assert.assertTrue(configuration.isMoveVideoFilesToDataDirectory());
+        Assert.assertTrue(configuration.isSavePreviewImageToDataDirectory());
     }
 }
