@@ -181,8 +181,12 @@ class ImportReplayTask extends Task<List<Replay>> {
             previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         }
-        ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
-        logMessage("Saved preview image: " + previewImageFile);
+        if (previewImageFile.exists()) {
+            throw new IOException("Preview image file already exists: " + previewImageFile);
+        } else {
+            ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
+            logMessage("Saved preview image: " + previewImageFile);
+        }
 
         File videoFile;
         if (this.configuration.isMoveVideoFilesToDataDirectory()) {
@@ -201,6 +205,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             
             // TODO wait for producer thread to release the video!
             
+            // Note that move will fail with an IOException if videoFile aleady exists.
             Files.move(file.toPath(), videoFile.toPath());
             
             logMessage("Moved video file to: " + videoFile);
