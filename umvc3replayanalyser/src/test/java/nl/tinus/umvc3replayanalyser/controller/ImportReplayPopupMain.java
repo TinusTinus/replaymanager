@@ -61,7 +61,7 @@ public class ImportReplayPopupMain extends Application {
         OCREngine ocrEngine = new TesseractOCREngine(configuration);
         VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
         ReplayAnalyser replayAnalyser = new ReplayAnalyser(versusScreenAnalyser);
-        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, replayAnalyser);
+        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, configuration, replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task, working, "Replay Import Thread");
 
         ImportReplayPopup.show(stage, controller);

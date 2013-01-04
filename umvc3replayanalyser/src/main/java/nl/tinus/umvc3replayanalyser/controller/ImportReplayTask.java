@@ -15,6 +15,7 @@ import javafx.concurrent.Task;
 import javax.imageio.ImageIO;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.video.GameAndVersusScreen;
@@ -39,16 +40,18 @@ class ImportReplayTask extends Task<List<Replay>> {
             return new SimpleDateFormat("HH:mm:ss,SSS");
         }
     };
-    
+
     /** The directory from which to import replays. */
     private final File directory;
+    /** Configuration of the application. */
+    private final Configuration configuration;
     /** Replay analyser. */
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
     private final List<Replay> replays;
     /** Message. */
     private String message;
-    
+
     /**
      * Constructor.
      * 
@@ -56,8 +59,12 @@ class ImportReplayTask extends Task<List<Replay>> {
      *            directory
      * @param replays
      *            list of replays, to which the newly loaded replays will be added
+     * @param configuration
+     *            configuration of the application
+     * @param analyser
+     *            replay nalyser
      */
-    ImportReplayTask(File directory, List<Replay> replays, ReplayAnalyser analyser) {
+    ImportReplayTask(File directory, List<Replay> replays, Configuration configuration, ReplayAnalyser analyser) {
         super();
         if (directory == null) {
             throw new NullPointerException("directory");
@@ -68,13 +75,14 @@ class ImportReplayTask extends Task<List<Replay>> {
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
-        
+
         this.directory = directory;
         this.replays = replays;
         this.replayAnalyser = analyser;
+        this.configuration = configuration;
         this.message = "";
     }
-    
+
     /** {@inheritDoc} */
     @Override
     protected List<Replay> call() {
@@ -83,7 +91,7 @@ class ImportReplayTask extends Task<List<Replay>> {
         logMessage(files.size() + " file(s) found.");
         int workDone = 0;
         updateProgress(workDone, files.size());
-        for (File file: files) {
+        for (File file : files) {
             logMessage("Trying to import: " + file);
             try {
                 final Replay replay = importReplay(file);
@@ -106,16 +114,17 @@ class ImportReplayTask extends Task<List<Replay>> {
         logMessage("Done.");
         return replays;
     }
-    
+
     /**
      * Gives a list of all files in the given directory. Directories are not returned but are searched recursively.
      * 
-     * @param directory directory
+     * @param directory
+     *            directory
      * @return list of files
      */
     private List<File> createFileList(File sourceDirectory) {
         List<File> result = new ArrayList<>();
-        for (File file: sourceDirectory.listFiles()) {
+        for (File file : sourceDirectory.listFiles()) {
             if (file.isDirectory()) {
                 result.addAll(createFileList(file));
             } else {
@@ -139,21 +148,42 @@ class ImportReplayTask extends Task<List<Replay>> {
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
 
+        Date creationTime = new Date(file.lastModified());
+        
         Game game = gameAndVersusScreen.getGame();
         BufferedImage versusScreen = gameAndVersusScreen.getVersusScreen();
 
-        // TODO Save the preview image and move the replay to the data directory.
-        // For now, save the preview image in a temp directory and leave the replay where it is.
-        File previewImageFile = File.createTempFile("previewimage", ".png");
-        previewImageFile.deleteOnExit();
+        // Save the preview image.
+        File previewImageFile;
+        if (this.configuration.isSavePreviewImageToDataDirectory()) {
+            // TODO create file in the data directory
+            // For now, use a temp file
+            previewImageFile = File.createTempFile("previewimage", ".png");
+            previewImageFile.deleteOnExit();
+        } else {
+            // Save the preview image as a temporary file.
+            previewImageFile = File.createTempFile("previewimage", ".png");
+            previewImageFile.deleteOnExit();
+        }
         ImageIO.write(versusScreen, "png", previewImageFile);
 
-        Date creationTime = new Date(file.lastModified());
-
-        return new Replay(creationTime, game, "file:///" + file.getAbsolutePath(), "file:///"
+        File videoFile;
+        if (this.configuration.isMoveVideoFilesToDataDirectory()) {
+            // TODO Move the replay to the data directory. For now, just leave it where it is.
+            videoFile = file;
+        } else {
+            // Leave the video file where it is.
+            videoFile = file;
+        }
+        
+        Replay replay = new Replay(creationTime, game, "file:///" + videoFile.getAbsolutePath(), "file:///"
                 + previewImageFile.getAbsolutePath());
+        
+        // TODO save replay to the data directory
+        
+        return replay;
     }
-    
+
     /**
      * Logs the given message to the logger at log level INFO and appends it to the message property.
      * 
