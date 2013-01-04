@@ -34,6 +34,8 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
 class ImportReplayTask extends Task<List<Replay>> {
     /** Name of the image format to be used when saving preview images. */
     private static final String IMAGE_FORMAT = "png";
+    /** Separator in file paths; "\" on Windows, "/" on Linux. */
+    private static final String SEPARATOR = System.getProperty("file.separator");
     /**
      * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
      * of just a single constant, because SimpleDateFormat is not threadsafe.
@@ -94,7 +96,7 @@ class ImportReplayTask extends Task<List<Replay>> {
         this.replayAnalyser = analyser;
         this.configuration = configuration;
         this.mapper = new ObjectMapper();
-        
+
         this.message = "";
     }
 
@@ -165,9 +167,9 @@ class ImportReplayTask extends Task<List<Replay>> {
 
         // TODO choose a more meaningful name!
         String baseFilename = file.getName();
-        
+
         Date creationTime = new Date(file.lastModified());
-        
+
         Game game = gameAndVersusScreen.getGame();
         BufferedImage versusScreen = gameAndVersusScreen.getVersusScreen();
 
@@ -175,23 +177,23 @@ class ImportReplayTask extends Task<List<Replay>> {
         File previewImageFile;
         if (this.configuration.isSavePreviewImageToDataDirectory()) {
             // Create preview image file in the data directory.
-            previewImageFile = new File(configuration.getDataDirectoryPath() + "/" + baseFilename + "." + IMAGE_FORMAT);
+            previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + "."
+                    + IMAGE_FORMAT);
+            if (previewImageFile.exists()) {
+                throw new IOException("Preview image file already exists: " + previewImageFile);
+            }
         } else {
             // Save the preview image as a temporary file.
             previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         }
-        if (previewImageFile.exists()) {
-            throw new IOException("Preview image file already exists: " + previewImageFile);
-        } else {
-            ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
-            logMessage("Saved preview image: " + previewImageFile);
-        }
+        ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
+        logMessage("Saved preview image: " + previewImageFile);
 
         File videoFile;
         if (this.configuration.isMoveVideoFilesToDataDirectory()) {
             // Move the replay to the data directory.
-            
+
             String videoFileExtension;
             int index = file.getName().lastIndexOf('.');
             if (0 < index) {
@@ -200,32 +202,32 @@ class ImportReplayTask extends Task<List<Replay>> {
                 // No extension.
                 videoFileExtension = "";
             }
-            
-            videoFile = new File(configuration.getDataDirectoryPath() + "/" + baseFilename + videoFileExtension);
-            
+
+            videoFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + videoFileExtension);
+
             // TODO wait for producer thread to release the video!
-            
+
             // Note that move will fail with an IOException if videoFile aleady exists.
             Files.move(file.toPath(), videoFile.toPath());
-            
+
             logMessage("Moved video file to: " + videoFile);
         } else {
             // Leave the video file where it is.
             videoFile = file;
         }
-        
+
         Replay replay = new Replay(creationTime, game, "file:///" + videoFile.getAbsolutePath(), "file:///"
                 + previewImageFile.getAbsolutePath());
 
         // Save replay to the data directory.
-        File replayFile = new File(configuration.getDataDirectoryPath() + "/" + baseFilename + ".replay");
+        File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + ".replay");
         if (replayFile.exists()) {
             throw new IOException("Replay already exists: " + replayFile);
         } else {
             this.mapper.writeValue(replayFile, replay);
             logMessage("Saved replay file: " + replayFile);
         }
-        
+
         return replay;
     }
 
