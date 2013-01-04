@@ -23,6 +23,8 @@ import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import com.sun.javafx.runtime.VersionInfo;
+
 /**
  * Main class, used to start the application. Defines the JavaFX user interface.
  * 
@@ -47,6 +49,18 @@ public class Umvc3ReplayManager extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            // TODO put the following in the about box?
+            log.info("Using JavaFX version: " + VersionInfo.getRuntimeVersion());
+            if (log.isDebugEnabled()) {
+                log.debug("Detailed JavaFX version info: ");
+                log.debug("  Version: " + VersionInfo.getVersion());
+                log.debug("  Runtime version: " + VersionInfo.getRuntimeVersion());
+                log.debug("  Release milestone: " + VersionInfo.getReleaseMilestone());
+                log.debug("  Build timestamp: " + VersionInfo.getBuildTimestamp());
+                log.debug("  Hudson build number: " + VersionInfo.getHudsonBuildNumber());
+                log.debug("  Hudson job name: " + VersionInfo.getHudsonJobName());
+            }
+            
             log.info("Starting application.");
             Parent root = FXMLLoader.load(getClass().getResource("/umvc3-replay-manager.fxml"));
 
