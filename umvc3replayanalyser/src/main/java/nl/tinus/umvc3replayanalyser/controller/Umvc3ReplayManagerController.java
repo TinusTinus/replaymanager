@@ -276,7 +276,6 @@ public class Umvc3ReplayManagerController {
             
             // For now, newValue.previewImageLocation contains a reference to the absolute path of the image.
             // This will eventually be a path relative to the application's data directory.
-            // TODO add data directory to create a full absolute path
             try {
                 if (log.isDebugEnabled()) {
                     log.debug("Loading image: " + newValue.getPreviewImageLocation());
@@ -495,7 +494,6 @@ public class Umvc3ReplayManagerController {
      * @param directory directory to be imported from
      */
     private void importReplays(File directory) {
-        // TODO first check that directory does not contain the data directory, or the other way around
         ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.configuration, this.replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task,
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
