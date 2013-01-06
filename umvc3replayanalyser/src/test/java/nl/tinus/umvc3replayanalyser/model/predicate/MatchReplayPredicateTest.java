@@ -102,8 +102,6 @@ public class MatchReplayPredicateTest {
         Assert.assertTrue(predicate.apply(replay));
     }
     
-    // TODO add test cases for characters and assists
-
     /**
      * Creates a replay where the players have the given gamertags. Other fields are filled with mock values.
      * 
