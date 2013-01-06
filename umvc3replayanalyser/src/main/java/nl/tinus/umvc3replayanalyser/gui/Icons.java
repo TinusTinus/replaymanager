@@ -16,6 +16,8 @@ class Icons {
     /** Singleton instance. */
     private static Icons INSTANCE = new Icons();
 
+    // TODO the She-Hulk portrait is cut off, replace it
+    
     /** Map. */
     private final Map<Umvc3Character, Image> portraits;
     /** Map. */
