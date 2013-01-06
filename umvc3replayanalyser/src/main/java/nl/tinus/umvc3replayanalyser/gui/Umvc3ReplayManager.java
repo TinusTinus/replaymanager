@@ -17,16 +17,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
 
-import com.google.common.base.Predicate;
 import com.sun.javafx.runtime.VersionInfo;
-import com.xuggle.mediatool.IMediaReader;
 
 /**
  * Main class, used to start the application. Defines the JavaFX user interface.
@@ -88,19 +81,9 @@ public class Umvc3ReplayManager extends Application {
         log.info("Using JavaFX runtime version: " + VersionInfo.getRuntimeVersion());
         if (log.isDebugEnabled()) {
             log.debug("Detailed JavaFX version info: ");
-            log.debug("  Implementation version: " + ObjectMapper.class.getPackage().getImplementationVersion());
             log.debug("  Version: " + VersionInfo.getVersion());
             log.debug("  Runtime version: " + VersionInfo.getRuntimeVersion());
             log.debug("  Build timestamp: " + VersionInfo.getBuildTimestamp());
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Apache commons-cli version: " + CommandLine.class.getPackage().getImplementationVersion());
-            log.debug("Apache commons-lang version: " + StringUtils.class.getPackage().getImplementationVersion());
-            log.debug("Guava version: " + Predicate.class.getPackage().getImplementationVersion());
-            log.debug("Jackson core version: " + JsonProperty.class.getPackage().getImplementationVersion());
-            log.debug("Jackson mapper version: " + ObjectMapper.class.getPackage().getImplementationVersion());
-            log.debug("Slf4j version: " + Logger.class.getPackage().getImplementationVersion());
-            log.debug("Xuggler version: " + IMediaReader.class.getPackage().getImplementationVersion());
         }
     }
 
