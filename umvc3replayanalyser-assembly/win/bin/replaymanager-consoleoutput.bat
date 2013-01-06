@@ -5,12 +5,12 @@
 
 set PWD="%CD%"
 
-set LIB_DIR=%PWD%/../lib
+set LIB_DIR=%PWD%\..\lib
 
-set CONFIG_DIR=%PWD%/../etc
+set CONFIG_DIR=%PWD%\..\etc
 
 set JAVA_OPTS=
 
 set JAVA=java
 
-start %JAVA% %JAVA_OPTS% -cp %CONFIG_DIR%;%LIB_DIR%/* nl.tinus.umvc3replayanalyser.gui.Umvc3ReplayManager
+start %JAVA% %JAVA_OPTS% -cp %CONFIG_DIR%;%LIB_DIR%\* nl.tinus.umvc3replayanalyser.gui.Umvc3ReplayManager
