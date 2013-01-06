@@ -45,14 +45,7 @@ public class Umvc3ReplayManager extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // TODO put the following version info in the about box?
-            log.info("Using JavaFX runtime version: " + VersionInfo.getRuntimeVersion());
-            if (log.isDebugEnabled()) {
-                log.debug("Detailed JavaFX version info: ");
-                log.debug("  Version: " + VersionInfo.getVersion());
-                log.debug("  Runtime version: " + VersionInfo.getRuntimeVersion());
-                log.debug("  Build timestamp: " + VersionInfo.getBuildTimestamp());
-            }
+            logVersionInfo();
             
             log.info("Starting application.");
             Parent root = FXMLLoader.load(getClass().getResource("/umvc3-replay-manager.fxml"));
@@ -73,6 +66,24 @@ public class Umvc3ReplayManager extends Application {
         } catch (Exception e) {
             log.error("Unable to start application.", e);
             handleExceptionOnStartup(stage, e);
+        }
+    }
+
+    /** Logs the version info. */
+    private void logVersionInfo() {
+        // TODO put some of the following version info in the about box?
+        log.info("Classpath: " + System.getProperty("java.class.path"));
+        log.info("Java vendor: " + System.getProperty("java.vendor"));
+        log.info("Java version: " + System.getProperty("java.version"));
+        log.info("OS name: " + System.getProperty("os.name"));
+        log.info("OS version: " + System.getProperty("os.version"));
+        log.info("OS architecture: " + System.getProperty("os.arch"));
+        log.info("Using JavaFX runtime version: " + VersionInfo.getRuntimeVersion());
+        if (log.isDebugEnabled()) {
+            log.debug("Detailed JavaFX version info: ");
+            log.debug("  Version: " + VersionInfo.getVersion());
+            log.debug("  Runtime version: " + VersionInfo.getRuntimeVersion());
+            log.debug("  Build timestamp: " + VersionInfo.getBuildTimestamp());
         }
     }
 
