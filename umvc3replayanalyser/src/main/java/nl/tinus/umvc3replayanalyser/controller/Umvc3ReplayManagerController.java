@@ -205,6 +205,7 @@ public class Umvc3ReplayManagerController {
         bindPreviewImageView();
         disableColumnSwapping();
         initTableView();
+        handleSelectedReplayChanged(null);
         initCharacterComboBoxValues();
         initAssistComboBoxes();
         initFilterListeners();
@@ -318,7 +319,7 @@ public class Umvc3ReplayManagerController {
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Replay> observable, Replay oldValue, Replay newValue) {
-                handleSelectedReplayChanged(oldValue, newValue);
+                handleSelectedReplayChanged(newValue);
             }
         });
     }
@@ -326,16 +327,13 @@ public class Umvc3ReplayManagerController {
     /**
      * Handles the case where the selection in the replay table changes.
      * 
-     * @param oldValue
-     *            old value
      * @param newValue
      *            new value
      */
-    private void handleSelectedReplayChanged(Replay oldValue, Replay newValue) {
+    private void handleSelectedReplayChanged(Replay newValue) {
         if (log.isDebugEnabled()) {
-            log.debug("Replay selection changed, old value: " + oldValue + ", new value: " + newValue);
+            log.debug("Replay selection changed, new value: " + newValue);
         }
-
         // Update the preview image.
         if (newValue != null) {
             // A new replay was selected.
