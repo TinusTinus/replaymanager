@@ -231,7 +231,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             videoFile = file;
         }
 
-        Replay replay = new Replay(creationTime, game, "file:///" + videoFile.getAbsolutePath(), "file:///"
+        Replay replay = new Replay(creationTime, game, videoFile.getAbsolutePath(), "file:///"
                 + previewImageFile.getAbsolutePath());
 
         // Save replay to the data directory.
