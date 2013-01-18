@@ -377,6 +377,8 @@ public class Umvc3ReplayManagerController {
             playerTwoAssistOneLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getFirstAssist()));
             playerTwoAssistTwoLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getSecondAssist()));
             playerTwoAssistThreeLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getThirdAssist()));
+            // button
+            openVideoButton.setDisable(false);
         } else {
             // Item was deselected.
             previewImageView.setImage(defaultPreviewImage);
@@ -404,7 +406,19 @@ public class Umvc3ReplayManagerController {
             playerTwoAssistOneLabel.setText("");
             playerTwoAssistTwoLabel.setText("");
             playerTwoAssistThreeLabel.setText("");
+            // button
+            openVideoButton.setDisable(true);
         }
+    }
+    
+    /**
+     * 
+     * TODO
+     *
+     */
+    @FXML
+    private void handleOpenVideoAction() {
+        // TODO
     }
     
     /**

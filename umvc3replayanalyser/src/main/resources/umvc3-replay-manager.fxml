@@ -141,7 +141,7 @@
             <Label fx:id="playerTwoAssistOneLabel" layoutX="340.0" layoutY="78.0" />
             <Label fx:id="playerTwoAssistTwoLabel" layoutX="340.0" layoutY="139.0" />
             <Label fx:id="playerTwoAssistThreeLabel" layoutX="340.0" layoutY="203.0" />
-            <Button fx:id="openVideoButton" layoutX="14.0" layoutY="259.0" mnemonicParsing="false" text="Open video" />
+            <Button fx:id="openVideoButton" layoutX="14.0" layoutY="259.0" mnemonicParsing="false" text="Open video" onAction="#handleOpenVideoAction" />
           </children>
         </AnchorPane>
       </content>
