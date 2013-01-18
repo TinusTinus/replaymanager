@@ -100,20 +100,20 @@
         </AnchorPane>
       </content>
     </TitledPane>
-    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="361.0" prefWidth="538.0" text="Preview image" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="35.0">
+    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="361.0" prefWidth="538.0" text="Preview image" AnchorPane.bottomAnchor="363.0" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="35.0">
       <content>
         <AnchorPane id="Content" fx:id="previewImageAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="538.0">
           <children>
             <ImageView fx:id="previewImageView" pickOnBounds="true">
               <image>
-                <Image fx:id="defaultPreviewImage" url="@ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" /> 
+                <Image url="@ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" fx:id="defaultPreviewImage" />
               </image>
             </ImageView>
           </children>
         </AnchorPane>
       </content>
     </TitledPane>
-    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="343.0" prefWidth="537.9999000000025" text="Replay details" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="404.0">
+    <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="343.0" prefWidth="537.9999000000025" text="Replay details" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0">
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
           <children>
