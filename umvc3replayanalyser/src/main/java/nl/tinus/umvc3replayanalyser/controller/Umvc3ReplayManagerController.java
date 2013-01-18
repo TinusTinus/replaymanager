@@ -372,13 +372,34 @@ public class Umvc3ReplayManagerController {
             playerTwoCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getFirstCharacter()));
             playerTwoCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getSecondCharacter()));
             playerTwoCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getThirdCharacter()));
-            
-            // TODO assists
+            // assists
+            playerOneAssistOneLabel.setText(getAssistText(newValue.getGame().getTeamOne().getFirstAssist()));
+            playerOneAssistTwoLabel.setText(getAssistText(newValue.getGame().getTeamOne().getSecondAssist()));
+            playerOneAssistThreeLabel.setText(getAssistText(newValue.getGame().getTeamOne().getThirdAssist()));
+            playerTwoAssistOneLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getFirstAssist()));
+            playerTwoAssistTwoLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getSecondAssist()));
+            playerTwoAssistThreeLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getThirdAssist()));
         } else {
             // Item was deselected.
             previewImageView.setImage(defaultPreviewImage);
             // TODO also erase contents of the replay details pane
         }
+    }
+    
+    /**
+     * Given an assist, returns the textual representation of the assist for the details view.
+     * 
+     * @param assist assist to be represented; may be null
+     * @return string representation of the given assist
+     */
+    private String getAssistText(Assist assist) {
+        String result;
+        if (assist != null) {
+            result = "(" + assist.getName() + ")";
+        } else {
+            result = "";
+        }
+        return result;
     }
 
     /** Initialises the character combo box values. */

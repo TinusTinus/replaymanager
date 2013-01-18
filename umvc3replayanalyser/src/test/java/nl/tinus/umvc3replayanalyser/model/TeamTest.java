@@ -53,11 +53,14 @@ public class TeamTest {
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         
         Assert.assertEquals(Umvc3Character.WOLVERINE, team.getFirstCharacter());
-        Assert.assertEquals(AssistType.GAMMA, team.getFirstAssist());
+        Assert.assertEquals(AssistType.GAMMA, team.getFirstAssistType());
+        Assert.assertEquals(new Assist(AssistType.GAMMA, Umvc3Character.WOLVERINE), team.getFirstAssist());
         Assert.assertEquals(Umvc3Character.ZERO, team.getSecondCharacter());
+        Assert.assertNull(team.getSecondAssistType());
         Assert.assertNull(team.getSecondAssist());
         Assert.assertEquals(Umvc3Character.DOCTOR_DOOM, team.getThirdCharacter());
-        Assert.assertEquals(AssistType.ALPHA, team.getThirdAssist());
+        Assert.assertEquals(AssistType.ALPHA, team.getThirdAssistType());
+        Assert.assertEquals(new Assist(AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM), team.getThirdAssist());
         
         Assert.assertEquals("Wolverine (gamma) / Zero / Doctor Doom (alpha)", team.getNameWithAssists());
         Assert.assertEquals("Wolverine (Berserker Barrage) / Zero / Doctor Doom (Plasma Beam)", team.getNameWithAssistMoveNames());

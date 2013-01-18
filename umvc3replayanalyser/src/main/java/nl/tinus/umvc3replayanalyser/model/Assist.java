@@ -21,9 +21,14 @@ public class Assist {
     @NonNull
     private final Umvc3Character character;
     
+    /** @return name of the assist */
+    public String getName() {
+        return character.getAssistName(type);
+    }
+    
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return character.getAssistName(type);
+        return getName();
     }
 }

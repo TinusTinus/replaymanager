@@ -24,17 +24,17 @@ public class Team {
     @NonNull
     private final Umvc3Character firstCharacter;
     /** Assist type of the point character. May be null if unknown. */
-    private final AssistType firstAssist;
+    private final AssistType firstAssistType;
     /** Second character. */
     @NonNull
     private final Umvc3Character secondCharacter;
     /** Assist type of the scond character. May be null if unknown. */
-    private final AssistType secondAssist;
+    private final AssistType secondAssistType;
     /** Anchor. */
     @NonNull
     private final Umvc3Character thirdCharacter;
     /** Assist type of the anchor character. May be null if unknown. */
-    private final AssistType thirdAssist;
+    private final AssistType thirdAssistType;
 
     /**
      * Convenience constructor, for when none of the assists are known.
@@ -80,11 +80,11 @@ public class Team {
         }
         
         this.firstCharacter = firstCharacter;
-        this.firstAssist = firstAssist;
+        this.firstAssistType = firstAssist;
         this.secondCharacter = secondCharacter;
-        this.secondAssist = secondAssist;
+        this.secondAssistType = secondAssist;
         this.thirdCharacter = thirdCharacter;
-        this.thirdAssist = thirdAssist;
+        this.thirdAssistType = thirdAssist;
     }
 
     /**
@@ -104,7 +104,7 @@ public class Team {
      */
     @JsonIgnore
     public List<AssistType> getAssists() {
-        return Collections.unmodifiableList(Arrays.asList(firstAssist, secondAssist, thirdAssist));
+        return Collections.unmodifiableList(Arrays.asList(firstAssistType, secondAssistType, thirdAssistType));
     }
 
     /**
@@ -181,12 +181,12 @@ public class Team {
     public String getNameWithAssists(boolean useAssistNames) {
         String result;
 
-        if (firstAssist == null && secondAssist == null && thirdAssist == null) {
+        if (firstAssistType == null && secondAssistType == null && thirdAssistType == null) {
             result = getName();
         } else {
-            String firstCharacterName = getCharacterNameWithAssist(firstCharacter, firstAssist, useAssistNames);
-            String secondCharacterName = getCharacterNameWithAssist(secondCharacter, secondAssist, useAssistNames);
-            String thirdCharacterName = getCharacterNameWithAssist(thirdCharacter, thirdAssist, useAssistNames);
+            String firstCharacterName = getCharacterNameWithAssist(firstCharacter, firstAssistType, useAssistNames);
+            String secondCharacterName = getCharacterNameWithAssist(secondCharacter, secondAssistType, useAssistNames);
+            String thirdCharacterName = getCharacterNameWithAssist(thirdCharacter, thirdAssistType, useAssistNames);
             result = String.format("%s / %s / %s", firstCharacterName, secondCharacterName, thirdCharacterName);
         }
         return result;
@@ -215,6 +215,39 @@ public class Team {
                 assistString = assist.getName();
             }
             result = String.format("%s (%s)", result, assistString);
+        }
+        return result;
+    }
+    
+    /** @return first assist; null if the assist type is unknown */
+    public Assist getFirstAssist() {
+        Assist result;
+        if (firstAssistType != null) {
+            result = new Assist(firstAssistType, firstCharacter);
+        } else {
+            result = null;
+        }
+        return result;
+    }
+    
+    /** @return second assist; null if the assist type is unknown */
+    public Assist getSecondAssist() {
+        Assist result;
+        if (secondAssistType != null) {
+            result = new Assist(secondAssistType, secondCharacter);
+        } else {
+            result = null;
+        }
+        return result;
+    }
+
+    /** @return third assist; null if the assist type is unknown */
+    public Assist getThirdAssist() {
+        Assist result;
+        if (thirdAssistType != null) {
+            result = new Assist(thirdAssistType, thirdCharacter);
+        } else {
+            result = null;
         }
         return result;
     }
