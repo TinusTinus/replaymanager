@@ -8,6 +8,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tinus.umvc3replayanalyser.controller.Umvc3ReplayManagerController">
   <children>
@@ -44,7 +45,6 @@
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="424.0" prefWidth="479.0">
           <children>
             <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <placeholder><Label text="No matching replays." /></placeholder>
               <columns>
                 <TableColumn prefWidth="120.0" text="Date / time" fx:id="creationTimeColumn">
                   <cellValueFactory>
@@ -92,6 +92,9 @@
                   </cellValueFactory>
                 </TableColumn>
               </columns>
+              <placeholder>
+                <Label text="No matching replays." />
+              </placeholder>
             </TableView>
           </children>
         </AnchorPane>
@@ -103,7 +106,7 @@
           <children>
             <ImageView fx:id="previewImageView" pickOnBounds="true">
               <image>
-                <Image fx:id="defaultPreviewImage" url="/ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" /> 
+                <Image fx:id="defaultPreviewImage" url="@ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" /> 
               </image>
             </ImageView>
           </children>
@@ -112,20 +115,72 @@
     </TitledPane>
     <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="343.0" prefWidth="537.9999000000025" text="Replay details" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="404.0">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <Label fx:id="playerOneLabel" layoutX="89.0" layoutY="14.0" prefWidth="161.0" text="MvdR">
+              <font>
+                <Font size="20.0" fx:id="x1" />
+              </font>
+            </Label>
+            <ImageView fx:id="playerOneCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@portrait-Wolvie.png" preserveRatio="false" smooth="false" />
+              </image>
+            </ImageView>
+            <Label fx:id="playerOneCharacterOneLabel" layoutX="90.0" layoutY="62.0" text="Wolverine" />
+            <ImageView id="playerOneCharacterOneImageView" fx:id="playerOneCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@portrait-Zero.png" preserveRatio="false" smooth="false" />
+              </image>
+            </ImageView>
+            <Label id="playerOneCharacterOneLabel" fx:id="playerOneCharacterTwoLabel" layoutX="89.0" layoutY="123.0" text="Zero" />
+            <ImageView id="playerOneCharacterOneImageView" fx:id="playerOneCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@portrait-Doom.png" preserveRatio="false" smooth="false" />
+              </image>
+            </ImageView>
+            <Label fx:id="playerOneCharacterThreeLabel" layoutX="88.0" layoutY="187.0" text="Doctor Doom" />
+            <Label fx:id="playerOneAssistOneLabel" layoutX="90.0" layoutY="78.0" text="(Berserker Barrage)" />
+            <Label fx:id="playerOneAssistTwoLabel" layoutX="91.0" layoutY="139.0" text="(Ryuenjin)" />
+            <Label fx:id="playerOneAssistThreeLabel" layoutX="88.0" layoutY="203.0" text="(Plasma Beam)" />
+            <Label fx:id="playerTwoLabel" font="$x1" layoutX="341.0" layoutY="14.0" prefWidth="161.0" text="MvdR" />
+            <ImageView id="playerOneCharacterOneImageView" fx:id="playerTwoCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@portrait-Wolvie.png" preserveRatio="false" smooth="false" />
+              </image>
+            </ImageView>
+            <Label fx:id="playerTwoCharacterOneLabel" layoutX="343.0" layoutY="62.0" text="Wolverine" />
+            <ImageView fx:id="playerTwoCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@portrait-Zero.png" preserveRatio="false" smooth="false" />
+              </image>
+            </ImageView>
+            <Label id="playerOneCharacterOneLabel" fx:id="playerTwoCharacterTwoLabel" layoutX="342.0" layoutY="123.0" text="Zero" />
+            <ImageView id="playerOneCharacterThreeImageView" fx:id="playerTwoCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@portrait-Doom.png" preserveRatio="false" smooth="false" />
+              </image>
+            </ImageView>
+            <Label fx:id="playerTwoCharacterThreeLabel" layoutX="341.0" layoutY="187.0" text="Doctor Doom" />
+            <Label fx:id="playerTwoAssistOneLabel" layoutX="343.0" layoutY="78.0" text="(Berserker Barrage)" />
+            <Label fx:id="playerTwoAssistTwoLabel" layoutX="342.0" layoutY="139.0" text="(Ryuenjin)" />
+            <Label id="playerTwoAssistOneLabel" fx:id="playerTwoAssistThreeLabel" layoutX="341.0" layoutY="203.0" text="(Plasma Beam)" />
+            <Button fx:id="openVideoButton" layoutX="14.0" layoutY="259.0" mnemonicParsing="false" text="Open video" />
+          </children>
+        </AnchorPane>
       </content>
     </TitledPane>
-    <MenuBar prefWidth="1418.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" focusTraversable="false">
+    <MenuBar prefWidth="1418.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem fx:id="importMenuItem" mnemonicParsing="false" text="Import New Replays" onAction="#handleImportAction" />
-            <MenuItem mnemonicParsing="false" text="Exit" onAction="#handleExitAction" />
+            <MenuItem mnemonicParsing="false" onAction="#handleImportAction" text="Import New Replays" fx:id="importMenuItem" />
+            <MenuItem mnemonicParsing="false" onAction="#handleExitAction" text="Exit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About" onAction="#handleAboutAction" />
+            <MenuItem mnemonicParsing="false" onAction="#handleAboutAction" text="About" />
           </items>
         </Menu>
       </menus>
