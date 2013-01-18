@@ -16,8 +16,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,6 +32,7 @@ import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
+import nl.tinus.umvc3replayanalyser.gui.Icons;
 import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.model.Assist;
@@ -119,6 +122,69 @@ public class Umvc3ReplayManagerController {
     /** Menu item for importing new replays.*/
     @FXML
     private MenuItem importMenuItem;
+    /** Player name label. */
+    @FXML
+    private Label playerOneLabel;
+    /** Player name label. */
+    @FXML
+    private Label playerTwoLabel;
+    /** Character portrait. */
+    @FXML
+    private ImageView playerOneCharacterOneImageView;
+    /** Character portrait. */
+    @FXML
+    private ImageView playerOneCharacterTwoImageView;
+    /** Character portrait. */
+    @FXML
+    private ImageView playerOneCharacterThreeImageView;
+    /** Character portrait. */
+    @FXML
+    private ImageView playerTwoCharacterOneImageView;
+    /** Character portrait. */
+    @FXML
+    private ImageView playerTwoCharacterTwoImageView;
+    /** Character portrait. */
+    @FXML
+    private ImageView playerTwoCharacterThreeImageView;
+    /** Character label. */
+    @FXML
+    private Label playerOneCharacterOneLabel;
+    /** Character label. */
+    @FXML
+    private Label playerOneCharacterTwoLabel;
+    /** Character label. */
+    @FXML
+    private Label playerOneCharacterThreeLabel;
+    /** Character label. */
+    @FXML
+    private Label playerTwoCharacterOneLabel;
+    /** Character label. */
+    @FXML
+    private Label playerTwoCharacterTwoLabel;
+    /** Character label. */
+    @FXML
+    private Label playerTwoCharacterThreeLabel;
+    /** Assist label. */
+    @FXML
+    private Label playerOneAssistOneLabel;
+    /** Assist label. */
+    @FXML
+    private Label playerOneAssistTwoLabel;
+    /** Assist label. */
+    @FXML
+    private Label playerOneAssistThreeLabel;
+    /** Assist label. */
+    @FXML
+    private Label playerTwoAssistOneLabel;
+    /** Assist label. */
+    @FXML
+    private Label playerTwoAssistTwoLabel;
+    /** Assist label. */
+    @FXML
+    private Label playerTwoAssistThreeLabel;
+    /** Button used to open the replay video. */
+    @FXML
+    private Button openVideoButton;
     
     /** Application configuration. */
     private Configuration configuration;
@@ -273,6 +339,7 @@ public class Umvc3ReplayManagerController {
         // Update the preview image.
         if (newValue != null) {
             // A new replay was selected.
+            // Update the preview image.
             
             // For now, newValue.previewImageLocation contains a reference to the absolute path of the image.
             // This will eventually be a path relative to the application's data directory.
@@ -286,12 +353,32 @@ public class Umvc3ReplayManagerController {
                 log.warn("Unable to load image: " + newValue.getPreviewImageLocation(), e);
                 previewImageView.setImage(defaultPreviewImage);
             }
+            
+            // Also update the replay details view.
+            // names
+            playerOneLabel.setText(newValue.getGame().getPlayerOne().getGamertag());
+            playerTwoLabel.setText(newValue.getGame().getPlayerTwo().getGamertag());
+            // character names
+            playerOneCharacterOneLabel.setText(newValue.getGame().getTeamOne().getFirstCharacter().getName());
+            playerOneCharacterTwoLabel.setText(newValue.getGame().getTeamOne().getSecondCharacter().getName());
+            playerOneCharacterThreeLabel.setText(newValue.getGame().getTeamOne().getThirdCharacter().getName());
+            playerTwoCharacterOneLabel.setText(newValue.getGame().getTeamTwo().getFirstCharacter().getName());
+            playerTwoCharacterTwoLabel.setText(newValue.getGame().getTeamTwo().getSecondCharacter().getName());
+            playerTwoCharacterThreeLabel.setText(newValue.getGame().getTeamTwo().getThirdCharacter().getName());
+            // portraits
+            playerOneCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getFirstCharacter()));
+            playerOneCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getSecondCharacter()));
+            playerOneCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getThirdCharacter()));
+            playerTwoCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getFirstCharacter()));
+            playerTwoCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getSecondCharacter()));
+            playerTwoCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getThirdCharacter()));
+            
+            // TODO assists
         } else {
             // Item was deselected.
             previewImageView.setImage(defaultPreviewImage);
+            // TODO also erase contents of the replay details pane
         }
-
-        // TODO also update contents of the replay details pane
     }
 
     /** Initialises the character combo box values. */

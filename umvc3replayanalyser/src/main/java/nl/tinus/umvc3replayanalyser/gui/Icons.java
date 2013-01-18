@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javafx.scene.image.Image;
+import lombok.Getter;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 /**
@@ -12,7 +13,7 @@ import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
  * 
  * @author Martijn van de Rijdt
  */
-class Icons {
+public class Icons {
     /** Singleton instance. */
     private static Icons INSTANCE = new Icons();
 
@@ -22,6 +23,9 @@ class Icons {
     private final Map<Umvc3Character, Image> portraits;
     /** Map. */
     private final Map<Umvc3Character, Image> icons;
+    /** Icon of Ultimate Marvel vs Capcom 3. */
+    @Getter
+    private final Image gameIcon;
     /** Random. */
     private final Random random;
 
@@ -31,6 +35,7 @@ class Icons {
         this.portraits = new HashMap<>(Umvc3Character.values().length);
         this.icons = new HashMap<>(Umvc3Character.values().length);
         this.random = new Random();
+        this.gameIcon = new Image("icon-umvc3.png");
     }
 
     /**
@@ -38,7 +43,7 @@ class Icons {
      * 
      * @return singleton instance
      */
-    static Icons get() {
+    public static Icons get() {
         return INSTANCE;
     }
 
@@ -74,7 +79,7 @@ class Icons {
      *            character
      * @return portrait image
      */
-    Image getPortrait(Umvc3Character character) {
+    public Image getPortrait(Umvc3Character character) {
         return getCached(portraits, character, "portrait-");
     }
 
@@ -85,7 +90,7 @@ class Icons {
      *            character
      * @return icon image
      */
-    Image getIcon(Umvc3Character character) {
+    public Image getIcon(Umvc3Character character) {
         return getCached(icons, character, "icon-");
     }
     
@@ -94,7 +99,7 @@ class Icons {
      * 
      * @return protrait
      */
-    Image getRandomPortrait() {
+    public Image getRandomPortrait() {
         // Select a random character and use that character's portrait as the icon.
         int characterIndex = random.nextInt(Umvc3Character.values().length);
         Umvc3Character character = Umvc3Character.values()[characterIndex];
