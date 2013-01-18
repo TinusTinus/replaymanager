@@ -1,5 +1,6 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -641,13 +642,13 @@ public class Umvc3ReplayManagerController {
         if (selectedReplay == null) {
             throw new IllegalStateException("No replay selected; open video button should have been disabled!");
         }
+        log.info("Playing video: " + selectedReplay.getVideoLocation());
         try {
             // Show the replay in the OS default associated program.
-            // TODO remove hardcoded reference to vlc install directory
-            Runtime.getRuntime().exec("\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\" " + selectedReplay.getVideoLocation());
+            Desktop.getDesktop().open(new File(selectedReplay.getVideoLocation()));
         } catch (IOException e) {
-            log.error("Unable to play replay", e);
-            // TODO show the user an error message?
+            log.error("Unable to play video for replay: " + selectedReplay, e);
+            // TODO show the user an error message
         }
     }
     
