@@ -220,6 +220,7 @@ public class Team {
     }
     
     /** @return first assist; null if the assist type is unknown */
+    @JsonIgnore
     public Assist getFirstAssist() {
         Assist result;
         if (firstAssistType != null) {
@@ -231,6 +232,7 @@ public class Team {
     }
     
     /** @return second assist; null if the assist type is unknown */
+    @JsonIgnore
     public Assist getSecondAssist() {
         Assist result;
         if (secondAssistType != null) {
@@ -242,6 +244,7 @@ public class Team {
     }
 
     /** @return third assist; null if the assist type is unknown */
+    @JsonIgnore
     public Assist getThirdAssist() {
         Assist result;
         if (thirdAssistType != null) {
