@@ -124,19 +124,19 @@
             </Label>
             <ImageView fx:id="playerOneCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@portrait-Wolvie.png" preserveRatio="false" smooth="false" />
+                <Image url="@icon-umvc3.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
             <Label fx:id="playerOneCharacterOneLabel" layoutX="90.0" layoutY="62.0" text="Wolverine" />
             <ImageView id="playerOneCharacterOneImageView" fx:id="playerOneCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@portrait-Zero.png" preserveRatio="false" smooth="false" />
+                <Image url="@icon-umvc3.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
             <Label id="playerOneCharacterOneLabel" fx:id="playerOneCharacterTwoLabel" layoutX="89.0" layoutY="123.0" text="Zero" />
             <ImageView id="playerOneCharacterOneImageView" fx:id="playerOneCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@portrait-Doom.png" preserveRatio="false" smooth="false" />
+                <Image url="@icon-umvc3.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
             <Label fx:id="playerOneCharacterThreeLabel" layoutX="88.0" layoutY="187.0" text="Doctor Doom" />
@@ -146,19 +146,19 @@
             <Label fx:id="playerTwoLabel" font="$x1" layoutX="341.0" layoutY="14.0" prefWidth="161.0" text="MvdR" />
             <ImageView id="playerOneCharacterOneImageView" fx:id="playerTwoCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@portrait-Wolvie.png" preserveRatio="false" smooth="false" />
+                <Image url="@icon-umvc3.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
             <Label fx:id="playerTwoCharacterOneLabel" layoutX="343.0" layoutY="62.0" text="Wolverine" />
             <ImageView fx:id="playerTwoCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@portrait-Zero.png" preserveRatio="false" smooth="false" />
+                <Image url="@icon-umvc3.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
             <Label id="playerOneCharacterOneLabel" fx:id="playerTwoCharacterTwoLabel" layoutX="342.0" layoutY="123.0" text="Zero" />
             <ImageView id="playerOneCharacterThreeImageView" fx:id="playerTwoCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@portrait-Doom.png" preserveRatio="false" smooth="false" />
+                <Image url="@icon-umvc3.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
             <Label fx:id="playerTwoCharacterThreeLabel" layoutX="341.0" layoutY="187.0" text="Doctor Doom" />
