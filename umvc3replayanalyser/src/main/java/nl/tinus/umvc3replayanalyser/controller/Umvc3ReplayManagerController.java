@@ -355,7 +355,7 @@ public class Umvc3ReplayManagerController {
             }
             
             // Also update the replay details view.
-            // names
+            // player names
             playerOneLabel.setText(newValue.getGame().getPlayerOne().getGamertag());
             playerTwoLabel.setText(newValue.getGame().getPlayerTwo().getGamertag());
             // character names
@@ -382,7 +382,30 @@ public class Umvc3ReplayManagerController {
         } else {
             // Item was deselected.
             previewImageView.setImage(defaultPreviewImage);
-            // TODO also erase contents of the replay details pane
+            // player names
+            playerOneLabel.setText("Player one");
+            playerTwoLabel.setText("Player two");
+            // character names
+            playerOneCharacterOneLabel.setText("Point character");
+            playerOneCharacterTwoLabel.setText("Second character");
+            playerOneCharacterThreeLabel.setText("Anchor character");
+            playerTwoCharacterOneLabel.setText("Point character");
+            playerTwoCharacterTwoLabel.setText("Second character");
+            playerTwoCharacterThreeLabel.setText("Anchor character");
+            // portraits
+            playerOneCharacterOneImageView.setImage(Icons.get().getGameIcon());
+            playerOneCharacterTwoImageView.setImage(Icons.get().getGameIcon());
+            playerOneCharacterThreeImageView.setImage(Icons.get().getGameIcon());
+            playerTwoCharacterOneImageView.setImage(Icons.get().getGameIcon());
+            playerTwoCharacterTwoImageView.setImage(Icons.get().getGameIcon());
+            playerTwoCharacterThreeImageView.setImage(Icons.get().getGameIcon());
+            // assists
+            playerOneAssistOneLabel.setText("");
+            playerOneAssistTwoLabel.setText("");
+            playerOneAssistThreeLabel.setText("");
+            playerTwoAssistOneLabel.setText("");
+            playerTwoAssistTwoLabel.setText("");
+            playerTwoAssistThreeLabel.setText("");
         }
     }
     
