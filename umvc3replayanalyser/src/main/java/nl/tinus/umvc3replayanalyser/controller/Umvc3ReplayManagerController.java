@@ -339,9 +339,6 @@ public class Umvc3ReplayManagerController {
         if (newValue != null) {
             // A new replay was selected.
             // Update the preview image.
-            
-            // For now, newValue.previewImageLocation contains a reference to the absolute path of the image.
-            // This will eventually be a path relative to the application's data directory.
             try {
                 if (log.isDebugEnabled()) {
                     log.debug("Loading image: " + newValue.getPreviewImageLocation());
