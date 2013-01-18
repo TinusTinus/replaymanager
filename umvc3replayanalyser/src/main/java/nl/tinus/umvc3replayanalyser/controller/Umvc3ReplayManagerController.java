@@ -638,14 +638,17 @@ public class Umvc3ReplayManagerController {
     @FXML
     private void handleOpenVideoAction() {
         log.info("Open video button clicked.");
+        
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
         if (selectedReplay == null) {
             throw new IllegalStateException("No replay selected; open video button should have been disabled!");
         }
+        
         log.info("Playing video: " + selectedReplay.getVideoLocation());
+
+        File videoFile = new File(selectedReplay.getVideoLocation());
         try {
-            // Show the replay in the OS default associated program.
-            Desktop.getDesktop().open(new File(selectedReplay.getVideoLocation()));
+            Desktop.getDesktop().open(videoFile);
         } catch (IOException e) {
             log.error("Unable to play video for replay: " + selectedReplay, e);
             // TODO show the user an error message
