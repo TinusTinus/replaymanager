@@ -24,6 +24,6 @@
       "thirdAssist":"ALPHA"
     }
   },
-  "videoLocation":"/badhyper-vs-MvdR.mp4",
+  "videoLocation":"src/test/resources/badhyper-vs-MvdR.mp4",
   "previewImageLocation":"/vs.png"
 }

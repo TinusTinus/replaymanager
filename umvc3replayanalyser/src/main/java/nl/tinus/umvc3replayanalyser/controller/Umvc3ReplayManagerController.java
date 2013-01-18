@@ -412,16 +412,6 @@ public class Umvc3ReplayManagerController {
     }
     
     /**
-     * 
-     * TODO
-     *
-     */
-    @FXML
-    private void handleOpenVideoAction() {
-        // TODO
-    }
-    
-    /**
      * Given an assist, returns the textual representation of the assist for the details view.
      * 
      * @param assist assist to be represented; may be null
@@ -641,6 +631,24 @@ public class Umvc3ReplayManagerController {
         ImportReplayPopupController controller = new ImportReplayPopupController(task,
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
         ImportReplayPopup.show(controller);
+    }
+    
+    /** Handles the case where the user clicks the Open video button. */
+    @FXML
+    private void handleOpenVideoAction() {
+        log.info("Open video button clicked.");
+        Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
+        if (selectedReplay == null) {
+            throw new IllegalStateException("No replay selected; open video button should have been disabled!");
+        }
+        try {
+            // Show the replay in the OS default associated program.
+            // TODO remove hardcoded reference to vlc install directory
+            Runtime.getRuntime().exec("\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\" " + selectedReplay.getVideoLocation());
+        } catch (IOException e) {
+            log.error("Unable to play replay", e);
+            // TODO show the user an error message?
+        }
     }
     
     /**
