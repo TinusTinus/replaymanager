@@ -106,6 +106,7 @@ public class VersusScreenAnalyser {
                     + SCREEN_WIDTH, "" + SCREEN_HEIGHT, "" + versusImage.getWidth(), "" + versusImage.getHeight()));
         }
         
+        // TODO move the "black pixels" check to the frame consumer
         checkBlackPixels(versusImage);
 
         String playerOneGamertag = getGamerTag(versusImage, Side.PLAYER_ONE, PLAYER_ONE_X, PLAYER_Y, PLAYER_WIDTH,
@@ -301,7 +302,7 @@ public class VersusScreenAnalyser {
      * @param image image to be checked
      * @throws OCRException in case the given image is not a versus screen
      */
-    // TODO use a different exception type?
+    // TODO don't use exceptions but simply return a boolean
     private void checkBlackPixels(BufferedImage image) throws OCRException {
         checkBlackPixel(image, 200, 60);
         checkBlackPixel(image, 1080, 60);
