@@ -98,9 +98,6 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
                     + SCREEN_WIDTH, "" + SCREEN_HEIGHT, "" + versusImage.getWidth(), "" + versusImage.getHeight()));
         }
         
-        // TODO move the "black pixels" check to the frame consumer
-        checkBlackPixels(versusImage);
-
         String playerOneGamertag = getGamerTag(versusImage, Side.PLAYER_ONE, PLAYER_ONE_X, PLAYER_Y, PLAYER_WIDTH,
                 PLAYER_HEIGHT);
         String playerTwoGamertag = getGamerTag(versusImage, Side.PLAYER_TWO, PLAYER_TWO_X, PLAYER_Y, PLAYER_WIDTH,
@@ -282,40 +279,5 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      */
     private boolean equalsWithinMargin(int left, int right) {
         return Math.abs(left - right) <= COLOR_MARGIN;
-    }
-    
-    /**
-     * Checks if the given image is a candidate to be a versus screen.
-     * 
-     * The versus screen is mostly black. This method checks some of the pixels that are supposed to be black; if any of
-     * them contains a different colour, this method throws an OCRException indicating that the given image is not a
-     * versus screen.
-     * 
-     * @param image image to be checked
-     * @throws OCRException in case the given image is not a versus screen
-     */
-    // TODO don't use exceptions but simply return a boolean
-    private void checkBlackPixels(BufferedImage image) throws OCRException {
-        checkBlackPixel(image, 200, 60);
-        checkBlackPixel(image, 1080, 60);
-        checkBlackPixel(image, 200, 680);
-        checkBlackPixel(image, 1080, 680);
-    }
-    
-    /**
-     * Checks if the given pixel in the given image is black. If not, this method throws an exception.
-     * 
-     * @param image image to be checked
-     * @param x horizontal coordinate
-     * @param y vertical coordinate
-     * @throws OCRException in case the given pixel is not black
-     */
-    // TODO use a different exception type?    
-    private void checkBlackPixel(BufferedImage image, int x, int y) throws OCRException {
-        Color color = new Color(image.getRGB(x, y));
-        if (!equalsWithinMargin(color, Color.BLACK)) {
-            throw new OCRException(String.format("Pixel at (%s, %s) is not black, so this cannot be a versus screen.",
-                    "" + x, "" + y));
-        }
     }
 }
