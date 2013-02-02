@@ -26,14 +26,14 @@ import org.junit.Test;
  */
 public class VersusScreenAnalyserIntegrationTest {
     /** Analyser to be tested. */
-    private VersusScreenAnalyser analyser;
+    private VersusScreenAnalyserImpl analyser;
 
     /** Setup method. */
     @Before
     public void setUp() {
         Configuration configuration = new PropertiesConfiguration();
         TesseractOCREngine ocrEngine = new TesseractOCREngine(configuration);
-        this.analyser = new VersusScreenAnalyser(ocrEngine);
+        this.analyser = new VersusScreenAnalyserImpl(ocrEngine);
     }
 
     /**

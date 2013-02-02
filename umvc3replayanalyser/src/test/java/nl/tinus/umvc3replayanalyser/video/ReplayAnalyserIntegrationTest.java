@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
@@ -28,7 +29,7 @@ public class ReplayAnalyserIntegrationTest {
     public void setUp() {
         Configuration configuration = new PropertiesConfiguration();
         TesseractOCREngine ocrEngine = new TesseractOCREngine(configuration);
-        this.versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
+        this.versusScreenAnalyser = new VersusScreenAnalyserImpl(ocrEngine);
     }
 
     /**

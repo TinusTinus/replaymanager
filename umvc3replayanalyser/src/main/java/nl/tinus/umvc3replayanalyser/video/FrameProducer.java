@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 
 import com.xuggle.mediatool.IMediaReader;
 import com.xuggle.mediatool.MediaListenerAdapter;
@@ -88,12 +88,12 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
         BufferedImage image = event.getImage();
         if (image == null) {
             log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
-        } else if (image.getWidth() != VersusScreenAnalyser.SCREEN_WIDTH
-                || image.getHeight() != VersusScreenAnalyser.SCREEN_HEIGHT) {
+        } else if (image.getWidth() != VersusScreenAnalyserImpl.SCREEN_WIDTH
+                || image.getHeight() != VersusScreenAnalyserImpl.SCREEN_HEIGHT) {
             // Video has the wrong size; there's no point in offering any of its frames to the consumers.
             // TODO Eliminate this check once the VersusScreenAnalyser supports other resolutions.
             this.errorMessage = String.format("Video size must be %s x %s, was %s x %s", ""
-                    + VersusScreenAnalyser.SCREEN_WIDTH, "" + VersusScreenAnalyser.SCREEN_HEIGHT,
+                    + VersusScreenAnalyserImpl.SCREEN_WIDTH, "" + VersusScreenAnalyserImpl.SCREEN_HEIGHT,
                     "" + image.getWidth(), "" + image.getHeight() + ".");
             this.productionCanStop = true;
         } else {

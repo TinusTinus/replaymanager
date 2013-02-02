@@ -36,6 +36,7 @@ import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.gui.Icons;
 import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
+import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Replay;
@@ -225,7 +226,7 @@ public class Umvc3ReplayManagerController {
     /** Initialises the replay analyser. */
     private void initReplayAnalyser() {
         OCREngine ocrEngine = new TesseractOCREngine(this.configuration);
-        VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyser(ocrEngine);
+        VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyserImpl(ocrEngine);
         this.replayAnalyser = new ReplayAnalyserImpl(versusScreenAnalyser);
     }
 

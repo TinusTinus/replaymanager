@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -20,7 +21,9 @@ import nl.tinus.umvc3replayanalyser.model.Game;
 @EqualsAndHashCode
 public class GameAndVersusScreen {
     /** Game. */
+    @NonNull
     private final Game game;
     /** Versus screen. */
+    @NonNull
     private final BufferedImage versusScreen;
 }
