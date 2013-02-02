@@ -53,7 +53,9 @@ class FrameConsumer implements Callable<GameAndVersusScreen> {
                     Game game = versusScreenAnalyser.analyse(image);
                     result = new GameAndVersusScreen(game, image);
                 } catch (OCRException e) {
-                    log.debug("Could not analyse frame. This frame is most likely not the versus screen.", e);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Could not analyse frame. This frame is most likely not the versus screen.", e);
+                    }
                 }
             } else {
                 Thread.sleep(WAIT_TIME_BETWEEN_POLLS);
