@@ -97,7 +97,7 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
             throw new IllegalArgumentException(String.format("Image size must be %s x %s, was %s x %s", ""
                     + SCREEN_WIDTH, "" + SCREEN_HEIGHT, "" + versusImage.getWidth(), "" + versusImage.getHeight()));
         }
-        
+
         String playerOneGamertag = getGamerTag(versusImage, Side.PLAYER_ONE, PLAYER_ONE_X, PLAYER_Y, PLAYER_WIDTH,
                 PLAYER_HEIGHT);
         String playerTwoGamertag = getGamerTag(versusImage, Side.PLAYER_TWO, PLAYER_TWO_X, PLAYER_Y, PLAYER_WIDTH,
@@ -121,8 +121,7 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      *             in case optical character recognition fails
      */
     // default visisbility for unit tests
-    Game analyse(BufferedImage versusImage, String playerOneGamertag, String playerTwoGamertag)
-            throws OCRException {
+    Game analyse(BufferedImage versusImage, String playerOneGamertag, String playerTwoGamertag) throws OCRException {
         // Check the image size.
         if (versusImage.getWidth() != SCREEN_WIDTH || versusImage.getHeight() != SCREEN_HEIGHT) {
             throw new IllegalArgumentException(String.format("Image size must be %s x %s, was %s x %s", ""
@@ -136,12 +135,28 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
         Umvc3Character thirdCharacterTeamOne = getCharacter(versusImage, Side.PLAYER_ONE, 3, CHARACTER_3_PLAYER_ONE_X,
                 CHARACTER_3_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT);
 
+        if (firstCharacterTeamOne == secondCharacterTeamOne || firstCharacterTeamOne == thirdCharacterTeamOne
+                || secondCharacterTeamOne == thirdCharacterTeamOne) {
+            throw new OCRException(
+                    String.format(
+                            "OCR recognised the following team one: %s, %s, %s, but it's impossible to have the same character on a team multiple times.",
+                            firstCharacterTeamOne, secondCharacterTeamOne, thirdCharacterTeamOne));
+        }
+
         Umvc3Character firstCharacterTeamTwo = getCharacter(versusImage, Side.PLAYER_TWO, 1, CHARACTER_1_PLAYER_TWO_X,
                 CHARACTER_1_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT);
         Umvc3Character secondCharacterTeamTwo = getCharacter(versusImage, Side.PLAYER_TWO, 2, CHARACTER_2_PLAYER_TWO_X,
                 CHARACTER_2_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT);
         Umvc3Character thirdCharacterTeamTwo = getCharacter(versusImage, Side.PLAYER_TWO, 3, CHARACTER_3_PLAYER_TWO_X,
                 CHARACTER_3_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT);
+
+        if (firstCharacterTeamTwo == secondCharacterTeamTwo || firstCharacterTeamTwo == thirdCharacterTeamTwo
+                || secondCharacterTeamTwo == thirdCharacterTeamTwo) {
+            throw new OCRException(
+                    String.format(
+                            "OCR recognised the following team two: %s, %s, %s, but it's impossible to have the same character on a team multiple times.",
+                            firstCharacterTeamTwo, secondCharacterTeamTwo, thirdCharacterTeamTwo));
+        }
 
         AssistType firstAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
                 BACKGROUND_PLAYER_ONE_CHARACTER_ONE_X, BACKGROUND_Y)));
