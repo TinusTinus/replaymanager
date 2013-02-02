@@ -74,7 +74,9 @@ public class FrameConsumerTest {
     public void testCallOnlyVersusScreen() throws IOException, InterruptedException {
         BufferedImage image = ImageIO.read(new File("src/test/resources/vs.png"));
         this.queue.put(image);
+        
         GameAndVersusScreen result = this.frameConsumer.call();
+        
         Assert.assertNotNull(result);
         Assert.assertSame(image, result.getVersusScreen());
         Assert.assertSame(VersusScreenAnalyserMock.DUMMY_GAME, result.getGame());
@@ -95,7 +97,9 @@ public class FrameConsumerTest {
         this.queue.put(versusScreen);
         this.queue.put(versusScreen);
         this.queue.put(versusScreen);
+        
         GameAndVersusScreen result = this.frameConsumer.call();
+        
         Assert.assertNotNull(result);
         Assert.assertSame(versusScreen, result.getVersusScreen());
         Assert.assertSame(VersusScreenAnalyserMock.DUMMY_GAME, result.getGame());
@@ -116,7 +120,9 @@ public class FrameConsumerTest {
         this.queue.put(notVersusScreen);
         this.queue.put(notVersusScreen);
         this.queue.put(notVersusScreen);
+        
         GameAndVersusScreen result = this.frameConsumer.call();
+        
         Assert.assertNull(result);
         Assert.assertEquals(0, versusScreenAnalyser.getNumberOfCalls());
     }
@@ -139,7 +145,9 @@ public class FrameConsumerTest {
         this.queue.put(versusScreen);
         this.queue.put(anotherVersusScreen);
         this.queue.put(notVersusScreen);
+        
         GameAndVersusScreen result = this.frameConsumer.call();
+        
         Assert.assertNotNull(result);
         Assert.assertSame(versusScreen, result.getVersusScreen());
         Assert.assertSame(VersusScreenAnalyserMock.DUMMY_GAME, result.getGame());
