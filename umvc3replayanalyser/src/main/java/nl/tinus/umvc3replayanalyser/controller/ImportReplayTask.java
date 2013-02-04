@@ -204,6 +204,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         }
+        // TODO the following can throw a NullPointerException, prevent and/or handle this
         ImageIO.write(versusScreen, IMAGE_FORMAT, previewImageFile);
         logMessage("Saved preview image: " + previewImageFile);
 
