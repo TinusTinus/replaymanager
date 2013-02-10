@@ -52,4 +52,31 @@ public class ImportReplayTaskTest {
         
         Assert.assertEquals("20120104182546-DJ_Alberto_Lara(Hulk-Wolvie-Sent)_vs_MvdR(Wolvie-Zero-Doom)", baseFilename);
     }
+    
+    /** Tests the construction of the base filename where the player names contain invalid symbols. */
+    @Test
+    public void testGetBaseFilenameSymbols() {
+        // Create task to be tested.
+        File dataDirectory = new File("src/test/resources/data");
+        List<Replay> replays = Collections.emptyList();
+        ConfigurationDummy configuration = new ConfigurationDummy() {
+            /** {@inheritDoc} */
+            @Override
+            public boolean isPrettyPrintReplays() {
+                return false;
+            }
+        };
+        ImportReplayTask task = new ImportReplayTask(dataDirectory, replays, configuration, new ReplayAnalyserDummy());
+        
+        Date creationTime = new GregorianCalendar(2012, 0, 4, 18, 25, 46).getTime();
+        Player playerOne = new Player("Pipe|Pipe");
+        Team teamOne = new Team(Umvc3Character.RYU, Umvc3Character.AKUMA, Umvc3Character.C_VIPER);
+        Player playerTwo = new Player("Star*Star");
+        Team teamTwo = new Team(Umvc3Character.CAPTAIN_AMERICA, Umvc3Character.IRON_MAN, Umvc3Character.THOR);
+        Game game = new Game(playerOne, teamOne, playerTwo, teamTwo);
+        
+        String baseFilename = task.getBaseFilename(game, creationTime);
+        
+        Assert.assertEquals("20120104182546-Pipe_Pipe(Ryu-Akuma-Viper)_vs_Star_Star(Cap-IronMan-Thor)", baseFilename);
+    }
 }

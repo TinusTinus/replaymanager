@@ -35,6 +35,11 @@ import org.codehaus.jackson.map.ObjectWriter;
  */
 @Slf4j
 class ImportReplayTask extends Task<List<Replay>> {
+    /**
+     * Regular expression for which characters are allowed in a player name in a filename. Any other characters will be
+     * filtered out and replaced by underscores.
+     */
+    private static final String WHITELIST_CHARACTERS = "\\W+";
     /** Name of the image format to be used when saving preview images. */
     private static final String IMAGE_FORMAT = "png";
     /** Separator in file paths; "\" on Windows, "/" on Linux. */
@@ -277,12 +282,12 @@ class ImportReplayTask extends Task<List<Replay>> {
     // default visibility for unit tests
     String getBaseFilename(Game game, Date creationTime) {
         String time = FILENAME_TIME_FORMAT.get().format(creationTime);
-        String playerOne = game.getPlayerOne().getGamertag().replace(' ', '_');
+        String playerOne = game.getPlayerOne().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
         Team teamOne = game.getTeamOne();
         String teamOneCharacterOne = teamOne.getFirstCharacter().getShortName();
         String teamOneCharacterTwo = teamOne.getSecondCharacter().getShortName();
         String teamOneCharacterThree = teamOne.getThirdCharacter().getShortName();
-        String playerTwo = game.getPlayerTwo().getGamertag().replace(' ', '_');
+        String playerTwo = game.getPlayerTwo().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
         Team teamTwo = game.getTeamTwo();
         String teamTwoCharacterOne = teamTwo.getFirstCharacter().getShortName();
         String teamTwoCharacterTwo = teamTwo.getSecondCharacter().getShortName();
