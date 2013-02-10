@@ -33,6 +33,7 @@ import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
+import nl.tinus.umvc3replayanalyser.gui.ErrorMessagePopup;
 import nl.tinus.umvc3replayanalyser.gui.Icons;
 import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
@@ -647,9 +648,14 @@ public class Umvc3ReplayManagerController {
         File videoFile = new File(selectedReplay.getVideoLocation());
         try {
             Desktop.getDesktop().open(videoFile);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             log.error("Unable to play video for replay: " + selectedReplay, e);
-            // TODO show the user an error message
+            // Show an error message to the user.
+            String errorMessage = "Unable to play video for game: " + selectedReplay.getGame();
+            if (e.getMessage() != null) {
+                errorMessage = errorMessage + " " + e.getMessage();
+            }
+            ErrorMessagePopup.show("Unable to play video", errorMessage, e);
         }
     }
     

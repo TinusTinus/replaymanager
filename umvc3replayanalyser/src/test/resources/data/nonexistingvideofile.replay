@@ -1,0 +1,29 @@
+{
+  "creationTime":1357220751273,
+  "game": {
+    "playerOne":{
+      "gamertag":"MvdR"
+    },
+    "teamOne":{
+      "firstCharacter":"WOLVERINE",
+      "firstAssist":"GAMMA",
+      "secondCharacter":"ZERO",
+      "secondAssist":"ALPHA",
+      "thirdCharacter":"DOCTOR_DOOM",
+      "thirdAssist":"ALPHA"
+    },
+    "playerTwo": {
+      "gamertag":"MvdR2"
+    },
+    "teamTwo": {
+      "firstCharacter":"WOLVERINE",
+      "firstAssist":"GAMMA",
+      "secondCharacter":"ZERO",
+      "secondAssist":"ALPHA",
+      "thirdCharacter":"DOCTOR_DOOM",
+      "thirdAssist":"ALPHA"
+    }
+  },
+  "videoLocation":"src/test/resources/nope.mp4",
+  "previewImageLocation":"/nope.png"
+}

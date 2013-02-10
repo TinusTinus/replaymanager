@@ -1,6 +1,5 @@
 package nl.tinus.umvc3replayanalyser.gui;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -42,7 +41,7 @@ public class ErrorMessagePopup {
      * @param exception
      *            exception that caused the error
      */
-    public static void show(String title, String errorMessage, Stage stage, Exception exception) {
+    public static void show(String title, String errorMessage, final Stage stage, Exception exception) {
         log.info("Showing error message dialog to indicate that startup failed.");
 
         // Create the error dialog programatically without relying on FXML, to minimize the chances of further failure.
@@ -76,8 +75,8 @@ public class ErrorMessagePopup {
             /** {@inheritDoc} */
             @Override
             public void handle(ActionEvent event) {
-                log.info("User clicked OK, exiting the program.");
-                Platform.exit();
+                log.info("User clicked OK, closing the dialog.");
+                stage.close();
             }
         });
 
@@ -120,5 +119,19 @@ public class ErrorMessagePopup {
         stage.setMinHeight(stage.getHeight());
 
         log.info("Error dialog displayed.");
+    }
+
+    /**
+     * Handles an exception that caused program startup to fail, by showing an error message to the user in a new stage.
+     * 
+     * @param title
+     *            title for the dialog
+     * @param errorMessage
+     *            error message
+     * @param exception
+     *            exception that caused the error
+     */
+    public static void show(String title, String errorMessage, Exception exception) {
+        show(title, errorMessage, new Stage(), exception);
     }
 }
