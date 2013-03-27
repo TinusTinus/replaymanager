@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 
 import com.xuggle.xuggler.IError;
-import com.xuggle.xuggler.IError.Type;
 
 /**
  * Implementation of the ReplayAnalyser interface.
@@ -108,23 +107,7 @@ public class ReplayAnalyserImpl implements ReplayAnalyser {
 
             if (result == null) {
                 // No game found. Throw a ReplayAnalysisException with meaningful info.
-                try {
-                    IError error = producerFuture.get();
-                    if (error != null) {
-                        String message;
-                        if (Type.ERROR_EOF == error.getType()) {
-                            message = "Replay analysis failed. No versus screen found in the video file.";
-                        } else {
-                            message = "Replay analysis failed. Xuggle error: " + error + ", type: " + error.getType();
-                        }
-                        
-                        throw new ReplayAnalysisException(message, error);
-                    } else {
-                        throw new ReplayAnalysisException("Replay analysis failed.");
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new ReplayAnalysisException(e);
-                }
+                throw new ReplayAnalysisException("Replay analysis failed.");
             }
             
             // Make sure the producer has terminated, so we can be sure it has closed its reference to the video file.
