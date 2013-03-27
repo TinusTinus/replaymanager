@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import com.xuggle.mediatool.IMediaReader;
@@ -34,8 +33,6 @@ class FrameIterator implements Iterator<BufferedImage>, Closeable {
     private IMediaReader reader;
 
     /** The error returned by the last call to reader.readPacket(); null if no such error has been encountered yet. */
-    @Getter
-    // TODO The error should be of no real interest to users of this class. Refactor and remove the @Getter annotation.
     private IError error;
 
     /**
