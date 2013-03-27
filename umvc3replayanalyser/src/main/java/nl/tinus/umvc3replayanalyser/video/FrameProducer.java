@@ -8,10 +8,6 @@ import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 
-import com.xuggle.mediatool.IMediaReader;
-import com.xuggle.mediatool.MediaListenerAdapter;
-import com.xuggle.mediatool.ToolFactory;
-import com.xuggle.mediatool.event.IVideoPictureEvent;
 import com.xuggle.xuggler.IError;
 
 /**
@@ -20,15 +16,12 @@ import com.xuggle.xuggler.IError;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
+class FrameProducer implements Callable<IError> {
     /** URL of the video file to read frames from. */
     private final String videoUrl;
 
     /** Queue to place items into. */
     private final BlockingQueue<BufferedImage> queue;
-
-    /** Null by default. If a frame cannot be placed into the queue, this field is set to a non-null error message text. */
-    private String errorMessage;
 
     /** Indicates whether production is still needed. */
     private boolean productionCanStop;
@@ -46,7 +39,6 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
         this.videoUrl = videoUrl;
         this.queue = queue;
         this.productionCanStop = false;
-        this.errorMessage = null;
     }
 
     /**
@@ -58,56 +50,33 @@ class FrameProducer extends MediaListenerAdapter implements Callable<IError> {
      */
     @Override
     public IError call() throws ReplayAnalysisException {
-        IError error = null;
-        IMediaReader reader = ToolFactory.makeReader(this.videoUrl);
-        try {
-            reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
-            reader.addListener(this);
-            while (error == null && !productionCanStop) {
-                // Whenever readPacket results in a complete picture, it will trigger the onVideoPicture method.
-                error = reader.readPacket();
-                log.debug("Read packet.");
-            }
-        } finally {
-            reader.close();
-        }
+        IError result = null;
+        try (FrameIterator frameIter = new FrameIterator(this.videoUrl)) {
+            while (!productionCanStop && frameIter.hasNext()) {
+                BufferedImage image = frameIter.next();
+                
+                if (image.getWidth() != VersusScreenAnalyserImpl.SCREEN_WIDTH
+                        || image.getHeight() != VersusScreenAnalyserImpl.SCREEN_HEIGHT) {
+                    // Video has the wrong size; there's no point in offering any of its frames to the consumers.
+                    // TODO Eliminate this check once the VersusScreenAnalyser supports other resolutions.
+                    throw new ReplayAnalysisException(String.format("Video size must be %s x %s, was %s x %s", ""
+                            + VersusScreenAnalyserImpl.SCREEN_WIDTH, "" + VersusScreenAnalyserImpl.SCREEN_HEIGHT, ""
+                            + image.getWidth(), "" + image.getHeight() + "."));
+                }
 
-        if (this.errorMessage != null) {
-            throw new ReplayAnalysisException(this.errorMessage);
-        }
-
-        log.info("Done.");
-
-        return error;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void onVideoPicture(IVideoPictureEvent event) {
-        log.debug("Decoded picture for timestamp " + event.getTimeStamp());
-        BufferedImage image = event.getImage();
-        if (image == null) {
-            log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
-        } else if (image.getWidth() != VersusScreenAnalyserImpl.SCREEN_WIDTH
-                || image.getHeight() != VersusScreenAnalyserImpl.SCREEN_HEIGHT) {
-            // Video has the wrong size; there's no point in offering any of its frames to the consumers.
-            // TODO Eliminate this check once the VersusScreenAnalyser supports other resolutions.
-            this.errorMessage = String.format("Video size must be %s x %s, was %s x %s", ""
-                    + VersusScreenAnalyserImpl.SCREEN_WIDTH, "" + VersusScreenAnalyserImpl.SCREEN_HEIGHT,
-                    "" + image.getWidth(), "" + image.getHeight() + ".");
-            this.productionCanStop = true;
-        } else {
-            boolean success = false;
-            while (!success && !productionCanStop) {
-                try {
-                    success = queue.offer(image, 1, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    log.error(
-                            String.format("Skipping image with timestamp %s due to an unexpected exception.",
-                                    event.getTimeStamp()), e);
+                boolean success = false;
+                while (!success && !productionCanStop) {
+                    try {
+                        success = queue.offer(image, 1, TimeUnit.SECONDS);
+                    } catch (InterruptedException e) {
+                        log.error("Skipping image due to an unexpected exception: " + image, e);
+                    }
                 }
             }
+            log.info("Done.");
+            result = frameIter.getError();
         }
+        return result;
     }
 
     /** Indicates that the producer no longer needs to keep producing frames. */
