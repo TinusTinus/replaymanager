@@ -17,7 +17,7 @@ import com.xuggle.xuggler.IError;
 import com.xuggle.xuggler.IError.Type;
 
 /**
- * Iterator for images.
+ * Iterator for video frames.
  * 
  * This class is intended as a wrapper for the (kind of clunky) Xuggler API. A FrameIterator can be used as any other
  * iterator to iterate over the individual frames of a video.
