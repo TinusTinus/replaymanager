@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 
-import com.xuggle.xuggler.IError;
-
 /**
  * Implementation of the ReplayAnalyser interface.
  * 
@@ -48,7 +46,7 @@ public class ReplayAnalyserImpl implements ReplayAnalyser {
 
         try {
             FrameProducer producer = new FrameProducer(videoUrl, queue);
-            Future<IError> producerFuture = executorService.submit(producer);
+            Future<Void> producerFuture = executorService.submit(producer);
             
             List<FrameConsumer> consumers = new ArrayList<>(numConsumers);
             List<Future<GameAndVersusScreen>> consumerFutures = new ArrayList<>(numConsumers);
@@ -106,7 +104,7 @@ public class ReplayAnalyserImpl implements ReplayAnalyser {
             }
 
             if (result == null) {
-                // No game found. Throw a ReplayAnalysisException with meaningful info.
+                // No game found. Throw a ReplayAnalysisException.
                 throw new ReplayAnalysisException("Replay analysis failed.");
             }
             

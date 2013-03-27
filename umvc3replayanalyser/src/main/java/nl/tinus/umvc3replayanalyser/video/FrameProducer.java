@@ -8,15 +8,14 @@ import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 
-import com.xuggle.xuggler.IError;
-
 /**
  * Produces video frames from a video file.
  * 
  * @author Martijn van de Rijdt
  */
 @Slf4j
-class FrameProducer implements Callable<IError> {
+// TODO implement Runnable instead of Callable<Void>. This can be done as soon as the ReplayException can no longer be thrown.
+class FrameProducer implements Callable<Void> {
     /** URL of the video file to read frames from. */
     private final String videoUrl;
 
@@ -49,8 +48,7 @@ class FrameProducer implements Callable<IError> {
      *             in case the video cannot be processed
      */
     @Override
-    public IError call() throws ReplayAnalysisException {
-        IError result = null;
+    public Void call() throws ReplayAnalysisException {
         try (FrameIterator frameIter = new FrameIterator(this.videoUrl)) {
             while (!productionCanStop && frameIter.hasNext()) {
                 BufferedImage image = frameIter.next();
@@ -74,9 +72,8 @@ class FrameProducer implements Callable<IError> {
                 }
             }
             log.info("Done.");
-            result = frameIter.getError();
         }
-        return result;
+        return null;
     }
 
     /** Indicates that the producer no longer needs to keep producing frames. */
