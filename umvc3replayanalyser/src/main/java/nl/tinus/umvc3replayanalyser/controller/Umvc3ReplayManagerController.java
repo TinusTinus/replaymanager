@@ -645,18 +645,24 @@ public class Umvc3ReplayManagerController {
         
         log.info("Playing video: " + selectedReplay.getVideoLocation());
 
-        File videoFile = new File(selectedReplay.getVideoLocation());
-        try {
-            Desktop.getDesktop().open(videoFile);
-        } catch (IOException | IllegalArgumentException e) {
-            log.error("Unable to play video for replay: " + selectedReplay, e);
-            // Show an error message to the user.
-            String errorMessage = "Unable to play video for game: "
-                    + selectedReplay.getGame().getDescription(false, false);
-            if (e.getMessage() != null) {
-                errorMessage = errorMessage + " " + e.getMessage();
+        if (Desktop.isDesktopSupported()) {
+            File videoFile = new File(selectedReplay.getVideoLocation());
+            try {
+                Desktop.getDesktop().open(videoFile);
+            } catch (IOException | IllegalArgumentException e) {
+                log.error("Unable to play video for replay: " + selectedReplay, e);
+                // Show an error message to the user.
+                String errorMessage = "Unable to play video for game: "
+                        + selectedReplay.getGame().getDescription(false, false);
+                if (e.getMessage() != null) {
+                    errorMessage = errorMessage + " " + e.getMessage();
+                }
+                ErrorMessagePopup.show("Unable to play video", errorMessage, e);
             }
-            ErrorMessagePopup.show("Unable to play video", errorMessage, e);
+        } else {
+            log.error("Unable to play video, desktop not supported!");
+            // Show an error message to the user.
+            ErrorMessagePopup.show("Unable to play video", "Unable to play video files.", null);
         }
     }
     
