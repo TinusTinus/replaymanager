@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author Martijn van de Rijdt
  */
-//private constructor to prevent utility class instantiation
+// private constructor to prevent utility class instantiation
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public class Popups {
@@ -28,7 +28,7 @@ public class Popups {
     public static void showImportReplaysPopup(Object controller) {
         showImportReplaysPopup(new Stage(), controller);
     }
-    
+
     /**
      * Shows the import replay popup.
      * 
@@ -40,12 +40,17 @@ public class Popups {
     public static void showImportReplaysPopup(Stage stage, Object controller) {
         show("/import-replay-popup.fxml", stage, controller, "Importing replays");
     }
-    
-    /** Shows the about box replay popup. */
-    public static void showAboutPopup() {
-        show("/about.fxml", new Stage(), null, "About");
+
+    /**
+     * Shows the about box replay popup.
+     * 
+     * @param controller
+     *            controller for the about box, typically an AboutPopupController
+     */
+    public static void showAboutPopup(Object controller) {
+        show("/about.fxml", new Stage(), controller, "About");
     }
-    
+
     /**
      * Shows a popup.
      * 

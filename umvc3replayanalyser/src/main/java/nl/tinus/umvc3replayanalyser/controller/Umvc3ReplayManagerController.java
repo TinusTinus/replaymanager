@@ -602,7 +602,7 @@ public class Umvc3ReplayManagerController {
     @FXML
     private void handleAboutAction(final ActionEvent event) {
         log.info("About menu item selected.");
-        Popups.showAboutPopup();
+        Popups.showAboutPopup(new AboutPopupController());
     }
     
     /** Action handler to import replays. */
