@@ -42,7 +42,6 @@ class AboutPopupController {
             // <Hyperlink layoutX="104.0" layoutY="87.0" text="GPL v3" onAction="#handleHyperlinkAction" />
             // <Hyperlink layoutX="104.0" layoutY="109.0" text="MIT" onAction="#handleHyperlinkAction" />
             // <Hyperlink layoutX="103.0" layoutY="131.0" text="Apache License v2.0" onAction="#handleHyperlinkAction"
-            // />
         } catch (URISyntaxException e) {
             throw new RuntimeException("Unable to complete class initialisation.", e);
         }
