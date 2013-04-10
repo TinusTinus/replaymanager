@@ -50,9 +50,12 @@ class FrameIterator implements Iterator<BufferedImage>, Closeable {
             /** {@inheritDoc} */
             @Override
             public void onVideoPicture(IVideoPictureEvent event) {
-                log.debug("Decoded picture for timestamp " + event.getTimeStamp());
+                if (log.isDebugEnabled()) {
+                    log.debug("Decoded picture for timestamp " + event.getTimeStamp());
+                }
                 BufferedImage image = event.getImage();
                 if (image == null) {
+                    // This should not occur, since we called setBufferedImageTypeToGenerate on the reader.
                     log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
                 } else {
                     FrameIterator.this.queue.offer(image);
