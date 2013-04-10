@@ -38,7 +38,7 @@ public class ReplayAnalysisException extends Exception {
 
     /** Constructor. */
     public ReplayAnalysisException() {
-        super();
+        super("Replay analysis failed.");
     }
 
     /**
