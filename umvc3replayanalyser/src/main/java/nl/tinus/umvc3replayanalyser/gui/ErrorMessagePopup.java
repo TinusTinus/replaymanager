@@ -52,7 +52,13 @@ public class ErrorMessagePopup {
         Text text = new Text(errorMessage);
 
         // Text area containing the stack trace. Not visible by default.
-        final TextArea stackTraceArea = new TextArea(ExceptionUtils.getStackTrace(exception));
+        String stackTrace;
+        if (exception != null) {
+            stackTrace = ExceptionUtils.getStackTrace(exception);
+        } else {
+            stackTrace = "No more details available.";
+        }
+        final TextArea stackTraceArea = new TextArea(stackTrace);
         stackTraceArea.setEditable(false);
         stackTraceArea.setVisible(false);
 
