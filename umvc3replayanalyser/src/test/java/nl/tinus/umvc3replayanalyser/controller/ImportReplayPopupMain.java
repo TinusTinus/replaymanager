@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
-import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
+import nl.tinus.umvc3replayanalyser.gui.Popups;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.tinus.umvc3replayanalyser.model.Replay;
@@ -66,7 +66,7 @@ public class ImportReplayPopupMain extends Application {
         ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, configuration, replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task, working, "Replay Import Thread");
 
-        ImportReplayPopup.show(stage, controller);
+        Popups.showImportReplaysPopup(stage, controller);
 
         log.info("Application started.");
     }

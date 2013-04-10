@@ -66,6 +66,7 @@ class ImportReplayPopupController {
         task.setOnFailed(eventHandler);
         working.set(true);
         new Thread(task, threadName).start();
+        log.info("Initialisation complete.");
     }
 
     /**

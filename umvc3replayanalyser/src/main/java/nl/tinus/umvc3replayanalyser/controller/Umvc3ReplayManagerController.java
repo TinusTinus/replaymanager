@@ -35,7 +35,7 @@ import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.tinus.umvc3replayanalyser.gui.ErrorMessagePopup;
 import nl.tinus.umvc3replayanalyser.gui.Icons;
-import nl.tinus.umvc3replayanalyser.gui.ImportReplayPopup;
+import nl.tinus.umvc3replayanalyser.gui.Popups;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.tinus.umvc3replayanalyser.model.Assist;
@@ -602,7 +602,7 @@ public class Umvc3ReplayManagerController {
     @FXML
     private void handleAboutAction(final ActionEvent event) {
         log.info("About menu item selected. About box not implemented yet.");
-        // TODO show an awesome about box!
+        Popups.showAboutPopup();
     }
     
     /** Action handler to import replays. */
@@ -630,7 +630,7 @@ public class Umvc3ReplayManagerController {
         ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.configuration, this.replayAnalyser);
         ImportReplayPopupController controller = new ImportReplayPopupController(task,
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
-        ImportReplayPopup.show(controller);
+        Popups.showImportReplaysPopup(controller);
     }
     
     /** Handles the case where the user clicks the Open video button. */
