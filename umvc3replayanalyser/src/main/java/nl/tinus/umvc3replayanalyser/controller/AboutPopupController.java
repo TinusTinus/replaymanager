@@ -23,10 +23,10 @@ import nl.tinus.umvc3replayanalyser.gui.ErrorMessagePopup;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class AboutPopupController {
-    /** Map from hyperlink texts to corresponding URLs. */
+    /** Map from hyperlink texts to corresponding URIs. */
     private static final Map<String, URI> URIS = new HashMap<>();
 
-    // Initialisation of the URLS map.
+    // Initialisation of the URIS map.
     {
         try {
             URIS.put("JavaFX", new URI("http://docs.oracle.com/javafx/"));
