@@ -31,17 +31,16 @@ class AboutPopupController {
         try {
             URIS.put("JavaFX", new URI("http://docs.oracle.com/javafx/"));
             URIS.put("Xuggler", new URI("http://www.xuggle.com/xuggler"));
-            // TODO add the following as well
-            // "Slf4j"
-            // "Log4j"
-            // "Commons-CLI"
-            // "Commons-lang"
-            // "Guava"
-            // "Jackson"
-            // "BCL for Java SE"
-            // "GPL v3"
-            // "MIT"
-            // "Apache License v2.0"
+            URIS.put("Slf4j", new URI("http://www.slf4j.org/"));
+            URIS.put("Log4j", new URI("http://logging.apache.org/log4j/1.2/"));
+            URIS.put("Commons-CLI", new URI("http://commons.apache.org/proper/commons-cli/"));
+            URIS.put("Commons-lang", new URI("http://commons.apache.org/proper/commons-lang/"));
+            URIS.put("Guava", new URI("http://code.google.com/p/guava-libraries/"));
+            URIS.put("Jackson", new URI("http://jackson.codehaus.org/"));
+            URIS.put("BCL for Java SE", new URI("http://www.oracle.com/technetwork/java/javase/terms/license/index.html"));
+            URIS.put("GPL v3", new URI("http://www.gnu.org/licenses/gpl.html"));
+            URIS.put("MIT", new URI("http://opensource.org/licenses/MIT"));
+            URIS.put("Apache License v2.0", new URI("http://www.apache.org/licenses/LICENSE-2.0.html"));
         } catch (URISyntaxException e) {
             throw new RuntimeException("Unable to complete class initialisation.", e);
         }
