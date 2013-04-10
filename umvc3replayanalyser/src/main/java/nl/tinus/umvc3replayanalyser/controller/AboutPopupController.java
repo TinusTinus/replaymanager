@@ -70,9 +70,10 @@ class AboutPopupController {
             throw new IllegalArgumentException("Unknow link text: " + linkText + ", must be one of the following: "
                     + URIS.keySet());
         }
-
+        
         if (Desktop.isDesktopSupported()) {
             try {
+                log.info("Browsing to uri: " + uri);
                 Desktop.getDesktop().browse(uri);
             } catch (IOException e) {
                 log.error("Unable to browse to URI: " + uri, e);
