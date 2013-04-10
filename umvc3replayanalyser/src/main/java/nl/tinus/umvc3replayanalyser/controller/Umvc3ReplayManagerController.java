@@ -601,7 +601,7 @@ public class Umvc3ReplayManagerController {
     /** Action handler which shows the about box. */
     @FXML
     private void handleAboutAction(final ActionEvent event) {
-        log.info("About menu item selected. About box not implemented yet.");
+        log.info("About menu item selected.");
         Popups.showAboutPopup();
     }
     
