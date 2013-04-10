@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Class used to load and show the import replay view.
  * 
- * This is a utility class that cannot be instantiated; use the static method.
+ * This is a utility class that cannot be instantiated; use the static methods.
  * 
  * @author Martijn van de Rijdt
  */
