@@ -30,7 +30,7 @@ public class EditReplayPopupMain extends Application {
     public void start(Stage stage) throws IOException {
         log.info("Starting application.");
 
-        Popups.showEditReplayPopup(new EditReplaysController());
+        Popups.showEditReplayPopup(new EditReplayController());
 
         log.info("Application started.");
     }

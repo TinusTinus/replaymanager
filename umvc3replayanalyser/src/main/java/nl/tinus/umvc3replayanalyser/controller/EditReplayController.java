@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class EditReplaysController {
+class EditReplayController {
     
     /** Initialisation method. */
     @FXML
