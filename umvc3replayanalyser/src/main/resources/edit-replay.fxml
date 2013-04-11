@@ -26,7 +26,7 @@
     <ComboBox fx:id="playerTwoAssistTwoComboBox" disable="true" layoutX="648.0" layoutY="67.0" prefHeight="21.0" prefWidth="177.0" promptText="unknown assist" />
     <ComboBox fx:id="playerTwoCharacterThreeComboBox" layoutX="466.0" layoutY="95.0" prefHeight="21.0" prefWidth="177.0" promptText="choose a character" />
     <ComboBox fx:id="playerTwoAssistThreeComboBox" disable="true" layoutX="648.0" layoutY="95.0" prefHeight="21.0" prefWidth="177.0" promptText="unknown assist" />
-    <Button fx:id="okButton" layoutX="657.0" layoutY="131.0" mnemonicParsing="false" prefWidth="80.0" text="OK" />
+    <Button fx:id="okButton" disable="true" layoutX="657.0" layoutY="131.0" mnemonicParsing="false" prefWidth="80.0" text="OK" />
     <Button fx:id="cancelButton" cancelButton="true" layoutX="745.0" layoutY="131.0" mnemonicParsing="false" prefWidth="80.0" text="Cancel" />
   </children>
 </AnchorPane>

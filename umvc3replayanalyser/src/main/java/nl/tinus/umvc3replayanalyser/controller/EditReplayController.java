@@ -16,8 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
+import nl.tinus.umvc3replayanalyser.model.Player;
 import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Controller for the edit replays view.
@@ -73,7 +76,6 @@ class EditReplayController {
     /** Assist selection combo box. */
     @FXML
     private ComboBox<Assist> playerTwoAssistThreeComboBox;
-    // TODO enable / disable the ok button when appropriate
     /** OK button. */
     @FXML
     private Button okButton;
@@ -103,7 +105,7 @@ class EditReplayController {
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
 
         // Add a listener, so that whenever a character value is changed, the assist combo box is updated as well.
-        ChangeListener<Umvc3Character> listener = new ChangeListener<Umvc3Character>() {
+        ChangeListener<Umvc3Character> assistListener = new ChangeListener<Umvc3Character>() {
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Umvc3Character> observable, Umvc3Character oldValue,
@@ -114,16 +116,37 @@ class EditReplayController {
                 updateAssistComboBox(observable);
             }
         };
-        playerOneCharacterOneComboBox.valueProperty().addListener(listener);
-        playerOneCharacterTwoComboBox.valueProperty().addListener(listener);
-        playerOneCharacterThreeComboBox.valueProperty().addListener(listener);
-        playerTwoCharacterOneComboBox.valueProperty().addListener(listener);
-        playerTwoCharacterTwoComboBox.valueProperty().addListener(listener);
-        playerTwoCharacterThreeComboBox.valueProperty().addListener(listener);
+        playerOneCharacterOneComboBox.valueProperty().addListener(assistListener);
+        playerOneCharacterTwoComboBox.valueProperty().addListener(assistListener);
+        playerOneCharacterThreeComboBox.valueProperty().addListener(assistListener);
+        playerTwoCharacterOneComboBox.valueProperty().addListener(assistListener);
+        playerTwoCharacterTwoComboBox.valueProperty().addListener(assistListener);
+        playerTwoCharacterThreeComboBox.valueProperty().addListener(assistListener);
         
+        // Add another listener to ensure the OK button is enabled when the required fields have been filled in.
+        ChangeListener<Object> okEnabledListener = new ChangeListener<Object>() {
+            /** {@inheritDoc} */
+            @Override
+            public void changed(ObservableValue<? extends Object> observable, Object oldValue,
+                    Object newValue) {
+                if (log.isDebugEnabled()) {
+                    log.debug(String.format("Observable value changed. Old value: %s, new value: %s", oldValue, newValue));
+                }
+                okButton.setDisable(!isFilledIn());
+            }
+        };
+        playerOneTextField.textProperty().addListener(okEnabledListener);
+        playerTwoTextField.textProperty().addListener(okEnabledListener);
+        playerOneCharacterOneComboBox.valueProperty().addListener(okEnabledListener);
+        playerOneCharacterTwoComboBox.valueProperty().addListener(okEnabledListener);
+        playerOneCharacterThreeComboBox.valueProperty().addListener(okEnabledListener);
+        playerTwoCharacterOneComboBox.valueProperty().addListener(okEnabledListener);
+        playerTwoCharacterTwoComboBox.valueProperty().addListener(okEnabledListener);
+        playerTwoCharacterThreeComboBox.valueProperty().addListener(okEnabledListener);
+
         // Set the value of all fields based on the contents of defaultContents if available.
         // Do this after registering the listeners, so that when a character value is set, the assist combo box is
-        // updated.
+        // updated, and the status of the OK button is updated at the end.
         // Always update the assist value after the corresponding character value.
         if (defaultContents != null) {
             playerOneTextField.setText(defaultContents.getPlayerOne().getGamertag());
@@ -166,5 +189,46 @@ class EditReplayController {
             comboBox.getItems().add(new Assist(type, observable.getValue()));
         }
         comboBox.setDisable(false);
+    }
+
+    /**
+     * Converts the selection in the dialog box to a game and returns it.
+     * 
+     * @return new game instance based on the selection in the dialog box, or null if not all required fields have been
+     *         filled in
+     */
+    private Game getGame() {
+        Game result;
+
+        if (!isFilledIn()) {
+            result = null;
+        } else {
+            Player playerOne = new Player(playerOneTextField.getText());
+            Player playerTwo = new Player(playerTwoTextField.getText());
+            Team teamOne = new Team(playerOneCharacterOneComboBox.getValue(), playerOneAssistOneComboBox.getValue()
+                    .getType(), playerOneCharacterTwoComboBox.getValue(), playerOneAssistTwoComboBox.getValue()
+                    .getType(), playerOneCharacterThreeComboBox.getValue(), playerOneAssistThreeComboBox.getValue()
+                    .getType());
+            Team teamTwo = new Team(playerTwoCharacterOneComboBox.getValue(), playerTwoAssistOneComboBox.getValue()
+                    .getType(), playerTwoCharacterTwoComboBox.getValue(), playerTwoAssistTwoComboBox.getValue()
+                    .getType(), playerTwoCharacterThreeComboBox.getValue(), playerTwoAssistThreeComboBox.getValue()
+                    .getType());
+            result = new Game(playerOne, teamOne, playerTwo, teamTwo);
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks whether the required fields of the form have been filled in.
+     * 
+     * @return true if the required fields are filled in, false otherwise
+     */
+    private boolean isFilledIn() {
+        return !StringUtils.isEmpty(playerOneTextField.getText()) && !StringUtils.isEmpty(playerTwoTextField.getText())
+                && playerOneCharacterOneComboBox.getValue() != null && playerOneCharacterTwoComboBox.getValue() != null
+                && playerOneCharacterThreeComboBox.getValue() != null
+                && playerTwoCharacterOneComboBox.getValue() != null && playerTwoCharacterTwoComboBox.getValue() != null
+                && playerTwoCharacterThreeComboBox.getValue() != null;
     }
 }
