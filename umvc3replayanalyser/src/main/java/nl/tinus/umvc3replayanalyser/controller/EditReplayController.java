@@ -192,16 +192,12 @@ class EditReplayController {
     }
 
     /**
-     * Converts the selection in the dialog box to a game and returns it. Throws an IllegalStateException in case any
-     * required fields have not been filled in.
+     * Converts the selection in the dialog box to a game and returns it. Will throw an IllegalArgumentException in case
+     * any required fields have not been filled in.
      * 
      * @return new game instance based on the selection in the dialog box
      */
     private Game getGame() {
-        if (!isFilledIn()) {
-            throw new IllegalStateException("Not all required fields have been filled in.");
-        }
-
         Player playerOne = new Player(playerOneTextField.getText());
         Player playerTwo = new Player(playerTwoTextField.getText());
         Team teamOne = new Team(playerOneCharacterOneComboBox.getValue(),
