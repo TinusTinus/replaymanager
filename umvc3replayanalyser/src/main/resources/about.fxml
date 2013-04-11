@@ -24,7 +24,7 @@
     <Hyperlink layoutX="103.0" layoutY="131.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
     <Hyperlink layoutX="103.0" layoutY="153.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
     <Hyperlink layoutX="103.0" layoutY="175.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="103.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
     <Hyperlink layoutX="103.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="103.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
   </children>
 </AnchorPane>
