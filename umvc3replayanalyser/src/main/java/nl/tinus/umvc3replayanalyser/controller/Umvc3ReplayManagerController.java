@@ -715,7 +715,7 @@ public class Umvc3ReplayManagerController {
             
             replays.add(replay);
         } catch (IOException e) {
-            ErrorMessagePopup.show("Unable to save replay.", "Unable to save replay.", e);
+            ErrorMessagePopup.show("Unable to save replay.", "The replay could not be saved.", e);
         }
     }
     
