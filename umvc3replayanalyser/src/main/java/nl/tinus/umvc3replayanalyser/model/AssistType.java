@@ -1,5 +1,6 @@
 package nl.tinus.umvc3replayanalyser.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  * 
  * @author Martijn van de Rijdt
  */
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum AssistType {
     ALPHA("alpha"), BETA("beta"), GAMMA("gamma");
