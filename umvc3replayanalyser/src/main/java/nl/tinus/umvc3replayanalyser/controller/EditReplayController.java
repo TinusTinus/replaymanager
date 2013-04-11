@@ -15,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
-import nl.tinus.umvc3replayanalyser.model.Replay;
+import nl.tinus.umvc3replayanalyser.model.Game;
+import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 
 /**
@@ -28,7 +29,7 @@ import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 class EditReplayController {
 
     /** Default contents for the form. May be null. */
-    private final Replay defaultContents;
+    private final Game defaultContents;
 
     /** First text field for player name. */
     @FXML
@@ -120,7 +121,28 @@ class EditReplayController {
         playerTwoCharacterTwoComboBox.valueProperty().addListener(listener);
         playerTwoCharacterThreeComboBox.valueProperty().addListener(listener);
         
-        // TODO fill all fields based on the contents of defaultContents
+        // Set the value of all fields based on the contents of defaultContents if available.
+        // Do this after registering the listeners, so that when a character value is set, the assist combo box is
+        // updated.
+        // Always update the assist value after the corresponding character value.
+        if (defaultContents != null) {
+            playerOneTextField.setText(defaultContents.getPlayerOne().getGamertag());
+            playerTwoTextField.setText(defaultContents.getPlayerTwo().getGamertag());
+            Team teamOne = defaultContents.getTeamOne();
+            Team teamTwo = defaultContents.getTeamTwo();
+            playerOneCharacterOneComboBox.setValue(teamOne.getFirstCharacter());
+            playerOneAssistOneComboBox.setValue(teamOne.getFirstAssist());
+            playerOneCharacterTwoComboBox.setValue(teamOne.getSecondCharacter());
+            playerOneAssistTwoComboBox.setValue(teamOne.getSecondAssist());
+            playerOneCharacterThreeComboBox.setValue(teamOne.getThirdCharacter());
+            playerOneAssistThreeComboBox.setValue(teamOne.getThirdAssist());
+            playerTwoCharacterOneComboBox.setValue(teamTwo.getFirstCharacter());
+            playerTwoAssistOneComboBox.setValue(teamTwo.getFirstAssist());
+            playerTwoCharacterTwoComboBox.setValue(teamTwo.getSecondCharacter());
+            playerTwoAssistTwoComboBox.setValue(teamTwo.getSecondAssist());
+            playerTwoCharacterThreeComboBox.setValue(teamTwo.getThirdCharacter());
+            playerTwoAssistThreeComboBox.setValue(teamTwo.getThirdAssist());
+        }
 
         log.info("Initialisation complete.");
     }
