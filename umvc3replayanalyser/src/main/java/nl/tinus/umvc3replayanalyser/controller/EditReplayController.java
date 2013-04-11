@@ -196,8 +196,8 @@ class EditReplayController {
     /**
      * Converts the selection in the dialog box to a game and returns it.
      * 
-     * Note that this method calls constructors which will throw an IllegalArgumentException in case any required fields
-     * have not been filled in. This can be checked using the isFilledIn() method.
+     * Note that this method will throw a NullPointerException in case any required field values are null. This can be
+     * checked using the isFilledIn() method.
      * 
      * @return new game instance based on the selection in the dialog box
      */
