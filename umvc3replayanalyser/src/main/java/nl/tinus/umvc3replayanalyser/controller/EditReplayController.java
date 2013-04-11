@@ -33,6 +33,16 @@ import org.apache.commons.lang3.StringUtils;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class EditReplayController {
 
+    /**
+     * Constructor.
+     * 
+     * @param okHandler
+     *            event handler, called when the user activates the OK button
+     */
+    EditReplayController(ReplayDetailsEditedHandler okHandler) {
+        this(null, okHandler);
+    }
+    
     /** Default contents for the form. May be null. */
     private final Game defaultContents;
     /** Event handler, called when the user activates the OK button. */
