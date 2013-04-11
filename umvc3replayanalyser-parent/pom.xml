@@ -17,12 +17,12 @@
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
 		<commons-cli.version>1.1</commons-cli.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
-		<guava.version>13.0.1</guava.version>
-		<jackson.version>1.9.9</jackson.version>
+		<guava.version>14.0.1</guava.version>
+		<jackson.version>1.9.11</jackson.version>
 		<javafx.version>2</javafx.version>
 		<junit.version>4.10</junit.version>
 		<lombok.version>0.11.2</lombok.version>
-		<slf4j.version>1.7.2</slf4j.version>
+		<slf4j.version>1.7.5</slf4j.version>
 		<xuggler.version>5.4</xuggler.version>
 	</properties>
 
