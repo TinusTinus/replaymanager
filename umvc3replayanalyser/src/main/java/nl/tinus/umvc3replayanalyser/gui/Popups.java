@@ -55,7 +55,7 @@ public class Popups {
      * Shows the edit replay details popup.
      * 
      * @param controller
-     *            controller for the edit replay popup window
+     *            controller for the edit replay popup window, typically an EditReplayController
      */
     public static void showEditReplayPopup(Object controller) {
         show("/edit-replay.fxml", new Stage(), controller, "Edit replay details");
