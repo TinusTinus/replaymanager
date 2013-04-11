@@ -29,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
@@ -40,6 +41,7 @@ import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
+import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.model.Side;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
@@ -600,7 +602,7 @@ public class Umvc3ReplayManagerController {
     /** Action handler to import replays. */
     @FXML
     private void handleImportAction(final ActionEvent event) {
-        log.info("Import menu item selected.");
+        log.info("Import New Replays menu item selected.");
 
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Import Replays - Ultimate Marvel vs Capcom 3 Replay Manager");
@@ -612,7 +614,7 @@ public class Umvc3ReplayManagerController {
             importReplays(selectedDirectory);
         }
     }
-
+    
     /**
      * Imports the replays from the given directory.
      * 
@@ -625,7 +627,30 @@ public class Umvc3ReplayManagerController {
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
         Popups.showImportReplaysPopup(controller);
     }
+    
+    /** Action handler to import a single replay manually. */
+    @FXML
+    private void handleAddReplayAction(final ActionEvent event) {
+        log.info("Add Replay Manually menu item selected.");
 
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Add Replay - Ultimate Marvel vs Capcom 3 Replay Manager");
+        File selectedFile = chooser.showOpenDialog(getApplicationWindow());
+
+        log.info("Selected file: " + selectedFile + ".");
+
+        if (selectedFile != null) {
+            EditReplayController controller = new EditReplayController(new ReplayDetailsEditedHandler() {
+                /** {@inheritDoc} */
+                @Override
+                public void handleReplayDetailsEdited(Game game) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            Popups.showEditReplayPopup(controller);
+        }
+    }
+    
     /** Handles the case where the user clicks the Open video button. */
     @FXML
     private void handleOpenVideoAction() {

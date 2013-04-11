@@ -151,6 +151,7 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#handleImportAction" text="Import New Replays" fx:id="importMenuItem" />
+            <MenuItem mnemonicParsing="false" onAction="#handleAddReplayAction" text="Add Replay Manually" fx:id="addReplayItem" />
             <MenuItem mnemonicParsing="false" onAction="#handleExitAction" text="Exit" />
           </items>
         </Menu>
