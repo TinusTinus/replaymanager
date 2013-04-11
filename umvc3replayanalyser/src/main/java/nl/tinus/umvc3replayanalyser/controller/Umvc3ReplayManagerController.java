@@ -122,7 +122,7 @@ public class Umvc3ReplayManagerController {
     /** Check box indicating that the characters should only be matched in the given order. */
     @FXML
     private CheckBox maintainCharacterOrderCheckBox;
-    /** Menu item for importing new replays.*/
+    /** Menu item for importing new replays. */
     @FXML
     private MenuItem importMenuItem;
     /** Player name label. */
@@ -188,7 +188,7 @@ public class Umvc3ReplayManagerController {
     /** Button used to open the replay video. */
     @FXML
     private Button openVideoButton;
-    
+
     /** Application configuration. */
     private Configuration configuration;
     /** Replay analyser. */
@@ -223,7 +223,6 @@ public class Umvc3ReplayManagerController {
         this.configuration = new PropertiesConfiguration();
     }
 
-    
     /** Initialises the replay analyser. */
     private void initReplayAnalyser() {
         OCREngine ocrEngine = new TesseractOCREngine(this.configuration);
@@ -236,9 +235,9 @@ public class Umvc3ReplayManagerController {
         if (replays != null) {
             throw new IllegalStateException("Replays already loaded: " + replays);
         }
-        
+
         replays = FXCollections.observableList(new ArrayList<Replay>());
-        
+
         File dataDirectory = new File(this.configuration.getDataDirectoryPath());
         if (!dataDirectory.exists()) {
             throw new IllegalStateException("Not an existing path: " + dataDirectory + ". Check your configuration.");
@@ -246,9 +245,9 @@ public class Umvc3ReplayManagerController {
         if (!dataDirectory.isDirectory()) {
             throw new IllegalStateException("Not a directory: " + dataDirectory + ". Check your configuration.");
         }
-        
+
         ObjectMapper mapper = new ObjectMapper();
-        for (File file: dataDirectory.listFiles()) {
+        for (File file : dataDirectory.listFiles()) {
             if (file.getName().endsWith(".replay")) {
                 try {
                     if (log.isDebugEnabled()) {
@@ -266,7 +265,7 @@ public class Umvc3ReplayManagerController {
                 }
             }
         }
-        
+
         replays.addListener(new ListChangeListener<Replay>() {
             /** {@inheritDoc} */
             @Override
@@ -351,7 +350,7 @@ public class Umvc3ReplayManagerController {
                 log.warn("Unable to load image: " + newValue.getPreviewImageLocation(), e);
                 previewImageView.setImage(defaultPreviewImage);
             }
-            
+
             // Also update the replay details view.
             // player names
             playerOneLabel.setText(newValue.getGame().getPlayerOne().getGamertag());
@@ -364,12 +363,18 @@ public class Umvc3ReplayManagerController {
             playerTwoCharacterTwoLabel.setText(newValue.getGame().getTeamTwo().getSecondCharacter().getName());
             playerTwoCharacterThreeLabel.setText(newValue.getGame().getTeamTwo().getThirdCharacter().getName());
             // portraits
-            playerOneCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getFirstCharacter()));
-            playerOneCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getSecondCharacter()));
-            playerOneCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getThirdCharacter()));
-            playerTwoCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getFirstCharacter()));
-            playerTwoCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getSecondCharacter()));
-            playerTwoCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getThirdCharacter()));
+            playerOneCharacterOneImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamOne().getFirstCharacter()));
+            playerOneCharacterTwoImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamOne().getSecondCharacter()));
+            playerOneCharacterThreeImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamOne().getThirdCharacter()));
+            playerTwoCharacterOneImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamTwo().getFirstCharacter()));
+            playerTwoCharacterTwoImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamTwo().getSecondCharacter()));
+            playerTwoCharacterThreeImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamTwo().getThirdCharacter()));
             // assists
             playerOneAssistOneLabel.setText(getAssistText(newValue.getGame().getTeamOne().getFirstAssist()));
             playerOneAssistTwoLabel.setText(getAssistText(newValue.getGame().getTeamOne().getSecondAssist()));
@@ -410,11 +415,12 @@ public class Umvc3ReplayManagerController {
             openVideoButton.setDisable(true);
         }
     }
-    
+
     /**
      * Given an assist, returns the textual representation of the assist for the details view.
      * 
-     * @param assist assist to be represented; may be null
+     * @param assist
+     *            assist to be represented; may be null
      * @return string representation of the given assist
      */
     private String getAssistText(Assist assist) {
@@ -436,7 +442,7 @@ public class Umvc3ReplayManagerController {
             comboBox.getItems().addAll(Umvc3Character.values());
         }
     }
-    
+
     /** Initialises the mapping of the assist combo boxes. */
     private void initAssistComboBoxes() {
         assistComboBoxes = new HashMap<>();
@@ -447,30 +453,31 @@ public class Umvc3ReplayManagerController {
         assistComboBoxes.put(playerTwoCharacterTwoComboBox.valueProperty(), playerTwoAssistTwoComboBox);
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
     }
-    
+
     /** Adds listeners to the filter input fields. */
     private void initFilterListeners() {
         ChangeListener<Object> listener = new ChangeListener<Object>() {
             /** Used to prevent infinite recursion. */
             private boolean suspended = false;
-            
+
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
                 if (!suspended) {
                     suspended = true;
                     if (log.isDebugEnabled()) {
-                        log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
+                        log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue,
+                                newValue));
                     }
 
                     updateAssistComboBox(observable);
                     updateReplayTable();
-                    
+
                     suspended = false;
                 }
             }
         };
-        
+
         playerOneTextField.textProperty().addListener(listener);
         playerTwoTextField.textProperty().addListener(listener);
         playerOneCharacterOneComboBox.valueProperty().addListener(listener);
@@ -500,125 +507,117 @@ public class Umvc3ReplayManagerController {
         if (comboBox != null) {
             // Character value has changed. Rebuild the contents of the combo box.
             Umvc3Character selectedCharacter = (Umvc3Character) observable.getValue();
-            
+
             comboBox.getSelectionModel().clearSelection();
-            
+
             comboBox.getItems().clear();
             if (selectedCharacter != null) {
                 comboBox.getItems().add(null);
-                for (AssistType type: AssistType.values()) {
+                for (AssistType type : AssistType.values()) {
                     comboBox.getItems().add(new Assist(type, selectedCharacter));
                 }
             }
             comboBox.setDisable(selectedCharacter == null);
         }
     }
-    
+
     /** Updates the replay table. */
     private void updateReplayTable() {
         log.debug("Updating replay table.");
-        
+
         // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
-        
+
         // Construct the filter predicate
         Predicate<Replay> sideOnePredicate = new MatchReplayPredicate(playerOneTextField.getText(),
-                playerOneCharacterOneComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
-                playerOneCharacterTwoComboBox.getValue(), getType(playerOneAssistTwoComboBox.getValue()),
-                playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistThreeComboBox.getValue()),
+                playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()),
+                playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()),
+                playerOneCharacterThreeComboBox.getValue(), Assist.getType(playerOneAssistThreeComboBox.getValue()),
                 maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
         Predicate<Replay> sideTwoPredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
-                playerTwoCharacterOneComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
-                playerTwoCharacterTwoComboBox.getValue(), getType(playerTwoAssistTwoComboBox.getValue()),
-                playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistThreeComboBox.getValue()),
+                playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()),
+                playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()),
+                playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox.getValue()),
                 maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
         Predicate<Replay> predicate = Predicates.and(sideOnePredicate, sideTwoPredicate);
 
         if (!maintainPlayerOrderCheckBox.isSelected()) {
             sideOnePredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
-                    playerTwoCharacterOneComboBox.getValue(), getType(playerTwoAssistOneComboBox.getValue()),
-                    playerTwoCharacterTwoComboBox.getValue(), getType(playerTwoAssistTwoComboBox.getValue()),
-                    playerTwoCharacterThreeComboBox.getValue(), getType(playerTwoAssistThreeComboBox.getValue()),
+                    playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()),
+                    playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()),
+                    playerTwoCharacterThreeComboBox.getValue(),
+                    Assist.getType(playerTwoAssistThreeComboBox.getValue()),
                     maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
             sideTwoPredicate = new MatchReplayPredicate(playerOneTextField.getText(),
-                    playerOneCharacterOneComboBox.getValue(), getType(playerOneAssistOneComboBox.getValue()),
-                    playerOneCharacterTwoComboBox.getValue(), getType(playerOneAssistTwoComboBox.getValue()),
-                    playerOneCharacterThreeComboBox.getValue(), getType(playerOneAssistThreeComboBox.getValue()),
+                    playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()),
+                    playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()),
+                    playerOneCharacterThreeComboBox.getValue(),
+                    Assist.getType(playerOneAssistThreeComboBox.getValue()),
                     maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
             predicate = Predicates.or(predicate, Predicates.and(sideOnePredicate, sideTwoPredicate));
         }
-        
+
         if (log.isDebugEnabled()) {
             log.debug("Using predicate to filter replays: " + predicate);
         }
-        
+
         Iterable<Replay> filteredReplays = Iterables.filter(replays, predicate);
-        
+
         List<Replay> viewReplays = replayTableView.getItems();
         viewReplays.clear();
-        for (Replay replay: filteredReplays) {
+        for (Replay replay : filteredReplays) {
             viewReplays.add(replay);
         }
-        
+
         if (log.isDebugEnabled()) {
-            log.debug(String.format("Filtered replays. Displaying %s of %s replays.", ""
-                    + viewReplays.size(), "" + this.replays.size()));
+            log.debug(String.format("Filtered replays. Displaying %s of %s replays.", "" + viewReplays.size(), ""
+                    + this.replays.size()));
         }
-        
+
         // Force a re-sort of the table.
         List<TableColumn<Replay, ?>> sortOrder = new ArrayList<>(replayTableView.getSortOrder());
         replayTableView.getSortOrder().setAll(sortOrder);
-        
+
         // Attempt to reselect the originally selected replay.
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
         replayTableView.getSelectionModel().select(newIndex);
     }
-    
-    /**
-     * Gets the assist type, while handling null values.
-     * 
-     * @param assist
-     *            assist, may be null
-     * @return assist type, or null if the given assist is null
-     */
-    private AssistType getType(Assist assist) {
-        return Assist.getType(assist);
-    }
-    
+
     /** Action handler which exits the application. */
     @FXML
     private void handleExitAction(final ActionEvent event) {
         log.info("Close menu item selected; stopping the application.");
         Platform.exit();
     }
-    
+
     /** Action handler which shows the about box. */
     @FXML
     private void handleAboutAction(final ActionEvent event) {
         log.info("About menu item selected.");
         Popups.showAboutPopup(new AboutPopupController());
     }
-    
+
     /** Action handler to import replays. */
     @FXML
     private void handleImportAction(final ActionEvent event) {
         log.info("Import menu item selected.");
-        
+
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Import Replays - Ultimate Marvel vs Capcom 3 Replay Manager");
         File selectedDirectory = chooser.showDialog(getApplicationWindow());
-        
+
         log.info("Selected directory: " + selectedDirectory + ".");
-        
+
         if (selectedDirectory != null) {
-            importReplays(selectedDirectory);      
+            importReplays(selectedDirectory);
         }
     }
 
     /**
      * Imports the replays from the given directory.
      * 
-     * @param directory directory to be imported from
+     * @param directory
+     *            directory to be imported from
      */
     private void importReplays(File directory) {
         ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.configuration, this.replayAnalyser);
@@ -626,17 +625,17 @@ public class Umvc3ReplayManagerController {
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
         Popups.showImportReplaysPopup(controller);
     }
-    
+
     /** Handles the case where the user clicks the Open video button. */
     @FXML
     private void handleOpenVideoAction() {
         log.info("Open video button clicked.");
-        
+
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
         if (selectedReplay == null) {
             throw new IllegalStateException("No replay selected; open video button should have been disabled!");
         }
-        
+
         log.info("Playing video: " + selectedReplay.getVideoLocation());
 
         if (Desktop.isDesktopSupported()) {
@@ -659,7 +658,7 @@ public class Umvc3ReplayManagerController {
             ErrorMessagePopup.show("Unable to play video", "Unable to play video files.", null);
         }
     }
-    
+
     /**
      * Returns the main window of this application.
      * 
