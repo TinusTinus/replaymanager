@@ -21,7 +21,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * 
  * Does not use FXML to minimise the chances of failure.
  * 
- * This is a utility class that cannot be instantiated; use the static method.
+ * This is a utility class that cannot be instantiated; use the static methods.
  * 
  * @author Martijn van de Rijdt
  */
