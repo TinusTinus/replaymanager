@@ -106,8 +106,8 @@ class EditReplayController {
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
 
         // Add a listener, so that whenever a character value is changed, the assist combo box is updated as well.
-        // TODO bug: changing character values clears the assist (not visually, but the value is null)
-        // this bug may also be present in Umvc3ReplayManagerController
+        // TODO bug: changing character values clears the assist (not visually, but getValue() returns null)!
+        // This bug may also be present in Umvc3ReplayManagerController.
         ChangeListener<Umvc3Character> assistListener = new ChangeListener<Umvc3Character>() {
             /** {@inheritDoc} */
             @Override
