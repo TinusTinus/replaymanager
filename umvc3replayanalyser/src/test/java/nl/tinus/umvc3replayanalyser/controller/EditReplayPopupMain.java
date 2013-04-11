@@ -44,7 +44,7 @@ public class EditReplayPopupMain extends Application {
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
         
-        Popups.showEditReplayPopup(new EditReplayController(game));
+        Popups.showEditReplayPopup(new EditReplayController(game, new LogReplayDetailsHandler()));
 
         log.info("Application started.");
     }

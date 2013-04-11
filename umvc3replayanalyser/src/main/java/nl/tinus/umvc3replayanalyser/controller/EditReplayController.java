@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Assist;
@@ -34,6 +35,9 @@ class EditReplayController {
 
     /** Default contents for the form. May be null. */
     private final Game defaultContents;
+    /** Event handler, called when the user activates the OK button. */
+    @NonNull
+    private ReplayDetailsEditedHandler okHandler;
 
     /** First text field for player name. */
     @FXML
@@ -242,7 +246,7 @@ class EditReplayController {
         
         log.info("Game: " + game);
         
-        // TODO do something with game
+        okHandler.handleReplayDetailsEdited(game);
         
         getApplicationWindow().hide();
     }
