@@ -21,6 +21,23 @@ public class Assist {
     @NonNull
     private final Umvc3Character character;
     
+    /**
+     * Gets the assist type, while handling null values.
+     * 
+     * @param assist
+     *            assist, may be null
+     * @return assist type, or null if the given assist is null
+     */
+    public static AssistType getType(Assist assist) {
+        AssistType result;
+        if (assist == null) {
+            result = null;
+        } else {
+            result = assist.getType();
+        }
+        return result;
+    }
+    
     /** @return name of the assist */
     public String getName() {
         return character.getAssistName(type);

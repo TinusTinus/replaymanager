@@ -122,15 +122,15 @@ class EditReplayController {
         playerTwoCharacterOneComboBox.valueProperty().addListener(assistListener);
         playerTwoCharacterTwoComboBox.valueProperty().addListener(assistListener);
         playerTwoCharacterThreeComboBox.valueProperty().addListener(assistListener);
-        
+
         // Add another listener to ensure the OK button is enabled when the required fields have been filled in.
         ChangeListener<Object> okEnabledListener = new ChangeListener<Object>() {
             /** {@inheritDoc} */
             @Override
-            public void changed(ObservableValue<? extends Object> observable, Object oldValue,
-                    Object newValue) {
+            public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
                 if (log.isDebugEnabled()) {
-                    log.debug(String.format("Observable value changed. Old value: %s, new value: %s", oldValue, newValue));
+                    log.debug(String.format("Observable value changed. Old value: %s, new value: %s", oldValue,
+                            newValue));
                 }
                 okButton.setDisable(!isFilledIn());
             }
@@ -192,31 +192,31 @@ class EditReplayController {
     }
 
     /**
-     * Converts the selection in the dialog box to a game and returns it.
+     * Converts the selection in the dialog box to a game and returns it. Throws an IllegalStateException in case any
+     * required fields have not been filled in.
      * 
-     * @return new game instance based on the selection in the dialog box, or null if not all required fields have been
-     *         filled in
+     * @return new game instance based on the selection in the dialog box
      */
     private Game getGame() {
-        Game result;
-
         if (!isFilledIn()) {
-            result = null;
-        } else {
-            Player playerOne = new Player(playerOneTextField.getText());
-            Player playerTwo = new Player(playerTwoTextField.getText());
-            Team teamOne = new Team(playerOneCharacterOneComboBox.getValue(), playerOneAssistOneComboBox.getValue()
-                    .getType(), playerOneCharacterTwoComboBox.getValue(), playerOneAssistTwoComboBox.getValue()
-                    .getType(), playerOneCharacterThreeComboBox.getValue(), playerOneAssistThreeComboBox.getValue()
-                    .getType());
-            Team teamTwo = new Team(playerTwoCharacterOneComboBox.getValue(), playerTwoAssistOneComboBox.getValue()
-                    .getType(), playerTwoCharacterTwoComboBox.getValue(), playerTwoAssistTwoComboBox.getValue()
-                    .getType(), playerTwoCharacterThreeComboBox.getValue(), playerTwoAssistThreeComboBox.getValue()
-                    .getType());
-            result = new Game(playerOne, teamOne, playerTwo, teamTwo);
+            throw new IllegalStateException("Not all required fields have been filled in.");
         }
 
-        return result;
+        Player playerOne = new Player(playerOneTextField.getText());
+        Player playerTwo = new Player(playerTwoTextField.getText());
+        Team teamOne = new Team(playerOneCharacterOneComboBox.getValue(),
+                Assist.getType(playerOneAssistOneComboBox.getValue()),
+                playerOneCharacterTwoComboBox.getValue(),
+                Assist.getType(playerOneAssistTwoComboBox.getValue()),
+                playerOneCharacterThreeComboBox.getValue(),
+                Assist.getType(playerOneAssistThreeComboBox.getValue()));
+        Team teamTwo = new Team(playerTwoCharacterOneComboBox.getValue(),
+                Assist.getType(playerTwoAssistOneComboBox.getValue()),
+                playerTwoCharacterTwoComboBox.getValue(),
+                Assist.getType(playerTwoAssistTwoComboBox.getValue()),
+                playerTwoCharacterThreeComboBox.getValue(),
+                Assist.getType(playerTwoAssistThreeComboBox.getValue()));
+        return new Game(playerOne, teamOne, playerTwo, teamTwo);
     }
 
     /**

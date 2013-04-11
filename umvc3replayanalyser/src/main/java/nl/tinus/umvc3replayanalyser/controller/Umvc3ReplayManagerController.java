@@ -582,13 +582,7 @@ public class Umvc3ReplayManagerController {
      * @return assist type, or null if the given assist is null
      */
     private AssistType getType(Assist assist) {
-        AssistType result;
-        if (assist == null) {
-            result = null;
-        } else {
-            result = assist.getType();
-        }
-        return result;
+        return Assist.getType(assist);
     }
     
     /** Action handler which exits the application. */
