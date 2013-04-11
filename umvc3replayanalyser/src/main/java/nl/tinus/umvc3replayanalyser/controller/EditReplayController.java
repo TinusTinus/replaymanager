@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Window;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -241,7 +242,9 @@ class EditReplayController {
         
         log.info("Game: " + game);
         
-        // TODO do something with game and close the popup window
+        // TODO do something with game
+        
+        getApplicationWindow().hide();
     }
     
     /** Action handler for the cancel button. */
@@ -249,6 +252,15 @@ class EditReplayController {
     private void handleCancelAction() {
         log.info("Cancel button activated.");
         
-        // TODO close the popup window
+        getApplicationWindow().hide();
+    }
+    
+    /**
+     * Returns the popup window.
+     * 
+     * @return window
+     */
+    private Window getApplicationWindow() {
+        return this.okButton.getScene().getWindow();
     }
 }
