@@ -3,8 +3,12 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +48,7 @@ import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.model.Side;
+import nl.tinus.umvc3replayanalyser.model.Team;
 import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
 import nl.tinus.umvc3replayanalyser.ocr.OCREngine;
@@ -52,6 +57,7 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -64,6 +70,25 @@ import com.google.common.collect.Iterables;
  */
 @Slf4j
 public class Umvc3ReplayManagerController {
+    /**
+     * Regular expression for which characters are allowed in a player name in a filename. Any other characters will be
+     * filtered out and replaced by underscores.
+     */
+    private static final String WHITELIST_CHARACTERS = "\\W+";
+    /** Separator in file paths; "\" on Windows, "/" on Linux. */
+    private static final String SEPARATOR = System.getProperty("file.separator");
+    /**
+     * Thread-local variable holding the time format for output filenames. This variable is stored as a thread-local instead
+     * of just a single constant, because SimpleDateFormat is not threadsafe.
+     */
+    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<DateFormat>() {
+        /** {@inheritDoc} */
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyyMMddHHmmss");
+        }
+    };
+    
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -635,7 +660,7 @@ public class Umvc3ReplayManagerController {
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Add Replay - Ultimate Marvel vs Capcom 3 Replay Manager");
-        File selectedFile = chooser.showOpenDialog(getApplicationWindow());
+        final File selectedFile = chooser.showOpenDialog(getApplicationWindow());
 
         log.info("Selected file: " + selectedFile + ".");
 
@@ -644,12 +669,104 @@ public class Umvc3ReplayManagerController {
                 /** {@inheritDoc} */
                 @Override
                 public void handleReplayDetailsEdited(Game game) {
-                    // TODO Auto-generated method stub
+                    addReplay(selectedFile, game);
                 }
             });
             Popups.showEditReplayPopup(controller);
         }
     }
+
+    /**
+     * Adds a replay for the given video file, with the data from the given game.
+     * 
+     * @param file original video file
+     * @param game game
+     */
+    // TODO Much of this code was duplicated from ImportReplayTask. See if it can be extracted and reused somehow.
+    private void addReplay(File file, Game game) {
+        try {
+            Date creationTime = new Date(file.lastModified());
+            String baseFilename = getBaseFilename(game, creationTime);
+
+            File videoFile;
+            if (this.configuration.isMoveVideoFilesToDataDirectory()) {
+                // Move the replay to the data directory.
+
+                String videoFileExtension;
+                int index = file.getName().lastIndexOf('.');
+                if (0 < index) {
+                    videoFileExtension = file.getName().substring(index).toLowerCase();
+                } else {
+                    // No extension.
+                    videoFileExtension = "";
+                }
+
+                videoFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename
+                        + videoFileExtension);
+
+                // Note that move will fail with an IOException if videoFile aleady exists.
+                Files.move(file.toPath(), videoFile.toPath());
+
+                log.info("Moved video file to: " + videoFile);
+            } else {
+                // Leave the video file where it is.
+                videoFile = file;
+            }
+
+            Replay replay = new Replay(creationTime, game, videoFile.getAbsolutePath(),
+                    "ultimate-marvel-vs-capcom-3.jpg");
+
+            // Save replay to the data directory.
+            File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + ".replay");
+            if (replayFile.exists()) {
+                throw new IOException("Replay already exists: " + replayFile);
+            }
+            // TODO extract writer to field?
+            ObjectWriter writer;
+            ObjectMapper mapper = new ObjectMapper();
+            if (this.configuration.isPrettyPrintReplays()) {
+                writer = mapper.writerWithDefaultPrettyPrinter();
+            } else {
+                writer = mapper.writer();
+            }
+            writer.writeValue(replayFile, replay);
+            log.info("Saved replay file: " + replayFile);
+            
+            replays.add(replay);
+        } catch (IOException e) {
+            ErrorMessagePopup.show("Unable to save replay.", "Unable to save replay.", e);
+        }
+    }
+    
+    /**
+     * Constructs the base filename, without the extension, to be used for preview image, video file and replay file.
+     * 
+     * @param game
+     *            game
+     * @param creationTime
+     *            creation time
+     * @return base filename
+     */
+    // TODO Duplicated from ImportReplayTask. Refactor for reuse. 
+    private String getBaseFilename(Game game, Date creationTime) {
+        String time = FILENAME_TIME_FORMAT.get().format(creationTime);
+        String playerOne = game.getPlayerOne().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
+        Team teamOne = game.getTeamOne();
+        String teamOneCharacterOne = teamOne.getFirstCharacter().getShortName();
+        String teamOneCharacterTwo = teamOne.getSecondCharacter().getShortName();
+        String teamOneCharacterThree = teamOne.getThirdCharacter().getShortName();
+        String playerTwo = game.getPlayerTwo().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
+        Team teamTwo = game.getTeamTwo();
+        String teamTwoCharacterOne = teamTwo.getFirstCharacter().getShortName();
+        String teamTwoCharacterTwo = teamTwo.getSecondCharacter().getShortName();
+        String teamTwoCharacterThree = teamTwo.getThirdCharacter().getShortName();
+
+        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOne, teamOneCharacterOne,
+                teamOneCharacterTwo, teamOneCharacterThree, playerTwo, teamTwoCharacterOne, teamTwoCharacterTwo,
+                teamTwoCharacterThree);
+        return result;
+    }
+
     
     /** Handles the case where the user clicks the Open video button. */
     @FXML
