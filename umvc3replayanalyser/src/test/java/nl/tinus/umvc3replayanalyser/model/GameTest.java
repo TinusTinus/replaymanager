@@ -1,6 +1,8 @@
 package nl.tinus.umvc3replayanalyser.model;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -128,4 +130,37 @@ public class GameTest {
         Assert.assertNotSame(game, unmarshalled);
         Assert.assertEquals(game, unmarshalled);
     }
+    
+    /** Tests the construction of the base filename. */
+    @Test
+    public void testGetBaseFilename() {
+        Date date = new GregorianCalendar(2012, 0, 4, 18, 25, 46).getTime();
+        Player djAlbertoLara = new Player("DJ Alberto Lara");
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Player tinus = new Player("MvdR");
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
+        
+        String baseFilename = game.getBaseFilename(date);
+        
+        Assert.assertEquals("20120104182546-DJ_Alberto_Lara(Hulk-Wolvie-Sent)_vs_MvdR(Wolvie-Zero-Doom)", baseFilename);
+    }
+    
+    /** Tests the construction of the base filename where the player names contain invalid symbols. */
+    @Test
+    public void testGetBaseFilenameSymbols() {
+        Date date = new GregorianCalendar(2012, 0, 4, 18, 25, 46).getTime();
+        Player playerOne = new Player("Pipe|Pipe");
+        Team teamOne = new Team(Umvc3Character.RYU, Umvc3Character.AKUMA, Umvc3Character.C_VIPER);
+        Player playerTwo = new Player("Star*Star");
+        Team teamTwo = new Team(Umvc3Character.CAPTAIN_AMERICA, Umvc3Character.IRON_MAN, Umvc3Character.THOR);
+        Game game = new Game(playerOne, teamOne, playerTwo, teamTwo);
+        
+        String baseFilename = game.getBaseFilename(date);
+        
+        Assert.assertEquals("20120104182546-Pipe_Pipe(Ryu-Akuma-Viper)_vs_Star_Star(Cap-IronMan-Thor)", baseFilename);
+    }
+
 }

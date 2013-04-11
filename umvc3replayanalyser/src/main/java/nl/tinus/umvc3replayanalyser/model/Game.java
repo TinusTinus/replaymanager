@@ -1,7 +1,10 @@
 package nl.tinus.umvc3replayanalyser.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -22,6 +25,23 @@ import lombok.NonNull;
 @Getter
 @EqualsAndHashCode
 public class Game {
+    /**
+     * Regular expression for which characters are allowed in a player name in a filename. Any other characters will be
+     * filtered out and replaced by underscores.
+     */
+    private static final String WHITELIST_CHARACTERS = "\\W+";
+    /**
+     * Thread-local variable holding the time format for output filenames. This variable is stored as a thread-local instead
+     * of just a single constant, because SimpleDateFormat is not threadsafe.
+     */
+    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<DateFormat>() {
+        /** {@inheritDoc} */
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyyMMddHHmmss");
+        }
+    };
+    
     /** First player. */
     @NonNull
     private final Player playerOne;
@@ -186,4 +206,34 @@ public class Game {
     public String toString() {
         return getDescription(true, true);
     }
+    
+    /**
+     * Constructs a base filename, without the extension, to be used for files that have something to do with this game
+     * (such as preview image, video file and replay file).
+     * 
+     * @param game
+     *            game
+     * @param date
+     *            timestamp for use as the first part of the filename; should indicate when the game was played
+     * @return base filename
+     */
+    public String getBaseFilename(Date date) {
+        String time = FILENAME_TIME_FORMAT.get().format(date);
+        String playerOne = this.getPlayerOne().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
+        Team teamOne = this.getTeamOne();
+        String teamOneCharacterOne = teamOne.getFirstCharacter().getShortName();
+        String teamOneCharacterTwo = teamOne.getSecondCharacter().getShortName();
+        String teamOneCharacterThree = teamOne.getThirdCharacter().getShortName();
+        String playerTwo = this.getPlayerTwo().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
+        Team teamTwo = this.getTeamTwo();
+        String teamTwoCharacterOne = teamTwo.getFirstCharacter().getShortName();
+        String teamTwoCharacterTwo = teamTwo.getSecondCharacter().getShortName();
+        String teamTwoCharacterThree = teamTwo.getThirdCharacter().getShortName();
+
+        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOne, teamOneCharacterOne,
+                teamOneCharacterTwo, teamOneCharacterThree, playerTwo, teamTwoCharacterOne, teamTwoCharacterTwo,
+                teamTwoCharacterThree);
+        return result;
+    }
+
 }
