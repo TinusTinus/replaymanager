@@ -797,7 +797,12 @@ public class Umvc3ReplayManagerController {
                 
                 replays.remove(selectedReplay);
                 replays.add(newReplay);
-                // TODO set newReplay as selected replay?
+                
+                if (replayTableView.getSelectionModel().getSelectedIndex() < 0) {
+                    // No current selection. Select the newly added replay.
+                    int newIndex = replayTableView.getItems().indexOf(newReplay);
+                    replayTableView.getSelectionModel().select(newIndex);
+                }
             }
         } catch (IOException e) {
             log.error(String.format("Unable to edit replay details for replay %s", selectedReplay, game), e);
