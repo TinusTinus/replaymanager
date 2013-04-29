@@ -3,8 +3,10 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +66,11 @@ import com.google.common.collect.Iterables;
  */
 @Slf4j
 public class Umvc3ReplayManagerController {
+    /** Separator in file paths; "\" on Windows, "/" on Linux. */
+    private static final String SEPARATOR = System.getProperty("file.separator");
+    /** Extension for replay files. */
+    private static final String REPLAY_EXTENSION = ".replay";
+    
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -190,6 +197,9 @@ public class Umvc3ReplayManagerController {
     /** Button used to open the replay video. */
     @FXML
     private Button openVideoButton;
+    /** Button used to edit replay details. */
+    @FXML
+    private Button editReplayButton;
 
     /** Application configuration. */
     private Configuration configuration;
@@ -389,6 +399,7 @@ public class Umvc3ReplayManagerController {
             playerTwoAssistThreeLabel.setText(getAssistText(newValue.getGame().getTeamTwo().getThirdAssist()));
             // button
             openVideoButton.setDisable(false);
+            editReplayButton.setDisable(false);
         } else {
             // Item was deselected.
             previewImageView.setImage(defaultPreviewImage);
@@ -418,6 +429,7 @@ public class Umvc3ReplayManagerController {
             playerTwoAssistThreeLabel.setText("");
             // button
             openVideoButton.setDisable(true);
+            editReplayButton.setDisable(true);
         }
     }
 
@@ -703,6 +715,93 @@ public class Umvc3ReplayManagerController {
             log.error("Unable to play video, desktop not supported!");
             // Show an error message to the user.
             ErrorMessagePopup.show("Unable to play video", "Unable to play video files.", null);
+        }
+    }
+    
+    /** Handles the case when the user clicks the Edit replay button. */
+    @FXML
+    private void handleEditReplayAction() {
+        log.info("Edit replay button clicked.");
+        
+        final Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
+        if (selectedReplay == null) {
+            throw new IllegalStateException("No replay selected; edit replay button should have been disabled!");
+        }
+        
+        EditReplayController controller = new EditReplayController(selectedReplay.getGame(),
+                new ReplayDetailsEditedHandler() {
+                    /** {@inheritDoc} */
+                    @Override
+                    public void handleReplayDetailsEdited(Game game) {
+                        editReplay(selectedReplay, game);
+                    }
+                });
+        Popups.showEditReplayPopup(controller);
+    }
+
+    /**
+     * Edits a replay.
+     * 
+     * @param selectedReplay
+     *            replay to be edited
+     * @param game
+     *            game, containing the new replay details to be used
+     */
+    private void editReplay(Replay selectedReplay, Game game) {
+        try {
+            // TODO move replay edit functionality to ReplaySaver
+            if (selectedReplay.getGame().equals(game)) {
+                log.info("Replay remains unchanged.");
+            } else {
+                String oldBaseFilename = selectedReplay.getGame().getBaseFilename(selectedReplay.getCreationTime());
+                
+                File videoFile = new File(selectedReplay.getVideoLocation());
+                Date creationTime = new Date(videoFile.lastModified());
+                String newBaseFilename = game.getBaseFilename(creationTime);
+
+                String newPreviewImageFileLocation;
+                if (this.configuration.isSavePreviewImageToDataDirectory()) {
+                    // Move preview image.
+                    String oldPreviewImageFileLocation = selectedReplay.getPreviewImageLocation();
+                    if (oldPreviewImageFileLocation.startsWith("file:///")) {
+                        oldPreviewImageFileLocation = oldPreviewImageFileLocation.substring("file:///".length());
+                    }
+                    File oldPreviewImageFile = new File(oldPreviewImageFileLocation);
+                    String previewImageExtension;
+                    int index = oldPreviewImageFileLocation.lastIndexOf('.');
+                    if (0 < index) {
+                        previewImageExtension = oldPreviewImageFileLocation.substring(index).toLowerCase();
+                    } else {
+                        // No extension.
+                        previewImageExtension = "";
+                    }
+                    File previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + newBaseFilename
+                            + previewImageExtension);
+
+                    // Note that move will fail with an IOException if previewImageFile aleady exists, but that it will
+                    // succeed if the old and new paths are the same.
+                    Files.move(oldPreviewImageFile.toPath(), previewImageFile.toPath());
+                    newPreviewImageFileLocation = "file:///" + previewImageFile.getAbsolutePath();
+                    log.info(String.format("Moved preview image from %s to %s.", oldPreviewImageFile, previewImageFile));
+                } else {
+                    // Leave preview image wherever it is.
+                    newPreviewImageFileLocation = selectedReplay.getPreviewImageLocation();
+                }
+                
+                // Delete the old replay file.
+                File oldReplayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + oldBaseFilename + REPLAY_EXTENSION);
+                Files.delete(oldReplayFile.toPath());
+                log.info(String.format("Deleted replay file: %s.", oldReplayFile));
+
+                Replay newReplay = replaySaver.saveReplay(videoFile, game, newPreviewImageFileLocation);
+                
+                replays.remove(selectedReplay);
+                replays.add(newReplay);
+                // TODO set newReplay as selected replay?
+            }
+        } catch (IOException e) {
+            log.error(String.format("Unable to edit replay details for replay %s", selectedReplay, game), e);
+            ErrorMessagePopup.show("Unable to save replay.", "The replay could not be saved.", e);
         }
     }
 

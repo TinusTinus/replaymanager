@@ -123,16 +123,16 @@
               </font>
             </Label>
             <Label fx:id="playerTwoLabel" font="$playerNameFont" layoutX="340.0" layoutY="14.0" prefWidth="161.0" />
-            <ImageView fx:id="playerOneCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true"/>
-            <ImageView fx:id="playerOneCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true"/>
-            <ImageView fx:id="playerOneCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true"/>
-            <ImageView fx:id="playerTwoCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true"/>
-            <ImageView fx:id="playerTwoCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true"/>
-            <ImageView fx:id="playerTwoCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="playerOneCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="playerOneCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="playerOneCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="14.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="playerTwoCharacterOneImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="playerTwoCharacterTwoImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="playerTwoCharacterThreeImageView" fitHeight="150.0" fitWidth="64.0" layoutX="267.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="playerOneCharacterOneLabel" layoutX="90.0" layoutY="62.0" />
             <Label fx:id="playerOneCharacterTwoLabel" layoutX="90.0" layoutY="123.0" />
             <Label fx:id="playerOneCharacterThreeLabel" layoutX="90.0" layoutY="187.0" />
-            <Label fx:id="playerTwoCharacterOneLabel" layoutX="340.0" layoutY="62.0"/>
+            <Label fx:id="playerTwoCharacterOneLabel" layoutX="340.0" layoutY="62.0" />
             <Label fx:id="playerTwoCharacterTwoLabel" layoutX="340.0" layoutY="123.0" />
             <Label fx:id="playerTwoCharacterThreeLabel" layoutX="340.0" layoutY="187.0" />
             <Label fx:id="playerOneAssistOneLabel" layoutX="90.0" layoutY="78.0" />
@@ -141,7 +141,8 @@
             <Label fx:id="playerTwoAssistOneLabel" layoutX="340.0" layoutY="78.0" />
             <Label fx:id="playerTwoAssistTwoLabel" layoutX="340.0" layoutY="139.0" />
             <Label fx:id="playerTwoAssistThreeLabel" layoutX="340.0" layoutY="203.0" />
-            <Button fx:id="openVideoButton" layoutX="14.0" layoutY="259.0" mnemonicParsing="false" text="Open video" onAction="#handleOpenVideoAction" />
+            <Button fx:id="openVideoButton" layoutX="14.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleOpenVideoAction" text="Open video" />
+            <Button fx:id="editReplayButton" layoutX="108.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEditReplayAction" text="Edit replay" />
           </children>
         </AnchorPane>
       </content>

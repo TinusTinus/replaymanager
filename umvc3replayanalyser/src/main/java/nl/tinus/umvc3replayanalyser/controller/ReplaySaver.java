@@ -22,7 +22,9 @@ import org.codehaus.jackson.map.ObjectWriter;
 class ReplaySaver {
     /** Separator in file paths; "\" on Windows, "/" on Linux. */
     private static final String SEPARATOR = System.getProperty("file.separator");
-
+    /** Extension for replay files. */
+    private static final String REPLAY_EXTENSION = ".replay";
+    
     /** Configuration. */
     private Configuration configuration;
     /** JSON object writer, used to save replays as files. */
@@ -118,7 +120,7 @@ class ReplaySaver {
         Replay replay = new Replay(creationTime, game, videoFile.getAbsolutePath(), previewImageLocation);
 
         // Save replay to the data directory.
-        File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + ".replay");
+        File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + REPLAY_EXTENSION);
         if (replayFile.exists()) {
             throw new IOException("Replay already exists: " + replayFile);
         }
