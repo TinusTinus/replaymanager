@@ -27,8 +27,13 @@ class ReplaySaver {
     private Configuration configuration;
     /** JSON object writer, used to save replays as files. */
     private final ObjectWriter writer;
-    
-    /** Constructor. */
+
+    /**
+     * Constructor.
+     * 
+     * @param configuration
+     *            configuration of the application
+     */
     ReplaySaver(Configuration configuration) {
         super();
         if (configuration == null) {
