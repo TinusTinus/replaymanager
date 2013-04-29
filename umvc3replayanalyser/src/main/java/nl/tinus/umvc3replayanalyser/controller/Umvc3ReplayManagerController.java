@@ -3,10 +3,8 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +52,6 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -67,9 +64,6 @@ import com.google.common.collect.Iterables;
  */
 @Slf4j
 public class Umvc3ReplayManagerController {
-    /** Separator in file paths; "\" on Windows, "/" on Linux. */
-    private static final String SEPARATOR = System.getProperty("file.separator");
-    
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -205,6 +199,8 @@ public class Umvc3ReplayManagerController {
     private ObservableList<Replay> replays;
     /** Indicates which character value each assist combo box depends on. */
     private Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes;
+    /** Replay saver. */
+    private ReplaySaver replaySaver;
 
     /** Initialisation method. */
     @FXML
@@ -236,8 +232,9 @@ public class Umvc3ReplayManagerController {
         OCREngine ocrEngine = new TesseractOCREngine(this.configuration);
         VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyserImpl(ocrEngine);
         this.replayAnalyser = new ReplayAnalyserImpl(versusScreenAnalyser);
+        this.replaySaver = new ReplaySaver(this.configuration);
     }
-
+    
     /** Loads the replays from storage. */
     private void loadReplays() {
         if (replays != null) {
@@ -628,7 +625,8 @@ public class Umvc3ReplayManagerController {
      *            directory to be imported from
      */
     private void importReplays(File directory) {
-        ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.configuration, this.replayAnalyser);
+        ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.configuration, this.replayAnalyser,
+                this.replaySaver);
         ImportReplayPopupController controller = new ImportReplayPopupController(task,
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
         Popups.showImportReplaysPopup(controller);
@@ -660,61 +658,17 @@ public class Umvc3ReplayManagerController {
     /**
      * Adds a replay for the given video file, with the data from the given game.
      * 
-     * @param file original video file
-     * @param game game
+     * @param file
+     *            original video file
+     * @param game
+     *            game
      */
-    // TODO Much of this code was duplicated from ImportReplayTask. See if it can be extracted and reused somehow.
     private void addReplay(File file, Game game) {
         try {
-            Date creationTime = new Date(file.lastModified());
-            String baseFilename = game.getBaseFilename(creationTime);
-
-            File videoFile;
-            if (this.configuration.isMoveVideoFilesToDataDirectory()) {
-                // Move the replay to the data directory.
-
-                String videoFileExtension;
-                int index = file.getName().lastIndexOf('.');
-                if (0 < index) {
-                    videoFileExtension = file.getName().substring(index).toLowerCase();
-                } else {
-                    // No extension.
-                    videoFileExtension = "";
-                }
-
-                videoFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename
-                        + videoFileExtension);
-
-                // Note that move will fail with an IOException if videoFile aleady exists.
-                Files.move(file.toPath(), videoFile.toPath());
-
-                log.info("Moved video file to: " + videoFile);
-            } else {
-                // Leave the video file where it is.
-                videoFile = file;
-            }
-
-            Replay replay = new Replay(creationTime, game, videoFile.getAbsolutePath(),
-                    "ultimate-marvel-vs-capcom-3.jpg");
-
-            // Save replay to the data directory.
-            File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + ".replay");
-            if (replayFile.exists()) {
-                throw new IOException("Replay already exists: " + replayFile);
-            }
-            // TODO extract writer to field?
-            ObjectWriter writer;
-            ObjectMapper mapper = new ObjectMapper();
-            if (this.configuration.isPrettyPrintReplays()) {
-                writer = mapper.writerWithDefaultPrettyPrinter();
-            } else {
-                writer = mapper.writer();
-            }
-            writer.writeValue(replayFile, replay);
-            log.info("Saved replay file: " + replayFile);
-            
+            Replay replay = replaySaver.saveReplay(file, game, "ultimate-marvel-vs-capcom-3.jpg");
             replays.add(replay);
         } catch (IOException e) {
+            log.error(String.format("Unable to save replay; video file: %s, game: %s", file, game), e);
             ErrorMessagePopup.show("Unable to save replay.", "The replay could not be saved.", e);
         }
     }

@@ -3,7 +3,6 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,9 +22,6 @@ import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.video.GameAndVersusScreen;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 /**
  * Task for importing replays.
@@ -58,8 +54,8 @@ class ImportReplayTask extends Task<List<Replay>> {
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
     private final List<Replay> replays;
-    /** JSON object writer, used to save replays as files. */
-    private final ObjectWriter writer;
+    /** Replay saver, used to actually save the replay file to disk. */
+    private final ReplaySaver replaySaver;
     /** Message. */
     private String message;
 
@@ -72,10 +68,10 @@ class ImportReplayTask extends Task<List<Replay>> {
      *            list of replays, to which the newly loaded replays will be added
      * @param configuration
      *            configuration of the application
-     * @param analyser
-     *            replay nalyser
+     * @param replaySaver
+     *            replay saver, used tp actually save the replay file to disk
      */
-    ImportReplayTask(File directory, List<Replay> replays, Configuration configuration, ReplayAnalyser analyser) {
+    ImportReplayTask(File directory, List<Replay> replays, Configuration configuration, ReplayAnalyser analyser, ReplaySaver replaySaver) {
         super();
         if (directory == null) {
             throw new NullPointerException("directory");
@@ -92,18 +88,15 @@ class ImportReplayTask extends Task<List<Replay>> {
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
         }
+        if (replaySaver == null) {
+            throw new NullPointerException("replaySaver");
+        }
 
         this.directory = directory;
         this.replays = replays;
         this.replayAnalyser = analyser;
         this.configuration = configuration;
-        
-        ObjectMapper mapper = new ObjectMapper();
-        if (this.configuration.isPrettyPrintReplays()) {
-            this.writer = mapper.writerWithDefaultPrettyPrinter();
-        } else {
-            this.writer = mapper.writer();
-        }
+        this.replaySaver = replaySaver;
 
         this.message = "";
     }
@@ -201,42 +194,16 @@ class ImportReplayTask extends Task<List<Replay>> {
             ImageIO.write(versusScreen, IMAGE_FORMAT, stream);
             logMessage("Saved preview image: " + previewImageFile);
         }
-
-        File videoFile;
-        if (this.configuration.isMoveVideoFilesToDataDirectory()) {
-            // Move the replay to the data directory.
-
-            String videoFileExtension;
-            int index = file.getName().lastIndexOf('.');
-            if (0 < index) {
-                videoFileExtension = file.getName().substring(index).toLowerCase();
-            } else {
-                // No extension.
-                videoFileExtension = "";
-            }
-
-            videoFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + videoFileExtension);
-
-            // Note that move will fail with an IOException if videoFile aleady exists.
-            Files.move(file.toPath(), videoFile.toPath());
-
-            logMessage("Moved video file to: " + videoFile);
-        } else {
-            // Leave the video file where it is.
-            videoFile = file;
-        }
-
-        Replay replay = new Replay(creationTime, game, videoFile.getAbsolutePath(), "file:///"
-                + previewImageFile.getAbsolutePath());
-
-        // Save replay to the data directory.
-        File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + ".replay");
-        if (replayFile.exists()) {
-            throw new IOException("Replay already exists: " + replayFile);
-        } else {
-            this.writer.writeValue(replayFile, replay);
-            logMessage("Saved replay file: " + replayFile);
-        }
+        
+        MessageLogger logger = new MessageLogger() {
+            /** {@inheritDoc} */
+            @Override
+            public void log(String message) {
+                logMessage(message);                
+            } 
+        };
+        
+        Replay replay = this.replaySaver.saveReplay(file, game, "file:///" + previewImageFile.getAbsolutePath(), logger);
 
         return replay;
     }
