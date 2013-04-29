@@ -183,7 +183,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             }
         } else {
             // Save the preview image as a temporary file.
-            previewImageFile = File.createTempFile("previewimage", "." + IMAGE_FORMAT);
+            previewImageFile = File.createTempFile("preview-" + baseFilename + "-", "." + IMAGE_FORMAT);
             previewImageFile.deleteOnExit();
         }
         try (ImageOutputStream stream = ImageIO.createImageOutputStream(previewImageFile)) {
