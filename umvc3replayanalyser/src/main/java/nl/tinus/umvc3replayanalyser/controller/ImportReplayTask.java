@@ -1,6 +1,5 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -11,13 +10,7 @@ import java.util.List;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
-
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.config.Configuration;
-import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 import nl.tinus.umvc3replayanalyser.video.GameAndVersusScreen;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
@@ -30,10 +23,6 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
  */
 @Slf4j
 class ImportReplayTask extends Task<List<Replay>> {
-    /** Name of the image format to be used when saving preview images. */
-    private static final String IMAGE_FORMAT = "png";
-    /** Separator in file paths; "\" on Windows, "/" on Linux. */
-    private static final String SEPARATOR = System.getProperty("file.separator");
     /**
      * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
      * of just a single constant, because SimpleDateFormat is not threadsafe.
@@ -48,8 +37,6 @@ class ImportReplayTask extends Task<List<Replay>> {
 
     /** The directory from which to import replays. */
     private final File directory;
-    /** Configuration of the application. */
-    private final Configuration configuration;
     /** Replay analyser. */
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
@@ -66,21 +53,16 @@ class ImportReplayTask extends Task<List<Replay>> {
      *            directory
      * @param replays
      *            list of replays, to which the newly loaded replays will be added
-     * @param configuration
-     *            configuration of the application
      * @param replaySaver
      *            replay saver, used tp actually save the replay file to disk
      */
-    ImportReplayTask(File directory, List<Replay> replays, Configuration configuration, ReplayAnalyser analyser, ReplaySaver replaySaver) {
+    ImportReplayTask(File directory, List<Replay> replays, ReplayAnalyser analyser, ReplaySaver replaySaver) {
         super();
         if (directory == null) {
             throw new NullPointerException("directory");
         }
         if (replays == null) {
             throw new NullPointerException("replays");
-        }
-        if (configuration == null) {
-            throw new NullPointerException("configuration");
         }
         if (analyser == null) {
             throw new NullPointerException("analyser");
@@ -95,7 +77,6 @@ class ImportReplayTask extends Task<List<Replay>> {
         this.directory = directory;
         this.replays = replays;
         this.replayAnalyser = analyser;
-        this.configuration = configuration;
         this.replaySaver = replaySaver;
 
         this.message = "";
@@ -166,46 +147,16 @@ class ImportReplayTask extends Task<List<Replay>> {
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
 
-        Date creationTime = new Date(file.lastModified());
-        Game game = gameAndVersusScreen.getGame();
-        BufferedImage versusScreen = gameAndVersusScreen.getVersusScreen();
-        
-        String baseFilename = game.getBaseFilename(creationTime);
-
-        // Save the preview image.
-        File previewImageFile;
-        if (this.configuration.isSavePreviewImageToDataDirectory()) {
-            // Create preview image file in the data directory.
-            previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + "."
-                    + IMAGE_FORMAT);
-            if (previewImageFile.exists()) {
-                throw new IOException("Preview image file already exists: " + previewImageFile);
-            }
-        } else {
-            // Save the preview image as a temporary file.
-            previewImageFile = File.createTempFile("preview-" + baseFilename + "-", "." + IMAGE_FORMAT);
-            previewImageFile.deleteOnExit();
-        }
-        try (ImageOutputStream stream = ImageIO.createImageOutputStream(previewImageFile)) {
-            if (stream == null) {
-                throw new IOException("Unable to save preview image. Image stream for path " + previewImageFile
-                        + " could not be created.");
-            }
-            ImageIO.write(versusScreen, IMAGE_FORMAT, stream);
-            logMessage("Saved preview image: " + previewImageFile);
-        }
-        
         MessageLogger logger = new MessageLogger() {
             /** {@inheritDoc} */
             @Override
             public void log(String message) {
                 logMessage(message);                
-            } 
+            }
         };
         
-        Replay replay = this.replaySaver.saveReplay(file, game, "file:///" + previewImageFile.getAbsolutePath(), logger);
-
-        return replay;
+        return this.replaySaver.saveReplay(file, gameAndVersusScreen.getGame(), gameAndVersusScreen.getVersusScreen(),
+                logger);
     }
 
     /**

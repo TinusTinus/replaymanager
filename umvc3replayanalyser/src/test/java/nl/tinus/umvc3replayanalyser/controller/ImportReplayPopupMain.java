@@ -64,8 +64,7 @@ public class ImportReplayPopupMain extends Application {
         VersusScreenAnalyser versusScreenAnalyser = new VersusScreenAnalyserImpl(ocrEngine);
         ReplayAnalyser replayAnalyser = new ReplayAnalyserImpl(versusScreenAnalyser);
         ReplaySaver replaySaver = new ReplaySaver(configuration);
-        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, configuration,
-                replayAnalyser, replaySaver);
+        ImportReplayTask task = new ImportReplayTask(new File(REPLAY_DIRECTORY), replays, replayAnalyser, replaySaver);
         ImportReplayPopupController controller = new ImportReplayPopupController(task, working, "Replay Import Thread");
 
         Popups.showImportReplaysPopup(stage, controller);

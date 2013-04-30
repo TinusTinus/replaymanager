@@ -1,9 +1,13 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.config.Configuration;
@@ -20,6 +24,8 @@ import org.codehaus.jackson.map.ObjectWriter;
  */
 @Slf4j
 class ReplaySaver {
+    /** Name of the image format to be used when saving preview images. */
+    private static final String IMAGE_FORMAT = "png";
     /** Separator in file paths; "\" on Windows, "/" on Linux. */
     private static final String SEPARATOR = System.getProperty("file.separator");
     /** Extension for replay files. */
@@ -51,6 +57,51 @@ class ReplaySaver {
         }
     }
 
+    /**
+     * Constructs a replay for the given video file with the data from the given game, saves it to disk and returns it.
+     * 
+     * @param file
+     *            original video file
+     * @param game
+     *            game
+     * @param previewImage
+     *            preview image
+     * @param logger
+     *            logger used to log informational messages that may be of interest to the user
+     * @return the new replay
+     * @throws IOException
+     *             in case saving the replay fails
+     */
+    Replay saveReplay(File file, Game game, BufferedImage previewImage, MessageLogger logger) throws IOException {
+        Date creationTime = new Date(file.lastModified());
+        String baseFilename = game.getBaseFilename(creationTime);
+
+        // Save the preview image.
+        File previewImageFile;
+        if (this.configuration.isSavePreviewImageToDataDirectory()) {
+            // Create preview image file in the data directory.
+            previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + "."
+                    + IMAGE_FORMAT);
+            if (previewImageFile.exists()) {
+                throw new IOException("Preview image file already exists: " + previewImageFile);
+            }
+        } else {
+            // Save the preview image as a temporary file.
+            previewImageFile = File.createTempFile("preview-" + baseFilename + "-", "." + IMAGE_FORMAT);
+            previewImageFile.deleteOnExit();
+        }
+        try (ImageOutputStream stream = ImageIO.createImageOutputStream(previewImageFile)) {
+            if (stream == null) {
+                throw new IOException("Unable to save preview image. Image stream for path " + previewImageFile
+                        + " could not be created.");
+            }
+            ImageIO.write(previewImage, IMAGE_FORMAT, stream);
+            logger.log("Saved preview image: " + previewImageFile);
+        }
+
+        return saveReplay(file, game, "file:///" + previewImageFile.getAbsolutePath(), logger);
+    }
+    
     /**
      * Constructs a replay for the given video file with the data from the given game, saves it to disk and returns it.
      * 

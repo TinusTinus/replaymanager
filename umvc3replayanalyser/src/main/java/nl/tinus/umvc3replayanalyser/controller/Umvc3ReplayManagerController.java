@@ -630,8 +630,7 @@ public class Umvc3ReplayManagerController {
      *            directory to be imported from
      */
     private void importReplays(File directory) {
-        ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.configuration, this.replayAnalyser,
-                this.replaySaver);
+        ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.replayAnalyser, this.replaySaver);
         ImportReplayPopupController controller = new ImportReplayPopupController(task,
                 this.importMenuItem.disableProperty(), "Replay Import Thread");
         Popups.showImportReplaysPopup(controller);
