@@ -53,7 +53,7 @@ public enum Umvc3Character {
     /** Hsien-Ko, also known as Lei-Lei. */
     HSIEN_KO("Hsien-Ko", "HsienKo", "Senbu Pu", "Henkyo Ki", "Anki Hou"),
     /** The Incredible Hulk. */
-    HULK("Hulk", "Hulk", "Gamma Wave", "Anti-Air Gamma Charge", "Gamme Charge"),
+    HULK("Hulk", "Hulk", "Gamma Wave", "Anti-Air Gamma Charge", "Gamma Charge"),
     /** Iron Fist. */
     IRON_FIST("Iron Fist", "IronFist", "Dragon's Touch", "Crescent Heal", "Rising Fan"),
     /** Iron Man. */
