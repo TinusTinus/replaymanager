@@ -27,7 +27,7 @@ import com.xuggle.xuggler.IError.Type;
 @Slf4j
 class FrameIterator implements Iterator<BufferedImage>, Closeable {
     /** Queue containing the images read from the input video. */
-    private Queue<BufferedImage> queue;
+    private final Queue<BufferedImage> queue;
 
     /** Xuggler media reader. Null after it has been closed. */
     private IMediaReader reader;
