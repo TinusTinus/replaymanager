@@ -30,6 +30,8 @@ class ReplaySaver {
     private static final String SEPARATOR = System.getProperty("file.separator");
     /** Extension for replay files. */
     private static final String REPLAY_EXTENSION = ".replay";
+    /** Prefix in local file URLs. */
+    private static final String FILE_URL_PREFIX = "file:///";
 
     /** Configuration. */
     private Configuration configuration;
@@ -99,7 +101,7 @@ class ReplaySaver {
             logger.log("Saved preview image: " + previewImageFile);
         }
 
-        return saveReplay(file, game, "file:///" + previewImageFile.getAbsolutePath(), logger);
+        return saveReplay(file, game, FILE_URL_PREFIX + previewImageFile.getAbsolutePath(), logger);
     }
     
     /**
@@ -208,8 +210,8 @@ class ReplaySaver {
             if (this.configuration.isSavePreviewImageToDataDirectory()) {
                 // Move preview image.
                 String oldPreviewImageFileLocation = oldReplay.getPreviewImageLocation();
-                if (oldPreviewImageFileLocation.startsWith("file:///")) {
-                    oldPreviewImageFileLocation = oldPreviewImageFileLocation.substring("file:///".length());
+                if (oldPreviewImageFileLocation.startsWith(FILE_URL_PREFIX)) {
+                    oldPreviewImageFileLocation = oldPreviewImageFileLocation.substring(FILE_URL_PREFIX.length());
                 }
                 File oldPreviewImageFile = new File(oldPreviewImageFileLocation);
                 String previewImageExtension;
@@ -226,7 +228,7 @@ class ReplaySaver {
                 // Note that move will fail with an IOException if previewImageFile aleady exists, but that it will
                 // succeed if the old and new paths are the same.
                 Files.move(oldPreviewImageFile.toPath(), previewImageFile.toPath());
-                newPreviewImageFileLocation = "file:///" + previewImageFile.getAbsolutePath();
+                newPreviewImageFileLocation = FILE_URL_PREFIX + previewImageFile.getAbsolutePath();
                 log.info(String.format("Moved preview image from %s to %s.", oldPreviewImageFile, previewImageFile));
             } else {
                 // Leave preview image wherever it is.
