@@ -3,10 +3,8 @@ package nl.tinus.umvc3replayanalyser.controller;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,11 +64,6 @@ import com.google.common.collect.Iterables;
  */
 @Slf4j
 public class Umvc3ReplayManagerController {
-    /** Separator in file paths; "\" on Windows, "/" on Linux. */
-    private static final String SEPARATOR = System.getProperty("file.separator");
-    /** Extension for replay files. */
-    private static final String REPLAY_EXTENSION = ".replay";
-    
     /** Preview image view. */
     @FXML
     private ImageView previewImageView;
@@ -749,60 +742,15 @@ public class Umvc3ReplayManagerController {
      */
     private void editReplay(Replay selectedReplay, Game game) {
         try {
-            // TODO move replay edit functionality to ReplaySaver
-            if (selectedReplay.getGame().equals(game)) {
-                log.info("Replay remains unchanged.");
-            } else {
-                String oldBaseFilename = selectedReplay.getGame().getBaseFilename(selectedReplay.getCreationTime());
-                
-                File videoFile = new File(selectedReplay.getVideoLocation());
-                Date creationTime = new Date(videoFile.lastModified());
-                String newBaseFilename = game.getBaseFilename(creationTime);
+            Replay newReplay = replaySaver.editReplay(selectedReplay, game);
 
-                String newPreviewImageFileLocation;
-                if (this.configuration.isSavePreviewImageToDataDirectory()) {
-                    // Move preview image.
-                    String oldPreviewImageFileLocation = selectedReplay.getPreviewImageLocation();
-                    if (oldPreviewImageFileLocation.startsWith("file:///")) {
-                        oldPreviewImageFileLocation = oldPreviewImageFileLocation.substring("file:///".length());
-                    }
-                    File oldPreviewImageFile = new File(oldPreviewImageFileLocation);
-                    String previewImageExtension;
-                    int index = oldPreviewImageFileLocation.lastIndexOf('.');
-                    if (0 < index) {
-                        previewImageExtension = oldPreviewImageFileLocation.substring(index).toLowerCase();
-                    } else {
-                        // No extension.
-                        previewImageExtension = "";
-                    }
-                    File previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + newBaseFilename
-                            + previewImageExtension);
+            replays.remove(selectedReplay);
+            replays.add(newReplay);
 
-                    // Note that move will fail with an IOException if previewImageFile aleady exists, but that it will
-                    // succeed if the old and new paths are the same.
-                    Files.move(oldPreviewImageFile.toPath(), previewImageFile.toPath());
-                    newPreviewImageFileLocation = "file:///" + previewImageFile.getAbsolutePath();
-                    log.info(String.format("Moved preview image from %s to %s.", oldPreviewImageFile, previewImageFile));
-                } else {
-                    // Leave preview image wherever it is.
-                    newPreviewImageFileLocation = selectedReplay.getPreviewImageLocation();
-                }
-                
-                // Delete the old replay file.
-                File oldReplayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + oldBaseFilename + REPLAY_EXTENSION);
-                Files.delete(oldReplayFile.toPath());
-                log.info(String.format("Deleted replay file: %s.", oldReplayFile));
-
-                Replay newReplay = replaySaver.saveReplay(videoFile, game, newPreviewImageFileLocation);
-                
-                replays.remove(selectedReplay);
-                replays.add(newReplay);
-                
-                if (replayTableView.getSelectionModel().getSelectedIndex() < 0) {
-                    // No current selection. Select the newly added replay.
-                    int newIndex = replayTableView.getItems().indexOf(newReplay);
-                    replayTableView.getSelectionModel().select(newIndex);
-                }
+            if (replayTableView.getSelectionModel().getSelectedIndex() < 0) {
+                // No current selection. Select the newly added replay.
+                int newIndex = replayTableView.getItems().indexOf(newReplay);
+                replayTableView.getSelectionModel().select(newIndex);
             }
         } catch (IOException e) {
             log.error(String.format("Unable to edit replay details for replay %s", selectedReplay, game), e);

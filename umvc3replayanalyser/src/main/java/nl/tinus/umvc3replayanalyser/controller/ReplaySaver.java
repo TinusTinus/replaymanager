@@ -24,7 +24,7 @@ class ReplaySaver {
     private static final String SEPARATOR = System.getProperty("file.separator");
     /** Extension for replay files. */
     private static final String REPLAY_EXTENSION = ".replay";
-    
+
     /** Configuration. */
     private Configuration configuration;
     /** JSON object writer, used to save replays as files. */
@@ -128,6 +128,69 @@ class ReplaySaver {
         logger.log("Saved replay file: " + replayFile);
 
         return replay;
+    }
+
+    /**
+     * Edits a replay.
+     * 
+     * @param oldReplay
+     *            replay to be edited
+     * @param newGame
+     *            game, containing the new replay details to be used
+     * @return new replay
+     * @throws IOException
+     *             in case saving the new replay fails
+     */
+    Replay editReplay(Replay oldReplay, Game newGame) throws IOException {
+        Replay result;
+        if (oldReplay.getGame().equals(newGame)) {
+            log.info("Replay remains unchanged.");
+            result = oldReplay;
+        } else {
+            String oldBaseFilename = oldReplay.getGame().getBaseFilename(oldReplay.getCreationTime());
+
+            File videoFile = new File(oldReplay.getVideoLocation());
+            Date creationTime = new Date(videoFile.lastModified());
+            String newBaseFilename = newGame.getBaseFilename(creationTime);
+
+            String newPreviewImageFileLocation;
+            if (this.configuration.isSavePreviewImageToDataDirectory()) {
+                // Move preview image.
+                String oldPreviewImageFileLocation = oldReplay.getPreviewImageLocation();
+                if (oldPreviewImageFileLocation.startsWith("file:///")) {
+                    oldPreviewImageFileLocation = oldPreviewImageFileLocation.substring("file:///".length());
+                }
+                File oldPreviewImageFile = new File(oldPreviewImageFileLocation);
+                String previewImageExtension;
+                int index = oldPreviewImageFileLocation.lastIndexOf('.');
+                if (0 < index) {
+                    previewImageExtension = oldPreviewImageFileLocation.substring(index).toLowerCase();
+                } else {
+                    // No extension.
+                    previewImageExtension = "";
+                }
+                File previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + newBaseFilename
+                        + previewImageExtension);
+
+                // Note that move will fail with an IOException if previewImageFile aleady exists, but that it will
+                // succeed if the old and new paths are the same.
+                Files.move(oldPreviewImageFile.toPath(), previewImageFile.toPath());
+                newPreviewImageFileLocation = "file:///" + previewImageFile.getAbsolutePath();
+                log.info(String.format("Moved preview image from %s to %s.", oldPreviewImageFile, previewImageFile));
+            } else {
+                // Leave preview image wherever it is.
+                newPreviewImageFileLocation = oldReplay.getPreviewImageLocation();
+            }
+
+            // Delete the old replay file.
+            File oldReplayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + oldBaseFilename
+                    + REPLAY_EXTENSION);
+            Files.delete(oldReplayFile.toPath());
+            log.info(String.format("Deleted old replay file: %s.", oldReplayFile));
+
+            result = saveReplay(videoFile, newGame, newPreviewImageFileLocation);
+        }
+        return result;
     }
 
 }
