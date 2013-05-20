@@ -14,6 +14,7 @@ import nl.tinus.umvc3replayanalyser.config.Configuration;
 import nl.tinus.umvc3replayanalyser.model.Game;
 import nl.tinus.umvc3replayanalyser.model.Replay;
 
+import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 
@@ -204,7 +205,9 @@ class ReplaySaver {
         } else {
             String oldBaseFilename = oldReplay.getGame().getBaseFilename(oldReplay.getCreationTime());
 
-            File videoFile = new File(oldReplay.getVideoLocation());
+            String videoFilePath = FilenameUtils.normalize(this.configuration.getDataDirectory().getAbsolutePath()
+                    + FileUtils.SEPARATOR + oldReplay.getVideoLocation());
+            File videoFile = new File(videoFilePath);
             Date creationTime = new Date(videoFile.lastModified());
             String newBaseFilename = newGame.getBaseFilename(creationTime);
 
