@@ -115,8 +115,6 @@ public class VersusScreenAnalyserIntegrationTest {
 
         Assert.assertEquals(AssistType.GAMMA, game.getTeamTwo().getFirstAssistType());
         Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssistType());
-        // TODO Shuma covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
-        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getThirdAssist());
     }
 
     /**
@@ -154,8 +152,6 @@ public class VersusScreenAnalyserIntegrationTest {
 
         Assert.assertEquals(AssistType.GAMMA, game.getTeamTwo().getFirstAssistType());
         Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssistType());
-        // TODO Shuma covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
-        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getThirdAssist());
     }
 
     /**
@@ -190,16 +186,10 @@ public class VersusScreenAnalyserIntegrationTest {
 
         // check assists
         Assert.assertEquals(AssistType.GAMMA, game.getTeamOne().getFirstAssistType());
-        // TODO Nemesis covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
-        // Assert.assertEquals(AssistType.BETA, game.getTeamOne().getSecondAssist());
 
         // Joe's assist type is not checked, because it is covered up by the lightning bolt in this specific screenshot.
         // It happens, this is exactly why the assist type is optional.
 
-        // TODO Skrull covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
-        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getFirstAssist());
-        // TODO Raccoon covers up the pixel we want to inspect; uncomment once there are character-specific exceptions
-        // Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getSecondAssist());
         Assert.assertEquals(AssistType.ALPHA, game.getTeamTwo().getThirdAssistType());
     }
 }

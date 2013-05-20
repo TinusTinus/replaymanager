@@ -83,8 +83,10 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
     /** Margin of error when matching assist colour. */
     private static final int COLOR_MARGIN = 44;
 
-    // TODO The following is pretty character-specific so it will not work for every character. Figure out
-    // character-specific exceptions.
+    // The background colour of the character portrait indicates which assist type is being used. 
+    // The following coordinates are used to check the background colour.
+    // Note that some character portraits cover up these coordinates, so for those characters assist type recognition
+    // will fail. This is acceptable: assist types are optional and recognition is best effort.
     /** X coordinate of the pixel to be inspected to figure out the assist type. */
     private static final int BACKGROUND_PLAYER_ONE_CHARACTER_ONE_X = 237;
     /** X coordinate of the pixel to be inspected to figure out the assist type. */
