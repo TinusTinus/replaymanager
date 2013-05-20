@@ -47,8 +47,6 @@ class AboutPopupController {
         }
     }
     
-    // TODO add Commons IO to fxml
-
     /**
      * Action handler for when one of the hyperlinks has been clicked.
      * 
