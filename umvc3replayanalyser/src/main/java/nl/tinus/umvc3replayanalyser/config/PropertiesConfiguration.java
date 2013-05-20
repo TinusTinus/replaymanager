@@ -1,5 +1,6 @@
 package nl.tinus.umvc3replayanalyser.config;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map.Entry;
@@ -137,5 +138,11 @@ public class PropertiesConfiguration implements Configuration {
     public boolean isPrettyPrintReplays() {
         String string = getProperty("pretty-print-replays", "false");
         return Boolean.valueOf(string).booleanValue();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public File getDataDirectory() {
+        return new File(getDataDirectoryPath());
     }
 }

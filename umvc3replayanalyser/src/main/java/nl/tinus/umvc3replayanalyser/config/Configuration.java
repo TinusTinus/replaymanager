@@ -1,5 +1,7 @@
 package nl.tinus.umvc3replayanalyser.config;
 
+import java.io.File;
+
 /**
  * Configuration of the application.
  * 
@@ -19,6 +21,13 @@ public interface Configuration {
      * @return path of the data directory
      */
     String getDataDirectoryPath();
+    
+    /**
+     * Gets the data directory, containing replay info.
+     * 
+     * @return data directory
+     */
+    File getDataDirectory();
 
     /**
      * Indicates whether, when importing new replays, the replay file should be moved to the data directory.

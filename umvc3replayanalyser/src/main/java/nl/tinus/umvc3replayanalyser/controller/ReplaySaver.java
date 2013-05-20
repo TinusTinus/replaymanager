@@ -26,8 +26,6 @@ import org.codehaus.jackson.map.ObjectWriter;
 class ReplaySaver {
     /** Name of the image format to be used when saving preview images. */
     private static final String IMAGE_FORMAT = "png";
-    /** Separator in file paths; "\" on Windows, "/" on Linux. */
-    private static final String SEPARATOR = System.getProperty("file.separator");
     /** Extension for replay files. */
     private static final String REPLAY_EXTENSION = ".replay";
     /** Prefix in local file URLs. */
@@ -82,7 +80,7 @@ class ReplaySaver {
         File previewImageFile;
         if (this.configuration.isSavePreviewImageToDataDirectory()) {
             // Create preview image file in the data directory.
-            previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + "."
+            previewImageFile = new File(configuration.getDataDirectoryPath() + FileUtils.SEPARATOR + baseFilename + "."
                     + IMAGE_FORMAT);
             if (previewImageFile.exists()) {
                 throw new IOException("Preview image file already exists: " + previewImageFile);
@@ -103,7 +101,7 @@ class ReplaySaver {
 
         return saveReplay(file, game, FILE_URL_PREFIX + previewImageFile.getAbsolutePath(), logger);
     }
-    
+
     /**
      * Constructs a replay for the given video file with the data from the given game, saves it to disk and returns it.
      * 
@@ -159,7 +157,8 @@ class ReplaySaver {
                 videoFileExtension = "";
             }
 
-            videoFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + videoFileExtension);
+            videoFile = new File(configuration.getDataDirectoryPath() + FileUtils.SEPARATOR + baseFilename
+                    + videoFileExtension);
 
             // Note that move will fail with an IOException if videoFile aleady exists.
             Files.move(file.toPath(), videoFile.toPath());
@@ -170,10 +169,13 @@ class ReplaySaver {
             videoFile = file;
         }
 
-        Replay replay = new Replay(creationTime, game, videoFile.getAbsolutePath(), previewImageLocation);
+        String videoFileRelativePath = FileUtils.getRelativePath(videoFile.getAbsolutePath(), 
+                configuration.getDataDirectory().getAbsolutePath());
+        Replay replay = new Replay(creationTime, game, videoFileRelativePath, previewImageLocation);
 
         // Save replay to the data directory.
-        File replayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + baseFilename + REPLAY_EXTENSION);
+        File replayFile = new File(configuration.getDataDirectoryPath() + FileUtils.SEPARATOR + baseFilename
+                + REPLAY_EXTENSION);
         if (replayFile.exists()) {
             throw new IOException("Replay already exists: " + replayFile);
         }
@@ -222,8 +224,8 @@ class ReplaySaver {
                     // No extension.
                     previewImageExtension = "";
                 }
-                File previewImageFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + newBaseFilename
-                        + previewImageExtension);
+                File previewImageFile = new File(configuration.getDataDirectoryPath() + FileUtils.SEPARATOR
+                        + newBaseFilename + previewImageExtension);
 
                 // Note that move will fail with an IOException if previewImageFile aleady exists, but that it will
                 // succeed if the old and new paths are the same.
@@ -236,7 +238,7 @@ class ReplaySaver {
             }
 
             // Delete the old replay file.
-            File oldReplayFile = new File(configuration.getDataDirectoryPath() + SEPARATOR + oldBaseFilename
+            File oldReplayFile = new File(configuration.getDataDirectoryPath() + FileUtils.SEPARATOR + oldBaseFilename
                     + REPLAY_EXTENSION);
             Files.delete(oldReplayFile.toPath());
             log.info(String.format("Deleted old replay file: %s.", oldReplayFile));

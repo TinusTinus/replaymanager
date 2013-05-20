@@ -34,6 +34,7 @@ class AboutPopupController {
             URIS.put("Slf4j", new URI("http://www.slf4j.org/"));
             URIS.put("Log4j", new URI("http://logging.apache.org/log4j/1.2/"));
             URIS.put("Commons-CLI", new URI("http://commons.apache.org/proper/commons-cli/"));
+            URIS.put("Commons-IO", new URI("http://commons.apache.org/proper/commons-io/"));
             URIS.put("Commons-lang", new URI("http://commons.apache.org/proper/commons-lang/"));
             URIS.put("Guava", new URI("http://code.google.com/p/guava-libraries/"));
             URIS.put("Jackson", new URI("http://jackson.codehaus.org/"));
@@ -45,6 +46,8 @@ class AboutPopupController {
             throw new RuntimeException("Unable to complete class initialisation.", e);
         }
     }
+    
+    // TODO add Commons IO to fxml
 
     /**
      * Action handler for when one of the hyperlinks has been clicked.

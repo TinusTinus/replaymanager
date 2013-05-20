@@ -40,7 +40,7 @@ public class Replay {
     /** Data about the game. */
     @NonNull
     private final Game game;
-    /** Location of the replay video. */
+    /** Location of the replay video, relative to the data directory. */
     @NonNull
     private String videoLocation;
     /** Location of the replay's preview image. */

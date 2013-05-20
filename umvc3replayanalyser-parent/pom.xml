@@ -16,6 +16,7 @@
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
 		<commons-cli.version>1.1</commons-cli.version>
+		<commons-io.version>2.4</commons-io.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<guava.version>14.0.1</guava.version>
 		<jackson.version>1.9.11</jackson.version>
@@ -165,6 +166,11 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>

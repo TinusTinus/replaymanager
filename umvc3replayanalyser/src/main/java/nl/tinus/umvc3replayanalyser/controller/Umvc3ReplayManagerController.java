@@ -51,6 +51,7 @@ import nl.tinus.umvc3replayanalyser.ocr.TesseractOCREngine;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.tinus.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
+import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.common.base.Predicate;
@@ -687,10 +688,11 @@ public class Umvc3ReplayManagerController {
             throw new IllegalStateException("No replay selected; open video button should have been disabled!");
         }
 
-        log.info("Playing video: " + selectedReplay.getVideoLocation());
-
         if (Desktop.isDesktopSupported()) {
-            File videoFile = new File(selectedReplay.getVideoLocation());
+            String videoFilePath = FilenameUtils.normalize(this.configuration.getDataDirectory().getAbsolutePath()
+                    + FileUtils.SEPARATOR + selectedReplay.getVideoLocation());
+            log.info("Playing video: " + videoFilePath);
+            File videoFile = new File(videoFilePath);
             try {
                 Desktop.getDesktop().open(videoFile);
             } catch (IOException | IllegalArgumentException e) {
