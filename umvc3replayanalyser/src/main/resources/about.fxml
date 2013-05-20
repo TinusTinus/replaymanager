@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="434.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="278.0" prefWidth="434.0" xmlns:fx="http://javafx.com/fxml">
   <children>
     <Label layoutX="14.0" layoutY="14.0" text="Ultimate Marvel vs Capcom 3 Replay Manager created by Martijn van de Rijdt" />
     <Label layoutX="14.0" layoutY="49.0" text="Libraries:" />
@@ -15,16 +15,18 @@
     <Hyperlink layoutX="14.0" layoutY="109.0" onAction="#handleHyperlinkAction" text="Slf4j" />
     <Hyperlink layoutX="14.0" layoutY="131.0" onAction="#handleHyperlinkAction" text="Log4j" />
     <Hyperlink layoutX="14.0" layoutY="153.0" onAction="#handleHyperlinkAction" text="Commons-CLI" />
-    <Hyperlink layoutX="14.0" layoutY="175.0" onAction="#handleHyperlinkAction" text="Commons-lang" />
-    <Hyperlink layoutX="14.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Guava" />
-    <Hyperlink layoutX="15.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Jackson" />
+    <Hyperlink layoutX="14.0" layoutY="175.0" onAction="#handleHyperlinkAction" text="Commons-IO" />
+    <Hyperlink layoutX="13.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Commons-lang" />
+    <Hyperlink layoutX="13.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Guava" />
+    <Hyperlink layoutX="14.0" layoutY="241.0" onAction="#handleHyperlinkAction" text="Jackson" />
     <Hyperlink layoutX="103.0" layoutY="65.0" onAction="#handleHyperlinkAction" text="BCL for Java SE" />
     <Hyperlink layoutX="104.0" layoutY="87.0" onAction="#handleHyperlinkAction" text="GPL v3" />
     <Hyperlink layoutX="104.0" layoutY="109.0" onAction="#handleHyperlinkAction" text="MIT" />
     <Hyperlink layoutX="103.0" layoutY="131.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
     <Hyperlink layoutX="103.0" layoutY="153.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
     <Hyperlink layoutX="103.0" layoutY="175.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="103.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="103.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="102.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="102.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="102.0" layoutY="241.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
   </children>
 </AnchorPane>
