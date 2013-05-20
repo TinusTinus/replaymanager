@@ -6,27 +6,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="278.0" prefWidth="434.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="434.0" xmlns:fx="http://javafx.com/fxml">
   <children>
-    <Label layoutX="14.0" layoutY="14.0" text="Ultimate Marvel vs Capcom 3 Replay Manager created by Martijn van de Rijdt" />
-    <Label layoutX="14.0" layoutY="49.0" text="Libraries:" />
-    <Hyperlink layoutX="14.0" layoutY="65.0" onAction="#handleHyperlinkAction" text="JavaFX" />
-    <Hyperlink layoutX="14.0" layoutY="87.0" onAction="#handleHyperlinkAction" text="Xuggler" />
-    <Hyperlink layoutX="14.0" layoutY="109.0" onAction="#handleHyperlinkAction" text="Slf4j" />
-    <Hyperlink layoutX="14.0" layoutY="131.0" onAction="#handleHyperlinkAction" text="Log4j" />
-    <Hyperlink layoutX="14.0" layoutY="153.0" onAction="#handleHyperlinkAction" text="Commons-CLI" />
-    <Hyperlink layoutX="14.0" layoutY="175.0" onAction="#handleHyperlinkAction" text="Commons-IO" />
-    <Hyperlink layoutX="13.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Commons-lang" />
-    <Hyperlink layoutX="13.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Guava" />
-    <Hyperlink layoutX="14.0" layoutY="241.0" onAction="#handleHyperlinkAction" text="Jackson" />
-    <Hyperlink layoutX="103.0" layoutY="65.0" onAction="#handleHyperlinkAction" text="BCL for Java SE" />
-    <Hyperlink layoutX="104.0" layoutY="87.0" onAction="#handleHyperlinkAction" text="GPL v3" />
-    <Hyperlink layoutX="104.0" layoutY="109.0" onAction="#handleHyperlinkAction" text="MIT" />
-    <Hyperlink layoutX="103.0" layoutY="131.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="103.0" layoutY="153.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="103.0" layoutY="175.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="102.0" layoutY="197.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="102.0" layoutY="219.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
-    <Hyperlink layoutX="102.0" layoutY="241.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Label layoutX="14.0" layoutY="14.0" text="Ultimate Marvel vs Capcom 3 Replay Manager" />
+    <Label layoutX="14.0" layoutY="112.0" text="Libraries:" />
+    <Hyperlink layoutX="14.0" layoutY="128.0" onAction="#handleHyperlinkAction" text="JavaFX" />
+    <Hyperlink layoutX="14.0" layoutY="150.0" onAction="#handleHyperlinkAction" text="Xuggler" />
+    <Hyperlink layoutX="14.0" layoutY="172.0" onAction="#handleHyperlinkAction" text="Slf4j" />
+    <Hyperlink layoutX="14.0" layoutY="194.0" onAction="#handleHyperlinkAction" text="Log4j" />
+    <Hyperlink layoutX="14.0" layoutY="216.0" onAction="#handleHyperlinkAction" text="Commons-CLI" />
+    <Hyperlink layoutX="14.0" layoutY="238.0" onAction="#handleHyperlinkAction" text="Commons-IO" />
+    <Hyperlink layoutX="13.0" layoutY="260.0" onAction="#handleHyperlinkAction" text="Commons-lang" />
+    <Hyperlink layoutX="13.0" layoutY="282.0" onAction="#handleHyperlinkAction" text="Guava" />
+    <Hyperlink layoutX="14.0" layoutY="304.0" onAction="#handleHyperlinkAction" text="Jackson" />
+    <Hyperlink layoutX="103.0" layoutY="128.0" onAction="#handleHyperlinkAction" text="BCL for Java SE" />
+    <Hyperlink layoutX="103.0" layoutY="150.0" onAction="#handleHyperlinkAction" text="GPL v3" />
+    <Hyperlink layoutX="104.0" layoutY="172.0" onAction="#handleHyperlinkAction" text="MIT" />
+    <Hyperlink layoutX="103.0" layoutY="194.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="103.0" layoutY="216.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="103.0" layoutY="238.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="102.0" layoutY="260.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="102.0" layoutY="282.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Hyperlink layoutX="102.0" layoutY="304.0" onAction="#handleHyperlinkAction" text="Apache License v2.0" />
+    <Label layoutX="13.0" layoutY="46.0" text="Copyright 2012, 2013 Martijn van de Rijdt" />
+    <Label layoutX="13.0" layoutY="62.0" text="This program comes with ABSOLUTELY NO WARRANTY. This is free" />
+    <Label layoutX="13.0" layoutY="78.0" text="software, and you are welcome to redistribute it under certain conditions." />
   </children>
 </AnchorPane>
