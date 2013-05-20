@@ -1,13 +1,12 @@
 package nl.tinus.umvc3replayanalyser.config;
 
-import java.io.File;
 
 /**
  * Dummy implementation of the Configuration interface.
  * 
  * @author Martijn van de Rijdt
  */
-public class ConfigurationDummy implements Configuration {
+public class ConfigurationDummy extends AbstractConfiguration implements Configuration {
     /** {@inheritDoc} */
     @Override
     public String getTesseractExecutablePath() {
@@ -36,11 +35,5 @@ public class ConfigurationDummy implements Configuration {
     @Override
     public boolean isPrettyPrintReplays() {
         throw new UnsupportedOperationException("Not implemented.");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public File getDataDirectory() {
-        return new File(getDataDirectoryPath());
     }
 }

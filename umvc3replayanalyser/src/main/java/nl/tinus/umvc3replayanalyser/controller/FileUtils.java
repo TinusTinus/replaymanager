@@ -63,11 +63,9 @@ public class FileUtils {
         if (pathSeparator.equals("/")) {
             normalizedTargetPath = FilenameUtils.separatorsToUnix(normalizedTargetPath);
             normalizedBasePath = FilenameUtils.separatorsToUnix(normalizedBasePath);
-
         } else if (pathSeparator.equals("\\")) {
             normalizedTargetPath = FilenameUtils.separatorsToWindows(normalizedTargetPath);
             normalizedBasePath = FilenameUtils.separatorsToWindows(normalizedBasePath);
-
         } else {
             throw new IllegalArgumentException("Unrecognised dir separator '" + pathSeparator + "'");
         }
@@ -110,7 +108,6 @@ public class FileUtils {
 
         if (baseResource.exists()) {
             baseIsFile = baseResource.isFile();
-
         } else if (basePath.endsWith(pathSeparator)) {
             baseIsFile = false;
         }

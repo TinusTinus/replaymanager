@@ -1,6 +1,5 @@
 package nl.tinus.umvc3replayanalyser.config;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map.Entry;
@@ -14,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-public class PropertiesConfiguration implements Configuration {
+public class PropertiesConfiguration extends AbstractConfiguration implements Configuration {
     /** Filename of the configuration file. */
     private static final String CONFIG_FILE_NAME = "/configuration.properties";
 
@@ -138,11 +137,5 @@ public class PropertiesConfiguration implements Configuration {
     public boolean isPrettyPrintReplays() {
         String string = getProperty("pretty-print-replays", "false");
         return Boolean.valueOf(string).booleanValue();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public File getDataDirectory() {
-        return new File(getDataDirectoryPath());
     }
 }
