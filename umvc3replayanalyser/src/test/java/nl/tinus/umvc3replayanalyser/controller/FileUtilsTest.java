@@ -1,6 +1,5 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
-import nl.tinus.umvc3replayanalyser.controller.FileUtils.PathResolutionException;
 
 import org.junit.Assert;
 import org.junit.Test;

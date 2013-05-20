@@ -1,7 +1,6 @@
 package nl.tinus.umvc3replayanalyser.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 import lombok.AccessLevel;
@@ -123,21 +122,5 @@ public class FileUtils {
         }
         relative.append(normalizedTargetPath.substring(common.length()));
         return relative.toString();
-    }
-
-    /** Exception class. */
-    static class PathResolutionException extends IOException {
-        /** Serial version UID. */
-        private static final long serialVersionUID = 8299984220960706361L;
-
-        /**
-         * Constructor.
-         * 
-         * @param message
-         *            exception message
-         */
-        PathResolutionException(String message) {
-            super(message);
-        }
     }
 }
