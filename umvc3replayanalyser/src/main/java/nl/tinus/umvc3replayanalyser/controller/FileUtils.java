@@ -36,7 +36,7 @@ public class FileUtils {
     static String getRelativePath(String targetPath, String basePath) throws PathResolutionException {
         return getRelativePath(targetPath, basePath, SEPARATOR);
     }
-    
+
     /**
      * Get the relative path from one file to another, specifying the directory separator. If one of the provided
      * resources does not exist, it is assumed to be a file unless it ends with '/' or '\'.
@@ -52,7 +52,8 @@ public class FileUtils {
      * @throws PathResolutionException
      *             in case the paths are not related at all
      */
-    static String getRelativePath(String targetPath, String basePath, String pathSeparator) throws PathResolutionException {
+    static String getRelativePath(String targetPath, String basePath, String pathSeparator)
+            throws PathResolutionException {
 
         // Normalize the paths
         String normalizedTargetPath = FilenameUtils.normalizeNoEndSeparator(targetPath);
@@ -135,8 +136,8 @@ public class FileUtils {
         /**
          * Constructor.
          * 
-         * @param message 
-         *           exception message
+         * @param message
+         *            exception message
          */
         PathResolutionException(String message) {
             super(message);
