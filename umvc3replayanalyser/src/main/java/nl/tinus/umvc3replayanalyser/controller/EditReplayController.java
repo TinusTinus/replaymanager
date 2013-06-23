@@ -28,6 +28,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,9 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+// AllArgsConstructor intended for unit tests.
+// In production code, use one of the other constructors and let JavaFX inject the @FXML-anotated fields.
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 class EditReplayController {
 
     /**
@@ -115,8 +119,9 @@ class EditReplayController {
     private Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes;
 
     /** Initialisation method. */
+    // Default visibility for unit tests.
     @FXML
-    private void initialize() {
+    void initialize() {
         log.info("Performing controller initialisation.");
 
         // Initialise character combo boxes.
@@ -136,8 +141,6 @@ class EditReplayController {
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
 
         // Add a listener, so that whenever a character value is changed, the assist combo box is updated as well.
-        // TODO bug: changing character values clears the assist (not visually, but getValue() returns null)!
-        // This bug may also be present in Umvc3ReplayManagerController.
         ChangeListener<Umvc3Character> assistListener = new ChangeListener<Umvc3Character>() {
             /** {@inheritDoc} */
             @Override
@@ -216,11 +219,14 @@ class EditReplayController {
         }
 
         // Character value has changed. Rebuild the contents of the combo box.
+        int index = comboBox.getSelectionModel().getSelectedIndex();
         comboBox.getItems().clear();
         comboBox.getItems().add(null);
         for (AssistType type : AssistType.values()) {
             comboBox.getItems().add(new Assist(type, observable.getValue()));
         }
+        // Maintain selected index.
+        comboBox.getSelectionModel().select(index);
         comboBox.setDisable(false);
     }
 
