@@ -83,7 +83,7 @@ class FrameProducer implements Callable<Void> {
                     try {
                         success = queue.offer(image, 1, TimeUnit.SECONDS);
                     } catch (InterruptedException e) {
-                        log.error("Skipping image due to an unexpected exception: " + image, e);
+                        log.error("Failed to offer image to queue due to an unexpected exception: " + image, e);
                     }
                 }
             }
