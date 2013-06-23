@@ -47,43 +47,44 @@ public class EditReplayControllerTest {
         Team teamTwo = new Team(Umvc3Character.CAPTAIN_AMERICA, Umvc3Character.CHRIS, Umvc3Character.CHUN_LI);
         Game defaultContents = new Game(new Player("one"), teamOne, new Player("two"), teamTwo);
 
-        ComboBox<Umvc3Character> playerOneCharacterOneComboBox = new ComboBox<>();
-        ComboBox<Assist> playerOneAssistOneComboBox = new ComboBox<>();
+        // ComboBoxes for player 1's first character and assist.
+        ComboBox<Umvc3Character> characterComboBox = new ComboBox<>();
+        ComboBox<Assist> assistComboBox = new ComboBox<>();
 
         EditReplayController controller = new EditReplayController(defaultContents, new LogReplayDetailsHandler(),
-                new TextField(), new TextField(), playerOneCharacterOneComboBox, new ComboBox<Umvc3Character>(),
+                new TextField(), new TextField(), characterComboBox, new ComboBox<Umvc3Character>(),
                 new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(),
-                new ComboBox<Umvc3Character>(), playerOneAssistOneComboBox, new ComboBox<Assist>(),
+                new ComboBox<Umvc3Character>(), assistComboBox, new ComboBox<Assist>(),
                 new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(),
                 new Button(), null);
         controller.initialize();
 
         // Check that the first character and first assist have been initialised correctly.
-        Assert.assertEquals(Umvc3Character.AKUMA, playerOneCharacterOneComboBox.getValue());
-        Assert.assertEquals(4, playerOneAssistOneComboBox.getItems().size());
-        Assert.assertNull(playerOneAssistOneComboBox.getItems().get(0));
-        Assert.assertEquals(Umvc3Character.AKUMA, playerOneAssistOneComboBox.getItems().get(1).getCharacter());
-        Assert.assertEquals(AssistType.ALPHA, playerOneAssistOneComboBox.getItems().get(1).getType());
-        Assert.assertEquals(Umvc3Character.AKUMA, playerOneAssistOneComboBox.getItems().get(2).getCharacter());
-        Assert.assertEquals(AssistType.BETA, playerOneAssistOneComboBox.getItems().get(2).getType());
-        Assert.assertEquals(Umvc3Character.AKUMA, playerOneAssistOneComboBox.getItems().get(3).getCharacter());
-        Assert.assertEquals(AssistType.GAMMA, playerOneAssistOneComboBox.getItems().get(3).getType());
-        Assert.assertEquals(playerOneAssistOneComboBox.getItems().get(1), playerOneAssistOneComboBox.getValue());
+        Assert.assertEquals(Umvc3Character.AKUMA, characterComboBox.getValue());
+        Assert.assertEquals(4, assistComboBox.getItems().size());
+        Assert.assertNull(assistComboBox.getItems().get(0));
+        Assert.assertEquals(Umvc3Character.AKUMA, assistComboBox.getItems().get(1).getCharacter());
+        Assert.assertEquals(AssistType.ALPHA, assistComboBox.getItems().get(1).getType());
+        Assert.assertEquals(Umvc3Character.AKUMA, assistComboBox.getItems().get(2).getCharacter());
+        Assert.assertEquals(AssistType.BETA, assistComboBox.getItems().get(2).getType());
+        Assert.assertEquals(Umvc3Character.AKUMA, assistComboBox.getItems().get(3).getCharacter());
+        Assert.assertEquals(AssistType.GAMMA, assistComboBox.getItems().get(3).getType());
+        Assert.assertEquals(assistComboBox.getItems().get(1), assistComboBox.getValue());
 
         // Change the first character to Ammy.
-        playerOneCharacterOneComboBox.setValue(Umvc3Character.AMATERASU);
+        characterComboBox.setValue(Umvc3Character.AMATERASU);
 
         // Check that the first character and first assist have been updated correctly, and the assist type
         // selection remains intact.
-        Assert.assertEquals(Umvc3Character.AMATERASU, playerOneCharacterOneComboBox.getValue());
-        Assert.assertEquals(4, playerOneAssistOneComboBox.getItems().size());
-        Assert.assertNull(playerOneAssistOneComboBox.getItems().get(0));
-        Assert.assertEquals(Umvc3Character.AMATERASU, playerOneAssistOneComboBox.getItems().get(1).getCharacter());
-        Assert.assertEquals(AssistType.ALPHA, playerOneAssistOneComboBox.getItems().get(1).getType());
-        Assert.assertEquals(Umvc3Character.AMATERASU, playerOneAssistOneComboBox.getItems().get(2).getCharacter());
-        Assert.assertEquals(AssistType.BETA, playerOneAssistOneComboBox.getItems().get(2).getType());
-        Assert.assertEquals(Umvc3Character.AMATERASU, playerOneAssistOneComboBox.getItems().get(3).getCharacter());
-        Assert.assertEquals(AssistType.GAMMA, playerOneAssistOneComboBox.getItems().get(3).getType());
-        Assert.assertEquals(playerOneAssistOneComboBox.getItems().get(1), playerOneAssistOneComboBox.getValue());
+        Assert.assertEquals(Umvc3Character.AMATERASU, characterComboBox.getValue());
+        Assert.assertEquals(4, assistComboBox.getItems().size());
+        Assert.assertNull(assistComboBox.getItems().get(0));
+        Assert.assertEquals(Umvc3Character.AMATERASU, assistComboBox.getItems().get(1).getCharacter());
+        Assert.assertEquals(AssistType.ALPHA, assistComboBox.getItems().get(1).getType());
+        Assert.assertEquals(Umvc3Character.AMATERASU, assistComboBox.getItems().get(2).getCharacter());
+        Assert.assertEquals(AssistType.BETA, assistComboBox.getItems().get(2).getType());
+        Assert.assertEquals(Umvc3Character.AMATERASU, assistComboBox.getItems().get(3).getCharacter());
+        Assert.assertEquals(AssistType.GAMMA, assistComboBox.getItems().get(3).getType());
+        Assert.assertEquals(assistComboBox.getItems().get(1), assistComboBox.getValue());
     }
 }
