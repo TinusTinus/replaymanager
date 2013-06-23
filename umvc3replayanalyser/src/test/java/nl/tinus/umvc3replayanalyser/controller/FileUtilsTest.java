@@ -29,7 +29,7 @@ import org.junit.Test;
  * @author Martijn van de Rijdt
  */
 public class FileUtilsTest {
-    // TODO Javadoc for individual test methods
+    /** Test for Unix-style paths. */
     @Test
     public void testGetRelativePathsUnix() throws PathResolutionException {
         Assert.assertEquals("stuff/xyz.dat", FileUtils.getRelativePath("/var/data/stuff/xyz.dat", "/var/data/", "/"));
@@ -37,6 +37,7 @@ public class FileUtilsTest {
         Assert.assertEquals("../../b/c", FileUtils.getRelativePath("/m/n/o/a/b/c", "/m/n/o/a/x/y/", "/"));
     }
 
+    /** Test for relative paths between Windows files. */
     @Test
     public void testGetRelativePathFileToFile() throws PathResolutionException {
         String target = "C:\\Windows\\Boot\\Fonts\\chs_boot.ttf";
@@ -46,6 +47,7 @@ public class FileUtilsTest {
         Assert.assertEquals("..\\..\\Boot\\Fonts\\chs_boot.ttf", relPath);
     }
 
+    /** Test for relative Windows paths from a firectory to a file. */
     @Test
     public void testGetRelativePathDirectoryToFile() throws PathResolutionException {
         String target = "C:\\Windows\\Boot\\Fonts\\chs_boot.ttf";
@@ -55,6 +57,7 @@ public class FileUtilsTest {
         Assert.assertEquals("..\\..\\Boot\\Fonts\\chs_boot.ttf", relPath);
     }
 
+    /** Test for relative Windows paths from a file to a directory. */
     @Test
     public void testGetRelativePathFileToDirectory() throws PathResolutionException {
         String target = "C:\\Windows\\Boot\\Fonts";
@@ -64,6 +67,7 @@ public class FileUtilsTest {
         Assert.assertEquals("..\\..\\Boot\\Fonts", relPath);
     }
 
+    /** Test for relative paths between Windows directories. */
     @Test
     public void testGetRelativePathDirectoryToDirectory() throws PathResolutionException {
         String target = "C:\\Windows\\Boot\\";
@@ -74,6 +78,7 @@ public class FileUtilsTest {
         Assert.assertEquals(expected, relPath);
     }
 
+    /** Test for Windows paths on different drive letters. */
     @Test(expected = PathResolutionException.class)
     public void testGetRelativePathDifferentDriveLetters() throws PathResolutionException {
         String target = "D:\\sources\\recovery\\RecEnv.exe";
