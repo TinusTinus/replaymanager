@@ -19,7 +19,6 @@ package nl.tinus.umvc3replayanalyser.controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import lombok.extern.slf4j.Slf4j;
 import nl.tinus.umvc3replayanalyser.model.Assist;
 import nl.tinus.umvc3replayanalyser.model.AssistType;
 import nl.tinus.umvc3replayanalyser.model.Game;
@@ -35,7 +34,6 @@ import org.junit.Test;
  * 
  * @author Martijn van de Rijdt
  */
-@Slf4j
 public class EditReplayControllerTest {
     /**
      * Tests what happens to the value of the assist combobox when the value of the corresponding character combobox is
@@ -49,19 +47,11 @@ public class EditReplayControllerTest {
         Team teamTwo = new Team(Umvc3Character.CAPTAIN_AMERICA, Umvc3Character.CHRIS, Umvc3Character.CHUN_LI);
         Game defaultContents = new Game(new Player("one"), teamOne, new Player("two"), teamTwo);
 
-        ReplayDetailsEditedHandler okHandler = new ReplayDetailsEditedHandler() {
-            /** {@inheritDoc} */
-            @Override
-            public void handleReplayDetailsEdited(Game game) {
-                log.info("Received game: " + game);
-            }
-        };
-
         ComboBox<Umvc3Character> playerOneCharacterOneComboBox = new ComboBox<>();
         ComboBox<Assist> playerOneAssistOneComboBox = new ComboBox<>();
 
-        EditReplayController controller = new EditReplayController(defaultContents, okHandler, new TextField(),
-                new TextField(), playerOneCharacterOneComboBox, new ComboBox<Umvc3Character>(),
+        EditReplayController controller = new EditReplayController(defaultContents, new LogReplayDetailsHandler(),
+                new TextField(), new TextField(), playerOneCharacterOneComboBox, new ComboBox<Umvc3Character>(),
                 new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(),
                 new ComboBox<Umvc3Character>(), playerOneAssistOneComboBox, new ComboBox<Assist>(),
                 new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(),
