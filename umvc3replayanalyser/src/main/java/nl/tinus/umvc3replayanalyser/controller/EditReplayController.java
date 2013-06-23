@@ -63,7 +63,7 @@ class EditReplayController {
     private final Game defaultContents;
     /** Event handler, called when the user activates the OK button. */
     @NonNull
-    private ReplayDetailsEditedHandler okHandler;
+    private final ReplayDetailsEditedHandler okHandler;
 
     /** First text field for player name. */
     @FXML
