@@ -20,7 +20,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for PropertiesConfiguration.
+ * Test class for {@link PropertiesConfiguration}.
  * 
  * @author Martijn van de Rijdt
  */

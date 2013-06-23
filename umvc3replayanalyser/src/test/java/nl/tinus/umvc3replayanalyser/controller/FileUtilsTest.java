@@ -21,7 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for FileUtils.
+ * Test class for {@link FileUtils}.
  * 
  * Based on Milan Aleksic's implementation as available on Stack Overflow:
  * http://stackoverflow.com/a/3054692.
@@ -29,6 +29,7 @@ import org.junit.Test;
  * @author Martijn van de Rijdt
  */
 public class FileUtilsTest {
+    // TODO Javadoc for individual test methods
     @Test
     public void testGetRelativePathsUnix() throws PathResolutionException {
         Assert.assertEquals("stuff/xyz.dat", FileUtils.getRelativePath("/var/data/stuff/xyz.dat", "/var/data/", "/"));

@@ -29,7 +29,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for MatchReplayPredicate.
+ * Test class for {@link MatchReplayPredicate}.
  * 
  * @author Martijn van de Rijdt
  */

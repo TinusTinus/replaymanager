@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for MatchTeamPredicate.
+ * Test class for {@link MatchTeamPredicate}.
  * 
  * @author Martijn van de Rijdt
  */

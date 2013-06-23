@@ -18,7 +18,7 @@ package nl.tinus.umvc3replayanalyser.config;
 
 
 /**
- * Dummy implementation of the Configuration interface.
+ * Dummy implementation of the {@link Configuration} interface.
  * 
  * @author Martijn van de Rijdt
  */

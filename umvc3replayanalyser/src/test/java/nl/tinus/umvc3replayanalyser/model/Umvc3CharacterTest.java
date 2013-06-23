@@ -25,7 +25,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for Umvc3Character.
+ * Test class for {@link Umvc3Character}.
  * 
  * @author Martijn van de Rijdt
  */

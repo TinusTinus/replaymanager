@@ -31,7 +31,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for TesseractOCREngine.
+ * Test class for {@link TesseractOCREngine}.
  * 
  * @author Martijn van de Rijdt
  */

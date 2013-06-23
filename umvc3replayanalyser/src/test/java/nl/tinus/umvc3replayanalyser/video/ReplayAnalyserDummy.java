@@ -17,7 +17,7 @@
 package nl.tinus.umvc3replayanalyser.video;
 
 /**
- * Dummy implementation of the replay analyser interface.
+ * Dummy implementation of {@link ReplayAnalyser}.
  * 
  * @author Martijn van de Rijdt
  */

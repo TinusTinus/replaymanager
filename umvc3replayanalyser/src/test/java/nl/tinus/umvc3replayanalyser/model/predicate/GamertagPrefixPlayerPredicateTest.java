@@ -28,7 +28,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
 /**
- * Test class for GamertagPrefixPlayerPredicate.
+ * Test class for {@link GamertagPrefixPlayerPredicate}.
  * 
  * @author Martijn van de Rijdt
  */

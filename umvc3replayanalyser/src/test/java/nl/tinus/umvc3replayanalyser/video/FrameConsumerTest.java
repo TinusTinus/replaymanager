@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test class for FrameConsumer.
+ * Test class for {@link FrameConsumer}.
  * 
  * @author Martijn van de Rijdt
  */

@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests ReplayAnalyser.
+ * Tests {@link ReplayAnalyser}.
  * 
  * @author Martijn van de Rijdt
  */

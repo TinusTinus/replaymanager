@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for Game.
+ * Test class for {@link Game}.
  * 
  * @author Martijn van de Rijdt
  */

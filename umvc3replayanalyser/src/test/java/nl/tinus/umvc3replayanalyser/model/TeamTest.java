@@ -26,7 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for Team.
+ * Test class for {@link Team}.
  * 
  * @author Martijn van de Rijdt
  */

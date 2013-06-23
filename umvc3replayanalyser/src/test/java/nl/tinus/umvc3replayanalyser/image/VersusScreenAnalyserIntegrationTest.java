@@ -35,8 +35,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test class for VersusScreenAnalyser. Uses an actual OCR engine implementation, so this test is more of an integration
- * test than a unit test.
+ * Test class for {@link VersusScreenAnalyser}. Uses an actual OCR engine implementation, so this test is more of an
+ * integration test than a unit test.
  * 
  * @author Martijn van de Rijdt
  */

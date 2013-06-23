@@ -26,7 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for Replay.
+ * Test class for {@link Replay}.
  * 
  * @author Martijn van de Rijdt
  */

@@ -27,7 +27,7 @@ import nl.tinus.umvc3replayanalyser.model.Umvc3Character;
 import nl.tinus.umvc3replayanalyser.ocr.OCRException;
 
 /**
- * Mock implementation of the VersusScreenAnalyser interface, for use in unit tests.
+ * Mock implementation of {@link VersusScreenAnalyser}, for use in unit tests.
  * 
  * @author Martijn van de Rijdt
  */

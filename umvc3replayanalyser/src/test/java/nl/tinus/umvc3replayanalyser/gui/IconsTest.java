@@ -23,7 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test class for Umvc3ReplayManager.
+ * Test class for {@link Icons}.
  * 
  * @author Martijn van de Rijdt
  */
