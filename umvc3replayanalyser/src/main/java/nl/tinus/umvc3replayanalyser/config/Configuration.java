@@ -53,7 +53,7 @@ public interface Configuration {
     boolean isMoveVideoFilesToDataDirectory();
 
     /**
-     * Indicates whether, when importing new replays, the preview image should be saved to the data direectory. If not,
+     * Indicates whether, when importing new replays, the preview image should be saved to the data directory. If not,
      * it is only saved as a temporary file. This should normally always be set to true, but it may be useful to set it
      * to false in development environments.
      * 
