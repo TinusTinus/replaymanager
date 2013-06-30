@@ -38,5 +38,5 @@ public interface VersusScreenAnalyser {
      * @throws OCRException
      *             in case image analysis fails
      */
-    public abstract Game analyse(BufferedImage versusImage) throws OCRException;
+    Game analyse(BufferedImage versusImage) throws OCRException;
 }
