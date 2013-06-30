@@ -23,21 +23,19 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
-
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * A game of Ultimate Marvel vs Capcom 3.
  * 
  * @author Martijn van de Rijdt
  */
-@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 public class Game {
@@ -70,8 +68,6 @@ public class Game {
     /** Player two's team. */
     @NonNull
     private final Team teamTwo;
-    /** Winning side. May be null in case the winner is unknown, or it is a draw game. */
-    private final Side winningSide;
 
     /**
      * Convenience constructor, for when the winning player is unknown.
@@ -88,7 +84,23 @@ public class Game {
     @JsonCreator
     public Game(@JsonProperty("playerOne") Player playerOne, @JsonProperty("teamOne") Team teamOne,
             @JsonProperty("playerTwo") Player playerTwo, @JsonProperty("teamTwo") Team teamTwo) {
-        this(playerOne, teamOne, playerTwo, teamTwo, null);
+        super();
+        if (playerOne == null) {
+            throw new NullPointerException("playerOne");
+        }
+        if (teamOne == null) {
+            throw new NullPointerException("teamOne");
+        }
+        if (playerTwo == null) {
+            throw new NullPointerException("playerTwo");
+        }
+        if (teamTwo == null) {
+            throw new NullPointerException("teamTwo");
+        }
+        this.playerOne = playerOne;
+        this.teamOne = teamOne;
+        this.playerTwo = playerTwo;
+        this.teamTwo = teamTwo;
     }
 
     /**
@@ -139,53 +151,14 @@ public class Game {
         return Collections.unmodifiableList(Arrays.asList(playerOne, playerTwo));
     }
 
-    /** @return the losing side, or null in case of a draw game */
-    @JsonIgnore
-    public Side getLosingSide() {
-        Side result;
-        if (winningSide != null) {
-            result = winningSide.getOpposite();
-        } else {
-            result = null;
-        }
-        return result;
-    }
-
-    /** @return the winning player, or null in case of a draw game */
-    @JsonIgnore
-    public Player getWinningPlayer() {
-        Player result;
-        if (winningSide != null) {
-            result = getPlayer(winningSide);
-        } else {
-            result = null;
-        }
-        return result;
-    }
-
-    /** @return the winning player, or null in case of a draw game */
-    @JsonIgnore
-    public Player getLosingPlayer() {
-        Player result;
-        Side losingSide = getLosingSide();
-        if (losingSide != null) {
-            result = getPlayer(losingSide);
-        } else {
-            result = null;
-        }
-        return result;
-    }
-
     /**
      * Returns a description of the match.
      * 
      * @param includeAssists
      *            whether assist names should be included in the description
-     * @param includeWinner
-     *            if true, the description will indicate which player won by putting "(W)" after their gamertag
      * @return match description
      */
-    public String getDescription(boolean includeAssists, boolean includeWinner) {
+    public String getDescription(boolean includeAssists) {
         StringBuffer text = new StringBuffer();
 
         text.append(playerOne.getGamertag());
@@ -195,12 +168,7 @@ public class Game {
         } else {
             text.append(teamOne.getName());
         }
-        text.append(")");
-        if (includeWinner && winningSide == Side.PLAYER_ONE) {
-            text.append(" (W)");
-        }
-
-        text.append(" vs. ");
+        text.append(") vs. ");
 
         text.append(playerTwo.getGamertag());
         text.append(" (");
@@ -210,9 +178,6 @@ public class Game {
             text.append(teamTwo.getName());
         }
         text.append(")");
-        if (includeWinner && winningSide == Side.PLAYER_TWO) {
-            text.append(" (W)");
-        }
 
         return text.toString();
     }
@@ -220,7 +185,7 @@ public class Game {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return getDescription(true, true);
+        return getDescription(true);
     }
     
     /**

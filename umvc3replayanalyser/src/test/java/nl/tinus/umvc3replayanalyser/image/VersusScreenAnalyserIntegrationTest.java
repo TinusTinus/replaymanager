@@ -173,7 +173,7 @@ public class VersusScreenAnalyserIntegrationTest {
         Assert.assertEquals("MvdR", game.getPlayerOne().getGamertag());
         Assert.assertEquals("Training Dummy", game.getPlayerTwo().getGamertag());
 
-        System.out.println(game.getDescription(true, false));
+        System.out.println(game.getDescription(true));
 
         // check characters
         Assert.assertEquals(Umvc3Character.STRIDER_HIRYU, game.getTeamOne().getFirstCharacter());

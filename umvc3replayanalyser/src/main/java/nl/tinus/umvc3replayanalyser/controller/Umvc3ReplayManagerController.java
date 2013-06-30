@@ -715,7 +715,7 @@ public class Umvc3ReplayManagerController {
                 log.error("Unable to play video for replay: " + selectedReplay, e);
                 // Show an error message to the user.
                 String errorMessage = "Unable to play video for game: "
-                        + selectedReplay.getGame().getDescription(false, false);
+                        + selectedReplay.getGame().getDescription(false);
                 if (e.getMessage() != null) {
                     errorMessage = errorMessage + " " + e.getMessage();
                 }

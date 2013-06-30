@@ -42,22 +42,13 @@ public class GameTest {
         Player tinus = new Player("MvdR");
         Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
 
-        Assert.assertEquals(Side.PLAYER_TWO, game.getLosingSide());
-        Assert.assertEquals(djAlbertoLara, game.getWinningPlayer());
-        Assert.assertEquals(tinus, game.getLosingPlayer());
         Assert.assertEquals("DJ Alberto Lara (Hulk / Wolverine / Sentinel) vs. MvdR (Wolverine / Zero / Doctor Doom)",
-                game.getDescription(false, false));
-        Assert.assertEquals(
-                "DJ Alberto Lara (Hulk / Wolverine / Sentinel) (W) vs. MvdR (Wolverine / Zero / Doctor Doom)",
-                game.getDescription(false, true));
+                game.getDescription(false));
         Assert.assertEquals(
                 "DJ Alberto Lara (Hulk (Gamma Wave) / Wolverine (Berserker Slash) / Sentinel (Sentinel Force Charge)) vs. MvdR (Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam))",
-                game.getDescription(true, false));
-        Assert.assertEquals(
-                "DJ Alberto Lara (Hulk (Gamma Wave) / Wolverine (Berserker Slash) / Sentinel (Sentinel Force Charge)) (W) vs. MvdR (Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam))",
-                game.getDescription(true, true));
+                game.getDescription(true));
     }
 
     /** Tests the equals method. */
@@ -69,7 +60,7 @@ public class GameTest {
         Player tinus = new Player("MvdR");
         Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game1 = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
+        Game game1 = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
 
         Player badhyper = new Player("badhyper");
         Team teamBadhyper = new Team(Umvc3Character.FELICIA, Umvc3Character.MODOK, Umvc3Character.WESKER);
@@ -90,7 +81,7 @@ public class GameTest {
         Player tinus = new Player("MvdR");
         Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
 
         Assert.assertEquals(game, game);
     }
@@ -104,7 +95,7 @@ public class GameTest {
         Player tinus1 = new Player("MvdR");
         Team teamTinus1 = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game1 = new Game(djAlbertoLara1, teamDjAlbertoLara1, tinus1, teamTinus1, Side.PLAYER_ONE);
+        Game game1 = new Game(djAlbertoLara1, teamDjAlbertoLara1, tinus1, teamTinus1);
 
         Player djAlbertoLara2 = new Player("DJ Alberto Lara");
         Team teamDjAlbertoLara2 = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
@@ -112,7 +103,7 @@ public class GameTest {
         Player tinus2 = new Player("MvdR");
         Team teamTinus2 = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game2 = new Game(djAlbertoLara2, teamDjAlbertoLara2, tinus2, teamTinus2, Side.PLAYER_ONE);
+        Game game2 = new Game(djAlbertoLara2, teamDjAlbertoLara2, tinus2, teamTinus2);
 
         Assert.assertEquals(game1, game2);
     }
@@ -132,7 +123,7 @@ public class GameTest {
         Player tinus = new Player("MvdR");
         Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         
         // marshal
         String string = mapper.writeValueAsString(game);

@@ -47,7 +47,7 @@ public class ReplayTest {
         Player tinus = new Player("MvdR");
         Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus, Side.PLAYER_ONE);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         Replay replay = new Replay(new Date(), game, "video", "preview");
         
         // marshal
