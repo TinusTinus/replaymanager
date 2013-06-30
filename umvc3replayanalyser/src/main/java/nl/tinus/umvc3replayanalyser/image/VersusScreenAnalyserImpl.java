@@ -38,9 +38,9 @@ import nl.tinus.umvc3replayanalyser.ocr.OCRException;
 @RequiredArgsConstructor
 @Slf4j
 public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
-    /** Width of the vs screen. */
+    /** Default width of the vs screen (720p). */
     public static final int SCREEN_WIDTH = 1280;
-    /** Height of the vs screen. */
+    /** Default height of the vs screen (720p). */
     public static final int SCREEN_HEIGHT = 720;
     /** Width of a gamertag. */
     private static final int PLAYER_WIDTH = 261;
@@ -106,16 +106,8 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
     private final OCREngine engine;
 
     /** {@inheritDoc} */
-    // TODO drop the image size requirement by having all sizes be a percentage of the total image size.
-    // Don't forget to fix Javadoc as well and reduce visibility of SCREEN_WIDTH and SCREEN_HEIGHT.
     @Override
     public Game analyse(BufferedImage versusImage) throws OCRException {
-        // Check the image size.
-        if (versusImage.getWidth() != SCREEN_WIDTH || versusImage.getHeight() != SCREEN_HEIGHT) {
-            throw new IllegalArgumentException(String.format("Image size must be %s x %s, was %s x %s", ""
-                    + SCREEN_WIDTH, "" + SCREEN_HEIGHT, "" + versusImage.getWidth(), "" + versusImage.getHeight()));
-        }
-
         String playerOneGamertag = getGamerTag(versusImage, Side.PLAYER_ONE, PLAYER_ONE_X, PLAYER_Y, PLAYER_WIDTH,
                 PLAYER_HEIGHT);
         String playerTwoGamertag = getGamerTag(versusImage, Side.PLAYER_TWO, PLAYER_TWO_X, PLAYER_Y, PLAYER_WIDTH,
@@ -140,12 +132,6 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      */
     // default visisbility for unit tests
     Game analyse(BufferedImage versusImage, String playerOneGamertag, String playerTwoGamertag) throws OCRException {
-        // Check the image size.
-        if (versusImage.getWidth() != SCREEN_WIDTH || versusImage.getHeight() != SCREEN_HEIGHT) {
-            throw new IllegalArgumentException(String.format("Image size must be %s x %s, was %s x %s", ""
-                    + SCREEN_WIDTH, "" + SCREEN_HEIGHT, "" + versusImage.getWidth(), "" + versusImage.getHeight()));
-        }
-
         Umvc3Character firstCharacterTeamOne = getCharacter(versusImage, Side.PLAYER_ONE, 1, CHARACTER_1_PLAYER_ONE_X,
                 CHARACTER_1_Y, CHARACTER_WIDTH, CHARACTER_HEIGHT);
         Umvc3Character secondCharacterTeamOne = getCharacter(versusImage, Side.PLAYER_ONE, 2, CHARACTER_2_PLAYER_ONE_X,
@@ -176,18 +162,18 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
                             firstCharacterTeamTwo, secondCharacterTeamTwo, thirdCharacterTeamTwo));
         }
 
-        AssistType firstAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
+        AssistType firstAssistTeamOne = getAssistType(new Color(getRGB(versusImage,
                 BACKGROUND_PLAYER_ONE_CHARACTER_ONE_X, BACKGROUND_Y)));
-        AssistType secondAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
+        AssistType secondAssistTeamOne = getAssistType(new Color(getRGB(versusImage,
                 BACKGROUND_PLAYER_ONE_CHARACTER_TWO_X, BACKGROUND_Y)));
-        AssistType thirdAssistTeamOne = getAssistType(new Color(versusImage.getRGB(
+        AssistType thirdAssistTeamOne = getAssistType(new Color(getRGB(versusImage,
                 BACKGROUND_PLAYER_ONE_CHARACTER_THREE_X, BACKGROUND_Y)));
 
-        AssistType firstAssistTeamTwo = getAssistType(new Color(versusImage.getRGB(
+        AssistType firstAssistTeamTwo = getAssistType(new Color(getRGB(versusImage,
                 BACKGROUND_PLAYER_TWO_CHARACTER_ONE_X, BACKGROUND_Y)));
-        AssistType secondAssistTeamTwo = getAssistType(new Color(versusImage.getRGB(
+        AssistType secondAssistTeamTwo = getAssistType(new Color(getRGB(versusImage,
                 BACKGROUND_PLAYER_TWO_CHARACTER_TWO_X, BACKGROUND_Y)));
-        AssistType thirdAssistTeamTwo = getAssistType(new Color(versusImage.getRGB(
+        AssistType thirdAssistTeamTwo = getAssistType(new Color(getRGB(versusImage,
                 BACKGROUND_PLAYER_TWO_CHARACTER_THREE_X, BACKGROUND_Y)));
 
         Player playerOne = new Player(playerOneGamertag);
@@ -204,7 +190,7 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
 
         return game;
     }
-
+    
     /**
      * Reads a player's gamertag from the given image.
      * 
@@ -225,7 +211,7 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      *             in case OCR fails
      */
     private String getGamerTag(BufferedImage versusImage, Side side, int x, int y, int w, int h) throws OCRException {
-        BufferedImage image = versusImage.getSubimage(x, y, w, h);
+        BufferedImage image = getSubImage(versusImage, x, y, w, h);
         String result = this.engine.ocrLine(image);
         if (log.isDebugEnabled()) {
             log.debug(side + "'s gamertag: " + result);
@@ -233,6 +219,7 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
         return result;
     }
 
+    
     /**
      * Reads a character from the given image.
      * 
@@ -256,7 +243,7 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      */
     private Umvc3Character getCharacter(BufferedImage versusImage, Side side, int characterNumber, int x, int y, int w,
             int h) throws OCRException {
-        BufferedImage image = versusImage.getSubimage(x, y, w, h);
+        BufferedImage image = getSubImage(versusImage, x, y, w, h);
         Umvc3Character result = this.engine.ocrCharacter(image);
         if (log.isDebugEnabled()) {
             log.debug(String.format("%s's character %s: %s", side, "" + characterNumber, result));
@@ -313,4 +300,40 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
     private boolean equalsWithinMargin(int left, int right) {
         return Math.abs(left - right) <= COLOR_MARGIN;
     }
+    
+    /**
+     * Returns the rgb-value for the given x- and y-coordinates.
+     * 
+     * @param image image
+     * @param x x-coordinate, based on a 720p image
+     * @param y y-coordinate, based on a 720p image
+     * @return rgb
+     */
+    private int getRGB(BufferedImage image, int x, int y) {
+        return image.getRGB(x * image.getWidth() / SCREEN_WIDTH, y * image.getHeight() / SCREEN_HEIGHT);
+    }
+    
+    /**
+     * Retrieves a subimage of the given image.
+     * 
+     * @param image
+     *            image
+     * @param x
+     *            x-coordinate of the upper left corner of the rectangle where the gamertag is located, based on a 720p
+     *            image
+     * @param y
+     *            y-coordinate of the upper left corner of the rectangle where the gamertag is located, based on a 720p
+     *            image
+     * @param w
+     *            width of the gamertag, based on a 720p image
+     * @param h
+     *            height of the gamertag, bsed on a 720p image
+     * @return subimage
+     */
+    private BufferedImage getSubImage(BufferedImage image, int x, int y, int w, int h) {
+        return image
+                .getSubimage(x * image.getWidth() / SCREEN_WIDTH, y * image.getHeight() / SCREEN_HEIGHT, w
+                        * image.getWidth() / SCREEN_WIDTH, h * image.getHeight() / SCREEN_HEIGHT);
+    }
+
 }

@@ -53,14 +53,14 @@ public class VersusScreenAnalyserIntegrationTest {
     }
 
     /**
-     * Test case with an image that is too small.
+     * Test case with a small image that does not contain an actual versus screen.
      * 
      * @throws IOException
      *             unexpected
      * @throws OCRException
-     *             unexpected
+     *             expected
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = OCRException.class)
     public void testAnalyseSmallImage() throws IOException, OCRException {
         BufferedImage image = ImageIO.read(new File("src/test/resources/MvdR.png"));
         this.analyser.analyse(image);
