@@ -102,6 +102,7 @@ class FrameConsumer implements Callable<GameAndVersusScreen> {
      */
     // Default visibility for unit tests.
     // TODO to be able to support different resolutions, replace the absolute values by percentages of the image size
+    // TODO move this method to versusScreenAnalyser
     boolean canBeVersusScreen(BufferedImage image) {
         return checkBlackPixel(image, 200, 60) && checkBlackPixel(image, 1080, 60) && checkBlackPixel(image, 200, 680)
                 && checkBlackPixel(image, 1080, 680);
