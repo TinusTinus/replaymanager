@@ -25,7 +25,10 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public enum Side {
-    PLAYER_ONE("Player One"), PLAYER_TWO("Player Two");
+    /** Player one. */
+    PLAYER_ONE("Player One"),
+    /** Player two. */
+    PLAYER_TWO("Player Two");
     
     /** Name. */
     private final String name;
