@@ -22,7 +22,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 
 /**
  * Produces video frames from a video file.
@@ -30,7 +29,7 @@ import nl.tinus.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-// TODO implement Runnable instead of Callable<Void>. This can be done as soon as the ReplayException can no longer be thrown.
+// TODO implement Runnable instead of Callable<Void>.
 class FrameProducer implements Callable<Void> {
     /** URL of the video file to read frames from. */
     private final String videoUrl;
@@ -60,24 +59,12 @@ class FrameProducer implements Callable<Void> {
      * Starts the producer.
      * 
      * @returns the IError that caused prodcution to be halted, or null if no such error occurred
-     * @throws ReplayAnalysisException
-     *             in case the video cannot be processed
      */
     @Override
-    public Void call() throws ReplayAnalysisException {
+    public Void call() {
         try (FrameIterator frameIter = new FrameIterator(this.videoUrl)) {
             while (!productionCanStop && frameIter.hasNext()) {
                 BufferedImage image = frameIter.next();
-                
-                if (image.getWidth() != VersusScreenAnalyserImpl.SCREEN_WIDTH
-                        || image.getHeight() != VersusScreenAnalyserImpl.SCREEN_HEIGHT) {
-                    // Video has the wrong size; there's no point in offering any of its frames to the consumers.
-                    // TODO Eliminate this check once the VersusScreenAnalyser supports other resolutions.
-                    throw new ReplayAnalysisException(String.format("Video size must be %s x %s, was %s x %s", ""
-                            + VersusScreenAnalyserImpl.SCREEN_WIDTH, "" + VersusScreenAnalyserImpl.SCREEN_HEIGHT, ""
-                            + image.getWidth(), "" + image.getHeight() + "."));
-                }
-
                 boolean success = false;
                 while (!success && !productionCanStop) {
                     try {
