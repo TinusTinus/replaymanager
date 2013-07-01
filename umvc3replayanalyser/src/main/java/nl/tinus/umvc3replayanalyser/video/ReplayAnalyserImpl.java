@@ -62,7 +62,7 @@ public class ReplayAnalyserImpl implements ReplayAnalyser {
 
         try {
             FrameProducer producer = new FrameProducer(videoUrl, queue);
-            Future<Void> producerFuture = executorService.submit(producer);
+            Future<?> producerFuture = executorService.submit(producer);
             
             List<FrameConsumer> consumers = new ArrayList<>(numConsumers);
             List<Future<GameAndVersusScreen>> consumerFutures = new ArrayList<>(numConsumers);

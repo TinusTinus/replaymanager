@@ -18,7 +18,6 @@ package nl.tinus.umvc3replayanalyser.video;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Martijn van de Rijdt
  */
 @Slf4j
-// TODO implement Runnable instead of Callable<Void>.
-class FrameProducer implements Callable<Void> {
+class FrameProducer implements Runnable {
     /** URL of the video file to read frames from. */
     private final String videoUrl;
 
@@ -61,7 +59,7 @@ class FrameProducer implements Callable<Void> {
      * @returns the IError that caused prodcution to be halted, or null if no such error occurred
      */
     @Override
-    public Void call() {
+    public void run() {
         try (FrameIterator frameIter = new FrameIterator(this.videoUrl)) {
             while (!productionCanStop && frameIter.hasNext()) {
                 BufferedImage image = frameIter.next();
@@ -76,7 +74,6 @@ class FrameProducer implements Callable<Void> {
             }
             log.info("Done.");
         }
-        return null;
     }
 
     /** Indicates that the producer no longer needs to keep producing frames. */
