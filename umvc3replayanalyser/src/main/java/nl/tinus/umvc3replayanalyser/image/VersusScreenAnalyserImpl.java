@@ -81,7 +81,9 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
     /** Background colour for characters with assist type gamma. */
     private static final Color COLOR_GAMMA_ASSIST = new Color(4, 87, 175);
     /** Margin of error when matching assist colour. */
-    private static final int COLOR_MARGIN = 44;
+    private static final int ASSIST_COLOR_MARGIN = 44;
+    /** Margin of error when matching background colour. */
+    private static final int BACKGROUND_COLOR_MARGIN = 50;
 
     // The background colour of the character portrait indicates which assist type is being used. 
     // The following coordinates are used to check the background colour.
@@ -261,11 +263,11 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      */
     private AssistType getAssistType(Color backgroundColor) {
         AssistType result;
-        if (equalsWithinMargin(backgroundColor, COLOR_ALPHA_ASSIST)) {
+        if (equalsWithinMargin(backgroundColor, COLOR_ALPHA_ASSIST, ASSIST_COLOR_MARGIN)) {
             result = AssistType.ALPHA;
-        } else if (equalsWithinMargin(backgroundColor, COLOR_BETA_ASSIST)) {
+        } else if (equalsWithinMargin(backgroundColor, COLOR_BETA_ASSIST, ASSIST_COLOR_MARGIN)) {
             result = AssistType.BETA;
-        } else if (equalsWithinMargin(backgroundColor, COLOR_GAMMA_ASSIST)) {
+        } else if (equalsWithinMargin(backgroundColor, COLOR_GAMMA_ASSIST, ASSIST_COLOR_MARGIN)) {
             result = AssistType.GAMMA;
         } else {
             result = null;
@@ -280,12 +282,14 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      *            left value
      * @param right
      *            right value
+     * @param margin 
+     *            margin for error
      * @return whether left and right are equal within the margin for error
      */
-    private boolean equalsWithinMargin(Color left, Color right) {
-        return equalsWithinMargin(left.getRed(), right.getRed())
-                && equalsWithinMargin(left.getGreen(), right.getGreen())
-                && equalsWithinMargin(left.getBlue(), right.getBlue());
+    private boolean equalsWithinMargin(Color left, Color right, int margin) {
+        return equalsWithinMargin(left.getRed(), right.getRed(), margin)
+                && equalsWithinMargin(left.getGreen(), right.getGreen(), margin)
+                && equalsWithinMargin(left.getBlue(), right.getBlue(), margin);
     }
 
     /**
@@ -295,11 +299,43 @@ public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
      *            left value
      * @param right
      *            right value
+     * @param margin
+     *            margin margin for error
      * @return whether left and right are equal within the margin for error
      */
-    private boolean equalsWithinMargin(int left, int right) {
-        return Math.abs(left - right) <= COLOR_MARGIN;
+    private boolean equalsWithinMargin(int left, int right, int margin) {
+        return Math.abs(left - right) <= margin;
     }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * The versus screen is mostly black. This method checks some of the pixels that are supposed to be black; if any of
+     * them contains a different colour, this method throws an OCRException indicating that the given image is not a
+     * versus screen.
+     */
+    @Override
+    public boolean canBeVersusScreen(BufferedImage image) {
+        return checkBlackPixel(image, 200, 60) && checkBlackPixel(image, 1080, 60) && checkBlackPixel(image, 200, 680)
+                && checkBlackPixel(image, 1080, 680);
+    }
+
+    /**
+     * Checks if the given pixel in the given image is black.
+     * 
+     * @param image
+     *            image to be checked
+     * @param x
+     *            horizontal coordinate
+     * @param y
+     *            vertical coordinate
+     * @return whether the pixel is black
+     */
+    private boolean checkBlackPixel(BufferedImage image, int x, int y) {
+        Color color = new Color(getRGB(image, x, y));
+        return equalsWithinMargin(color, Color.BLACK, BACKGROUND_COLOR_MARGIN);
+    }
+
     
     /**
      * Returns the rgb-value for the given x- and y-coordinates.

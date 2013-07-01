@@ -99,11 +99,10 @@ class FrameConsumer implements Callable<GameAndVersusScreen> {
      * @param image
      *            image to be checked
      * @return true if the image could be a versus screen, false if it definitely is not
+     * @deprecated use VersusScreenAnalyserImpl.canBeVersusScreen instead
      */
-    // Default visibility for unit tests.
-    // TODO to be able to support different resolutions, replace the absolute values by percentages of the image size
-    // TODO move this method to versusScreenAnalyser
-    boolean canBeVersusScreen(BufferedImage image) {
+    @Deprecated
+    private boolean canBeVersusScreen(BufferedImage image) {
         return checkBlackPixel(image, 200, 60) && checkBlackPixel(image, 1080, 60) && checkBlackPixel(image, 200, 680)
                 && checkBlackPixel(image, 1080, 680);
     }

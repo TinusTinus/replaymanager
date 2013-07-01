@@ -39,4 +39,15 @@ public interface VersusScreenAnalyser {
      *             in case image analysis fails
      */
     Game analyse(BufferedImage versusImage) throws OCRException;
+
+    /**
+     * Checks if the given image is a candidate to be a versus screen.
+     * 
+     * Implementations of this method should be a lot cheaper than {@link #analyse(BufferedImage)}.
+     * 
+     * @param image
+     *            image to be checked
+     * @return true if the image could be a versus screen, false if it definitely is not
+     */
+    boolean canBeVersusScreen(BufferedImage image);
 }

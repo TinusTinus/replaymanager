@@ -55,30 +55,6 @@ public class FrameConsumerTest {
     }
 
     /**
-     * Tests the canBeVersusScreen method with an image that actually is a versus screen.
-     * 
-     * @throws IOException
-     *             unexpected
-     */
-    @Test
-    public void testCanBeVersusScreenTrue() throws IOException {
-        BufferedImage image = ImageIO.read(new File("src/test/resources/vs.png"));
-        Assert.assertTrue(frameConsumer.canBeVersusScreen(image));
-    }
-
-    /**
-     * Tests the canBeVersusScreen method with an image that cannot be a versus screen.
-     * 
-     * @throws IOException
-     *             unexpected
-     */
-    @Test
-    public void testCanBeVersusScreenFalse() throws IOException {
-        BufferedImage image = ImageIO.read(new File("src/test/resources/vsinverted.png"));
-        Assert.assertFalse(frameConsumer.canBeVersusScreen(image));
-    }
-
-    /**
      * Tests the call method.
      * 
      * @throws IOException
@@ -139,7 +115,7 @@ public class FrameConsumerTest {
         
         GameAndVersusScreen result = this.frameConsumer.call();
         
-        Assert.assertNull(result);
+        Assert.assertNull("Result found: " + result, result);
         Assert.assertEquals(0, versusScreenAnalyser.getNumberOfCalls());
     }
     

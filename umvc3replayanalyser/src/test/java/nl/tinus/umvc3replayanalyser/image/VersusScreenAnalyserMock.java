@@ -55,4 +55,10 @@ public class VersusScreenAnalyserMock implements VersusScreenAnalyser {
         this.numberOfCalls++;
         return DUMMY_GAME;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean canBeVersusScreen(BufferedImage image) {
+        return true;
+    }
 }
