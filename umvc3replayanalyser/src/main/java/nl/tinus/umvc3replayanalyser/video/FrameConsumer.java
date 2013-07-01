@@ -16,7 +16,6 @@
  */
 package nl.tinus.umvc3replayanalyser.video;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -35,8 +34,6 @@ import nl.tinus.umvc3replayanalyser.ocr.OCRException;
 class FrameConsumer implements Callable<GameAndVersusScreen> {
     /** Wait time between polling attempts when no new frame is available, in milliseconds. */
     private static final long WAIT_TIME_BETWEEN_POLLS = 100;
-    /** Margin of error when matching background colour. */
-    private static final int COLOR_MARGIN = 50;
 
     /** Versus screen analyser. */
     private final VersusScreenAnalyser versusScreenAnalyser;
@@ -69,7 +66,7 @@ class FrameConsumer implements Callable<GameAndVersusScreen> {
         while (result == null && !consumptionCanStop && !(producerStopped && queue.isEmpty())) {
             BufferedImage image = queue.poll();
             if (image != null) {
-                if (canBeVersusScreen(image)) {
+                if (versusScreenAnalyser.canBeVersusScreen(image)) {
                     try {
                         Game game = versusScreenAnalyser.analyse(image);
                         result = new GameAndVersusScreen(game, image);
@@ -87,68 +84,6 @@ class FrameConsumer implements Callable<GameAndVersusScreen> {
         log.info("Done.");
 
         return result;
-    }
-
-    /**
-     * Checks if the given image is a candidate to be a versus screen.
-     * 
-     * The versus screen is mostly black. This method checks some of the pixels that are supposed to be black; if any of
-     * them contains a different colour, this method throws an OCRException indicating that the given image is not a
-     * versus screen.
-     * 
-     * @param image
-     *            image to be checked
-     * @return true if the image could be a versus screen, false if it definitely is not
-     * @deprecated use VersusScreenAnalyserImpl.canBeVersusScreen instead
-     */
-    @Deprecated
-    private boolean canBeVersusScreen(BufferedImage image) {
-        return checkBlackPixel(image, 200, 60) && checkBlackPixel(image, 1080, 60) && checkBlackPixel(image, 200, 680)
-                && checkBlackPixel(image, 1080, 680);
-    }
-
-    /**
-     * Checks if the given pixel in the given image is black.
-     * 
-     * @param image
-     *            image to be checked
-     * @param x
-     *            horizontal coordinate
-     * @param y
-     *            vertical coordinate
-     * @return whether the pixel is black
-     */
-    private boolean checkBlackPixel(BufferedImage image, int x, int y) {
-        Color color = new Color(image.getRGB(x, y));
-        return equalsWithinMargin(color, Color.BLACK);
-    }
-
-    /**
-     * Checks that the given colours are equal, within the allowed margin for error.
-     * 
-     * @param left
-     *            left value
-     * @param right
-     *            right value
-     * @return whether left and right are equal within the margin for error
-     */
-    private boolean equalsWithinMargin(Color left, Color right) {
-        return equalsWithinMargin(left.getRed(), right.getRed())
-                && equalsWithinMargin(left.getGreen(), right.getGreen())
-                && equalsWithinMargin(left.getBlue(), right.getBlue());
-    }
-
-    /**
-     * Checks that the absoloute difference between left and right is at most COLOR_MARGIN.
-     * 
-     * @param left
-     *            left value
-     * @param right
-     *            right value
-     * @return whether left and right are equal within the margin for error
-     */
-    private boolean equalsWithinMargin(int left, int right) {
-        return Math.abs(left - right) <= COLOR_MARGIN;
     }
 
     /** Indicates that the producer is no longer producing items. */

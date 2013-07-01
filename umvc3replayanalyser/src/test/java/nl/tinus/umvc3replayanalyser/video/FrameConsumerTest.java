@@ -84,59 +84,25 @@ public class FrameConsumerTest {
      *             unexpected
      */
     @Test
+    public void testCallNoFrames() throws IOException, InterruptedException {
+        GameAndVersusScreen result = this.frameConsumer.call();
+        Assert.assertNull(result);
+    }
+    
+    /**
+     * Tests the call method.
+     * 
+     * @throws IOException
+     *             unexpected
+     * @throws InterruptedException
+     *             unexpected
+     */
+    @Test
     public void testCallOnlyVersusScreenMultipleTimes() throws IOException, InterruptedException {
         BufferedImage versusScreen = ImageIO.read(new File("src/test/resources/vs.png"));
         this.queue.put(versusScreen);
         this.queue.put(versusScreen);
         this.queue.put(versusScreen);
-        
-        GameAndVersusScreen result = this.frameConsumer.call();
-        
-        Assert.assertNotNull(result);
-        Assert.assertSame(versusScreen, result.getVersusScreen());
-        Assert.assertSame(VersusScreenAnalyserMock.DUMMY_GAME, result.getGame());
-        Assert.assertEquals(1, versusScreenAnalyser.getNumberOfCalls());
-    }
-    
-    /**
-     * Tests the call method.
-     * 
-     * @throws IOException
-     *             unexpected
-     * @throws InterruptedException
-     *             unexpected
-     */
-    @Test
-    public void testCallOnlyNotVersusScreen() throws IOException, InterruptedException {
-        BufferedImage notVersusScreen = ImageIO.read(new File("src/test/resources/vsinverted.png"));
-        this.queue.put(notVersusScreen);
-        this.queue.put(notVersusScreen);
-        this.queue.put(notVersusScreen);
-        
-        GameAndVersusScreen result = this.frameConsumer.call();
-        
-        Assert.assertNull("Result found: " + result, result);
-        Assert.assertEquals(0, versusScreenAnalyser.getNumberOfCalls());
-    }
-    
-    /**
-     * Tests the call method.
-     * 
-     * @throws IOException
-     *             unexpected
-     * @throws InterruptedException
-     *             unexpected
-     */
-    @Test
-    public void testCallMixed() throws IOException, InterruptedException {
-        BufferedImage versusScreen = ImageIO.read(new File("src/test/resources/vs.png"));
-        BufferedImage anotherVersusScreen = ImageIO.read(new File("src/test/resources/vs.png"));
-        BufferedImage notVersusScreen = ImageIO.read(new File("src/test/resources/vsinverted.png"));
-        this.queue.put(notVersusScreen);
-        this.queue.put(notVersusScreen);
-        this.queue.put(versusScreen);
-        this.queue.put(anotherVersusScreen);
-        this.queue.put(notVersusScreen);
         
         GameAndVersusScreen result = this.frameConsumer.call();
         
