@@ -39,9 +39,9 @@ import nl.tinus.umvc3replayanalyser.ocr.OCRException;
 @Slf4j
 public class VersusScreenAnalyserImpl implements VersusScreenAnalyser {
     /** Default width of the vs screen (720p). */
-    public static final int SCREEN_WIDTH = 1280;
+    private static final int SCREEN_WIDTH = 1280;
     /** Default height of the vs screen (720p). */
-    public static final int SCREEN_HEIGHT = 720;
+    private static final int SCREEN_HEIGHT = 720;
     /** Width of a gamertag. */
     private static final int PLAYER_WIDTH = 261;
     /** Height of a gamertag. */
