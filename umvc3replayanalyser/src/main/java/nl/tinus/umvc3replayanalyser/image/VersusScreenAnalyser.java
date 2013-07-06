@@ -28,7 +28,6 @@ import nl.tinus.umvc3replayanalyser.ocr.OCRException;
  * @author Martijn van de Rijdt
  */
 public interface VersusScreenAnalyser {
-
     /**
      * Analyses the given image and returns the Game represented by this image.
      * 
