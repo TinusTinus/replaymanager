@@ -45,7 +45,7 @@ public class VersusScreenAnalyserTest {
     
     
     /**
-     * Tests the canBeVersusScreen method with an image that actually is a versus screen.
+     * Tests the {@link VersusScreenAnalyserImpl#canBeVersusScreen(BufferedImage)} method with an image that actually is a versus screen.
      * 
      * @throws IOException
      *             unexpected
@@ -57,7 +57,7 @@ public class VersusScreenAnalyserTest {
     }
 
     /**
-     * Tests the canBeVersusScreen method with an image that cannot be a versus screen.
+     * Tests the {@link VersusScreenAnalyserImpl#canBeVersusScreen(BufferedImage)} method with an image that cannot be a versus screen.
      * 
      * @throws IOException
      *             unexpected
