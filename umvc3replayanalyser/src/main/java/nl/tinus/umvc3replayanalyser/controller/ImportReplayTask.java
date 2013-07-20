@@ -41,7 +41,7 @@ import nl.tinus.umvc3replayanalyser.video.ReplayAnalysisException;
 class ImportReplayTask extends Task<List<Replay>> {
     /**
      * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
-     * of just a single constant, because SimpleDateFormat is not threadsafe.
+     * of just a single constant, because {@link SimpleDateFormat} is not threadsafe.
      */
     private static final ThreadLocal<DateFormat> LOG_MESSAGE_TIME_FORMAT = new ThreadLocal<DateFormat>() {
         /** {@inheritDoc} */
