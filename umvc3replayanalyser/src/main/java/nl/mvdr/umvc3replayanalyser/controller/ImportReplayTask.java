@@ -26,6 +26,7 @@ import java.util.List;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import nl.mvdr.umvc3replayanalyser.model.Replay;
 import nl.mvdr.umvc3replayanalyser.video.GameAndVersusScreen;
@@ -52,12 +53,16 @@ class ImportReplayTask extends Task<List<Replay>> {
     };
 
     /** The directory from which to import replays. */
+    @NonNull
     private final File directory;
     /** Replay analyser. */
+    @NonNull
     private final ReplayAnalyser replayAnalyser;
     /** List of replays, to which the newly loaded replays will be added. */
+    @NonNull
     private final List<Replay> replays;
     /** Replay saver, used to actually save the replay file to disk. */
+    @NonNull
     private final ReplaySaver replaySaver;
     /** Message. */
     private String message;
@@ -72,22 +77,11 @@ class ImportReplayTask extends Task<List<Replay>> {
      * @param replaySaver
      *            replay saver, used tp actually save the replay file to disk
      */
-    ImportReplayTask(File directory, List<Replay> replays, ReplayAnalyser analyser, ReplaySaver replaySaver) {
+    ImportReplayTask(@NonNull File directory, @NonNull List<Replay> replays, @NonNull ReplayAnalyser analyser, @NonNull ReplaySaver replaySaver) {
         super();
-        if (directory == null) {
-            throw new NullPointerException("directory");
-        }
-        if (replays == null) {
-            throw new NullPointerException("replays");
-        }
-        if (analyser == null) {
-            throw new NullPointerException("analyser");
-        }
+
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Not a directory: " + directory);
-        }
-        if (replaySaver == null) {
-            throw new NullPointerException("replaySaver");
         }
 
         this.directory = directory;
