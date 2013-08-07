@@ -10,16 +10,16 @@
   </appender>
 
 	<!-- loggers -->
-	<logger name="nl.tinus">
+	<logger name="nl.mvdr">
 		<level value="debug" />
 	</logger>
-	<logger name="nl.tinus.umvc3replayanalyser.image">
+	<logger name="nl.mvdr.umvc3replayanalyser.image">
 		<level value="info" />
 	</logger>
-	<logger name="nl.tinus.umvc3replayanalyser.ocr">
+	<logger name="nl.mvdr.umvc3replayanalyser.ocr">
 		<level value="info" />
 	</logger>
-	<logger name="nl.tinus.umvc3replayanalyser.video">
+	<logger name="nl.mvdr.umvc3replayanalyser.video">
 		<level value="info" />
 	</logger>
 

@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tinus.umvc3replayanalyser.controller.Umvc3ReplayManagerController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.mvdr.umvc3replayanalyser.controller.Umvc3ReplayManagerController">
   <children>
     <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="192.0" prefWidth="837.0" text="Filters" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="35.0">
       <content>
