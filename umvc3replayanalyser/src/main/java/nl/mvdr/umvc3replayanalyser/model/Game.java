@@ -192,8 +192,6 @@ public class Game {
      * Constructs a base filename, without the extension, to be used for files that have something to do with this game
      * (such as preview image, video file and replay file).
      * 
-     * @param game
-     *            game
      * @param date
      *            timestamp for use as the first part of the filename; should indicate when the game was played
      * @return base filename
