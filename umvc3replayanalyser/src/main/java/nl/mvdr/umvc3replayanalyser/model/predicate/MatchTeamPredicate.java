@@ -55,7 +55,7 @@ public class MatchTeamPredicate implements Predicate<Team> {
      *            character 3
      * @param assist3
      *            assist type for character 3
-     * @param meaintainCharacterOrder
+     * @param maintainCharacterOrder
      *            whether character order needs to be respected when matching against a team
      */
     public MatchTeamPredicate(Umvc3Character character1, AssistType assist1, Umvc3Character character2,
