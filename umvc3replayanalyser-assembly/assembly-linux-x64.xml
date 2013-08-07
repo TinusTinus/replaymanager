@@ -34,6 +34,7 @@
 				<exclude>xuggle:xuggle-xuggler-arch-i686-w64-mingw32</exclude>
 				<exclude>xuggle:xuggle-xuggler-arch-i686-pc-linux-gnu</exclude>
 			</excludes>
+			<useProjectArtifact>false</useProjectArtifact>
 		</dependencySet>
 		<dependencySet>
 			<scope>system</scope>
