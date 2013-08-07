@@ -19,7 +19,7 @@ package nl.mvdr.umvc3replayanalyser.controller;
 import java.io.File;
 import java.util.Collections;
 
-import nl.mvdr.umvc3replayanalyser.config.PropertiesConfiguration;
+import nl.mvdr.umvc3replayanalyser.config.ConfigurationDummy;
 import nl.mvdr.umvc3replayanalyser.model.Replay;
 import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyserDummy;
 
@@ -31,33 +31,29 @@ import org.junit.Test;
  * @author Martijn van de Rijdt
  */
 public class ImportReplayTaskTest {
-
     /** Tests the constructor. */
     @Test
     public void testConstructor() {
         new ImportReplayTask(new File("."), Collections.<Replay> emptyList(), new ReplayAnalyserDummy(),
-                new ReplaySaver(new PropertiesConfiguration()));
+                createReplaySaver());
     }
 
     /** Tests the constructor. */
     @Test(expected = NullPointerException.class)
     public void testConstructorNullDirectory() {
-        new ImportReplayTask(null, Collections.<Replay> emptyList(), new ReplayAnalyserDummy(), 
-                new ReplaySaver(new PropertiesConfiguration()));
+        new ImportReplayTask(null, Collections.<Replay> emptyList(), new ReplayAnalyserDummy(), createReplaySaver());
     }
 
     /** Tests the constructor. */
     @Test(expected = NullPointerException.class)
     public void testConstructorNullReplays() {
-        new ImportReplayTask(new File("."), null, new ReplayAnalyserDummy(), 
-                new ReplaySaver(new PropertiesConfiguration()));
+        new ImportReplayTask(new File("."), null, new ReplayAnalyserDummy(), createReplaySaver());
     }
 
     /** Tests the constructor. */
     @Test(expected = NullPointerException.class)
     public void testConstructorNullAnalyser() {
-        new ImportReplayTask(new File("."), Collections.<Replay> emptyList(), null, 
-                new ReplaySaver(new PropertiesConfiguration()));
+        new ImportReplayTask(new File("."), Collections.<Replay> emptyList(), null, createReplaySaver());
     }
 
     /** Tests the constructor. */
@@ -70,6 +66,22 @@ public class ImportReplayTaskTest {
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorNotADirectory() {
         new ImportReplayTask(new File("derp"), Collections.<Replay> emptyList(), new ReplayAnalyserDummy(),
-                new ReplaySaver(new PropertiesConfiguration()));
+                createReplaySaver());
+    }
+
+    /**
+     * Creates a replay saver.
+     * 
+     * @return replay saver
+     */
+    private ReplaySaver createReplaySaver() {
+        ConfigurationDummy configuration = new ConfigurationDummy() {
+            /** {@inheritDoc} */
+            @Override
+            public boolean isPrettyPrintReplays() {
+                return false;
+            }
+        };
+        return new ReplaySaver(configuration);
     }
 }
