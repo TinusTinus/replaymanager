@@ -56,14 +56,47 @@ public class TeamTest {
 
     /** Tests what happens when we try to pass a null character value to the constructor. */
     @Test(expected = NullPointerException.class)
-    public void testNullValueCharacter() {
+    public void testNullValueFirstCharacter() {
         new Team(null, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+    }
+    
+    /** Tests what happens when we try to pass a null character value to the constructor. */
+    @Test(expected = NullPointerException.class)
+    public void testNullValueSecondCharacter() {
+        new Team(Umvc3Character.WOLVERINE, null, Umvc3Character.DOCTOR_DOOM);
     }
 
     
+    /** Tests what happens when we try to pass a null character value to the constructor. */
+    @Test(expected = NullPointerException.class)
+    public void testNullValueThirdCharacter() {
+        new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, null);
+    }
+    
     /** Tests what happens when we try to pass a null assist value to the constructor. */
     @Test
-    public void testNullValueAssist() {
+    public void testNullValueFirstAssist() {
+        Team team = new Team(Umvc3Character.WOLVERINE, null,
+                Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        
+        Assert.assertEquals(Umvc3Character.WOLVERINE, team.getFirstCharacter());
+        Assert.assertNull(team.getFirstAssistType());
+        Assert.assertNull(team.getFirstAssist());
+        Assert.assertEquals(Umvc3Character.ZERO, team.getSecondCharacter());
+        Assert.assertEquals(AssistType.ALPHA, team.getSecondAssistType());
+        Assert.assertEquals(new Assist(AssistType.ALPHA, Umvc3Character.ZERO), team.getSecondAssist());
+        Assert.assertEquals(Umvc3Character.DOCTOR_DOOM, team.getThirdCharacter());
+        Assert.assertEquals(AssistType.ALPHA, team.getThirdAssistType());
+        Assert.assertEquals(new Assist(AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM), team.getThirdAssist());
+        
+        Assert.assertEquals("Wolverine / Zero (alpha) / Doctor Doom (alpha)", team.getNameWithAssists());
+        Assert.assertEquals("Wolverine / Zero (Ryuenjin) / Doctor Doom (Plasma Beam)", team.getNameWithAssistMoveNames());
+    }
+    
+    /** Tests what happens when we try to pass a null assist value to the constructor. */
+    @Test
+    public void testNullValueSecondAssist() {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA,
                 Umvc3Character.ZERO, null,
                 Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
@@ -80,6 +113,27 @@ public class TeamTest {
         
         Assert.assertEquals("Wolverine (gamma) / Zero / Doctor Doom (alpha)", team.getNameWithAssists());
         Assert.assertEquals("Wolverine (Berserker Barrage) / Zero / Doctor Doom (Plasma Beam)", team.getNameWithAssistMoveNames());
+    }
+    
+    /** Tests what happens when we try to pass a null assist value to the constructor. */
+    @Test
+    public void testNullValueThirdAssist() {
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA,
+                Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, null);
+        
+        Assert.assertEquals(Umvc3Character.WOLVERINE, team.getFirstCharacter());
+        Assert.assertEquals(AssistType.GAMMA, team.getFirstAssistType());
+        Assert.assertEquals(new Assist(AssistType.GAMMA, Umvc3Character.WOLVERINE), team.getFirstAssist());
+        Assert.assertEquals(Umvc3Character.ZERO, team.getSecondCharacter());
+        Assert.assertEquals(AssistType.ALPHA, team.getSecondAssistType());
+        Assert.assertEquals(new Assist(AssistType.ALPHA, Umvc3Character.ZERO), team.getSecondAssist());
+        Assert.assertEquals(Umvc3Character.DOCTOR_DOOM, team.getThirdCharacter());
+        Assert.assertNull(team.getThirdAssistType());
+        Assert.assertNull(team.getThirdAssist());
+        
+        Assert.assertEquals("Wolverine (gamma) / Zero (alpha) / Doctor Doom", team.getNameWithAssists());
+        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom", team.getNameWithAssistMoveNames());
     }
 
     /** Tests what happens when we try to pass all null values to the constructor. */
