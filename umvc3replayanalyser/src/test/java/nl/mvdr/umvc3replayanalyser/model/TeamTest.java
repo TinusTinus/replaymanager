@@ -141,4 +141,10 @@ public class TeamTest {
     public void testNullValues() {
         new Team(null, null, null, null, null, null);
     }
+    
+    /** Tests what happens when we try to pass all null values to the constructor. */
+    @Test(expected = NullPointerException.class)
+    public void testNullValuesForCharacters() {
+        new Team(null, null, null);
+    }
 }
