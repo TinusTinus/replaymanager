@@ -38,6 +38,30 @@ import org.junit.Test;
  */
 @Slf4j
 public class ReplayTest {
+    /** Tests the constructor's behaviour in case of null values for parameters. */
+    @Test(expected = NullPointerException.class)
+    public void testNullDate() {
+        new Replay(null, createGame(), "video", "preview");
+    }
+    
+    /** Tests the constructor's behaviour in case of null values for parameters. */
+    @Test(expected = NullPointerException.class)
+    public void testNullGame() {
+        new Replay(new Date(), null, "video", "preview");
+    }
+    
+    /** Tests the constructor's behaviour in case of null values for parameters. */
+    @Test(expected = NullPointerException.class)
+    public void testNullVideo() {
+        new Replay(new Date(), createGame(), null, "preview");
+    }
+    
+    /** Tests the constructor's behaviour in case of null values for parameters. */
+    @Test(expected = NullPointerException.class)
+    public void testNullImage() {
+        new Replay(new Date(), createGame(), "video", null);
+    }
+    
     /** 
      * Tests converting a value to a JSON string and back. 
      * 
@@ -47,14 +71,7 @@ public class ReplayTest {
     public void testJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
-        Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
-                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
-        Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
-                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
-        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
-        Replay replay = new Replay(new Date(), game, "video", "preview");
+        Replay replay = new Replay(new Date(), createGame(), "video", "preview");
         
         // marshal
         String string = mapper.writeValueAsString(replay);
@@ -67,5 +84,21 @@ public class ReplayTest {
         
         Assert.assertNotSame(replay, unmarshalled);
         Assert.assertEquals(replay, unmarshalled);
+    }
+
+    /**
+     * Constructs a game.
+     * 
+     * @return game
+     */
+    private Game createGame() {
+        Player djAlbertoLara = new Player("DJ Alberto Lara");
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Player tinus = new Player("MvdR");
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
+        return game;
     }
 }
