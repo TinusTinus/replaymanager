@@ -67,12 +67,8 @@ public class MatchReplayPredicate implements Predicate<Replay> {
      */
     public MatchReplayPredicate(String prefix, Umvc3Character character1, AssistType assist1,
             Umvc3Character character2, AssistType assist2, Umvc3Character character3, AssistType assist3,
-            boolean maintainCharacterOrder, Side side) {
+            boolean maintainCharacterOrder, @NonNull Side side) {
         super();
-
-        if (side == null) {
-            throw new NullPointerException("side");
-        }
 
         if ("".equals(prefix)) {
             this.playerPredicate = Predicates.alwaysTrue();
