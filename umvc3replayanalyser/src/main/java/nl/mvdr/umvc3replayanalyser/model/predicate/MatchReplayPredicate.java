@@ -16,6 +16,7 @@
  */
 package nl.mvdr.umvc3replayanalyser.model.predicate;
 
+import lombok.NonNull;
 import lombok.ToString;
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Player;
@@ -39,6 +40,7 @@ public class MatchReplayPredicate implements Predicate<Replay> {
     /** Team predicate. */
     private final Predicate<Team> teamPredicate;
     /** Side to be matched. */
+    @NonNull
     private final Side side;
 
     /**
