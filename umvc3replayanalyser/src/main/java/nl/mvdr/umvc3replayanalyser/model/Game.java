@@ -82,21 +82,9 @@ public class Game {
      *            player two's team
      */
     @JsonCreator
-    public Game(@JsonProperty("playerOne") Player playerOne, @JsonProperty("teamOne") Team teamOne,
-            @JsonProperty("playerTwo") Player playerTwo, @JsonProperty("teamTwo") Team teamTwo) {
+    public Game(@JsonProperty("playerOne") @NonNull Player playerOne, @JsonProperty("teamOne") @NonNull Team teamOne,
+            @JsonProperty("playerTwo") @NonNull Player playerTwo, @JsonProperty("teamTwo") @NonNull Team teamTwo) {
         super();
-        if (playerOne == null) {
-            throw new NullPointerException("playerOne");
-        }
-        if (teamOne == null) {
-            throw new NullPointerException("teamOne");
-        }
-        if (playerTwo == null) {
-            throw new NullPointerException("playerTwo");
-        }
-        if (teamTwo == null) {
-            throw new NullPointerException("teamTwo");
-        }
         this.playerOne = playerOne;
         this.teamOne = teamOne;
         this.playerTwo = playerTwo;
