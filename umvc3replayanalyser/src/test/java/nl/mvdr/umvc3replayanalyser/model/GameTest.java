@@ -21,11 +21,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.mvdr.umvc3replayanalyser.model.AssistType;
-import nl.mvdr.umvc3replayanalyser.model.Game;
-import nl.mvdr.umvc3replayanalyser.model.Player;
-import nl.mvdr.umvc3replayanalyser.model.Team;
-import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;

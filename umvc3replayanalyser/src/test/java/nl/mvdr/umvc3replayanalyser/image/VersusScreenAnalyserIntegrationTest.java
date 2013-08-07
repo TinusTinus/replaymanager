@@ -24,7 +24,6 @@ import javax.imageio.ImageIO;
 
 import nl.mvdr.umvc3replayanalyser.config.Configuration;
 import nl.mvdr.umvc3replayanalyser.config.PropertiesConfiguration;
-import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Game;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;

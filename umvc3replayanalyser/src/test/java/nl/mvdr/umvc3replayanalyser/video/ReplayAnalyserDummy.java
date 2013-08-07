@@ -16,10 +16,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.video;
 
-import nl.mvdr.umvc3replayanalyser.video.GameAndVersusScreen;
-import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyser;
-import nl.mvdr.umvc3replayanalyser.video.ReplayAnalysisException;
-
 /**
  * Dummy implementation of {@link ReplayAnalyser}.
  * 
@@ -28,7 +24,7 @@ import nl.mvdr.umvc3replayanalyser.video.ReplayAnalysisException;
 public class ReplayAnalyserDummy implements ReplayAnalyser {
     /** {@inheritDoc} */
     @Override
-    public GameAndVersusScreen analyse(String videoUrl) throws ReplayAnalysisException {
+    public GameAndVersusScreen analyse(String videoUrl) {
         throw new UnsupportedOperationException("Not implemented.");
     }
 }

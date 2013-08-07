@@ -16,10 +16,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.config;
 
-import nl.mvdr.umvc3replayanalyser.config.AbstractConfiguration;
-import nl.mvdr.umvc3replayanalyser.config.Configuration;
-
-
 /**
  * Dummy implementation of the {@link Configuration} interface.
  * 

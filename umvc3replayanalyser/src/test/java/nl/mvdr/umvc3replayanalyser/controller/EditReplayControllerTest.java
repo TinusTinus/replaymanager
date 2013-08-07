@@ -19,7 +19,6 @@ package nl.mvdr.umvc3replayanalyser.controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import nl.mvdr.umvc3replayanalyser.controller.EditReplayController;
 import nl.mvdr.umvc3replayanalyser.model.Assist;
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Game;

@@ -19,8 +19,6 @@ package nl.mvdr.umvc3replayanalyser.model;
 import java.io.IOException;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.mvdr.umvc3replayanalyser.model.AssistType;
-import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;

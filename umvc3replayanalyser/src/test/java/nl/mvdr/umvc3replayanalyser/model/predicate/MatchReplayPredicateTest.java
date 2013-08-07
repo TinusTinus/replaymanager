@@ -24,7 +24,6 @@ import nl.mvdr.umvc3replayanalyser.model.Replay;
 import nl.mvdr.umvc3replayanalyser.model.Side;
 import nl.mvdr.umvc3replayanalyser.model.Team;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import nl.mvdr.umvc3replayanalyser.model.predicate.MatchReplayPredicate;
 
 import org.junit.Assert;
 import org.junit.Test;

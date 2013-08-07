@@ -16,10 +16,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.controller;
 
-
-import nl.mvdr.umvc3replayanalyser.controller.FileUtils;
-import nl.mvdr.umvc3replayanalyser.controller.PathResolutionException;
-
 import org.junit.Assert;
 import org.junit.Test;
 

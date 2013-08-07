@@ -25,8 +25,6 @@ import java.util.concurrent.BlockingQueue;
 import javax.imageio.ImageIO;
 
 import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyserMock;
-import nl.mvdr.umvc3replayanalyser.video.FrameConsumer;
-import nl.mvdr.umvc3replayanalyser.video.GameAndVersusScreen;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,7 +48,7 @@ public class FrameConsumerTest {
     /** Setup method. */
     @Before
     public void setUp() {
-        this.queue = new ArrayBlockingQueue<BufferedImage>(10);
+        this.queue = new ArrayBlockingQueue<>(10);
         this.versusScreenAnalyser = new VersusScreenAnalyserMock();
         this.frameConsumer = new FrameConsumer(versusScreenAnalyser, this.queue);
         this.frameConsumer.producerStopped();
@@ -86,7 +84,7 @@ public class FrameConsumerTest {
      *             unexpected
      */
     @Test
-    public void testCallNoFrames() throws IOException, InterruptedException {
+    public void testCallNoFrames() throws InterruptedException {
         GameAndVersusScreen result = this.frameConsumer.call();
         Assert.assertNull(result);
     }

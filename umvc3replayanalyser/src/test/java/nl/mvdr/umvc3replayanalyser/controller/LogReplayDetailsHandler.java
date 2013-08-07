@@ -18,7 +18,6 @@ package nl.mvdr.umvc3replayanalyser.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.mvdr.umvc3replayanalyser.controller.ReplayDetailsEditedHandler;
 import nl.mvdr.umvc3replayanalyser.model.Game;
 
 /**

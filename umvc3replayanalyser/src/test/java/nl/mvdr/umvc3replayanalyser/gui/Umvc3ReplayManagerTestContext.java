@@ -16,8 +16,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.gui;
 
-import nl.mvdr.umvc3replayanalyser.gui.Umvc3ReplayManager;
-
 /**
  * Main class, whose main method simply calls {@link Umvc3ReplayManager#main(String[])}.
  * 

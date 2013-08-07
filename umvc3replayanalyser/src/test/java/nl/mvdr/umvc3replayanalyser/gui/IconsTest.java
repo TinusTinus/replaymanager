@@ -17,7 +17,6 @@
 package nl.mvdr.umvc3replayanalyser.gui;
 
 import javafx.scene.image.Image;
-import nl.mvdr.umvc3replayanalyser.gui.Icons;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 import org.junit.Assert;

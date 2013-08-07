@@ -161,8 +161,8 @@ class ImportReplayTask extends Task<List<Replay>> {
         MessageLogger logger = new MessageLogger() {
             /** {@inheritDoc} */
             @Override
-            public void log(String message) {
-                logMessage(message);
+            public void log(String logMessage) {
+                logMessage(logMessage);
             }
         };
 
@@ -173,12 +173,12 @@ class ImportReplayTask extends Task<List<Replay>> {
     /**
      * Logs the given message to the logger at log level INFO and appends it to the message property.
      * 
-     * @param message
-     *            message
+     * @param logMessage
+     *            message text
      */
-    private void logMessage(String message) {
+    private void logMessage(String logMessage) {
         log.info(message);
-        this.message = this.message + "\n" + LOG_MESSAGE_TIME_FORMAT.get().format(new Date()) + " - " + message;
+        this.message = this.message + "\n" + LOG_MESSAGE_TIME_FORMAT.get().format(new Date()) + " - " + logMessage;
         updateMessage(this.message);
     }
 }

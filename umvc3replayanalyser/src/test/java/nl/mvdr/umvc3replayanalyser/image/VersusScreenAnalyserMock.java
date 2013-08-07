@@ -20,12 +20,10 @@ import java.awt.image.BufferedImage;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.mvdr.umvc3replayanalyser.model.Game;
 import nl.mvdr.umvc3replayanalyser.model.Player;
 import nl.mvdr.umvc3replayanalyser.model.Team;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import nl.mvdr.umvc3replayanalyser.ocr.OCRException;
 
 /**
  * Mock implementation of {@link VersusScreenAnalyser}, for use in unit tests.
@@ -51,7 +49,7 @@ public class VersusScreenAnalyserMock implements VersusScreenAnalyser {
 
     /** {@inheritDoc} */
     @Override
-    public Game analyse(BufferedImage versusImage) throws OCRException {
+    public Game analyse(BufferedImage versusImage) {
         log.info("analyse called: " + versusImage);
         this.numberOfCalls++;
         return DUMMY_GAME;

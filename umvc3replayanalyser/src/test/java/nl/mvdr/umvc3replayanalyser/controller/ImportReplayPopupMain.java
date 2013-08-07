@@ -17,7 +17,6 @@
 package nl.mvdr.umvc3replayanalyser.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -28,9 +27,6 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import nl.mvdr.umvc3replayanalyser.config.Configuration;
 import nl.mvdr.umvc3replayanalyser.config.PropertiesConfiguration;
-import nl.mvdr.umvc3replayanalyser.controller.ImportReplayPopupController;
-import nl.mvdr.umvc3replayanalyser.controller.ImportReplayTask;
-import nl.mvdr.umvc3replayanalyser.controller.ReplaySaver;
 import nl.mvdr.umvc3replayanalyser.gui.Popups;
 import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyser;
 import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
@@ -63,10 +59,10 @@ public class ImportReplayPopupMain extends Application {
     
     /** {@inheritDoc} */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         log.info("Starting application.");
 
-        final ArrayList<Replay> replays = new ArrayList<Replay>();
+        final ArrayList<Replay> replays = new ArrayList<>();
         
         SimpleBooleanProperty working = new SimpleBooleanProperty();
         working.addListener(new ChangeListener<Boolean>() {

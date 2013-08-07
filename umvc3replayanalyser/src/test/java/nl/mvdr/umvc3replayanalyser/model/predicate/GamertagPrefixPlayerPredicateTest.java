@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import nl.mvdr.umvc3replayanalyser.model.Player;
-import nl.mvdr.umvc3replayanalyser.model.predicate.GamertagPrefixPlayerPredicate;
 
 import org.junit.Assert;
 import org.junit.Test;

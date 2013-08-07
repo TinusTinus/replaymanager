@@ -186,19 +186,17 @@ public class Game {
      */
     public String getBaseFilename(Date date) {
         String time = FILENAME_TIME_FORMAT.get().format(date);
-        String playerOne = this.getPlayerOne().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
-        Team teamOne = this.getTeamOne();
-        String teamOneCharacterOne = teamOne.getFirstCharacter().getShortName();
-        String teamOneCharacterTwo = teamOne.getSecondCharacter().getShortName();
-        String teamOneCharacterThree = teamOne.getThirdCharacter().getShortName();
-        String playerTwo = this.getPlayerTwo().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
-        Team teamTwo = this.getTeamTwo();
-        String teamTwoCharacterOne = teamTwo.getFirstCharacter().getShortName();
-        String teamTwoCharacterTwo = teamTwo.getSecondCharacter().getShortName();
-        String teamTwoCharacterThree = teamTwo.getThirdCharacter().getShortName();
+        String playerOneGamertag = this.getPlayerOne().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
+        String teamOneCharacterOne = this.getTeamOne().getFirstCharacter().getShortName();
+        String teamOneCharacterTwo = this.getTeamOne().getSecondCharacter().getShortName();
+        String teamOneCharacterThree = this.getTeamOne().getThirdCharacter().getShortName();
+        String playerTwoGamertag = this.getPlayerTwo().getGamertag().replaceAll(WHITELIST_CHARACTERS, "_");
+        String teamTwoCharacterOne = this.getTeamTwo().getFirstCharacter().getShortName();
+        String teamTwoCharacterTwo = this.getTeamTwo().getSecondCharacter().getShortName();
+        String teamTwoCharacterThree = this.getTeamTwo().getThirdCharacter().getShortName();
 
-        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOne, teamOneCharacterOne,
-                teamOneCharacterTwo, teamOneCharacterThree, playerTwo, teamTwoCharacterOne, teamTwoCharacterTwo,
+        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOneGamertag, teamOneCharacterOne,
+                teamOneCharacterTwo, teamOneCharacterThree, playerTwoGamertag, teamTwoCharacterOne, teamTwoCharacterTwo,
                 teamTwoCharacterThree);
         return result;
     }

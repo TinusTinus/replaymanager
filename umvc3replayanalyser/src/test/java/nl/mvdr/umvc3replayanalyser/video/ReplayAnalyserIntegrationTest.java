@@ -24,10 +24,6 @@ import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.mvdr.umvc3replayanalyser.model.Game;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 import nl.mvdr.umvc3replayanalyser.ocr.TesseractOCREngine;
-import nl.mvdr.umvc3replayanalyser.video.GameAndVersusScreen;
-import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyser;
-import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyserImpl;
-import nl.mvdr.umvc3replayanalyser.video.ReplayAnalysisException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;

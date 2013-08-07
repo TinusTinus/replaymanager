@@ -16,8 +16,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.config;
 
-import nl.mvdr.umvc3replayanalyser.config.PropertiesConfiguration;
-
 import org.junit.Assert;
 import org.junit.Test;
 

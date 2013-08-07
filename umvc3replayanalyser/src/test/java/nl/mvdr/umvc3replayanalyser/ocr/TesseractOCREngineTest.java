@@ -26,8 +26,6 @@ import nl.mvdr.umvc3replayanalyser.config.Configuration;
 import nl.mvdr.umvc3replayanalyser.config.ConfigurationDummy;
 import nl.mvdr.umvc3replayanalyser.config.PropertiesConfiguration;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import nl.mvdr.umvc3replayanalyser.ocr.OCRException;
-import nl.mvdr.umvc3replayanalyser.ocr.TesseractOCREngine;
 
 import org.junit.Assert;
 import org.junit.Test;

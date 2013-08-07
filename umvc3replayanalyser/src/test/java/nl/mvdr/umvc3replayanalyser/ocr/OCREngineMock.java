@@ -19,8 +19,6 @@ package nl.mvdr.umvc3replayanalyser.ocr;
 import java.awt.image.BufferedImage;
 
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import nl.mvdr.umvc3replayanalyser.ocr.OCREngine;
-import nl.mvdr.umvc3replayanalyser.ocr.OCRException;
 
 /**
  * Mock implementation of {@link OCREngine}.
@@ -30,13 +28,13 @@ import nl.mvdr.umvc3replayanalyser.ocr.OCRException;
 public class OCREngineMock implements OCREngine {
     /** {@inheritDoc} */
     @Override
-    public String ocrLine(BufferedImage image) throws OCRException {
+    public String ocrLine(BufferedImage image) {
         throw new UnsupportedOperationException();
     }
 
     /** {@inheritDoc} */
     @Override
-    public Umvc3Character ocrCharacter(BufferedImage image) throws OCRException {
+    public Umvc3Character ocrCharacter(BufferedImage image) {
         throw new UnsupportedOperationException();
     }
 

@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyserImpl;
 import nl.mvdr.umvc3replayanalyser.ocr.OCREngineMock;
 
 import org.junit.Assert;

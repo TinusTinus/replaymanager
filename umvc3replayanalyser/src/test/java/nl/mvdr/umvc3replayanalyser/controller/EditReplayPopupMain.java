@@ -16,12 +16,9 @@
  */
 package nl.mvdr.umvc3replayanalyser.controller;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import nl.mvdr.umvc3replayanalyser.controller.EditReplayController;
 import nl.mvdr.umvc3replayanalyser.gui.Popups;
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Game;
@@ -48,7 +45,7 @@ public class EditReplayPopupMain extends Application {
     
     /** {@inheritDoc} */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         log.info("Starting application.");
 
         Player djAlbertoLara = new Player("DJ Alberto Lara");

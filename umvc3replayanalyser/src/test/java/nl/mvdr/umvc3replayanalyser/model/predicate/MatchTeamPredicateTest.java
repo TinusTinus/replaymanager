@@ -19,7 +19,6 @@ package nl.mvdr.umvc3replayanalyser.model.predicate;
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Team;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import nl.mvdr.umvc3replayanalyser.model.predicate.MatchTeamPredicate;
 
 import org.junit.Assert;
 import org.junit.Test;
