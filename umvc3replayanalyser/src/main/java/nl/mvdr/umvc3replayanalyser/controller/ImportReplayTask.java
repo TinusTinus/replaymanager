@@ -77,7 +77,8 @@ class ImportReplayTask extends Task<List<Replay>> {
      * @param replaySaver
      *            replay saver, used tp actually save the replay file to disk
      */
-    ImportReplayTask(@NonNull File directory, @NonNull List<Replay> replays, @NonNull ReplayAnalyser analyser, @NonNull ReplaySaver replaySaver) {
+    ImportReplayTask(@NonNull File directory, @NonNull List<Replay> replays, @NonNull ReplayAnalyser analyser,
+            @NonNull ReplaySaver replaySaver) {
         super();
 
         if (!directory.isDirectory()) {
@@ -161,10 +162,10 @@ class ImportReplayTask extends Task<List<Replay>> {
             /** {@inheritDoc} */
             @Override
             public void log(String message) {
-                logMessage(message);                
+                logMessage(message);
             }
         };
-        
+
         return this.replaySaver.saveReplay(file, gameAndVersusScreen.getGame(), gameAndVersusScreen.getVersusScreen(),
                 logger);
     }
