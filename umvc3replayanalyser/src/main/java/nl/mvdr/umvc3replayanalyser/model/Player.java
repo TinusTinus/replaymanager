@@ -44,7 +44,7 @@ public class Player {
      *            gamertag
      */
     @JsonCreator
-    public Player(@JsonProperty("gamertag") String gamertag) {
+    public Player(@JsonProperty("gamertag") @NonNull String gamertag) {
         super();
         this.gamertag = gamertag;
     }
