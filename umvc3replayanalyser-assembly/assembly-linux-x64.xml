@@ -37,9 +37,6 @@
 		</dependencySet>
 		<dependencySet>
 			<scope>system</scope>
-			<includes>
-				<include>*:jar</include>
-			</includes>
 			<outputDirectory>/lib</outputDirectory>
 		</dependencySet>
 	</dependencySets>
