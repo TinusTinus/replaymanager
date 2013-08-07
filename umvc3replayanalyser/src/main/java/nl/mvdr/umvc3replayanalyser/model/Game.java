@@ -144,7 +144,7 @@ public class Game {
     /**
      * Returns an unmodifiable list containing all players.
      * 
-     * @return characters
+     * @return players
      */
     @JsonIgnore
     public List<Player> getPlayers() {
