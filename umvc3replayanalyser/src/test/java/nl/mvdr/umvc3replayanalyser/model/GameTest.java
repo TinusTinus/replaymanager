@@ -175,4 +175,39 @@ public class GameTest {
         Assert.assertEquals("20120104182546-Pipe_Pipe(Ryu-Akuma-Viper)_vs_Star_Star(Cap-IronMan-Thor)", baseFilename);
     }
 
+    /** Tests the constructor's behaviour when passing in a null value. */
+    @Test(expected = NullPointerException.class)
+    public void testConstructorNullPlayerOne() {
+        Team teamOne = new Team(Umvc3Character.HULK, Umvc3Character.WOLVERINE, Umvc3Character.SENTINEL);
+        Player playerTwo = new Player("MvdR");
+        Team teamTwo = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        new Game(null, teamOne, playerTwo, teamTwo);
+    }
+    
+    /** Tests the constructor's behaviour when passing in a null value. */
+    @Test(expected = NullPointerException.class)
+    public void testConstructorNullPlayerTwo() {
+        Player playerOne = new Player("DJ Alberto Lara");
+        Team teamOne = new Team(Umvc3Character.HULK, Umvc3Character.WOLVERINE, Umvc3Character.SENTINEL);
+        Team teamTwo = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        new Game(playerOne, teamOne, null, teamTwo);
+    }
+    
+    /** Tests the constructor's behaviour when passing in a null value. */
+    @Test(expected = NullPointerException.class)
+    public void testConstructorNullTeamOne() {
+        Player playerOne = new Player("DJ Alberto Lara");
+        Player playerTwo = new Player("MvdR");
+        Team teamTwo = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
+        new Game(playerOne, null, playerTwo, teamTwo);
+    }
+    
+    /** Tests the constructor's behaviour when passing in a null value. */
+    @Test(expected = NullPointerException.class)
+    public void testConstructorNullTeamTwo() {
+        Player playerOne = new Player("DJ Alberto Lara");
+        Team teamOne = new Team(Umvc3Character.HULK, Umvc3Character.WOLVERINE, Umvc3Character.SENTINEL);
+        Player playerTwo = new Player("MvdR");
+        new Game(playerOne, teamOne, playerTwo, null);
+    }
 }
