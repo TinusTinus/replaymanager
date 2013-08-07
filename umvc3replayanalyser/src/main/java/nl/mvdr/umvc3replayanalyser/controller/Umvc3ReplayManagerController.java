@@ -612,21 +612,21 @@ public class Umvc3ReplayManagerController {
 
     /** Action handler which exits the application. */
     @FXML
-    private void handleExitAction(final ActionEvent event) {
+    private void handleExitAction() {
         log.info("Close menu item selected; stopping the application.");
         Platform.exit();
     }
 
     /** Action handler which shows the about box. */
     @FXML
-    private void handleAboutAction(final ActionEvent event) {
+    private void handleAboutAction() {
         log.info("About menu item selected.");
         Popups.showAboutPopup(new AboutPopupController());
     }
 
     /** Action handler to import replays. */
     @FXML
-    private void handleImportAction(final ActionEvent event) {
+    private void handleImportAction() {
         log.info("Import New Replays menu item selected.");
 
         DirectoryChooser chooser = new DirectoryChooser();
@@ -655,7 +655,7 @@ public class Umvc3ReplayManagerController {
     
     /** Action handler to import a single replay manually. */
     @FXML
-    private void handleAddReplayAction(final ActionEvent event) {
+    private void handleAddReplayAction() {
         log.info("Add Replay Manually menu item selected.");
 
         FileChooser chooser = new FileChooser();
