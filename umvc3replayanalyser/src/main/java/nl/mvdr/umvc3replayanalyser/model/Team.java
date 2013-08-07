@@ -71,10 +71,16 @@ public class Team {
      * 
      * @param firstCharacter
      *            point character
+     * @param firstAssist
+     *            assist type for the first character
      * @param secondCharacter
      *            second character
+     * @param secondAssist
+     *            assist type for the second character
      * @param thirdCharacter
      *            anchor
+     * @param thirdAssist
+     *            assist type for the third character
      */
     @JsonCreator
     public Team(@JsonProperty("firstCharacter") @NonNull Umvc3Character firstCharacter,
