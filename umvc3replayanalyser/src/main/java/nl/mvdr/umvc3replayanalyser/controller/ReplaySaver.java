@@ -25,6 +25,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import nl.mvdr.umvc3replayanalyser.config.Configuration;
 import nl.mvdr.umvc3replayanalyser.model.Game;
@@ -49,6 +50,7 @@ class ReplaySaver {
     private static final String FILE_URL_PREFIX = "file:///";
 
     /** Configuration. */
+    @NonNull
     private Configuration configuration;
     /** JSON object writer, used to save replays as files. */
     private final ObjectWriter writer;
@@ -59,11 +61,9 @@ class ReplaySaver {
      * @param configuration
      *            configuration of the application
      */
-    ReplaySaver(Configuration configuration) {
+    ReplaySaver(@NonNull Configuration configuration) {
         super();
-        if (configuration == null) {
-            throw new NullPointerException("configuration");
-        }
+
         this.configuration = configuration;
 
         ObjectMapper mapper = new ObjectMapper();
