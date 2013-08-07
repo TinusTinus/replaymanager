@@ -77,23 +77,13 @@ public class Team {
      *            anchor
      */
     @JsonCreator
-    public Team(@JsonProperty("firstCharacter") Umvc3Character firstCharacter,
+    public Team(@JsonProperty("firstCharacter") @NonNull Umvc3Character firstCharacter,
             @JsonProperty("firstAssist") AssistType firstAssist,
-            @JsonProperty("secondCharacter") Umvc3Character secondCharacter,
+            @JsonProperty("secondCharacter") @NonNull Umvc3Character secondCharacter,
             @JsonProperty("secondAssist") AssistType secondAssist,
-            @JsonProperty("thirdCharacter") Umvc3Character thirdCharacter,
+            @JsonProperty("thirdCharacter") @NonNull Umvc3Character thirdCharacter,
             @JsonProperty("thirdAssist") AssistType thirdAssist) {
         super();
-        
-        if (firstCharacter == null) {
-            throw new NullPointerException("firstCharacter");
-        }
-        if (secondCharacter == null) {
-            throw new NullPointerException("secondCharacter");
-        }
-        if (thirdCharacter == null) {
-            throw new NullPointerException("thirdCharacter");
-        }
         
         this.firstCharacter = firstCharacter;
         this.firstAssistType = firstAssist;
