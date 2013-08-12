@@ -16,7 +16,7 @@
  */
 package nl.mvdr.umvc3replayanalyser.gui;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -48,8 +48,8 @@ public class Icons {
     /** Private constructor since this is a singleton class. */
     private Icons() {
         super();
-        this.portraits = new HashMap<>(Umvc3Character.values().length);
-        this.icons = new HashMap<>(Umvc3Character.values().length);
+        this.portraits = new EnumMap<>(Umvc3Character.class);
+        this.icons = new EnumMap<>(Umvc3Character.class);
         this.random = new Random();
         this.gameIcon = new Image("icon-umvc3.png");
     }
