@@ -24,8 +24,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -277,7 +276,7 @@ public class TesseractOCREngine implements OCREngine {
      *             in case the matching character cannot be uniquely determined
      */
     private Umvc3Character matchToCharacterName(String text) throws OCRException {
-        return matchToCharacterName(text, new HashSet<>(Arrays.asList(Umvc3Character.values())));
+        return matchToCharacterName(text, EnumSet.allOf(Umvc3Character.class));
     }
 
     /**
@@ -304,7 +303,7 @@ public class TesseractOCREngine implements OCREngine {
 
         // Compute the minimal Levenshtein distance between the given text and the uppercase character names.
         int minimalDistance = Integer.MAX_VALUE;
-        Set<Umvc3Character> matchingCharacters = new HashSet<>();
+        Set<Umvc3Character> matchingCharacters = EnumSet.noneOf(Umvc3Character.class);
 
         for (Umvc3Character character : possibleCharacters) {
             int distance = StringUtils.getLevenshteinDistance(character.getName().toUpperCase(), text);
@@ -391,7 +390,7 @@ public class TesseractOCREngine implements OCREngine {
     private Umvc3Character matchByReplacingLetters(String text, Set<Umvc3Character> possibleCharacters,
             List<OCRException> suppressedExceptions) {
 
-        Set<Umvc3Character> matches = new HashSet<>();
+        Set<Umvc3Character> matches = EnumSet.noneOf(Umvc3Character.class);
 
         matchByReplacingLetters(text, "II", "A", possibleCharacters, matches, suppressedExceptions);
         matchByReplacingLetters(text, "II", "N", possibleCharacters, matches, suppressedExceptions);
