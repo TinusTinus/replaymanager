@@ -28,6 +28,7 @@ import nl.mvdr.umvc3replayanalyser.ocr.TesseractOCREngine;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -55,6 +56,8 @@ public class ReplayAnalyserIntegrationTest {
      *             unexpected
      */
     @Test
+    @Ignore
+    // disabled by default, since this integration test case can fail occasionally depending on timing issues
     public void test() throws ReplayAnalysisException {
         ReplayAnalyserImpl analyser = new ReplayAnalyserImpl(this.versusScreenAnalyser);
 
