@@ -39,6 +39,7 @@
 		<dependencySet>
 			<scope>system</scope>
 			<outputDirectory>/lib</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
 		</dependencySet>
 	</dependencySets>
 </assembly>
