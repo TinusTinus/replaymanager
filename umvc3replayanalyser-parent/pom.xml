@@ -25,10 +25,15 @@
 		<lombok.version>0.12.0</lombok.version>
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
 		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+		<maven-release-plugin.version>2.4.1</maven-release-plugin.version>
 		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<xuggler.version>5.4</xuggler.version>
 	</properties>
+
+	<scm>
+		<developerConnection>scm:git:git://github.com/TinusTinus/replaymanager.git</developerConnection>
+	</scm>
 
 	<!-- Dependency management. Please do not specify version numbers here; 
 		refer to the properties instead! -->
@@ -70,83 +75,72 @@
 				<!-- javadoc: http://build.xuggle.com/view/Stable/job/xuggler_jdk5_stable/javadoc/java/api/ -->
 			</dependency>
 			<dependency>
-				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions.
-					
-					To get this dependency, first download it here:
-						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-noarch-5.4.jar
-					Then manually install it into your local Maven repository using
-					the following command:
-						mvn install:install-file -Dfile=xuggle-xuggler-noarch-5.4.jar -DgroupId=xuggle -DartifactId=xuggle-xuggler-noarch -Dversion=5.4 -Dpackaging=jar
-				-->
+				<!-- Note that, although this jar is available in the Xuggle repository 
+					directory, its location does not follow Maven conventions. To get this dependency, 
+					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-noarch-5.4.jar 
+					Then manually install it into your local Maven repository using the following 
+					command: mvn install:install-file -Dfile=xuggle-xuggler-noarch-5.4.jar -DgroupId=xuggle 
+					-DartifactId=xuggle-xuggler-noarch -Dversion=5.4 -Dpackaging=jar -->
 				<groupId>xuggle</groupId>
 				<artifactId>xuggle-xuggler-noarch</artifactId>
 				<version>${xuggler.version}</version>
 			</dependency>
 			<dependency>
 				<!-- Xuggler implementation for 64-bit Windows -->
-				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions.
-					
-					To get this dependency, first download it here:
-						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-w64-mingw32.jar
-					Then manually install it into your local Maven repository using
-					the following command:
-						mvn install:install-file -Dfile=xuggle-xuggler-arch-x86_64-w64-mingw32.jar -DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-x86_64-w64-mingw32 -Dversion=5.4 -Dpackaging=jar
-				-->
+				<!-- Note that, although this jar is available in the Xuggle repository 
+					directory, its location does not follow Maven conventions. To get this dependency, 
+					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-w64-mingw32.jar 
+					Then manually install it into your local Maven repository using the following 
+					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-x86_64-w64-mingw32.jar 
+					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-x86_64-w64-mingw32 -Dversion=5.4 
+					-Dpackaging=jar -->
 				<groupId>xuggle</groupId>
 				<artifactId>xuggle-xuggler-arch-x86_64-w64-mingw32</artifactId>
 				<version>${xuggler.version}</version>
 			</dependency>
 			<dependency>
 				<!-- Xuggler implementation for 32-bit Windows -->
-				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions.
-					
-					To get this dependency, first download it here:
-						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-w64-mingw32.jar
-					Then manually install it into your local Maven repository using
-					the following command:
-						mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-w64-mingw32.jar -DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-w64-mingw32 -Dversion=5.4 -Dpackaging=jar
-				-->
+				<!-- Note that, although this jar is available in the Xuggle repository 
+					directory, its location does not follow Maven conventions. To get this dependency, 
+					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-w64-mingw32.jar 
+					Then manually install it into your local Maven repository using the following 
+					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-w64-mingw32.jar 
+					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-w64-mingw32 -Dversion=5.4 
+					-Dpackaging=jar -->
 				<groupId>xuggle</groupId>
 				<artifactId>xuggle-xuggler-arch-i686-w64-mingw32</artifactId>
 				<version>${xuggler.version}</version>
 			</dependency>
 			<dependency>
 				<!-- Xuggler implementation for 32-bit Linux -->
-				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions.
-					
-					To get this dependency, first download it here:
-						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-pc-linux-gnu.jar
-					Then manually install it into your local Maven repository using
-					the following command:
-						mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-pc-linux-gnu.jar -DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-pc-linux-gnu -Dversion=5.4 -Dpackaging=jar
-				-->
+				<!-- Note that, although this jar is available in the Xuggle repository 
+					directory, its location does not follow Maven conventions. To get this dependency, 
+					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-pc-linux-gnu.jar 
+					Then manually install it into your local Maven repository using the following 
+					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-pc-linux-gnu.jar 
+					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-pc-linux-gnu -Dversion=5.4 
+					-Dpackaging=jar -->
 				<groupId>xuggle</groupId>
 				<artifactId>xuggle-xuggler-arch-i686-pc-linux-gnu</artifactId>
 				<version>${xuggler.version}</version>
 			</dependency>
 			<dependency>
 				<!-- Xuggler implementation for 64-bit Linux -->
-				<!-- Note that, although this jar is available in the Xuggle repository
-					directory, its location does not follow Maven conventions.
-					
-					To get this dependency, first download it here:
-						http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar
-					Then manually install it into your local Maven repository using
-					the following command:
-						mvn install:install-file -Dfile=xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar -DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-x86_64-pc-linux-gnu -Dversion=5.4 -Dpackaging=jar
-				-->
+				<!-- Note that, although this jar is available in the Xuggle repository 
+					directory, its location does not follow Maven conventions. To get this dependency, 
+					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar 
+					Then manually install it into your local Maven repository using the following 
+					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar 
+					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-x86_64-pc-linux-gnu -Dversion=5.4 
+					-Dpackaging=jar -->
 				<groupId>xuggle</groupId>
 				<artifactId>xuggle-xuggler-arch-x86_64-pc-linux-gnu</artifactId>
 				<version>${xuggler.version}</version>
 			</dependency>
-			
+
 			<dependency>
-				<!-- Needed by Xuggler. Probably only needed if you execute Xuggler as an 
-					executable jar, but better safe than sorry. -->
+				<!-- Needed by Xuggler. Probably only needed if you execute Xuggler as 
+					an executable jar, but better safe than sorry. -->
 				<groupId>commons-cli</groupId>
 				<artifactId>commons-cli</artifactId>
 				<version>${commons-cli.version}</version>
@@ -212,7 +206,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -231,10 +225,22 @@
 					<artifactId>maven-source-plugin</artifactId>
 					<version>${maven-source-plugin.version}</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven-release-plugin.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
-	
+
 	<repositories>
 		<repository>
 			<id>xuggle repo</id>
