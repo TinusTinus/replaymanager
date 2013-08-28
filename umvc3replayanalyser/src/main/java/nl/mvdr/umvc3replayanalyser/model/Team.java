@@ -16,8 +16,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.model;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -27,6 +25,8 @@ import lombok.NonNull;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * A team in Ultimate Marvel vs Capcom 3. Each match has two of these fighting each other.
@@ -106,7 +106,7 @@ public class Team {
      */
     @JsonIgnore
     public List<Umvc3Character> getCharacters() {
-        return Collections.unmodifiableList(Arrays.asList(firstCharacter, secondCharacter, thirdCharacter));
+        return ImmutableList.of(firstCharacter, secondCharacter, thirdCharacter);
     }
 
     /**
@@ -116,7 +116,7 @@ public class Team {
      */
     @JsonIgnore
     public List<AssistType> getAssists() {
-        return Collections.unmodifiableList(Arrays.asList(firstAssistType, secondAssistType, thirdAssistType));
+        return ImmutableList.of(firstAssistType, secondAssistType, thirdAssistType);
     }
 
     /**

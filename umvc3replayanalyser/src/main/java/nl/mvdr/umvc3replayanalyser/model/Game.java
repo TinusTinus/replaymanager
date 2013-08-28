@@ -18,8 +18,6 @@ package nl.mvdr.umvc3replayanalyser.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +28,8 @@ import lombok.NonNull;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * A game of Ultimate Marvel vs Capcom 3.
@@ -136,7 +136,7 @@ public class Game {
      */
     @JsonIgnore
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(Arrays.asList(playerOne, playerTwo));
+        return ImmutableList.of(playerOne, playerTwo);
     }
 
     /**
