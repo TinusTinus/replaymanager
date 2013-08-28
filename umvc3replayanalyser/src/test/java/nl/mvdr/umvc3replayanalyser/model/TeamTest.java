@@ -16,6 +16,8 @@
  */
 package nl.mvdr.umvc3replayanalyser.model;
 
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.junit.Assert;
@@ -142,5 +144,31 @@ public class TeamTest {
     @Test(expected = NullPointerException.class)
     public void testNullValuesForCharacters() {
         new Team(null, null, null);
+    }
+    
+    /** Tests the getCharacters method. */
+    @Test
+    public void testGetCharacters() {
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        List<Umvc3Character> characters = team.getCharacters();
+        
+        Assert.assertEquals(3, characters.size());
+        Assert.assertEquals(Umvc3Character.WOLVERINE, characters.get(0));
+        Assert.assertEquals(Umvc3Character.ZERO, characters.get(1));
+        Assert.assertEquals(Umvc3Character.DOCTOR_DOOM, characters.get(2));
+    }
+    
+    /**
+     * Tests what happens when the result of getCharacters is modified. Since this method is supposed to return an
+     * unmodifiable list, this is expected to throw an UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testModifyCharacters() {
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        List<Umvc3Character> characters = team.getCharacters();
+        
+        characters.add(Umvc3Character.AKUMA);
     }
 }
