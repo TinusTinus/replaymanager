@@ -19,6 +19,7 @@ package nl.mvdr.umvc3replayanalyser.model;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -204,5 +205,40 @@ public class GameTest {
         Team teamOne = new Team(Umvc3Character.HULK, Umvc3Character.WOLVERINE, Umvc3Character.SENTINEL);
         Player playerTwo = new Player("MvdR");
         new Game(playerOne, teamOne, playerTwo, null);
+    }
+    
+    /** Tests {@link Game#getPlayers()}. */
+    @Test
+    public void testGetPlayers() {
+        Player djAlbertoLara = new Player("DJ Alberto Lara");
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Player tinus = new Player("MvdR");
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
+        List<Player> players = game.getPlayers();
+        
+        Assert.assertEquals(2, players.size());
+        Assert.assertEquals(djAlbertoLara, players.get(0));
+        Assert.assertEquals(tinus, players.get(1));
+    }
+    
+    /**
+     * Tests what happens when the result of {@link Game#getPlayeers()} is modified. Since this method is supposed to
+     * return an unmodifiable list, this is expected to throw an UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testModifyPlayers() {
+        Player djAlbertoLara = new Player("DJ Alberto Lara");
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Player tinus = new Player("MvdR");
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
+        List<Player> players = game.getPlayers();
+        
+        players.add(new Player("Someone else"));
     }
 }
