@@ -146,7 +146,7 @@ public class TeamTest {
         new Team(null, null, null);
     }
     
-    /** Tests the getCharacters method. */
+    /** Tests {@link Team#getCharacters()}. */
     @Test
     public void testGetCharacters() {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
@@ -160,8 +160,8 @@ public class TeamTest {
     }
     
     /**
-     * Tests what happens when the result of getCharacters is modified. Since this method is supposed to return an
-     * unmodifiable list, this is expected to throw an UnsupportedOperationException.
+     * Tests what happens when the result of {@link Team#getCharacters()} is modified. Since this method is supposed to
+     * return an unmodifiable list, this is expected to throw an UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testModifyCharacters() {
