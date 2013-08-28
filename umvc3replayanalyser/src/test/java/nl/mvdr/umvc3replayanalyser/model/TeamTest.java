@@ -171,4 +171,30 @@ public class TeamTest {
         
         characters.add(Umvc3Character.AKUMA);
     }
+    
+    /** Tests {@link Team#getAssists()}. */
+    @Test
+    public void testGetAssists() {
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        List<AssistType> assistTypes = team.getAssists();
+        
+        Assert.assertEquals(3, assistTypes.size());
+        Assert.assertEquals(AssistType.GAMMA, assistTypes.get(0));
+        Assert.assertEquals(AssistType.ALPHA, assistTypes.get(1));
+        Assert.assertEquals(AssistType.ALPHA, assistTypes.get(2));
+    }
+    
+    /**
+     * Tests what happens when the result of {@link Team#getAssists()} is modified. Since this method is supposed to
+     * return an unmodifiable list, this is expected to throw an UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testModifyAssists() {
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        List<AssistType> assistTypes = team.getAssists();
+        
+        assistTypes.add(AssistType.BETA);
+    }
 }
