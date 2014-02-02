@@ -20,7 +20,7 @@
 		<commons-lang3.version>3.2.1</commons-lang3.version>
 		<guava.version>14.0.1</guava.version>
 		<jackson.version>1.9.11</jackson.version>
-		<javafx.version>2</javafx.version>
+		<javafx.version>8</javafx.version>
 		<junit.version>4.11</junit.version>
 		<lombok.version>1.12.4</lombok.version>
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
@@ -41,9 +41,10 @@
 				<groupId>com.oracle</groupId>
 				<artifactId>javafx</artifactId>
 				<version>${javafx.version}</version>
-				<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+				<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
 				<scope>system</scope>
-				<!-- javadoc: http://docs.oracle.com/javafx/2/api/ -->
+				<!-- source: <jdk-location>/javafx-src.zip -->
+				<!-- javadoc: http://download.java.net/jdk8/jfxdocs/ -->
 			</dependency>
 
 			<!-- Video decoding -->

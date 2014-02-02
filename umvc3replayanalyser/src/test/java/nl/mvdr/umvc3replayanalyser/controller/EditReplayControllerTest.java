@@ -16,6 +16,7 @@
  */
 package nl.mvdr.umvc3replayanalyser.controller;
 
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -27,6 +28,7 @@ import nl.mvdr.umvc3replayanalyser.model.Team;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -35,6 +37,14 @@ import org.junit.Test;
  * @author Martijn van de Rijdt
  */
 public class EditReplayControllerTest {
+    /** Setup method. */
+    @Before
+    public void setUp() {
+        // Force JavaFX graphics initialisation; this is required by the ComboBox constructor.
+        // When running the actual application this is performed by Application.launch().
+        new JFXPanel();
+    }
+    
     /**
      * Tests what happens to the value of the assist combobox when the value of the corresponding character combobox is
      * changed.

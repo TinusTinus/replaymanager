@@ -14,6 +14,7 @@
 
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
+		<!-- Note: setting this to 1.8 doesn't seem to be supported yet; leave it at 7. -->
 		<java.version>1.7</java.version>
 	</properties>
 

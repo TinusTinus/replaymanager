@@ -16,10 +16,12 @@
  */
 package nl.mvdr.umvc3replayanalyser.gui;
 
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.image.Image;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,6 +30,14 @@ import org.junit.Test;
  * @author Martijn van de Rijdt
  */
 public class IconsTest {
+    /** Setup method. */
+    @Before
+    public void setUp() {
+     // Force JavaFX graphics initialisation; this is required by the Image constructor.
+        // When running the actual application this is performed by Application.launch().
+        new JFXPanel();
+    }
+    
     /** Tests that all the character portraits are available and can be loaded. */
     @Test
     public void testPortraits() {
