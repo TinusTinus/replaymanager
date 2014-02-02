@@ -6,7 +6,6 @@
 		<groupId>nl.mvdr.umvc3replayanalyser</groupId>		
 		<artifactId>umvc3replayanalyser-parent</artifactId>
 		<version>1.1-SNAPSHOT</version>
-		<relativePath>../umvc3replayanalyser-parent</relativePath>
 	</parent>
 
 	<groupId>${project.parent.groupId}</groupId>

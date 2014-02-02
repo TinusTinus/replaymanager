@@ -9,8 +9,8 @@
 	<name>Ultimate Marvel vs Capcom 3 Replay Analyser Parent</name>
 
 	<modules>
-		<module>../umvc3replayanalyser</module>
-		<module>../umvc3replayanalyser-assembly</module>
+		<module>umvc3replayanalyser</module>
+		<module>umvc3replayanalyser-assembly</module>
 	</modules>
 
 	<properties>
