@@ -227,7 +227,6 @@ class EditReplayController {
         // Do this after registering the listeners, so that when a character value is set, the assist combo box is
         // updated, and the status of the OK button is updated at the end.
         // Always update the assist value after the corresponding character value.
-        /** {@inheritDoc} */
         if (defaultContents != null) {
             playerOneTextField.setText(defaultContents.getPlayerOne().getGamertag());
             playerTwoTextField.setText(defaultContents.getPlayerTwo().getGamertag());
