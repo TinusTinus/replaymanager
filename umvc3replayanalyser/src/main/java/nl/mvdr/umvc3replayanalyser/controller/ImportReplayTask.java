@@ -175,7 +175,7 @@ class ImportReplayTask extends Task<List<Replay>> {
      */
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
-        MessageLogger logger = (String logMessage) -> logMessage(logMessage);
+        MessageLogger logger = this::logMessage;
         return this.replaySaver.saveReplay(file, gameAndVersusScreen.getGame(), gameAndVersusScreen.getVersusScreen(),
                 logger);
     }
