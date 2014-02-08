@@ -18,7 +18,6 @@
 package nl.mvdr.umvc3replayanalyser.gui;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 // private constructor to prevent utility class instantiation
@@ -75,25 +75,17 @@ public class ErrorMessagePopup {
         // Details button for displaying the stack trace.
         Button detailsButton = new Button();
         detailsButton.setText("Details");
-        detailsButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                log.info("User clicked Details.");
-                stackTraceArea.setVisible(!stackTraceArea.isVisible());
-            }
+        detailsButton.setOnAction((ActionEvent event) -> {
+            log.info("User clicked Details.");
+            stackTraceArea.setVisible(!stackTraceArea.isVisible());
         });
         // OK button for closing the dialog.
         /** {@inheritDoc} */
         Button okButton = new Button();
         okButton.setText("OK");
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                log.info("User clicked OK, closing the dialog.");
-                stage.close();
-            }
+        okButton.setOnAction((ActionEvent event) -> {
+            log.info("User clicked OK, closing the dialog.");
+            stage.close();
         });
         // Horizontal box containing the buttons, to make sure they are always centered.
         HBox buttonsBox = new HBox(5);
