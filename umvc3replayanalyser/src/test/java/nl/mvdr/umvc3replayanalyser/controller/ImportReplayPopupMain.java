@@ -19,9 +19,9 @@ package nl.mvdr.umvc3replayanalyser.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import nl.mvdr.umvc3replayanalyser.config.Configuration;
@@ -67,13 +67,9 @@ public class ImportReplayPopupMain extends Application {
         log.info("Starting application.");
         final ArrayList<Replay> replays = new ArrayList<>();
         SimpleBooleanProperty working = new SimpleBooleanProperty();
-        working.addListener(new ChangeListener<Boolean>() {
-            /** {@inheritDoc} */
-            @Override
-            public void changed(ObservableValue<? extends Boolean> value, Boolean oldValue, Boolean newValue) {
-                log.info("working changed from " + oldValue + " to " + newValue + "; " + replays.size() + " replays: "
-                        + replays);
-            }
+        working.addListener((ObservableValue<? extends Boolean> value, Boolean oldValue, Boolean newValue) -> {
+            log.info("working changed from " + oldValue + " to " + newValue + "; " + replays.size() + " replays: "
+                    + replays);
         });
         Configuration configuration = new PropertiesConfiguration();
         OCREngine ocrEngine = new TesseractOCREngine(configuration);
