@@ -25,18 +25,20 @@ import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 /**
  * Mock implementation of {@link VersusScreenAnalyser}, for use in unit tests.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class VersusScreenAnalyserMock implements VersusScreenAnalyser {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VersusScreenAnalyserMock.class);
-    
+
     /**
      * The dummy game returned by this mock's analyse method.
      */
-    public static final Game DUMMY_GAME = new Game(new Player("Player One"), new Team(Umvc3Character.VERGIL, Umvc3Character.DANTE, Umvc3Character.TRISH), new Player("Player Two"), new Team(Umvc3Character.RYU, Umvc3Character.CHUN_LI, Umvc3Character.AKUMA));
-    
+    public static final Game DUMMY_GAME = new Game(new Player("Player One"), new Team(Umvc3Character.VERGIL,
+            Umvc3Character.DANTE, Umvc3Character.TRISH), new Player("Player Two"), new Team(Umvc3Character.RYU,
+            Umvc3Character.CHUN_LI, Umvc3Character.AKUMA));
+
     /**
      * The number of times the analyse method has been called.
      */
