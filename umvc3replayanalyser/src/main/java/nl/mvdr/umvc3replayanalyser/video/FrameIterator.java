@@ -68,7 +68,7 @@ class FrameIterator implements Iterator<BufferedImage>, Closeable {
         this.reader = ToolFactory.makeReader(videoUrl);
         this.reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
         this.reader.addListener(new MediaListenerAdapter() {
-
+            /** {@inheritDoc} */
             @Override
             public void onVideoPicture(IVideoPictureEvent event) {
                 if (log.isDebugEnabled()) {
