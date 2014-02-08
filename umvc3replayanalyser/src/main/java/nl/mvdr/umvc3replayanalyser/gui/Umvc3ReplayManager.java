@@ -25,9 +25,7 @@ import javafx.stage.Stage;
 import com.sun.javafx.runtime.VersionInfo;
 
 /**
- * Main class, used to start the application. Defines the JavaFX user interface.
- *
- * @author Martijn van de Rijdt
+ * Main class, used to start the application. Defines the JavaFX user interface. * * @author Martijn van de Rijdt
  */
 public class Umvc3ReplayManager extends Application {
     @java.lang.SuppressWarnings("all")
@@ -40,10 +38,7 @@ public class Umvc3ReplayManager extends Application {
     private static final String TITLE = "Ultimate Marvel vs Capcom 3 Replay Manager";
 
     /**
-     * Main method, starts the application.
-     *
-     * @param args
-     * command line parameters, which are passed on to JavaFX
+     * Main method, starts the application.     *     * @param args     * command line parameters, which are passed on to JavaFX
      */
     public static void main(String[] args) {
         launch(args);

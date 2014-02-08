@@ -28,24 +28,23 @@ import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 
 /**
  * Main class which lets us test the edit replay popup as a standalone application.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class EditReplayPopupMain extends Application {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditReplayPopupMain.class);
-    
-    
+
     /**
      * Main method.
-     *
+     * 
      * @param args
-     * command line parameters, which are passed on to JavaFX
+     *            command line parameters, which are passed on to JavaFX
      */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -53,14 +52,16 @@ public class EditReplayPopupMain extends Application {
     public void start(Stage stage) {
         log.info("Starting application.");
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, null, Umvc3Character.WOLVERINE, null, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, null, Umvc3Character.WOLVERINE, null,
+                Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         Popups.showEditReplayPopup(new EditReplayController(game, new LogReplayDetailsHandler()));
         log.info("Application started.");
     }
-    
+
     /**
      * {@inheritDoc}
      */

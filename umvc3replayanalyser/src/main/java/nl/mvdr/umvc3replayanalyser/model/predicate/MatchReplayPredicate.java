@@ -33,17 +33,17 @@ import com.google.common.base.Predicates;
  * @author Martijn van de Rijdt
  */
 public class MatchReplayPredicate implements Predicate<Replay> {
-    
+
     /**
      * Player predicate.
      */
     private final Predicate<Player> playerPredicate;
-    
+
     /**
      * Team predicate.
      */
     private final Predicate<Team> teamPredicate;
-    
+
     /**
      * Side to be matched.
      */
@@ -54,25 +54,27 @@ public class MatchReplayPredicate implements Predicate<Replay> {
      * Constructor.
      *
      * @param prefix
-     * prefix to be matched to the player's gamertag; may not be null
+     *            prefix to be matched to the player's gamertag; may not be null
      * @param character1
-     * character 1
+     *            character 1
      * @param assist1
-     * assist type for character 1
+     *            assist type for character 1
      * @param character2
-     * character 2
+     *            character 2
      * @param assist2
-     * assist type for character 2
+     *            assist type for character 2
      * @param character3
-     * character 3
+     *            character 3
      * @param assist3
-     * assist type for character 3
+     *            assist type for character 3
      * @param maintainCharacterOrder
-     * whether character order needs to be respected when matching against a team
+     *            whether character order needs to be respected when matching against a team
      * @param side
-     * side; may not be null
+     *            side; may not be null
      */
-    public MatchReplayPredicate(String prefix, Umvc3Character character1, AssistType assist1, Umvc3Character character2, AssistType assist2, Umvc3Character character3, AssistType assist3, boolean maintainCharacterOrder, @NonNull Side side) {
+    public MatchReplayPredicate(String prefix, Umvc3Character character1, AssistType assist1,
+            Umvc3Character character2, AssistType assist2, Umvc3Character character3, AssistType assist3,
+            boolean maintainCharacterOrder, @NonNull Side side) {
         if (side == null) {
             throw new java.lang.NullPointerException("side");
         }
@@ -84,7 +86,8 @@ public class MatchReplayPredicate implements Predicate<Replay> {
         if (character1 == null && character2 == null && character3 == null) {
             this.teamPredicate = Predicates.alwaysTrue();
         } else {
-            this.teamPredicate = new MatchTeamPredicate(character1, assist1, character2, assist2, character3, assist3, maintainCharacterOrder);
+            this.teamPredicate = new MatchTeamPredicate(character1, assist1, character2, assist2, character3, assist3,
+                    maintainCharacterOrder);
         }
         this.side = side;
     }
@@ -94,12 +97,14 @@ public class MatchReplayPredicate implements Predicate<Replay> {
      */
     @Override
     public boolean apply(Replay replay) {
-        return playerPredicate.apply(replay.getGame().getPlayer(side)) && teamPredicate.apply(replay.getGame().getTeam(side));
+        return playerPredicate.apply(replay.getGame().getPlayer(side))
+                && teamPredicate.apply(replay.getGame().getTeam(side));
     }
 
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public java.lang.String toString() {
-        return "MatchReplayPredicate(playerPredicate=" + this.playerPredicate + ", teamPredicate=" + this.teamPredicate + ", side=" + this.side + ")";
+        return "MatchReplayPredicate(playerPredicate=" + this.playerPredicate + ", teamPredicate=" + this.teamPredicate
+                + ", side=" + this.side + ")";
     }
 }

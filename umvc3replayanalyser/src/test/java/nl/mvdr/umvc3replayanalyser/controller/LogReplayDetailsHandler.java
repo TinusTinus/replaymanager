@@ -21,7 +21,7 @@ import nl.mvdr.umvc3replayanalyser.model.Game;
 
 /**
  * Handler which only logs the given game.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 class LogReplayDetailsHandler implements ReplayDetailsEditedHandler {

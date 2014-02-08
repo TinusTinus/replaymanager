@@ -23,9 +23,7 @@ import nl.mvdr.umvc3replayanalyser.model.Player;
 import com.google.common.base.Predicate;
 
 /**
- * Predicate that checks whether the player's gamertag starts with the given string.
- *
- * @author Martijn van de Rijdt
+ * Predicate that checks whether the player's gamertag starts with the given string. * * @author Martijn van de Rijdt
  */
 public class GamertagPrefixPlayerPredicate implements Predicate<Player> {
     

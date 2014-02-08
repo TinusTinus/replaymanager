@@ -26,76 +26,81 @@ import com.google.common.collect.ImmutableList;
 
 /**
  * A team in Ultimate Marvel vs Capcom 3. Each match has two of these fighting each other.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class Team {
-    
+
     /**
      * Point character.
      */
     @NonNull
     private final Umvc3Character firstCharacter;
-    
+
     /**
      * Assist type of the point character. May be null if unknown.
      */
     private final AssistType firstAssistType;
-    
+
     /**
      * Second character.
      */
     @NonNull
     private final Umvc3Character secondCharacter;
-    
+
     /**
      * Assist type of the scond character. May be null if unknown.
      */
     private final AssistType secondAssistType;
-    
+
     /**
      * Anchor.
      */
     @NonNull
     private final Umvc3Character thirdCharacter;
-    
+
     /**
      * Assist type of the anchor character. May be null if unknown.
      */
     private final AssistType thirdAssistType;
-    
+
     /**
      * Convenience constructor, for when none of the assists are known.
-     *
+     * 
      * @param firstCharacter
-     * point character
+     *            point character
      * @param secondCharacter
-     * second character
+     *            second character
      * @param thirdCharacter
-     * anchor
+     *            anchor
      */
     public Team(Umvc3Character firstCharacter, Umvc3Character secondCharacter, Umvc3Character thirdCharacter) {
         this(firstCharacter, null, secondCharacter, null, thirdCharacter, null);
     }
-    
+
     /**
      * Constructor.
-     *
+     * 
      * @param firstCharacter
-     * point character
+     *            point character
      * @param firstAssist
-     * assist type for the first character
+     *            assist type for the first character
      * @param secondCharacter
-     * second character
+     *            second character
      * @param secondAssist
-     * assist type for the second character
+     *            assist type for the second character
      * @param thirdCharacter
-     * anchor
+     *            anchor
      * @param thirdAssist
-     * assist type for the third character
+     *            assist type for the third character
      */
     @JsonCreator
-    public Team(@JsonProperty("firstCharacter") @NonNull Umvc3Character firstCharacter, @JsonProperty("firstAssist") AssistType firstAssist, @JsonProperty("secondCharacter") @NonNull Umvc3Character secondCharacter, @JsonProperty("secondAssist") AssistType secondAssist, @JsonProperty("thirdCharacter") @NonNull Umvc3Character thirdCharacter, @JsonProperty("thirdAssist") AssistType thirdAssist) {
+    public Team(@JsonProperty("firstCharacter") @NonNull Umvc3Character firstCharacter,
+            @JsonProperty("firstAssist") AssistType firstAssist,
+            @JsonProperty("secondCharacter") @NonNull Umvc3Character secondCharacter,
+            @JsonProperty("secondAssist") AssistType secondAssist,
+            @JsonProperty("thirdCharacter") @NonNull Umvc3Character thirdCharacter,
+            @JsonProperty("thirdAssist") AssistType thirdAssist) {
         if (firstCharacter == null) {
             throw new java.lang.NullPointerException("firstCharacter");
         }
@@ -112,91 +117,95 @@ public class Team {
         this.thirdCharacter = thirdCharacter;
         this.thirdAssistType = thirdAssist;
     }
-    
+
     /**
      * Returns an unmodifiable list containing all three characters.
-     *
+     * 
      * @return characters
      */
     @JsonIgnore
     public List<Umvc3Character> getCharacters() {
         return ImmutableList.of(firstCharacter, secondCharacter, thirdCharacter);
     }
-    
+
     /**
      * Returns an unmodifiable list containing all three assist types.
-     *
+     * 
      * @return assist types
      */
     @JsonIgnore
     public List<AssistType> getAssists() {
         return ImmutableList.of(firstAssistType, secondAssistType, thirdAssistType);
     }
-    
+
     /**
      * Returns a name for the team, based on which characters it contains. The name does not include information about
      * which assists are being used.
-     *
+     * 
      * For most teams, the result's format is "Point Character / Second Character / Anchor". For example:
      * "Wolverine / Zero / Doctor Doom" or "Phoenix Wright / Viewtiful Joe / Dante".
-     *
+     * 
      * Some teams, such as Vergil / Dante / Wesker and Zero / Dante / Vergil, have special names (for these examples,
      * "Team Trenchcoat" and "Zero May Die", respectively).
-     *
+     * 
      * @return team name
      */
     @JsonIgnore
     public String getName() {
         String result;
-        if (firstCharacter == Umvc3Character.VERGIL && secondCharacter == Umvc3Character.DANTE && thirdCharacter == Umvc3Character.WESKER) {
+        if (firstCharacter == Umvc3Character.VERGIL && secondCharacter == Umvc3Character.DANTE
+                && thirdCharacter == Umvc3Character.WESKER) {
             result = "Team Trenchcoat";
-        } else if (firstCharacter == Umvc3Character.ZERO && secondCharacter == Umvc3Character.DANTE && thirdCharacter == Umvc3Character.VERGIL) {
+        } else if (firstCharacter == Umvc3Character.ZERO && secondCharacter == Umvc3Character.DANTE
+                && thirdCharacter == Umvc3Character.VERGIL) {
             result = "Zero May Cry";
-        } else if (firstCharacter == Umvc3Character.MAGNETO && secondCharacter == Umvc3Character.STORM && thirdCharacter == Umvc3Character.SENTINEL) {
+        } else if (firstCharacter == Umvc3Character.MAGNETO && secondCharacter == Umvc3Character.STORM
+                && thirdCharacter == Umvc3Character.SENTINEL) {
             result = "MSS";
         } else {
-            result = String.format("%s / %s / %s", firstCharacter.getName(), secondCharacter.getName(), thirdCharacter.getName());
+            result = String.format("%s / %s / %s", firstCharacter.getName(), secondCharacter.getName(),
+                    thirdCharacter.getName());
         }
         return result;
     }
-    
+
     /**
      * Returns a name for the team, including (if known) which assists are being used. Assists are represented by
      * "alpha", "beta" or "gamma".
-     *
+     * 
      * The result's format is of "Point Character / Second Character / Anchor". For example:
      * "Wolverine (gamma) / Zero (alpha) / Doctor Doom (gamma)".
-     *
+     * 
      * @return team name including assists
      */
     @JsonIgnore
     public String getNameWithAssists() {
         return getNameWithAssists(false);
     }
-    
+
     /**
      * Returns a name for the team, including which assists are being used. Assists are represented by the move names.
-     *
+     * 
      * The result's format is of "Point Character / Second Character / Anchor". For example:
      * "Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam)".
-     *
+     * 
      * @return team name including assists
      */
     @JsonIgnore
     public String getNameWithAssistMoveNames() {
         return getNameWithAssists(true);
     }
-    
+
     /**
      * Returns a name for the team, including (if known) which assists are being used.
-     *
+     * 
      * The result's format is of "Point Character / Second Character / Anchor". For example:
      * "Wolverine (gamma) / Zero (alpha) / Doctor Doom (gamma)".
-     *
+     * 
      * @param useAssistNames
-     * if true, the assists are represented by the move names (for example: Hidden Missiles); otherwise by
-     * the greek letters (e.g. alpha)
-     *
+     *            if true, the assists are represented by the move names (for example: Hidden Missiles); otherwise by
+     *            the greek letters (e.g. alpha)
+     * 
      * @return team name including assists
      */
     @JsonIgnore
@@ -212,17 +221,17 @@ public class Team {
         }
         return result;
     }
-    
+
     /**
      * Returns the given character's name with the assist in brackets if known.
-     *
+     * 
      * @param character
-     * character
+     *            character
      * @param assist
-     * assist type; may be null if unknown
+     *            assist type; may be null if unknown
      * @param useAssistName
-     * if true, the assist is represented by the move name (for example: Hidden Missiles); otherwise by the
-     * greek letter (e.g. alpha)
+     *            if true, the assist is represented by the move name (for example: Hidden Missiles); otherwise by the
+     *            greek letter (e.g. alpha)
      * @return String representation of the character and the assist
      */
     @JsonIgnore
@@ -239,7 +248,7 @@ public class Team {
         }
         return result;
     }
-    
+
     /**
      * @return first assist; null if the assist type is unknown
      */
@@ -253,7 +262,7 @@ public class Team {
         }
         return result;
     }
-    
+
     /**
      * @return second assist; null if the assist type is unknown
      */
@@ -267,7 +276,7 @@ public class Team {
         }
         return result;
     }
-    
+
     /**
      * @return third assist; null if the assist type is unknown
      */
@@ -281,7 +290,7 @@ public class Team {
         }
         return result;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -289,7 +298,7 @@ public class Team {
     public String toString() {
         return getNameWithAssists();
     }
-    
+
     /**
      * Point character.
      */
@@ -298,7 +307,7 @@ public class Team {
     public Umvc3Character getFirstCharacter() {
         return this.firstCharacter;
     }
-    
+
     /**
      * Assist type of the point character. May be null if unknown.
      */
@@ -306,7 +315,7 @@ public class Team {
     public AssistType getFirstAssistType() {
         return this.firstAssistType;
     }
-    
+
     /**
      * Second character.
      */
@@ -315,7 +324,7 @@ public class Team {
     public Umvc3Character getSecondCharacter() {
         return this.secondCharacter;
     }
-    
+
     /**
      * Assist type of the scond character. May be null if unknown.
      */
@@ -323,7 +332,7 @@ public class Team {
     public AssistType getSecondAssistType() {
         return this.secondAssistType;
     }
-    
+
     /**
      * Anchor.
      */
@@ -332,7 +341,7 @@ public class Team {
     public Umvc3Character getThirdCharacter() {
         return this.thirdCharacter;
     }
-    
+
     /**
      * Assist type of the anchor character. May be null if unknown.
      */
@@ -340,40 +349,55 @@ public class Team {
     public AssistType getThirdAssistType() {
         return this.thirdAssistType;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public boolean equals(final java.lang.Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Team)) return false;
-        final Team other = (Team)o;
-        if (!other.canEqual((java.lang.Object)this)) return false;
+        if (o == this)
+            return true;
+        if (!(o instanceof Team))
+            return false;
+        final Team other = (Team) o;
+        if (!other.canEqual((java.lang.Object) this))
+            return false;
         final java.lang.Object this$firstCharacter = this.getFirstCharacter();
         final java.lang.Object other$firstCharacter = other.getFirstCharacter();
-        if (this$firstCharacter == null ? other$firstCharacter != null : !this$firstCharacter.equals(other$firstCharacter)) return false;
+        if (this$firstCharacter == null ? other$firstCharacter != null : !this$firstCharacter
+                .equals(other$firstCharacter))
+            return false;
         final java.lang.Object this$firstAssistType = this.getFirstAssistType();
         final java.lang.Object other$firstAssistType = other.getFirstAssistType();
-        if (this$firstAssistType == null ? other$firstAssistType != null : !this$firstAssistType.equals(other$firstAssistType)) return false;
+        if (this$firstAssistType == null ? other$firstAssistType != null : !this$firstAssistType
+                .equals(other$firstAssistType))
+            return false;
         final java.lang.Object this$secondCharacter = this.getSecondCharacter();
         final java.lang.Object other$secondCharacter = other.getSecondCharacter();
-        if (this$secondCharacter == null ? other$secondCharacter != null : !this$secondCharacter.equals(other$secondCharacter)) return false;
+        if (this$secondCharacter == null ? other$secondCharacter != null : !this$secondCharacter
+                .equals(other$secondCharacter))
+            return false;
         final java.lang.Object this$secondAssistType = this.getSecondAssistType();
         final java.lang.Object other$secondAssistType = other.getSecondAssistType();
-        if (this$secondAssistType == null ? other$secondAssistType != null : !this$secondAssistType.equals(other$secondAssistType)) return false;
+        if (this$secondAssistType == null ? other$secondAssistType != null : !this$secondAssistType
+                .equals(other$secondAssistType))
+            return false;
         final java.lang.Object this$thirdCharacter = this.getThirdCharacter();
         final java.lang.Object other$thirdCharacter = other.getThirdCharacter();
-        if (this$thirdCharacter == null ? other$thirdCharacter != null : !this$thirdCharacter.equals(other$thirdCharacter)) return false;
+        if (this$thirdCharacter == null ? other$thirdCharacter != null : !this$thirdCharacter
+                .equals(other$thirdCharacter))
+            return false;
         final java.lang.Object this$thirdAssistType = this.getThirdAssistType();
         final java.lang.Object other$thirdAssistType = other.getThirdAssistType();
-        if (this$thirdAssistType == null ? other$thirdAssistType != null : !this$thirdAssistType.equals(other$thirdAssistType)) return false;
+        if (this$thirdAssistType == null ? other$thirdAssistType != null : !this$thirdAssistType
+                .equals(other$thirdAssistType))
+            return false;
         return true;
     }
-    
+
     @java.lang.SuppressWarnings("all")
     public boolean canEqual(final java.lang.Object other) {
         return other instanceof Team;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public int hashCode() {

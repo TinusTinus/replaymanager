@@ -20,16 +20,17 @@ package nl.mvdr.umvc3replayanalyser.controller;
 import java.io.File;
 import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
+
 // Private constructor to prevent utility class instantiation.
 
 /**
  * Utility class for file manipulation. Based on Milan Aleksic's implementation as available on Stack Overflow:
  * http://stackoverflow.com/a/3054692.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class FileUtils {
-    
+
     /**
      * Path separator.
      */
@@ -38,14 +39,14 @@ public class FileUtils {
     /**
      * Get the relative path from one file to another, specifying the directory separator. If one of the provided
      * resources does not exist, it is assumed to be a file unless it ends with '/' or '\'.
-     *
+     * 
      * @param targetPath
-     * targetPath is calculated to this file
+     *            targetPath is calculated to this file
      * @param basePath
-     * basePath is calculated from this file
+     *            basePath is calculated from this file
      * @return relative path
      * @throws PathResolutionException
-     * in case the paths are not related at all
+     *             in case the paths are not related at all
      */
     static String getRelativePath(String targetPath, String basePath) throws PathResolutionException {
         return getRelativePath(targetPath, basePath, SEPARATOR);
@@ -54,19 +55,20 @@ public class FileUtils {
     /**
      * Get the relative path from one file to another, specifying the directory separator. If one of the provided
      * resources does not exist, it is assumed to be a file unless it ends with '/' or '\'.
-     *
+     * 
      * @param targetPath
-     * targetPath is calculated to this file
+     *            targetPath is calculated to this file
      * @param basePath
-     * basePath is calculated from this file
+     *            basePath is calculated from this file
      * @param pathSeparator
-     * directory separator; the platform default is not assumed so that we can test Unix behaviour when
-     * running on Windows (for example)
+     *            directory separator; the platform default is not assumed so that we can test Unix behaviour when
+     *            running on Windows (for example)
      * @return relative path
      * @throws PathResolutionException
-     * in case the paths are not related at all
+     *             in case the paths are not related at all
      */
-    static String getRelativePath(String targetPath, String basePath, String pathSeparator) throws PathResolutionException {
+    static String getRelativePath(String targetPath, String basePath, String pathSeparator)
+            throws PathResolutionException {
         // Normalize the paths
         String normalizedTargetPath = FilenameUtils.normalizeNoEndSeparator(targetPath);
         String normalizedBasePath = FilenameUtils.normalizeNoEndSeparator(basePath);
@@ -86,7 +88,8 @@ public class FileUtils {
         // and also count how many of them there are.
         StringBuffer common = new StringBuffer();
         int commonIndex = 0;
-        while (commonIndex < target.length && commonIndex < base.length && target[commonIndex].equals(base[commonIndex])) {
+        while (commonIndex < target.length && commonIndex < base.length
+                && target[commonIndex].equals(base[commonIndex])) {
             common.append(target[commonIndex] + pathSeparator);
             commonIndex++;
         }
@@ -94,7 +97,8 @@ public class FileUtils {
             // No single common path element. This most
             // likely indicates differing drive letters, like C: and D:.
             // These paths cannot be relativized.
-            throw new PathResolutionException("No common path element found for \'" + normalizedTargetPath + "\' and \'" + normalizedBasePath + "\'");
+            throw new PathResolutionException("No common path element found for \'" + normalizedTargetPath
+                    + "\' and \'" + normalizedBasePath + "\'");
         }
         // The number of directories we have to backtrack depends on whether the base is a file or a dir
         // For example, the relative path from

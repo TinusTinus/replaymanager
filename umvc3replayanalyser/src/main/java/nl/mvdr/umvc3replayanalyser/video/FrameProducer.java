@@ -29,17 +29,17 @@ import java.util.concurrent.TimeUnit;
 class FrameProducer implements Runnable {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrameProducer.class);
-    
+
     /**
      * URL of the video file to read frames from.
      */
     private final String videoUrl;
-    
+
     /**
      * Queue to place items into.
      */
     private final BlockingQueue<BufferedImage> queue;
-    
+
     /**
      * Indicates whether production is still needed.
      */
@@ -49,9 +49,9 @@ class FrameProducer implements Runnable {
      * Constructor.
      *
      * @param videoUrl
-     * URL of the video file from which to produce frames
+     *            URL of the video file from which to produce frames
      * @param queue
-     * queue to place items into
+     *            queue to place items into
      */
     FrameProducer(String videoUrl, BlockingQueue<BufferedImage> queue) {
         this.videoUrl = videoUrl;
@@ -61,7 +61,7 @@ class FrameProducer implements Runnable {
 
     /**
      * Starts the producer.
-     *
+     * 
      * @returns the IError that caused prodcution to be halted, or null if no such error occurred
      */
     @Override

@@ -23,22 +23,22 @@ package nl.mvdr.umvc3replayanalyser.model;
  * @author Martijn van de Rijdt
  */
 public enum Side {
-    
+
     /**
      * Player one.
      */
     PLAYER_ONE("Player One"),
-    
+
     /**
      * Player two.
      */
     PLAYER_TWO("Player Two");
-    
+
     /**
      * Name.
      */
     private final String name;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -46,7 +46,7 @@ public enum Side {
     public String toString() {
         return this.name;
     }
-    
+
     /**
      * @return the opposite side
      */
@@ -61,7 +61,7 @@ public enum Side {
         }
         return result;
     }
-    
+
     @java.lang.SuppressWarnings("all")
     private Side(final String name) {
         this.name = name;

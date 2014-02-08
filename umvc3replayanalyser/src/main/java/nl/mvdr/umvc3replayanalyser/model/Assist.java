@@ -20,9 +20,7 @@ package nl.mvdr.umvc3replayanalyser.model;
 import lombok.NonNull;
 
 /**
- * Representation of an assist for a specific character.
- *
- * @author Martijn van de Rijdt
+ * Representation of an assist for a specific character. * * @author Martijn van de Rijdt
  */
 public class Assist {
     
@@ -39,11 +37,7 @@ public class Assist {
     private final Umvc3Character character;
     
     /**
-     * Gets the assist type, while handling null values.
-     *
-     * @param assist
-     * assist, may be null
-     * @return assist type, or null if the given assist is null
+     * Gets the assist type, while handling null values.     *     * @param assist     * assist, may be null     * @return assist type, or null if the given assist is null
      */
     public static AssistType getType(Assist assist) {
         AssistType result;

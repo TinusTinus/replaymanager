@@ -41,17 +41,17 @@ import org.apache.commons.lang3.StringUtils;
 public class TesseractOCREngine implements OCREngine {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TesseractOCREngine.class);
-    
+
     /**
      * Image format used to temporarily store images.
      */
     private static final String IMAGE_FORMAT = "png";
-    
+
     /**
      * Suffix for temporary image files.
      */
     private static final String IMAGE_SUFFIX = "." + IMAGE_FORMAT;
-    
+
     /**
      * Suffix for temporary text files.
      */
@@ -66,23 +66,26 @@ public class TesseractOCREngine implements OCREngine {
      * Constructor.
      *
      * @param configuration
-     * configuration
+     *            configuration
      */
     public TesseractOCREngine(Configuration configuration) {
         this.configuration = configuration;
-        // Check that the given configuration contains a working tesseract executable by attempting to retrieve Tesseract's version number.
+        // Check that the given configuration contains a working tesseract executable by attempting to retrieve
+        // Tesseract's version number.
         try {
             log.info("Tesseract version: " + getTesseractVersion());
         } catch (OCRException e) {
-            throw new IllegalArgumentException("Unable to invoke Tesseract. Please check if the configuration in /etc/configuration.properties is correct and/or that the Tesseract executable is available at " + configuration.getTesseractExecutablePath(), e);
+            throw new IllegalArgumentException(
+                    "Unable to invoke Tesseract. Please check if the configuration in /etc/configuration.properties is correct and/or that the Tesseract executable is available at "
+                            + configuration.getTesseractExecutablePath(), e);
         }
     }
 
     /**
      * Retrieves Tesseract's version number.
-     *
+     * 
      * @throws OCRException
-     * in case the version number cannot be retrieved
+     *             in case the version number cannot be retrieved
      * @return Tesseract's version number
      */
     public String getTesseractVersion() throws OCRException {
@@ -90,7 +93,8 @@ public class TesseractOCREngine implements OCREngine {
         String command = String.format("\"%s\" -v", configuration.getTesseractExecutablePath());
         String firstLine = execute(command);
         if (firstLine == null) {
-            throw new OCRException("Unable to determine Tesseract version number; Tesseract did not write anything to its output.");
+            throw new OCRException(
+                    "Unable to determine Tesseract version number; Tesseract did not write anything to its output.");
         }
         String result;
         if (firstLine.startsWith("tesseract ")) {
@@ -131,7 +135,8 @@ public class TesseractOCREngine implements OCREngine {
                 if (deleted) {
                     log.debug("Deleted temporary file: " + file);
                 } else {
-                    log.warn("Could not delete temporary file: " + file + ". This file should be deleted when the JVM is stopped.");
+                    log.warn("Could not delete temporary file: " + file
+                            + ". This file should be deleted when the JVM is stopped.");
                 }
             }
         }
@@ -142,14 +147,14 @@ public class TesseractOCREngine implements OCREngine {
     /**
      * Creates a temporary file using File.createTempFile, logs this and makes sure that, if not deleted before then,
      * the file will be deleted once the JVM terminates.
-     *
+     * 
      * @param prefix
-     * prefix
+     *            prefix
      * @param suffix
-     * suffix
+     *            suffix
      * @return file
      * @throws IOException
-     * in case the file cannot be created
+     *             in case the file cannot be created
      */
     private File createTempFile(String prefix, String suffix) throws IOException {
         File result = File.createTempFile(prefix, suffix);
@@ -160,35 +165,37 @@ public class TesseractOCREngine implements OCREngine {
 
     /**
      * Runs Tesseract.
-     *
+     * 
      * @param imageFile
-     * image file which Tesseract should read
+     *            image file which Tesseract should read
      * @param textFile
-     * text file where Tesseract should write its output
+     *            text file where Tesseract should write its output
      * @throws IOException
-     * in case an I/O error occurs when trying to start Tesseract
+     *             in case an I/O error occurs when trying to start Tesseract
      * @throws InterruptedException
-     * in case the wait for Tesseract completion is interrupted
+     *             in case the wait for Tesseract completion is interrupted
      * @throws OCRException
-     * in case Tesseract execution fails
+     *             in case Tesseract execution fails
      */
     private void runTesseract(File imageFile, File textFile) throws OCRException {
-        String outbase = textFile.getAbsolutePath().substring(0, textFile.getAbsolutePath().length() - TEXT_SUFFIX.length());
+        String outbase = textFile.getAbsolutePath().substring(0,
+                textFile.getAbsolutePath().length() - TEXT_SUFFIX.length());
         // TODO Test if this works on Linux / Mac.
         // This version uses quotes to deal with spaces in directory names on Windows,
         // but I'm not sure if this works on Linux.
-        String command = String.format("\"%s\" \"%s\" \"%s\"", configuration.getTesseractExecutablePath(), imageFile.getAbsolutePath(), outbase);
+        String command = String.format("\"%s\" \"%s\" \"%s\"", configuration.getTesseractExecutablePath(),
+                imageFile.getAbsolutePath(), outbase);
         execute(command);
     }
 
     /**
      * Executes the given command.
-     *
+     * 
      * @param command
-     * command to be executed
+     *            command to be executed
      * @throws OCRException
-     * if the command returns a nonzero exit code, the command is interrupted or there is an unexpected I/O
-     * exception
+     *             if the command returns a nonzero exit code, the command is interrupted or there is an unexpected I/O
+     *             exception
      * @return the first line of the command's output
      */
     private String execute(String command) throws OCRException {
@@ -222,14 +229,14 @@ public class TesseractOCREngine implements OCREngine {
 
     /**
      * Reads the nonempty line from the given text file.
-     *
+     * 
      * @param textFile
-     * text file to be read
+     *            text file to be read
      * @return contents of the nonempty line in the file
      * @throws IOException
-     * if reading the file fails due to an I/O error
+     *             if reading the file fails due to an I/O error
      * @throws OCRException
-     * if the file is empty or contains multiple nonempty lines
+     *             if the file is empty or contains multiple nonempty lines
      */
     private String readLineFromFile(File textFile) throws IOException, OCRException {
         if (log.isDebugEnabled()) {
@@ -265,12 +272,12 @@ public class TesseractOCREngine implements OCREngine {
 
     /**
      * Matches the given string to a character's name.
-     *
+     * 
      * @param text
-     * text to be matched, should be a Marvel character name, non-null
+     *            text to be matched, should be a Marvel character name, non-null
      * @return the character to whose name the given text is closest
      * @throws OCRException
-     * in case the matching character cannot be uniquely determined
+     *             in case the matching character cannot be uniquely determined
      */
     private Umvc3Character matchToCharacterName(String text) throws OCRException {
         return matchToCharacterName(text, EnumSet.allOf(Umvc3Character.class));
@@ -278,21 +285,23 @@ public class TesseractOCREngine implements OCREngine {
 
     /**
      * Matches the given string to a character's name.
-     *
+     * 
      * @param text
-     * text to be matched, should be a Marvel character name
+     *            text to be matched, should be a Marvel character name
      * @param possibleCharacters
-     * the characters that text may match, may not be empty
+     *            the characters that text may match, may not be empty
      * @return the character to whose name the given text is closest
      * @throws OCRException
-     * in case the matching character cannot be uniquely determined
+     *             in case the matching character cannot be uniquely determined
      */
-    private Umvc3Character matchToCharacterName(String text, Set<Umvc3Character> possibleCharacters) throws OCRException {
+    private Umvc3Character matchToCharacterName(String text, Set<Umvc3Character> possibleCharacters)
+            throws OCRException {
         if (log.isDebugEnabled()) {
             if (possibleCharacters.size() == Umvc3Character.values().length) {
                 log.debug(String.format("Attempting to match %s to the UMvC3 characters", text));
             } else {
-                log.debug(String.format("Attempting to match %s to the following characters: %s", text, possibleCharacters));
+                log.debug(String.format("Attempting to match %s to the following characters: %s", text,
+                        possibleCharacters));
             }
         }
         // Compute the minimal Levenshtein distance between the given text and the uppercase character names.
@@ -319,25 +328,27 @@ public class TesseractOCREngine implements OCREngine {
             result = matchingCharacters.iterator().next();
         }
         if (log.isDebugEnabled()) {
-            log.debug(String.format("Match found: %s. levenshtein(%s, %s) = %s", result, result.getName().toUpperCase(), text, "" + minimalDistance));
+            log.debug(String.format("Match found: %s. levenshtein(%s, %s) = %s", result,
+                    result.getName().toUpperCase(), text, "" + minimalDistance));
         }
         return result;
     }
 
     /**
      * Handles the situation where more than one match is found with the minimal Levenshtein distance.
-     *
+     * 
      * @param text
-     * text to be matched
+     *            text to be matched
      * @param minimalDistance
-     * minimal distance found
+     *            minimal distance found
      * @param matchingCharacters
-     * potentially matching characters, with minimal distance to text
+     *            potentially matching characters, with minimal distance to text
      * @return best match out of matchingCharacters
      * @throws OCRException
-     * in case no best match can be determined
+     *             in case no best match can be determined
      */
-    private Umvc3Character handleMultipleMatches(String text, int minimalDistance, Set<Umvc3Character> matchingCharacters) throws OCRException {
+    private Umvc3Character handleMultipleMatches(String text, int minimalDistance,
+            Set<Umvc3Character> matchingCharacters) throws OCRException {
         Umvc3Character result;
         if (log.isDebugEnabled()) {
             log.debug("Potential matches: " + matchingCharacters);
@@ -346,7 +357,10 @@ public class TesseractOCREngine implements OCREngine {
         result = matchByReplacingLetters(text, matchingCharacters, suppressedExceptions);
         if (result == null) {
             // Nothing else we can do, throw an exception.
-            OCRException e = new OCRException(String.format("Unable to uniquely match character. Text to be matched: %s, characters with minimal Levenshtein distance %s: %s.", text, "" + minimalDistance, matchingCharacters));
+            OCRException e = new OCRException(
+                    String.format(
+                            "Unable to uniquely match character. Text to be matched: %s, characters with minimal Levenshtein distance %s: %s.",
+                            text, "" + minimalDistance, matchingCharacters));
             for (OCRException suppressed : suppressedExceptions) {
                 e.addSuppressed(suppressed);
             }
@@ -363,17 +377,18 @@ public class TesseractOCREngine implements OCREngine {
      * Tesseract seems to have trouble reading a few letter combinations. For example, A is often read as II. This
      * method replaces one of these occurences of known difficult combinations and tries to match the resulting text to
      * a character name.
-     *
+     * 
      * @param text
-     * original text, which did not uniquely match any character's name
+     *            original text, which did not uniquely match any character's name
      * @param possibleCharacters
-     * the characters that text may match
+     *            the characters that text may match
      * @param suppressedExceptions
-     * list of suppressed exceptions; if any OCRExceptions occur while executing this method, they are added
-     * to this list
+     *            list of suppressed exceptions; if any OCRExceptions occur while executing this method, they are added
+     *            to this list
      * @return matching character, or null if no match could be found
      */
-    private Umvc3Character matchByReplacingLetters(String text, Set<Umvc3Character> possibleCharacters, List<OCRException> suppressedExceptions) {
+    private Umvc3Character matchByReplacingLetters(String text, Set<Umvc3Character> possibleCharacters,
+            List<OCRException> suppressedExceptions) {
         Set<Umvc3Character> matches = EnumSet.noneOf(Umvc3Character.class);
         matchByReplacingLetters(text, "II", "A", possibleCharacters, matches, suppressedExceptions);
         matchByReplacingLetters(text, "II", "N", possibleCharacters, matches, suppressedExceptions);
@@ -397,22 +412,23 @@ public class TesseractOCREngine implements OCREngine {
     /**
      * This method replaces te first occurence of regexp with replacement and tries to match the resulting text to a
      * character name.
-     *
+     * 
      * @param text
-     * original text, which did not uniquely match any character's name
+     *            original text, which did not uniquely match any character's name
      * @param regexp
-     * expression to be replaced
+     *            expression to be replaced
      * @param replacement
-     * replacement for regexp
+     *            replacement for regexp
      * @param possibleCharacters
-     * the characters that text may match
+     *            the characters that text may match
      * @param matches
-     * any resulting matches are added to this list
+     *            any resulting matches are added to this list
      * @param suppressedExceptions
-     * list of suppressed exceptions; if any OCRExceptions occur while executing this method, they are added
-     * to this list
+     *            list of suppressed exceptions; if any OCRExceptions occur while executing this method, they are added
+     *            to this list
      */
-    private void matchByReplacingLetters(String text, String regexp, String replacement, Set<Umvc3Character> possibleCharacters, Set<Umvc3Character> matches, List<OCRException> suppressedExceptions) {
+    private void matchByReplacingLetters(String text, String regexp, String replacement,
+            Set<Umvc3Character> possibleCharacters, Set<Umvc3Character> matches, List<OCRException> suppressedExceptions) {
         String alternateText = text.replaceFirst(regexp, replacement);
         if (!text.equals(alternateText)) {
             try {

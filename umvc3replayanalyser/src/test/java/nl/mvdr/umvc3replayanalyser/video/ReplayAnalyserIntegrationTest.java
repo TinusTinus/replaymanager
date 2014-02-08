@@ -32,19 +32,18 @@ import org.junit.Test;
 
 /**
  * Tests {@link ReplayAnalyser}.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class ReplayAnalyserIntegrationTest {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReplayAnalyserIntegrationTest.class);
-    
-    
+
     /**
      * Versus screen analyser to be used.
      */
     private VersusScreenAnalyser versusScreenAnalyser;
-    
+
     /**
      * Setup method.
      */
@@ -54,12 +53,13 @@ public class ReplayAnalyserIntegrationTest {
         TesseractOCREngine ocrEngine = new TesseractOCREngine(configuration);
         this.versusScreenAnalyser = new VersusScreenAnalyserImpl(ocrEngine);
     }
+
     // disabled by default, since this integration test case can fail occasionally depending on timing issues
     /**
      * Analyses a replay.
-     *
+     * 
      * @throws ReplayAnalysisException
-     * unexpected
+     *             unexpected
      */
     @Test
     @Ignore
@@ -76,13 +76,13 @@ public class ReplayAnalyserIntegrationTest {
         assertPlayerName("badhyper", game.getPlayerOne().getGamertag());
         assertPlayerName("MvdR", game.getPlayerTwo().getGamertag());
     }
-    
+
     /**
      * Attempts to analyse a file which can be decoded just fine, but does not contain a versus screen. This is expected
      * to fail with a nice ReplayAnalysisException.
-     *
+     * 
      * @throws ReplayAnalysisException
-     * expected exception
+     *             expected exception
      */
     @Test(expected = ReplayAnalysisException.class)
     public void testEOF() throws ReplayAnalysisException {
@@ -90,32 +90,34 @@ public class ReplayAnalyserIntegrationTest {
         // Xuggle can handle png files, and interprets them as a single frame video.
         analyser.analyse("src/test/resources/vswithoutnames.png");
     }
-    
+
     /**
-     * Attempts to analyse a file that is not a video file. This is expected to fail with a nice ReplayAnalysisException.
-     *
+     * Attempts to analyse a file that is not a video file. This is expected to fail with a nice
+     * ReplayAnalysisException.
+     * 
      * @throws ReplayAnalysisException
-     * expected exception
+     *             expected exception
      */
     @Test(expected = ReplayAnalysisException.class)
     public void testTextFile() throws ReplayAnalysisException {
         ReplayAnalyserImpl analyser = new ReplayAnalyserImpl(this.versusScreenAnalyser);
         analyser.analyse("src/test/resources/test.txt");
     }
-    
+
     /**
      * Checks the given player name.
-     *
+     * 
      * @param expected
-     * expected name
+     *            expected name
      * @param actual
-     * actual name
+     *            actual name
      */
     private void assertPlayerName(String expected, String actual) {
         // OCR'ing player names is hard, so we're going to give Tesseract a break and allow for some mismatched
         // characters.
         int distance = StringUtils.getLevenshteinDistance(expected, actual);
-        String message = String.format("Expected \"%s\", got \"%s\", Levenshtein distance: %s", expected, actual, "" + distance);
+        String message = String.format("Expected \"%s\", got \"%s\", Levenshtein distance: %s", expected, actual, ""
+                + distance);
         log.info(message);
         Assert.assertTrue(message, distance < 5);
     }

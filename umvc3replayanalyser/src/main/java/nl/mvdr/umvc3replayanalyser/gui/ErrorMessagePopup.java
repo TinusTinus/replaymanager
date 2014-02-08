@@ -28,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+
 // private constructor to prevent utility class instantiation
 
 /**
@@ -47,13 +48,13 @@ public class ErrorMessagePopup {
      * Handles an exception that caused program startup to fail, by showing an error message to the user.
      *
      * @param title
-     * title for the dialog
+     *            title for the dialog
      * @param errorMessage
-     * error message
+     *            error message
      * @param stage
-     * stage in which to show the error message
+     *            stage in which to show the error message
      * @param exception
-     * exception that caused the error
+     *            exception that caused the error
      */
     public static void show(String title, String errorMessage, final Stage stage, Exception exception) {
         log.info("Showing error message dialog to indicate that startup failed.");
@@ -74,7 +75,7 @@ public class ErrorMessagePopup {
         // Details button for displaying the stack trace.
         Button detailsButton = new Button();
         detailsButton.setText("Details");
-        detailsButton.setOnAction(new EventHandler<ActionEvent>(){
+        detailsButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -86,7 +87,7 @@ public class ErrorMessagePopup {
         /** {@inheritDoc} */
         Button okButton = new Button();
         okButton.setText("OK");
-        okButton.setOnAction(new EventHandler<ActionEvent>(){
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -131,11 +132,11 @@ public class ErrorMessagePopup {
      * Handles an exception that caused program startup to fail, by showing an error message to the user in a new stage.
      *
      * @param title
-     * title for the dialog
+     *            title for the dialog
      * @param errorMessage
-     * error message
+     *            error message
      * @param exception
-     * exception that caused the error
+     *            exception that caused the error
      */
     public static void show(String title, String errorMessage, Exception exception) {
         show(title, errorMessage, new Stage(), exception);

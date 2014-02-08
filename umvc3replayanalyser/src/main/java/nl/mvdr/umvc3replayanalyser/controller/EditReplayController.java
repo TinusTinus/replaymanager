@@ -46,122 +46,123 @@ import org.apache.commons.lang3.StringUtils;
 class EditReplayController {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditReplayController.class);
-    
+
     /**
      * Constructor.
      *
      * @param okHandler
-     * event handler, called when the user activates the OK button
+     *            event handler, called when the user activates the OK button
      */
     EditReplayController(ReplayDetailsEditedHandler okHandler) {
         this(null, okHandler);
     }
-    
+
     /**
      * Default contents for the form. May be null.
      */
     private final Game defaultContents;
-    
+
     /**
      * Event handler, called when the user activates the OK button.
      */
     @NonNull
     private final ReplayDetailsEditedHandler okHandler;
-    
+
     /**
      * First text field for player name.
      */
     @FXML
     private TextField playerOneTextField;
-    
+
     /**
      * Second text field for player name.
      */
     @FXML
     private TextField playerTwoTextField;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerOneCharacterOneComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerOneCharacterTwoComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerOneCharacterThreeComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterOneComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterTwoComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterThreeComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerOneAssistOneComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerOneAssistTwoComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerOneAssistThreeComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerTwoAssistOneComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerTwoAssistTwoComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerTwoAssistThreeComboBox;
-    
+
     /**
      * OK button.
      */
     @FXML
     private Button okButton;
-    
+
     /**
      * Indicates which character value each assist combo box depends on.
      */
     private Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes;
+
     // Default visibility for unit tests.
     /**
      * Initialisation method.
@@ -170,7 +171,9 @@ class EditReplayController {
     void initialize() {
         log.info("Performing controller initialisation.");
         // Initialise character combo boxes.
-        for (ComboBox<Umvc3Character> comboBox : Arrays.asList(playerOneCharacterOneComboBox, playerOneCharacterTwoComboBox, playerOneCharacterThreeComboBox, playerTwoCharacterOneComboBox, playerTwoCharacterTwoComboBox, playerTwoCharacterThreeComboBox)) {
+        for (ComboBox<Umvc3Character> comboBox : Arrays.asList(playerOneCharacterOneComboBox,
+                playerOneCharacterTwoComboBox, playerOneCharacterThreeComboBox, playerTwoCharacterOneComboBox,
+                playerTwoCharacterTwoComboBox, playerTwoCharacterThreeComboBox)) {
             comboBox.getItems().addAll(Umvc3Character.values());
         }
         // Initialise assist combo boxes.
@@ -182,10 +185,11 @@ class EditReplayController {
         assistComboBoxes.put(playerTwoCharacterTwoComboBox.valueProperty(), playerTwoAssistTwoComboBox);
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
         // Add a listener, so that whenever a character value is changed, the assist combo box is updated as well.
-        ChangeListener<Umvc3Character> assistListener = new ChangeListener<Umvc3Character>(){
-            
+        ChangeListener<Umvc3Character> assistListener = new ChangeListener<Umvc3Character>() {
+
             @Override
-            public void changed(ObservableValue<? extends Umvc3Character> observable, Umvc3Character oldValue, Umvc3Character newValue) {
+            public void changed(ObservableValue<? extends Umvc3Character> observable, Umvc3Character oldValue,
+                    Umvc3Character newValue) {
                 if (log.isDebugEnabled()) {
                     log.debug(String.format("Character changed. Old value: %s, new value: %s", oldValue, newValue));
                 }
@@ -200,12 +204,13 @@ class EditReplayController {
         playerTwoCharacterThreeComboBox.valueProperty().addListener(assistListener);
         // Add another listener to ensure the OK button is enabled when the required fields have been filled in.
         /** {@inheritDoc} */
-        ChangeListener<Object> okEnabledListener = new ChangeListener<Object>(){
-            
+        ChangeListener<Object> okEnabledListener = new ChangeListener<Object>() {
+
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
                 if (log.isDebugEnabled()) {
-                    log.debug(String.format("Observable value changed. Old value: %s, new value: %s", oldValue, newValue));
+                    log.debug(String.format("Observable value changed. Old value: %s, new value: %s", oldValue,
+                            newValue));
                 }
                 okButton.setDisable(!isFilledIn());
             }
@@ -243,12 +248,12 @@ class EditReplayController {
         }
         log.info("Initialisation complete.");
     }
-    
+
     /**
      * Updates the assist combo box corresponding to the given character value.
-     *
+     * 
      * @param observable
-     * character observable whose value has changed
+     *            character observable whose value has changed
      */
     private void updateAssistComboBox(ObservableValue<? extends Umvc3Character> observable) {
         ComboBox<Assist> comboBox = this.assistComboBoxes.get(observable);
@@ -266,32 +271,42 @@ class EditReplayController {
         comboBox.getSelectionModel().select(index);
         comboBox.setDisable(false);
     }
-    
+
     /**
      * Converts the selection in the dialog box to a game and returns it.
-     *
+     * 
      * Note that this method will throw a NullPointerException in case any required field values are null. This can be
      * checked using the isFilledIn() method.
-     *
+     * 
      * @return new game instance based on the selection in the dialog box
      */
     private Game getGame() {
         Player playerOne = new Player(playerOneTextField.getText());
         Player playerTwo = new Player(playerTwoTextField.getText());
-        Team teamOne = new Team(playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()), playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()), playerOneCharacterThreeComboBox.getValue(), Assist.getType(playerOneAssistThreeComboBox.getValue()));
-        Team teamTwo = new Team(playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()), playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()), playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox.getValue()));
+        Team teamOne = new Team(playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox
+                .getValue()), playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox
+                .getValue()), playerOneCharacterThreeComboBox.getValue(), Assist.getType(playerOneAssistThreeComboBox
+                .getValue()));
+        Team teamTwo = new Team(playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox
+                .getValue()), playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox
+                .getValue()), playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox
+                .getValue()));
         return new Game(playerOne, teamOne, playerTwo, teamTwo);
     }
-    
+
     /**
      * Checks whether the required fields of the form have been filled in.
-     *
+     * 
      * @return true if the required fields are filled in, false otherwise
      */
     private boolean isFilledIn() {
-        return !StringUtils.isEmpty(playerOneTextField.getText()) && !StringUtils.isEmpty(playerTwoTextField.getText()) && playerOneCharacterOneComboBox.getValue() != null && playerOneCharacterTwoComboBox.getValue() != null && playerOneCharacterThreeComboBox.getValue() != null && playerTwoCharacterOneComboBox.getValue() != null && playerTwoCharacterTwoComboBox.getValue() != null && playerTwoCharacterThreeComboBox.getValue() != null;
+        return !StringUtils.isEmpty(playerOneTextField.getText()) && !StringUtils.isEmpty(playerTwoTextField.getText())
+                && playerOneCharacterOneComboBox.getValue() != null && playerOneCharacterTwoComboBox.getValue() != null
+                && playerOneCharacterThreeComboBox.getValue() != null
+                && playerTwoCharacterOneComboBox.getValue() != null && playerTwoCharacterTwoComboBox.getValue() != null
+                && playerTwoCharacterThreeComboBox.getValue() != null;
     }
-    
+
     /**
      * Action handler for the ok button.
      */
@@ -303,7 +318,7 @@ class EditReplayController {
         okHandler.handleReplayDetailsEdited(game);
         getApplicationWindow().hide();
     }
-    
+
     /**
      * Action handler for the cancel button.
      */
@@ -312,17 +327,17 @@ class EditReplayController {
         log.info("Cancel button activated.");
         getApplicationWindow().hide();
     }
-    
+
     /**
      * Returns the popup window.
-     *
+     * 
      * @return window
      */
     private Window getApplicationWindow() {
         return this.okButton.getScene().getWindow();
     }
-    
-    @java.beans.ConstructorProperties({"defaultContents", "okHandler"})
+
+    @java.beans.ConstructorProperties({ "defaultContents", "okHandler" })
     @java.lang.SuppressWarnings("all")
     EditReplayController(final Game defaultContents, @NonNull final ReplayDetailsEditedHandler okHandler) {
         if (okHandler == null) {
@@ -331,10 +346,26 @@ class EditReplayController {
         this.defaultContents = defaultContents;
         this.okHandler = okHandler;
     }
-    
-    @java.beans.ConstructorProperties({"defaultContents", "okHandler", "playerOneTextField", "playerTwoTextField", "playerOneCharacterOneComboBox", "playerOneCharacterTwoComboBox", "playerOneCharacterThreeComboBox", "playerTwoCharacterOneComboBox", "playerTwoCharacterTwoComboBox", "playerTwoCharacterThreeComboBox", "playerOneAssistOneComboBox", "playerOneAssistTwoComboBox", "playerOneAssistThreeComboBox", "playerTwoAssistOneComboBox", "playerTwoAssistTwoComboBox", "playerTwoAssistThreeComboBox", "okButton", "assistComboBoxes"})
+
+    @java.beans.ConstructorProperties({ "defaultContents", "okHandler", "playerOneTextField", "playerTwoTextField",
+            "playerOneCharacterOneComboBox", "playerOneCharacterTwoComboBox", "playerOneCharacterThreeComboBox",
+            "playerTwoCharacterOneComboBox", "playerTwoCharacterTwoComboBox", "playerTwoCharacterThreeComboBox",
+            "playerOneAssistOneComboBox", "playerOneAssistTwoComboBox", "playerOneAssistThreeComboBox",
+            "playerTwoAssistOneComboBox", "playerTwoAssistTwoComboBox", "playerTwoAssistThreeComboBox", "okButton",
+            "assistComboBoxes" })
     @java.lang.SuppressWarnings("all")
-    EditReplayController(final Game defaultContents, @NonNull final ReplayDetailsEditedHandler okHandler, final TextField playerOneTextField, final TextField playerTwoTextField, final ComboBox<Umvc3Character> playerOneCharacterOneComboBox, final ComboBox<Umvc3Character> playerOneCharacterTwoComboBox, final ComboBox<Umvc3Character> playerOneCharacterThreeComboBox, final ComboBox<Umvc3Character> playerTwoCharacterOneComboBox, final ComboBox<Umvc3Character> playerTwoCharacterTwoComboBox, final ComboBox<Umvc3Character> playerTwoCharacterThreeComboBox, final ComboBox<Assist> playerOneAssistOneComboBox, final ComboBox<Assist> playerOneAssistTwoComboBox, final ComboBox<Assist> playerOneAssistThreeComboBox, final ComboBox<Assist> playerTwoAssistOneComboBox, final ComboBox<Assist> playerTwoAssistTwoComboBox, final ComboBox<Assist> playerTwoAssistThreeComboBox, final Button okButton, final Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes) {
+    EditReplayController(final Game defaultContents, @NonNull final ReplayDetailsEditedHandler okHandler,
+            final TextField playerOneTextField, final TextField playerTwoTextField,
+            final ComboBox<Umvc3Character> playerOneCharacterOneComboBox,
+            final ComboBox<Umvc3Character> playerOneCharacterTwoComboBox,
+            final ComboBox<Umvc3Character> playerOneCharacterThreeComboBox,
+            final ComboBox<Umvc3Character> playerTwoCharacterOneComboBox,
+            final ComboBox<Umvc3Character> playerTwoCharacterTwoComboBox,
+            final ComboBox<Umvc3Character> playerTwoCharacterThreeComboBox,
+            final ComboBox<Assist> playerOneAssistOneComboBox, final ComboBox<Assist> playerOneAssistTwoComboBox,
+            final ComboBox<Assist> playerOneAssistThreeComboBox, final ComboBox<Assist> playerTwoAssistOneComboBox,
+            final ComboBox<Assist> playerTwoAssistTwoComboBox, final ComboBox<Assist> playerTwoAssistThreeComboBox,
+            final Button okButton, final Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes) {
         if (okHandler == null) {
             throw new java.lang.NullPointerException("okHandler");
         }

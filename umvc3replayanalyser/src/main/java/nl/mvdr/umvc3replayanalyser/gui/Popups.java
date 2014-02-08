@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 // private constructor to prevent utility class instantiation
 
 /**
@@ -37,7 +38,7 @@ public class Popups {
      * Shows the import replay popup in a new stage.
      *
      * @param controller
-     * controller for this popup window, typically an ImportReplayPopupController
+     *            controller for this popup window, typically an ImportReplayPopupController
      */
     public static void showImportReplaysPopup(Object controller) {
         showImportReplaysPopup(new Stage(), controller);
@@ -47,9 +48,9 @@ public class Popups {
      * Shows the import replay popup.
      *
      * @param stage
-     * stage in which to show the user interface
+     *            stage in which to show the user interface
      * @param controller
-     * controller for this popup window, typically an ImportReplayPopupController
+     *            controller for this popup window, typically an ImportReplayPopupController
      */
     public static void showImportReplaysPopup(Stage stage, Object controller) {
         show("/import-replay-popup.fxml", stage, controller, "Importing replays");
@@ -59,7 +60,7 @@ public class Popups {
      * Shows the about box replay popup.
      *
      * @param controller
-     * controller for the about box, typically an AboutPopupController
+     *            controller for the about box, typically an AboutPopupController
      */
     public static void showAboutPopup(Object controller) {
         show("/about.fxml", new Stage(), controller, "About");
@@ -69,7 +70,7 @@ public class Popups {
      * Shows the edit replay details popup.
      *
      * @param controller
-     * controller for the edit replay popup window, typically an EditReplayController
+     *            controller for the edit replay popup window, typically an EditReplayController
      */
     public static void showEditReplayPopup(Object controller) {
         show("/edit-replay.fxml", new Stage(), controller, "Edit replay details");
@@ -79,20 +80,20 @@ public class Popups {
      * Shows a popup.
      *
      * @param fxmlFilename
-     * filename of the fxml file to be loaded
+     *            filename of the fxml file to be loaded
      * @param stage
-     * stage in which to show the user interface
+     *            stage in which to show the user interface
      * @param controller
-     * controller for this popup window
+     *            controller for this popup window
      * @param title
-     * title for the popup window
+     *            title for the popup window
      */
     static void show(String fxmlFilename, Stage stage, Object controller, String title) {
         log.info(String.format("Opening popup, title: %s, fxml file: %s", title, fxmlFilename));
         FXMLLoader fxmlLoader = new FXMLLoader(Popups.class.getResource(fxmlFilename));
         fxmlLoader.setController(controller);
         try {
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = (Parent) fxmlLoader.load();
             log.info("Fxml loaded, performing additional initialisation.");
             stage.setTitle(title);
             stage.setScene(new Scene(root));

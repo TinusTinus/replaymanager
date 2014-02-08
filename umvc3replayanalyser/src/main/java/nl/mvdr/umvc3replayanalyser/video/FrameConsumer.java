@@ -26,33 +26,33 @@ import nl.mvdr.umvc3replayanalyser.ocr.OCRException;
 
 /**
  * Consumes and analyses individual video frames, until it succesfully finds and analyses a versus screen.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 class FrameConsumer implements Callable<GameAndVersusScreen> {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrameConsumer.class);
-    
+
     /**
      * Wait time between polling attempts when no new frame is available, in milliseconds.
      */
     private static final long WAIT_TIME_BETWEEN_POLLS = 100;
-    
+
     /**
      * Versus screen analyser.
      */
     private final VersusScreenAnalyser versusScreenAnalyser;
-    
+
     /**
      * Queue to read frames from.
      */
     private final BlockingQueue<BufferedImage> queue;
-    
+
     /**
      * Indicates that the producer is no longer producing new items.
      */
     private boolean producerStopped;
-    
+
     /**
      * Indicates whether consumption is still needed.
      */
@@ -60,11 +60,11 @@ class FrameConsumer implements Callable<GameAndVersusScreen> {
 
     /**
      * Constructor.
-     *
+     * 
      * @param versusScreenAnalyser
-     * versus screen analyser
+     *            versus screen analyser
      * @param queue
-     * queue
+     *            queue
      */
     FrameConsumer(VersusScreenAnalyser versusScreenAnalyser, BlockingQueue<BufferedImage> queue) {
         this.versusScreenAnalyser = versusScreenAnalyser;

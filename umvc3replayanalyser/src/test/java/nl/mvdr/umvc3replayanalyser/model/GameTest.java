@@ -27,37 +27,43 @@ import org.junit.Test;
 
 /**
  * Test class for {@link Game}.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class GameTest {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GameTest.class);
-    
-    
+
     /**
      * Tests the constructor and a bunch of methods in the Game class.
      */
     @Test
     public void test() {
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
-        Assert.assertEquals("DJ Alberto Lara (Hulk / Wolverine / Sentinel) vs. MvdR (Wolverine / Zero / Doctor Doom)", game.getDescription(false));
-        Assert.assertEquals("DJ Alberto Lara (Hulk (Gamma Wave) / Wolverine (Berserker Slash) / Sentinel (Sentinel Force Charge)) vs. MvdR (Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam))", game.getDescription(true));
+        Assert.assertEquals("DJ Alberto Lara (Hulk / Wolverine / Sentinel) vs. MvdR (Wolverine / Zero / Doctor Doom)",
+                game.getDescription(false));
+        Assert.assertEquals(
+                "DJ Alberto Lara (Hulk (Gamma Wave) / Wolverine (Berserker Slash) / Sentinel (Sentinel Force Charge)) vs. MvdR (Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam))",
+                game.getDescription(true));
     }
-    
+
     /**
      * Tests the equals method.
      */
     @Test
     public void testNotEqual() {
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game1 = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         Player badhyper = new Player("badhyper");
         Team teamBadhyper = new Team(Umvc3Character.FELICIA, Umvc3Character.MODOK, Umvc3Character.WESKER);
@@ -67,50 +73,59 @@ public class GameTest {
         Assert.assertFalse(game1.equals(game2));
         Assert.assertFalse(game2.equals(game1));
     }
-    
+
     /**
      * Tests the equals method.
      */
     @Test
     public void testEqualSame() {
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         Assert.assertEquals(game, game);
     }
-    
+
     /**
      * Tests the equals method.
      */
     @Test
     public void testEquals() {
         Player djAlbertoLara1 = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara1 = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara1 = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus1 = new Player("MvdR");
-        Team teamTinus1 = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus1 = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game1 = new Game(djAlbertoLara1, teamDjAlbertoLara1, tinus1, teamTinus1);
         Player djAlbertoLara2 = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara2 = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara2 = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus2 = new Player("MvdR");
-        Team teamTinus2 = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus2 = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game2 = new Game(djAlbertoLara2, teamDjAlbertoLara2, tinus2, teamTinus2);
         Assert.assertEquals(game1, game2);
     }
-    
+
     /**
-     * Tests converting a value to a JSON string and back. 
-     *
-     * @throws IOException unexpected
+     * Tests converting a value to a JSON string and back.
+     * 
+     * @throws IOException
+     *             unexpected
      */
     @Test
     public void testJson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         // marshal
         String string = mapper.writeValueAsString(game);
@@ -121,7 +136,7 @@ public class GameTest {
         Assert.assertNotSame(game, unmarshalled);
         Assert.assertEquals(game, unmarshalled);
     }
-    
+
     /**
      * Tests the construction of the base filename.
      */
@@ -129,14 +144,16 @@ public class GameTest {
     public void testGetBaseFilename() {
         Date date = new GregorianCalendar(2012, 0, 4, 18, 25, 46).getTime();
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         String baseFilename = game.getBaseFilename(date);
         Assert.assertEquals("20120104182546-DJ_Alberto_Lara(Hulk-Wolvie-Sent)_vs_MvdR(Wolvie-Zero-Doom)", baseFilename);
     }
-    
+
     /**
      * Tests the construction of the base filename where the player names contain invalid symbols.
      */
@@ -151,7 +168,7 @@ public class GameTest {
         String baseFilename = game.getBaseFilename(date);
         Assert.assertEquals("20120104182546-Pipe_Pipe(Ryu-Akuma-Viper)_vs_Star_Star(Cap-IronMan-Thor)", baseFilename);
     }
-    
+
     /**
      * Tests the constructor's behaviour when passing in a null value.
      */
@@ -162,7 +179,7 @@ public class GameTest {
         Team teamTwo = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
         new Game(null, teamOne, playerTwo, teamTwo);
     }
-    
+
     /**
      * Tests the constructor's behaviour when passing in a null value.
      */
@@ -173,7 +190,7 @@ public class GameTest {
         Team teamTwo = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
         new Game(playerOne, teamOne, null, teamTwo);
     }
-    
+
     /**
      * Tests the constructor's behaviour when passing in a null value.
      */
@@ -184,7 +201,7 @@ public class GameTest {
         Team teamTwo = new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
         new Game(playerOne, null, playerTwo, teamTwo);
     }
-    
+
     /**
      * Tests the constructor's behaviour when passing in a null value.
      */
@@ -195,33 +212,38 @@ public class GameTest {
         Player playerTwo = new Player("MvdR");
         new Game(playerOne, teamOne, playerTwo, null);
     }
-    
+
     /**
      * Tests {@link Game#getPlayers()}.
      */
     @Test
     public void testGetPlayers() {
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         List<Player> players = game.getPlayers();
         Assert.assertEquals(2, players.size());
         Assert.assertEquals(djAlbertoLara, players.get(0));
         Assert.assertEquals(tinus, players.get(1));
     }
-    
+
     /**
      * Tests what happens when the result of {@link Game#getPlayeers()} is modified. Since this method is supposed to
+     * 
      * return an unmodifiable list, this is expected to throw an UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testModifyPlayers() {
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         List<Player> players = game.getPlayers();
         players.add(new Player("Someone else"));

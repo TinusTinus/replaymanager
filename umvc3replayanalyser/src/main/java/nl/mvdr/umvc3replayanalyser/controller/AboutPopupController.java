@@ -36,7 +36,7 @@ import nl.mvdr.umvc3replayanalyser.gui.ErrorMessagePopup;
 class AboutPopupController {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AboutPopupController.class);
-    
+
     /**
      * Map from hyperlink texts to corresponding URIs.
      */
@@ -53,7 +53,8 @@ class AboutPopupController {
             URIS.put("Commons-lang", new URI("http://commons.apache.org/proper/commons-lang/"));
             URIS.put("Guava", new URI("http://code.google.com/p/guava-libraries/"));
             URIS.put("Jackson", new URI("http://jackson.codehaus.org/"));
-            URIS.put("BCL for Java SE", new URI("http://www.oracle.com/technetwork/java/javase/terms/license/index.html"));
+            URIS.put("BCL for Java SE", new URI(
+                    "http://www.oracle.com/technetwork/java/javase/terms/license/index.html"));
             URIS.put("GPL v3", new URI("http://www.gnu.org/licenses/gpl.html"));
             URIS.put("MIT", new URI("http://opensource.org/licenses/MIT"));
             URIS.put("Apache License v2.0", new URI("http://www.apache.org/licenses/LICENSE-2.0.html"));
@@ -61,24 +62,26 @@ class AboutPopupController {
             throw new RuntimeException("Unable to complete class initialisation.", e);
         }
     }
-    
+
     /**
      * Action handler for when one of the hyperlinks has been clicked.
      *
      * @param event
-     * event which led to this method being called; source must be a hyperlink whose text occurs in URIS
+     *            event which led to this method being called; source must be a hyperlink whose text occurs in URIS
      */
     @FXML
     private void handleHyperlinkAction(final ActionEvent event) {
         Object source = event.getSource();
         if (!(source instanceof Hyperlink)) {
-            throw new IllegalArgumentException("handleHyperlinkAction called with a source that is not a hyperlink: " + source);
+            throw new IllegalArgumentException("handleHyperlinkAction called with a source that is not a hyperlink: "
+                    + source);
         }
-        String linkText = ((Hyperlink)source).getText();
+        String linkText = ((Hyperlink) source).getText();
         log.info("Hyperlink clicked: " + linkText);
         URI uri = URIS.get(linkText);
         if (uri == null) {
-            throw new IllegalArgumentException("Unknow link text: " + linkText + ", must be one of the following: " + URIS.keySet());
+            throw new IllegalArgumentException("Unknow link text: " + linkText + ", must be one of the following: "
+                    + URIS.keySet());
         }
         if (Desktop.isDesktopSupported()) {
             try {
@@ -95,7 +98,7 @@ class AboutPopupController {
             ErrorMessagePopup.show("Unable to open link", "Unable to open link: " + uri, null);
         }
     }
-    
+
     @java.lang.SuppressWarnings("all")
     AboutPopupController() {
     }

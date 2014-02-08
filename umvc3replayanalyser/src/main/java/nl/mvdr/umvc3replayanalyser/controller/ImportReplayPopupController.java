@@ -32,42 +32,42 @@ import lombok.NonNull;
 
 /**
  * Controller for the import replay view.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 class ImportReplayPopupController {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportReplayPopupController.class);
-    
+
     /**
      * Task to be performed.
      */
     @NonNull
     private final Task<?> task;
-    
+
     /**
      * Boolean property which will be set to true upon initialisation, and to false once the task is done.
      */
     @NonNull
     private final BooleanProperty working;
-    
+
     /**
      * Name for the newly constructed thread that will perform the task.
      */
     private final String threadName;
-    
+
     /**
      * Progress bar.
      */
     @FXML
     private ProgressBar progressBar;
-    
+
     /**
      * Text area.
      */
     @FXML
     private TextArea textArea;
-    
+
     /**
      * Initialisation method.
      */
@@ -76,7 +76,7 @@ class ImportReplayPopupController {
         log.info("Performing controller initialisation.");
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
-        EventHandler<WorkerStateEvent> eventHandler = new EventHandler<WorkerStateEvent>(){
+        EventHandler<WorkerStateEvent> eventHandler = new EventHandler<WorkerStateEvent>() {
             /** {@inheritDoc} */
             @Override
             public void handle(WorkerStateEvent event) {
@@ -96,19 +96,20 @@ class ImportReplayPopupController {
         new Thread(task, threadName).start();
         log.info("Initialisation complete.");
     }
-    
+
     /**
      * Returns the popup window.
-     *
+     * 
      * @return window
      */
     private Window getApplicationWindow() {
         return this.progressBar.getScene().getWindow();
     }
-    
-    @java.beans.ConstructorProperties({"task", "working", "threadName"})
+
+    @java.beans.ConstructorProperties({ "task", "working", "threadName" })
     @java.lang.SuppressWarnings("all")
-    ImportReplayPopupController(@NonNull final Task<?> task, @NonNull final BooleanProperty working, final String threadName) {
+    ImportReplayPopupController(@NonNull final Task<?> task, @NonNull final BooleanProperty working,
+            final String threadName) {
         if (task == null) {
             throw new java.lang.NullPointerException("task");
         }

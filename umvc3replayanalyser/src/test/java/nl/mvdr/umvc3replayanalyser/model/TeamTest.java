@@ -23,37 +23,39 @@ import org.junit.Test;
 
 /**
  * Test class for {@link Team}.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class TeamTest {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TeamTest.class);
-    
-    
+
     /**
      * Tests the constructor and the various getName methods.
      */
     @Test
     public void test() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         log.info("" + team);
         Assert.assertEquals("Wolverine / Zero / Doctor Doom", team.getName());
         Assert.assertEquals("Wolverine (gamma) / Zero (alpha) / Doctor Doom (alpha)", team.getNameWithAssists());
-        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam)", team.getNameWithAssistMoveNames());
+        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom (Plasma Beam)",
+                team.getNameWithAssistMoveNames());
     }
-    
+
     /**
      * Tests a custom team name.
      */
     @Test
     public void testCustomTeamNamesTeamTrenchcoat() {
-        Team team = new Team(Umvc3Character.VERGIL, AssistType.ALPHA, Umvc3Character.DANTE, AssistType.BETA, Umvc3Character.WESKER, AssistType.GAMMA);
+        Team team = new Team(Umvc3Character.VERGIL, AssistType.ALPHA, Umvc3Character.DANTE, AssistType.BETA,
+                Umvc3Character.WESKER, AssistType.GAMMA);
         log.info("" + team);
         Assert.assertEquals("Team Trenchcoat", team.getName());
         Assert.assertEquals("Vergil (alpha) / Dante (beta) / Wesker (gamma)", team.getNameWithAssists());
     }
-    
+
     /**
      * Tests what happens when we try to pass a null character value to the constructor.
      */
@@ -61,7 +63,7 @@ public class TeamTest {
     public void testNullValueFirstCharacter() {
         new Team(null, Umvc3Character.ZERO, Umvc3Character.DOCTOR_DOOM);
     }
-    
+
     /**
      * Tests what happens when we try to pass a null character value to the constructor.
      */
@@ -69,7 +71,7 @@ public class TeamTest {
     public void testNullValueSecondCharacter() {
         new Team(Umvc3Character.WOLVERINE, null, Umvc3Character.DOCTOR_DOOM);
     }
-    
+
     /**
      * Tests what happens when we try to pass a null character value to the constructor.
      */
@@ -77,13 +79,14 @@ public class TeamTest {
     public void testNullValueThirdCharacter() {
         new Team(Umvc3Character.WOLVERINE, Umvc3Character.ZERO, null);
     }
-    
+
     /**
      * Tests what happens when we try to pass a null assist value to the constructor.
      */
     @Test
     public void testNullValueFirstAssist() {
-        Team team = new Team(Umvc3Character.WOLVERINE, null, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, null, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Assert.assertEquals(Umvc3Character.WOLVERINE, team.getFirstCharacter());
         Assert.assertNull(team.getFirstAssistType());
         Assert.assertNull(team.getFirstAssist());
@@ -94,15 +97,17 @@ public class TeamTest {
         Assert.assertEquals(AssistType.ALPHA, team.getThirdAssistType());
         Assert.assertEquals(new Assist(AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM), team.getThirdAssist());
         Assert.assertEquals("Wolverine / Zero (alpha) / Doctor Doom (alpha)", team.getNameWithAssists());
-        Assert.assertEquals("Wolverine / Zero (Ryuenjin) / Doctor Doom (Plasma Beam)", team.getNameWithAssistMoveNames());
+        Assert.assertEquals("Wolverine / Zero (Ryuenjin) / Doctor Doom (Plasma Beam)",
+                team.getNameWithAssistMoveNames());
     }
-    
+
     /**
      * Tests what happens when we try to pass a null assist value to the constructor.
      */
     @Test
     public void testNullValueSecondAssist() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, null, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, null,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Assert.assertEquals(Umvc3Character.WOLVERINE, team.getFirstCharacter());
         Assert.assertEquals(AssistType.GAMMA, team.getFirstAssistType());
         Assert.assertEquals(new Assist(AssistType.GAMMA, Umvc3Character.WOLVERINE), team.getFirstAssist());
@@ -113,15 +118,17 @@ public class TeamTest {
         Assert.assertEquals(AssistType.ALPHA, team.getThirdAssistType());
         Assert.assertEquals(new Assist(AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM), team.getThirdAssist());
         Assert.assertEquals("Wolverine (gamma) / Zero / Doctor Doom (alpha)", team.getNameWithAssists());
-        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero / Doctor Doom (Plasma Beam)", team.getNameWithAssistMoveNames());
+        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero / Doctor Doom (Plasma Beam)",
+                team.getNameWithAssistMoveNames());
     }
-    
+
     /**
      * Tests what happens when we try to pass a null assist value to the constructor.
      */
     @Test
     public void testNullValueThirdAssist() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, null);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, null);
         Assert.assertEquals(Umvc3Character.WOLVERINE, team.getFirstCharacter());
         Assert.assertEquals(AssistType.GAMMA, team.getFirstAssistType());
         Assert.assertEquals(new Assist(AssistType.GAMMA, Umvc3Character.WOLVERINE), team.getFirstAssist());
@@ -132,9 +139,10 @@ public class TeamTest {
         Assert.assertNull(team.getThirdAssistType());
         Assert.assertNull(team.getThirdAssist());
         Assert.assertEquals("Wolverine (gamma) / Zero (alpha) / Doctor Doom", team.getNameWithAssists());
-        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom", team.getNameWithAssistMoveNames());
+        Assert.assertEquals("Wolverine (Berserker Barrage) / Zero (Ryuenjin) / Doctor Doom",
+                team.getNameWithAssistMoveNames());
     }
-    
+
     /**
      * Tests what happens when we try to pass all null values to the constructor.
      */
@@ -142,7 +150,7 @@ public class TeamTest {
     public void testNullValues() {
         new Team(null, null, null, null, null, null);
     }
-    
+
     /**
      * Tests what happens when we try to pass all null values to the constructor.
      */
@@ -150,51 +158,57 @@ public class TeamTest {
     public void testNullValuesForCharacters() {
         new Team(null, null, null);
     }
-    
+
     /**
      * Tests {@link Team#getCharacters()}.
      */
     @Test
     public void testGetCharacters() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         List<Umvc3Character> characters = team.getCharacters();
         Assert.assertEquals(3, characters.size());
         Assert.assertEquals(Umvc3Character.WOLVERINE, characters.get(0));
         Assert.assertEquals(Umvc3Character.ZERO, characters.get(1));
         Assert.assertEquals(Umvc3Character.DOCTOR_DOOM, characters.get(2));
     }
-    
+
     /**
      * Tests what happens when the result of {@link Team#getCharacters()} is modified. Since this method is supposed to
+     * 
      * return an unmodifiable list, this is expected to throw an UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testModifyCharacters() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         List<Umvc3Character> characters = team.getCharacters();
         characters.add(Umvc3Character.AKUMA);
     }
-    
+
     /**
      * Tests {@link Team#getAssists()}.
      */
     @Test
     public void testGetAssists() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         List<AssistType> assistTypes = team.getAssists();
         Assert.assertEquals(3, assistTypes.size());
         Assert.assertEquals(AssistType.GAMMA, assistTypes.get(0));
         Assert.assertEquals(AssistType.ALPHA, assistTypes.get(1));
         Assert.assertEquals(AssistType.ALPHA, assistTypes.get(2));
     }
-    
+
     /**
      * Tests what happens when the result of {@link Team#getAssists()} is modified. Since this method is supposed to
+     * 
      * return an unmodifiable list, this is expected to throw an UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testModifyAssists() {
-        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team team = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         List<AssistType> assistTypes = team.getAssists();
         assistTypes.add(AssistType.BETA);
     }

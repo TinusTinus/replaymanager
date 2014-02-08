@@ -24,14 +24,13 @@ import org.junit.Test;
 
 /**
  * Test class for {@link Umvc3Character}.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class Umvc3CharacterTest {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Umvc3CharacterTest.class);
-    
-    
+
     /**
      * Checks the number of characters.
      */
@@ -39,7 +38,7 @@ public class Umvc3CharacterTest {
     public void testNumber() {
         Assert.assertEquals(50, Umvc3Character.values().length);
     }
-    
+
     /**
      * Tests the toString method and the assist names. All values are also logged.
      */
@@ -63,11 +62,12 @@ public class Umvc3CharacterTest {
             }
         }
     }
-    
+
     /**
-     * Tests converting a value to a JSON string and back. 
-     *
-     * @throws IOException unexpected
+     * Tests converting a value to a JSON string and back.
+     * 
+     * @throws IOException
+     *             unexpected
      */
     @Test
     public void testJson() throws IOException {

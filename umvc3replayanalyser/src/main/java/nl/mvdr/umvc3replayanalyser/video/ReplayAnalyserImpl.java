@@ -30,23 +30,23 @@ import nl.mvdr.umvc3replayanalyser.image.VersusScreenAnalyser;
 
 /**
  * Implementation of the ReplayAnalyser interface.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class ReplayAnalyserImpl implements ReplayAnalyser {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReplayAnalyserImpl.class);
-    
+
     /**
      * Time to wait in between polling attempts, in milliseconds.
      */
     private static final long TIME_BETWEEN_POLLS = 100;
-    
+
     /**
      * Versus screen analyser.
      */
     private final VersusScreenAnalyser versusScreenAnalyser;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -133,8 +133,8 @@ public class ReplayAnalyserImpl implements ReplayAnalyser {
         log.info(String.format("Game analysed: %s (time spent: %s ms)", result, "" + timeTaken));
         return result;
     }
-    
-    @java.beans.ConstructorProperties({"versusScreenAnalyser"})
+
+    @java.beans.ConstructorProperties({ "versusScreenAnalyser" })
     @java.lang.SuppressWarnings("all")
     public ReplayAnalyserImpl(final VersusScreenAnalyser versusScreenAnalyser) {
         this.versusScreenAnalyser = versusScreenAnalyser;

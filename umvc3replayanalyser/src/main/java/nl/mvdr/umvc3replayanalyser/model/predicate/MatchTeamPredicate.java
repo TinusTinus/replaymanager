@@ -30,17 +30,17 @@ import com.google.common.base.Predicate;
  * @author Martijn van de Rijdt
  */
 public class MatchTeamPredicate implements Predicate<Team> {
-    
+
     /**
      * Characters.
      */
     private final List<Umvc3Character> characters;
-    
+
     /**
      * Assist types.
      */
     private final List<AssistType> assists;
-    
+
     /**
      * Whether character order needs to be respected when matching against a team.
      */
@@ -50,21 +50,22 @@ public class MatchTeamPredicate implements Predicate<Team> {
      * Constructor.
      *
      * @param character1
-     * character 1
+     *            character 1
      * @param assist1
-     * assist type for character 1
+     *            assist type for character 1
      * @param character2
-     * character 2
+     *            character 2
      * @param assist2
-     * assist type for character 2
+     *            assist type for character 2
      * @param character3
-     * character 3
+     *            character 3
      * @param assist3
-     * assist type for character 3
+     *            assist type for character 3
      * @param maintainCharacterOrder
-     * whether character order needs to be respected when matching against a team
+     *            whether character order needs to be respected when matching against a team
      */
-    public MatchTeamPredicate(Umvc3Character character1, AssistType assist1, Umvc3Character character2, AssistType assist2, Umvc3Character character3, AssistType assist3, boolean maintainCharacterOrder) {
+    public MatchTeamPredicate(Umvc3Character character1, AssistType assist1, Umvc3Character character2,
+            AssistType assist2, Umvc3Character character3, AssistType assist3, boolean maintainCharacterOrder) {
         this.characters = Arrays.asList(character1, character2, character3);
         this.assists = Arrays.asList(assist1, assist2, assist3);
         this.maintainCharacterOrder = maintainCharacterOrder;
@@ -98,6 +99,7 @@ public class MatchTeamPredicate implements Predicate<Team> {
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public java.lang.String toString() {
-        return "MatchTeamPredicate(characters=" + this.characters + ", assists=" + this.assists + ", maintainCharacterOrder=" + this.maintainCharacterOrder + ")";
+        return "MatchTeamPredicate(characters=" + this.characters + ", assists=" + this.assists
+                + ", maintainCharacterOrder=" + this.maintainCharacterOrder + ")";
     }
 }

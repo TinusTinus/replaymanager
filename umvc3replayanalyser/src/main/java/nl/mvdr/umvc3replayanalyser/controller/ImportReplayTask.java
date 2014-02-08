@@ -34,50 +34,49 @@ import nl.mvdr.umvc3replayanalyser.video.ReplayAnalysisException;
 
 /**
  * Task for importing replays.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 class ImportReplayTask extends Task<List<Replay>> {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportReplayTask.class);
-    
+
     /**
      * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
      * of just a single constant, because {@link SimpleDateFormat} is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> LOG_MESSAGE_TIME_FORMAT = new ThreadLocal<DateFormat>(){
+    private static final ThreadLocal<DateFormat> LOG_MESSAGE_TIME_FORMAT = new ThreadLocal<DateFormat>() {
         /** {@inheritDoc} */
-
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("HH:mm:ss,SSS");
         }
     };
-    
+
     /**
      * The directory from which to import replays.
      */
     @NonNull
     private final File directory;
-    
+
     /**
      * Replay analyser.
      */
     @NonNull
     private final ReplayAnalyser replayAnalyser;
-    
+
     /**
      * List of replays, to which the newly loaded replays will be added.
      */
     @NonNull
     private final List<Replay> replays;
-    
+
     /**
      * Replay saver, used to actually save the replay file to disk.
      */
     @NonNull
     private final ReplaySaver replaySaver;
-    
+
     /**
      * Message.
      */
@@ -87,13 +86,14 @@ class ImportReplayTask extends Task<List<Replay>> {
      * Constructor.
      *
      * @param directory
-     * directory
+     *            directory
      * @param replays
-     * list of replays, to which the newly loaded replays will be added
+     *            list of replays, to which the newly loaded replays will be added
      * @param replaySaver
-     * replay saver, used tp actually save the replay file to disk
+     *            replay saver, used tp actually save the replay file to disk
      */
-    ImportReplayTask(@NonNull File directory, @NonNull List<Replay> replays, @NonNull ReplayAnalyser analyser, @NonNull ReplaySaver replaySaver) {
+    ImportReplayTask(@NonNull File directory, @NonNull List<Replay> replays, @NonNull ReplayAnalyser analyser,
+            @NonNull ReplaySaver replaySaver) {
         if (directory == null) {
             throw new java.lang.NullPointerException("directory");
         }
@@ -131,7 +131,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             try {
                 final Replay replay = importReplay(file);
                 logMessage("Imported replay: " + replay.getGame());
-                Platform.runLater(new Runnable(){
+                Platform.runLater(new Runnable() {
                     /** {@inheritDoc} */
 
                     @Override
@@ -152,9 +152,9 @@ class ImportReplayTask extends Task<List<Replay>> {
 
     /**
      * Gives a list of all files in the given directory. Directories are not returned but are searched recursively.
-     *
+     * 
      * @param directory
-     * directory
+     *            directory
      * @return list of files
      */
     private List<File> createFileList(File sourceDirectory) {
@@ -171,18 +171,18 @@ class ImportReplayTask extends Task<List<Replay>> {
 
     /**
      * Imports the given file as a replay.
-     *
+     * 
      * @param file
-     * file to be imported
+     *            file to be imported
      * @return replay
      * @throws ReplayAnalysisException
-     * in case the replay cannot be analysed
+     *             in case the replay cannot be analysed
      * @throws IOException
-     * if unable to save the preview image, video file or replay file
+     *             if unable to save the preview image, video file or replay file
      */
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
-        MessageLogger logger = new MessageLogger(){
+        MessageLogger logger = new MessageLogger() {
             /** {@inheritDoc} */
 
             @Override
@@ -190,14 +190,15 @@ class ImportReplayTask extends Task<List<Replay>> {
                 logMessage(logMessage);
             }
         };
-        return this.replaySaver.saveReplay(file, gameAndVersusScreen.getGame(), gameAndVersusScreen.getVersusScreen(), logger);
+        return this.replaySaver.saveReplay(file, gameAndVersusScreen.getGame(), gameAndVersusScreen.getVersusScreen(),
+                logger);
     }
 
     /**
      * Logs the given message to the logger at log level INFO and appends it to the message property.
-     *
+     * 
      * @param logMessage
-     * message text
+     *            message text
      */
     private void logMessage(String logMessage) {
         log.info(message);

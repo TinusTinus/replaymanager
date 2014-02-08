@@ -18,11 +18,7 @@
 package nl.mvdr.umvc3replayanalyser.model;
 
 /**
- * Representation of a character in the video game Ultimate Marvel vs Capcom 3.
- *
- * Named Umvc3Character instead of Character to avoid name clashes with java.lang.Character.
- *
- * @author Martijn van de Rijdt
+ * Representation of a character in the video game Ultimate Marvel vs Capcom 3. * * Named Umvc3Character instead of Character to avoid name clashes with java.lang.Character. * * @author Martijn van de Rijdt
  */
 public enum Umvc3Character {
     
@@ -310,9 +306,7 @@ public enum Umvc3Character {
     }
     
     /**
-     * Returns the name of the assist move of the given type for this character
-     *
-     * @return move name
+     * Returns the name of the assist move of the given type for this character     *     * @return move name
      */
     public String getAssistName(AssistType type) {
         String result;

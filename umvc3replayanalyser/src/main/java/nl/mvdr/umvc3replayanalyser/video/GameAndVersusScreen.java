@@ -27,20 +27,20 @@ import nl.mvdr.umvc3replayanalyser.model.Game;
  * @author Martijn van de Rijdt
  */
 public class GameAndVersusScreen {
-    
+
     /**
      * Game.
      */
     @NonNull
     private final Game game;
-    
+
     /**
      * Versus screen.
      */
     @NonNull
     private final BufferedImage versusScreen;
 
-    @java.beans.ConstructorProperties({"game", "versusScreen"})
+    @java.beans.ConstructorProperties({ "game", "versusScreen" })
     @java.lang.SuppressWarnings("all")
     GameAndVersusScreen(@NonNull final Game game, @NonNull final BufferedImage versusScreen) {
         if (game == null) {
@@ -80,16 +80,21 @@ public class GameAndVersusScreen {
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public boolean equals(final java.lang.Object o) {
-        if (o == this) return true;
-        if (!(o instanceof GameAndVersusScreen)) return false;
-        final GameAndVersusScreen other = (GameAndVersusScreen)o;
-        if (!other.canEqual((java.lang.Object)this)) return false;
+        if (o == this)
+            return true;
+        if (!(o instanceof GameAndVersusScreen))
+            return false;
+        final GameAndVersusScreen other = (GameAndVersusScreen) o;
+        if (!other.canEqual((java.lang.Object) this))
+            return false;
         final java.lang.Object this$game = this.getGame();
         final java.lang.Object other$game = other.getGame();
-        if (this$game == null ? other$game != null : !this$game.equals(other$game)) return false;
+        if (this$game == null ? other$game != null : !this$game.equals(other$game))
+            return false;
         final java.lang.Object this$versusScreen = this.getVersusScreen();
         final java.lang.Object other$versusScreen = other.getVersusScreen();
-        if (this$versusScreen == null ? other$versusScreen != null : !this$versusScreen.equals(other$versusScreen)) return false;
+        if (this$versusScreen == null ? other$versusScreen != null : !this$versusScreen.equals(other$versusScreen))
+            return false;
         return true;
     }
 

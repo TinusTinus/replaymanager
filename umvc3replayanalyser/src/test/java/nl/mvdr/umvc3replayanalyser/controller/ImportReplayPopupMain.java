@@ -37,29 +37,28 @@ import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
 /**
  * Main class which lets us test the import replay popup as a standalone application.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class ImportReplayPopupMain extends Application {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportReplayPopupMain.class);
-    
-    
+
     /**
      * Directory from which replays are loaded.
      */
     private static final String REPLAY_DIRECTORY = "src/test/resources";
-    
+
     /**
      * Main method.
-     *
+     * 
      * @param args
-     * command line parameters, which are passed on to JavaFX
+     *            command line parameters, which are passed on to JavaFX
      */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -68,11 +67,12 @@ public class ImportReplayPopupMain extends Application {
         log.info("Starting application.");
         final ArrayList<Replay> replays = new ArrayList<>();
         SimpleBooleanProperty working = new SimpleBooleanProperty();
-        working.addListener(new ChangeListener<Boolean>(){
+        working.addListener(new ChangeListener<Boolean>() {
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Boolean> value, Boolean oldValue, Boolean newValue) {
-                log.info("working changed from " + oldValue + " to " + newValue + "; " + replays.size() + " replays: " + replays);
+                log.info("working changed from " + oldValue + " to " + newValue + "; " + replays.size() + " replays: "
+                        + replays);
             }
         });
         Configuration configuration = new PropertiesConfiguration();
@@ -85,7 +85,7 @@ public class ImportReplayPopupMain extends Application {
         Popups.showImportReplaysPopup(stage, controller);
         log.info("Application started.");
     }
-    
+
     /**
      * {@inheritDoc}
      */

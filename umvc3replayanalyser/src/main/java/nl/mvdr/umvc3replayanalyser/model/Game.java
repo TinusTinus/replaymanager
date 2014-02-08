@@ -33,63 +33,64 @@ import com.google.common.collect.ImmutableList;
  * @author Martijn van de Rijdt
  */
 public class Game {
-    
+
     /**
      * Regular expression for which characters are allowed in a player name in a filename. Any other characters will be
      * filtered out and replaced by underscores.
      */
     private static final String WHITELIST_CHARACTERS = "\\W+";
-    
+
     /**
-     * Thread-local variable holding the time format for output filenames. This variable is stored as a thread-local instead
-     * of just a single constant, because SimpleDateFormat is not threadsafe.
+     * Thread-local variable holding the time format for output filenames. This variable is stored as a thread-local
+     * instead of just a single constant, because SimpleDateFormat is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<DateFormat>(){
+    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<DateFormat>() {
         /** {@inheritDoc} */
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyyMMddHHmmss");
         }
     };
-    
+
     /**
      * First player.
      */
     @NonNull
     private final Player playerOne;
-    
+
     /**
      * Player one's team.
      */
     @NonNull
     private final Team teamOne;
-    
+
     /**
      * Second player.
      */
     @NonNull
     private final Player playerTwo;
-    
+
     /**
      * Player two's team.
      */
     @NonNull
     private final Team teamTwo;
-    
+
     /**
      * Convenience constructor, for when the winning player is unknown.
      *
      * @param playerOne
-     * first player
+     *            first player
      * @param teamOne
-     * player one's team
+     *            player one's team
      * @param playerTwo
-     * second player
+     *            second player
      * @param teamTwo
-     * player two's team
+     *            player two's team
      */
     @JsonCreator
-    public Game(@JsonProperty("playerOne") @NonNull Player playerOne, @JsonProperty("teamOne") @NonNull Team teamOne, @JsonProperty("playerTwo") @NonNull Player playerTwo, @JsonProperty("teamTwo") @NonNull Team teamTwo) {
+    public Game(@JsonProperty("playerOne") @NonNull Player playerOne, @JsonProperty("teamOne") @NonNull Team teamOne,
+            @JsonProperty("playerTwo") @NonNull Player playerTwo, @JsonProperty("teamTwo") @NonNull Team teamTwo) {
         if (playerOne == null) {
             throw new java.lang.NullPointerException("playerOne");
         }
@@ -107,12 +108,12 @@ public class Game {
         this.playerTwo = playerTwo;
         this.teamTwo = teamTwo;
     }
-    
+
     /**
      * Returns the player playing on the given side.
-     *
+     * 
      * @param side
-     * side
+     *            side
      * @return player
      */
     public Player getPlayer(Side side) {
@@ -126,12 +127,12 @@ public class Game {
         }
         return result;
     }
-    
+
     /**
      * Returns the team played on the given side.
-     *
+     * 
      * @param side
-     * side
+     *            side
      * @return team
      */
     public Team getTeam(Side side) {
@@ -145,22 +146,22 @@ public class Game {
         }
         return result;
     }
-    
+
     /**
      * Returns an unmodifiable list containing all players.
-     *
+     * 
      * @return players
      */
     @JsonIgnore
     public List<Player> getPlayers() {
         return ImmutableList.of(playerOne, playerTwo);
     }
-    
+
     /**
      * Returns a description of the match.
-     *
+     * 
      * @param includeAssists
-     * whether assist names should be included in the description
+     *            whether assist names should be included in the description
      * @return match description
      */
     public String getDescription(boolean includeAssists) {
@@ -183,7 +184,7 @@ public class Game {
         text.append(")");
         return text.toString();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -191,13 +192,13 @@ public class Game {
     public String toString() {
         return getDescription(true);
     }
-    
+
     /**
      * Constructs a base filename, without the extension, to be used for files that have something to do with this game
      * (such as preview image, video file and replay file).
-     *
+     * 
      * @param date
-     * timestamp for use as the first part of the filename; should indicate when the game was played
+     *            timestamp for use as the first part of the filename; should indicate when the game was played
      * @return base filename
      */
     public String getBaseFilename(Date date) {
@@ -210,10 +211,12 @@ public class Game {
         String teamTwoCharacterOne = this.getTeamTwo().getFirstCharacter().getShortName();
         String teamTwoCharacterTwo = this.getTeamTwo().getSecondCharacter().getShortName();
         String teamTwoCharacterThree = this.getTeamTwo().getThirdCharacter().getShortName();
-        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOneGamertag, teamOneCharacterOne, teamOneCharacterTwo, teamOneCharacterThree, playerTwoGamertag, teamTwoCharacterOne, teamTwoCharacterTwo, teamTwoCharacterThree);
+        String result = String.format("%s-%s(%s-%s-%s)_vs_%s(%s-%s-%s)", time, playerOneGamertag, teamOneCharacterOne,
+                teamOneCharacterTwo, teamOneCharacterThree, playerTwoGamertag, teamTwoCharacterOne,
+                teamTwoCharacterTwo, teamTwoCharacterThree);
         return result;
     }
-    
+
     /**
      * First player.
      */
@@ -222,7 +225,7 @@ public class Game {
     public Player getPlayerOne() {
         return this.playerOne;
     }
-    
+
     /**
      * Player one's team.
      */
@@ -231,7 +234,7 @@ public class Game {
     public Team getTeamOne() {
         return this.teamOne;
     }
-    
+
     /**
      * Second player.
      */
@@ -240,7 +243,7 @@ public class Game {
     public Player getPlayerTwo() {
         return this.playerTwo;
     }
-    
+
     /**
      * Player two's team.
      */
@@ -249,34 +252,41 @@ public class Game {
     public Team getTeamTwo() {
         return this.teamTwo;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public boolean equals(final java.lang.Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Game)) return false;
-        final Game other = (Game)o;
-        if (!other.canEqual((java.lang.Object)this)) return false;
+        if (o == this)
+            return true;
+        if (!(o instanceof Game))
+            return false;
+        final Game other = (Game) o;
+        if (!other.canEqual((java.lang.Object) this))
+            return false;
         final java.lang.Object this$playerOne = this.getPlayerOne();
         final java.lang.Object other$playerOne = other.getPlayerOne();
-        if (this$playerOne == null ? other$playerOne != null : !this$playerOne.equals(other$playerOne)) return false;
+        if (this$playerOne == null ? other$playerOne != null : !this$playerOne.equals(other$playerOne))
+            return false;
         final java.lang.Object this$teamOne = this.getTeamOne();
         final java.lang.Object other$teamOne = other.getTeamOne();
-        if (this$teamOne == null ? other$teamOne != null : !this$teamOne.equals(other$teamOne)) return false;
+        if (this$teamOne == null ? other$teamOne != null : !this$teamOne.equals(other$teamOne))
+            return false;
         final java.lang.Object this$playerTwo = this.getPlayerTwo();
         final java.lang.Object other$playerTwo = other.getPlayerTwo();
-        if (this$playerTwo == null ? other$playerTwo != null : !this$playerTwo.equals(other$playerTwo)) return false;
+        if (this$playerTwo == null ? other$playerTwo != null : !this$playerTwo.equals(other$playerTwo))
+            return false;
         final java.lang.Object this$teamTwo = this.getTeamTwo();
         final java.lang.Object other$teamTwo = other.getTeamTwo();
-        if (this$teamTwo == null ? other$teamTwo != null : !this$teamTwo.equals(other$teamTwo)) return false;
+        if (this$teamTwo == null ? other$teamTwo != null : !this$teamTwo.equals(other$teamTwo))
+            return false;
         return true;
     }
-    
+
     @java.lang.SuppressWarnings("all")
     public boolean canEqual(final java.lang.Object other) {
         return other instanceof Game;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public int hashCode() {

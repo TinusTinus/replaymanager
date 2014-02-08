@@ -37,9 +37,9 @@ public class Player {
 
     /**
      * Constructor.
-     *
+     * 
      * @param gamertag
-     * gamertag
+     *            gamertag
      */
     @JsonCreator
     public Player(@JsonProperty("gamertag") @NonNull String gamertag) {
@@ -69,13 +69,17 @@ public class Player {
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public boolean equals(final java.lang.Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Player)) return false;
-        final Player other = (Player)o;
-        if (!other.canEqual((java.lang.Object)this)) return false;
+        if (o == this)
+            return true;
+        if (!(o instanceof Player))
+            return false;
+        final Player other = (Player) o;
+        if (!other.canEqual((java.lang.Object) this))
+            return false;
         final java.lang.Object this$gamertag = this.getGamertag();
         final java.lang.Object other$gamertag = other.getGamertag();
-        if (this$gamertag == null ? other$gamertag != null : !this$gamertag.equals(other$gamertag)) return false;
+        if (this$gamertag == null ? other$gamertag != null : !this$gamertag.equals(other$gamertag))
+            return false;
         return true;
     }
 

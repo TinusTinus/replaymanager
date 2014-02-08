@@ -18,9 +18,7 @@
 package nl.mvdr.umvc3replayanalyser.model;
 
 /**
- * Possible values for a character's assist.
- *
- * @author Martijn van de Rijdt
+ * Possible values for a character's assist. * * @author Martijn van de Rijdt
  */
 public enum AssistType {
     ALPHA("alpha"),

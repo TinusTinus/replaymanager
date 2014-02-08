@@ -32,26 +32,26 @@ import com.xuggle.xuggler.IError.Type;
 
 /**
  * Iterator for video frames.
- *
+ * 
  * This class is intended as a wrapper for the (kind of clunky) Xuggler API. A FrameIterator can be used as any other
  * iterator to iterate over the individual frames of a video.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 class FrameIterator implements Iterator<BufferedImage>, Closeable {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrameIterator.class);
-    
+
     /**
      * Queue containing the images read from the input video.
      */
     private final Queue<BufferedImage> queue;
-    
+
     /**
      * Xuggler media reader. Null after it has been closed.
      */
     private IMediaReader reader;
-    
+
     /**
      * The error returned by the last call to reader.readPacket(); null if no such error has been encountered yet.
      */
@@ -59,15 +59,15 @@ class FrameIterator implements Iterator<BufferedImage>, Closeable {
 
     /**
      * Constructor.
-     *
+     * 
      * @param videoUrl
-     * URL of the video file from which to read frames
+     *            URL of the video file from which to read frames
      */
     FrameIterator(String videoUrl) {
         this.queue = new LinkedList<>();
         this.reader = ToolFactory.makeReader(videoUrl);
         this.reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
-        this.reader.addListener(new MediaListenerAdapter(){
+        this.reader.addListener(new MediaListenerAdapter() {
 
             @Override
             public void onVideoPicture(IVideoPictureEvent event) {
@@ -108,7 +108,8 @@ class FrameIterator implements Iterator<BufferedImage>, Closeable {
                 if (Type.ERROR_EOF == error.getType()) {
                     log.info("End of video file reached.");
                 } else {
-                    log.error(String.format("Unexpected Xuggle error: %s, type: %s. Stopping media reader.", this.error, this.error.getType()));
+                    log.error(String.format("Unexpected Xuggle error: %s, type: %s. Stopping media reader.",
+                            this.error, this.error.getType()));
                 }
                 // We will no longer read any packets; may as well close immediately.
                 close();

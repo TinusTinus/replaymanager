@@ -78,291 +78,290 @@ import com.google.common.collect.Iterables;
 public class Umvc3ReplayManagerController {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Umvc3ReplayManagerController.class);
-    
-    
+
     /**
      * Preview image view.
      */
     @FXML
     private ImageView previewImageView;
-    
+
     /**
      * Anchor pane containing the preview image view.
      */
     @FXML
     private AnchorPane previewImageAnchorPane;
-    
+
     /**
      * The default preview image. Whenever no replay is selected, this one should be displayed.
      */
     @FXML
     private Image defaultPreviewImage;
-    
+
     /**
      * The main table view.
      */
     @FXML
     private TableView<Replay> replayTableView;
-    
+
     /**
      * First text field for player name.
      */
     @FXML
     private TextField playerOneTextField;
-    
+
     /**
      * Second text field for player name.
      */
     @FXML
     private TextField playerTwoTextField;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerOneCharacterOneComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerOneCharacterTwoComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerOneCharacterThreeComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterOneComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterTwoComboBox;
-    
+
     /**
      * Character selection combo box.
      */
     @FXML
     private ComboBox<Umvc3Character> playerTwoCharacterThreeComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerOneAssistOneComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerOneAssistTwoComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerOneAssistThreeComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerTwoAssistOneComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerTwoAssistTwoComboBox;
-    
+
     /**
      * Assist selection combo box.
      */
     @FXML
     private ComboBox<Assist> playerTwoAssistThreeComboBox;
-    
+
     /**
      * Check box indicating that the info filled in in the left column should only be matched to player one.
      */
     @FXML
     private CheckBox maintainPlayerOrderCheckBox;
-    
+
     /**
      * Check box indicating that the characters should only be matched in the given order.
      */
     @FXML
     private CheckBox maintainCharacterOrderCheckBox;
-    
+
     /**
      * Menu item for importing new replays.
      */
     @FXML
     private MenuItem importMenuItem;
-    
+
     /**
      * Player name label.
      */
     @FXML
     private Label playerOneLabel;
-    
+
     /**
      * Player name label.
      */
     @FXML
     private Label playerTwoLabel;
-    
+
     /**
      * Character portrait.
      */
     @FXML
     private ImageView playerOneCharacterOneImageView;
-    
+
     /**
      * Character portrait.
      */
     @FXML
     private ImageView playerOneCharacterTwoImageView;
-    
+
     /**
      * Character portrait.
      */
     @FXML
     private ImageView playerOneCharacterThreeImageView;
-    
+
     /**
      * Character portrait.
      */
     @FXML
     private ImageView playerTwoCharacterOneImageView;
-    
+
     /**
      * Character portrait.
      */
     @FXML
     private ImageView playerTwoCharacterTwoImageView;
-    
+
     /**
      * Character portrait.
      */
     @FXML
     private ImageView playerTwoCharacterThreeImageView;
-    
+
     /**
      * Character label.
      */
     @FXML
     private Label playerOneCharacterOneLabel;
-    
+
     /**
      * Character label.
      */
     @FXML
     private Label playerOneCharacterTwoLabel;
-    
+
     /**
      * Character label.
      */
     @FXML
     private Label playerOneCharacterThreeLabel;
-    
+
     /**
      * Character label.
      */
     @FXML
     private Label playerTwoCharacterOneLabel;
-    
+
     /**
      * Character label.
      */
     @FXML
     private Label playerTwoCharacterTwoLabel;
-    
+
     /**
      * Character label.
      */
     @FXML
     private Label playerTwoCharacterThreeLabel;
-    
+
     /**
      * Assist label.
      */
     @FXML
     private Label playerOneAssistOneLabel;
-    
+
     /**
      * Assist label.
      */
     @FXML
     private Label playerOneAssistTwoLabel;
-    
+
     /**
      * Assist label.
      */
     @FXML
     private Label playerOneAssistThreeLabel;
-    
+
     /**
      * Assist label.
      */
     @FXML
     private Label playerTwoAssistOneLabel;
-    
+
     /**
      * Assist label.
      */
     @FXML
     private Label playerTwoAssistTwoLabel;
-    
+
     /**
      * Assist label.
      */
     @FXML
     private Label playerTwoAssistThreeLabel;
-    
+
     /**
      * Button used to open the replay video.
      */
     @FXML
     private Button openVideoButton;
-    
+
     /**
      * Button used to edit replay details.
      */
     @FXML
     private Button editReplayButton;
-    
+
     /**
      * Application configuration.
      */
     private Configuration configuration;
-    
+
     /**
      * Replay analyser.
      */
     private ReplayAnalyser replayAnalyser;
-    
+
     /**
      * Replays.
      */
     private ObservableList<Replay> replays;
-    
+
     /**
      * Indicates which character value each assist combo box depends on.
      */
     private Map<ObservableValue<Umvc3Character>, ComboBox<Assist>> assistComboBoxes;
-    
+
     /**
      * Replay saver.
      */
     private ReplaySaver replaySaver;
-    
+
     /**
      * Initialisation method.
      */
@@ -381,7 +380,7 @@ public class Umvc3ReplayManagerController {
         initFilterListeners();
         log.info("Initialisation complete.");
     }
-    
+
     /**
      * Loads the configuration.
      */
@@ -391,7 +390,7 @@ public class Umvc3ReplayManagerController {
         }
         this.configuration = new PropertiesConfiguration();
     }
-    
+
     /**
      * Initialises the replay analyser.
      */
@@ -401,7 +400,7 @@ public class Umvc3ReplayManagerController {
         this.replayAnalyser = new ReplayAnalyserImpl(versusScreenAnalyser);
         this.replaySaver = new ReplaySaver(this.configuration);
     }
-    
+
     /**
      * Loads the replays from storage.
      */
@@ -436,7 +435,7 @@ public class Umvc3ReplayManagerController {
                 }
             }
         }
-        replays.addListener(new ListChangeListener<Replay>(){
+        replays.addListener(new ListChangeListener<Replay>() {
             /** {@inheritDoc} */
             @Override
             public void onChanged(Change<? extends Replay> change) {
@@ -447,7 +446,7 @@ public class Umvc3ReplayManagerController {
             }
         });
     }
-    
+
     /**
      * Binds the image size to the size of its parent.
      */
@@ -455,17 +454,20 @@ public class Umvc3ReplayManagerController {
         previewImageView.fitWidthProperty().bind(previewImageAnchorPane.widthProperty());
         previewImageView.fitHeightProperty().bind(previewImageAnchorPane.heightProperty());
     }
+
     // As far as I know there is no easy way to do this directly in the FXML (yet?), so we do this using a Java hack.
     /**
      * Disables column swapping on the table view.
      */
     private void disableColumnSwapping() {
         // First make a copy of the columns.
-        final ObservableList<TableColumn<Replay, ?>> columns = FXCollections.observableList(new ArrayList<>(replayTableView.getColumns()));
+        final ObservableList<TableColumn<Replay, ?>> columns = FXCollections.observableList(new ArrayList<>(
+                replayTableView.getColumns()));
         // Now, whenever the list is changed, reset it to the original.
-        replayTableView.getColumns().addListener(new ListChangeListener<TableColumn<Replay, ?>>(){
+        replayTableView.getColumns().addListener(new ListChangeListener<TableColumn<Replay, ?>>() {
             /** Used to limit recursion to 1. */
             public boolean suspended;
+
             /** {@inheritDoc} */
             @Override
             public void onChanged(Change<? extends TableColumn<Replay, ?>> change) {
@@ -478,7 +480,7 @@ public class Umvc3ReplayManagerController {
             }
         });
     }
-    
+
     /**
      * Intialises the table view.
      */
@@ -488,7 +490,7 @@ public class Umvc3ReplayManagerController {
         // Set default sort order.
         replayTableView.getSortOrder().add(replayTableView.getColumns().get(0));
         // Set listener for item selection.
-        replayTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Replay>(){
+        replayTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Replay>() {
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Replay> observable, Replay oldValue, Replay newValue) {
@@ -496,12 +498,12 @@ public class Umvc3ReplayManagerController {
             }
         });
     }
-    
+
     /**
      * Handles the case where the selection in the replay table changes.
      *
      * @param newValue
-     * new value
+     *            new value
      */
     private void handleSelectedReplayChanged(Replay newValue) {
         if (log.isDebugEnabled()) {
@@ -533,12 +535,18 @@ public class Umvc3ReplayManagerController {
             playerTwoCharacterTwoLabel.setText(newValue.getGame().getTeamTwo().getSecondCharacter().getName());
             playerTwoCharacterThreeLabel.setText(newValue.getGame().getTeamTwo().getThirdCharacter().getName());
             // portraits
-            playerOneCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getFirstCharacter()));
-            playerOneCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getSecondCharacter()));
-            playerOneCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamOne().getThirdCharacter()));
-            playerTwoCharacterOneImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getFirstCharacter()));
-            playerTwoCharacterTwoImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getSecondCharacter()));
-            playerTwoCharacterThreeImageView.setImage(Icons.get().getPortrait(newValue.getGame().getTeamTwo().getThirdCharacter()));
+            playerOneCharacterOneImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamOne().getFirstCharacter()));
+            playerOneCharacterTwoImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamOne().getSecondCharacter()));
+            playerOneCharacterThreeImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamOne().getThirdCharacter()));
+            playerTwoCharacterOneImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamTwo().getFirstCharacter()));
+            playerTwoCharacterTwoImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamTwo().getSecondCharacter()));
+            playerTwoCharacterThreeImageView.setImage(Icons.get().getPortrait(
+                    newValue.getGame().getTeamTwo().getThirdCharacter()));
             // assists
             playerOneAssistOneLabel.setText(getAssistText(newValue.getGame().getTeamOne().getFirstAssist()));
             playerOneAssistTwoLabel.setText(getAssistText(newValue.getGame().getTeamOne().getSecondAssist()));
@@ -581,12 +589,12 @@ public class Umvc3ReplayManagerController {
             editReplayButton.setDisable(true);
         }
     }
-    
+
     /**
      * Given an assist, returns the textual representation of the assist for the details view.
      *
      * @param assist
-     * assist to be represented; may be null
+     *            assist to be represented; may be null
      * @return string representation of the given assist
      */
     private String getAssistText(Assist assist) {
@@ -598,17 +606,19 @@ public class Umvc3ReplayManagerController {
         }
         return result;
     }
-    
+
     /**
      * Initialises the character combo box values.
      */
     private void initCharacterComboBoxValues() {
-        for (ComboBox<Umvc3Character> comboBox : Arrays.asList(playerOneCharacterOneComboBox, playerOneCharacterTwoComboBox, playerOneCharacterThreeComboBox, playerTwoCharacterOneComboBox, playerTwoCharacterTwoComboBox, playerTwoCharacterThreeComboBox)) {
+        for (ComboBox<Umvc3Character> comboBox : Arrays.asList(playerOneCharacterOneComboBox,
+                playerOneCharacterTwoComboBox, playerOneCharacterThreeComboBox, playerTwoCharacterOneComboBox,
+                playerTwoCharacterTwoComboBox, playerTwoCharacterThreeComboBox)) {
             comboBox.getItems().add(null);
             comboBox.getItems().addAll(Umvc3Character.values());
         }
     }
-    
+
     /**
      * Initialises the mapping of the assist combo boxes.
      */
@@ -621,21 +631,23 @@ public class Umvc3ReplayManagerController {
         assistComboBoxes.put(playerTwoCharacterTwoComboBox.valueProperty(), playerTwoAssistTwoComboBox);
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
     }
-    
+
     /**
      * Adds listeners to the filter input fields.
      */
     private void initFilterListeners() {
-        ChangeListener<Object> listener = new ChangeListener<Object>(){
+        ChangeListener<Object> listener = new ChangeListener<Object>() {
             /** Used to prevent infinite recursion. */
             private boolean suspended = false;
+
             /** {@inheritDoc} */
             @Override
             public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
                 if (!suspended) {
                     suspended = true;
                     if (log.isDebugEnabled()) {
-                        log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue, newValue));
+                        log.debug(String.format("Filter value changed. Old value: %s, new value: %s", oldValue,
+                                newValue));
                     }
                     updateAssistComboBox(observable);
                     updateReplayTable();
@@ -660,18 +672,18 @@ public class Umvc3ReplayManagerController {
         maintainPlayerOrderCheckBox.selectedProperty().addListener(listener);
         maintainCharacterOrderCheckBox.selectedProperty().addListener(listener);
     }
-    
+
     /**
      * If observable is a character, updates the corresponding assist combo box.
      *
      * @param observable
-     * observable whose value has changed
+     *            observable whose value has changed
      */
     private void updateAssistComboBox(ObservableValue<? extends Object> observable) {
         ComboBox<Assist> comboBox = this.assistComboBoxes.get(observable);
         if (comboBox != null) {
             // Character value has changed. Rebuild the contents of the combo box.
-            Umvc3Character selectedCharacter = (Umvc3Character)observable.getValue();
+            Umvc3Character selectedCharacter = (Umvc3Character) observable.getValue();
             comboBox.getSelectionModel().clearSelection();
             comboBox.getItems().clear();
             if (selectedCharacter != null) {
@@ -683,7 +695,7 @@ public class Umvc3ReplayManagerController {
             comboBox.setDisable(selectedCharacter == null);
         }
     }
-    
+
     /**
      * Updates the replay table.
      */
@@ -692,12 +704,30 @@ public class Umvc3ReplayManagerController {
         // Save the selected replay so we can reselect it later.
         Replay selectedReplay = replayTableView.getSelectionModel().getSelectedItem();
         // Construct the filter predicate
-        Predicate<Replay> sideOnePredicate = new MatchReplayPredicate(playerOneTextField.getText(), playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()), playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()), playerOneCharacterThreeComboBox.getValue(), Assist.getType(playerOneAssistThreeComboBox.getValue()), maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
-        Predicate<Replay> sideTwoPredicate = new MatchReplayPredicate(playerTwoTextField.getText(), playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()), playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()), playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox.getValue()), maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
+        Predicate<Replay> sideOnePredicate = new MatchReplayPredicate(playerOneTextField.getText(),
+                playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()),
+                playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()),
+                playerOneCharacterThreeComboBox.getValue(), Assist.getType(playerOneAssistThreeComboBox.getValue()),
+                maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
+        Predicate<Replay> sideTwoPredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
+                playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()),
+                playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()),
+                playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox.getValue()),
+                maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
         Predicate<Replay> predicate = Predicates.and(sideOnePredicate, sideTwoPredicate);
         if (!maintainPlayerOrderCheckBox.isSelected()) {
-            sideOnePredicate = new MatchReplayPredicate(playerTwoTextField.getText(), playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()), playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()), playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox.getValue()), maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
-            sideTwoPredicate = new MatchReplayPredicate(playerOneTextField.getText(), playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()), playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()), playerOneCharacterThreeComboBox.getValue(), Assist.getType(playerOneAssistThreeComboBox.getValue()), maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
+            sideOnePredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
+                    playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()),
+                    playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()),
+                    playerTwoCharacterThreeComboBox.getValue(),
+                    Assist.getType(playerTwoAssistThreeComboBox.getValue()),
+                    maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_ONE);
+            sideTwoPredicate = new MatchReplayPredicate(playerOneTextField.getText(),
+                    playerOneCharacterOneComboBox.getValue(), Assist.getType(playerOneAssistOneComboBox.getValue()),
+                    playerOneCharacterTwoComboBox.getValue(), Assist.getType(playerOneAssistTwoComboBox.getValue()),
+                    playerOneCharacterThreeComboBox.getValue(),
+                    Assist.getType(playerOneAssistThreeComboBox.getValue()),
+                    maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
             predicate = Predicates.or(predicate, Predicates.and(sideOnePredicate, sideTwoPredicate));
         }
         if (log.isDebugEnabled()) {
@@ -710,7 +740,8 @@ public class Umvc3ReplayManagerController {
             viewReplays.add(replay);
         }
         if (log.isDebugEnabled()) {
-            log.debug(String.format("Filtered replays. Displaying %s of %s replays.", "" + viewReplays.size(), "" + this.replays.size()));
+            log.debug(String.format("Filtered replays. Displaying %s of %s replays.", "" + viewReplays.size(), ""
+                    + this.replays.size()));
         }
         // Force a re-sort of the table.
         List<TableColumn<Replay, ?>> sortOrder = new ArrayList<>(replayTableView.getSortOrder());
@@ -719,7 +750,7 @@ public class Umvc3ReplayManagerController {
         int newIndex = replayTableView.getItems().indexOf(selectedReplay);
         replayTableView.getSelectionModel().select(newIndex);
     }
-    
+
     /**
      * Action handler which exits the application.
      */
@@ -728,7 +759,7 @@ public class Umvc3ReplayManagerController {
         log.info("Close menu item selected; stopping the application.");
         Platform.exit();
     }
-    
+
     /**
      * Action handler which shows the about box.
      */
@@ -737,7 +768,7 @@ public class Umvc3ReplayManagerController {
         log.info("About menu item selected.");
         Popups.showAboutPopup(new AboutPopupController());
     }
-    
+
     /**
      * Action handler to import replays.
      */
@@ -752,19 +783,20 @@ public class Umvc3ReplayManagerController {
             importReplays(selectedDirectory);
         }
     }
-    
+
     /**
      * Imports the replays from the given directory.
      *
      * @param directory
-     * directory to be imported from
+     *            directory to be imported from
      */
     private void importReplays(File directory) {
         ImportReplayTask task = new ImportReplayTask(directory, this.replays, this.replayAnalyser, this.replaySaver);
-        ImportReplayPopupController controller = new ImportReplayPopupController(task, this.importMenuItem.disableProperty(), "Replay Import Thread");
+        ImportReplayPopupController controller = new ImportReplayPopupController(task,
+                this.importMenuItem.disableProperty(), "Replay Import Thread");
         Popups.showImportReplaysPopup(controller);
     }
-    
+
     /**
      * Action handler to import a single replay manually.
      */
@@ -776,7 +808,7 @@ public class Umvc3ReplayManagerController {
         final File selectedFile = chooser.showOpenDialog(getApplicationWindow());
         log.info("Selected file: " + selectedFile + ".");
         if (selectedFile != null) {
-            EditReplayController controller = new EditReplayController(new ReplayDetailsEditedHandler(){
+            EditReplayController controller = new EditReplayController(new ReplayDetailsEditedHandler() {
                 /** {@inheritDoc} */
                 @Override
                 public void handleReplayDetailsEdited(Game game) {
@@ -786,14 +818,14 @@ public class Umvc3ReplayManagerController {
             Popups.showEditReplayPopup(controller);
         }
     }
-    
+
     /**
      * Adds a replay for the given video file, with the data from the given game.
      *
      * @param file
-     * original video file
+     *            original video file
      * @param game
-     * game
+     *            game
      */
     private void addReplay(File file, Game game) {
         try {
@@ -804,7 +836,7 @@ public class Umvc3ReplayManagerController {
             ErrorMessagePopup.show("Unable to save replay.", "The replay could not be saved.", e);
         }
     }
-    
+
     /**
      * Handles the case where the user clicks the Open video button.
      */
@@ -816,7 +848,8 @@ public class Umvc3ReplayManagerController {
             throw new IllegalStateException("No replay selected; open video button should have been disabled!");
         }
         if (Desktop.isDesktopSupported()) {
-            String videoFilePath = FilenameUtils.normalize(this.configuration.getDataDirectory().getAbsolutePath() + FileUtils.SEPARATOR + selectedReplay.getVideoLocation());
+            String videoFilePath = FilenameUtils.normalize(this.configuration.getDataDirectory().getAbsolutePath()
+                    + FileUtils.SEPARATOR + selectedReplay.getVideoLocation());
             log.info("Playing video: " + videoFilePath);
             File videoFile = new File(videoFilePath);
             try {
@@ -824,7 +857,8 @@ public class Umvc3ReplayManagerController {
             } catch (IOException | IllegalArgumentException e) {
                 log.error("Unable to play video for replay: " + selectedReplay, e);
                 // Show an error message to the user.
-                String errorMessage = "Unable to play video for game: " + selectedReplay.getGame().getDescription(false);
+                String errorMessage = "Unable to play video for game: "
+                        + selectedReplay.getGame().getDescription(false);
                 if (e.getMessage() != null) {
                     errorMessage = errorMessage + " " + e.getMessage();
                 }
@@ -836,7 +870,7 @@ public class Umvc3ReplayManagerController {
             ErrorMessagePopup.show("Unable to play video", "Unable to play video files.", null);
         }
     }
-    
+
     /**
      * Handles the case when the user clicks the Edit replay button.
      */
@@ -847,23 +881,24 @@ public class Umvc3ReplayManagerController {
         if (selectedReplay == null) {
             throw new IllegalStateException("No replay selected; edit replay button should have been disabled!");
         }
-        EditReplayController controller = new EditReplayController(selectedReplay.getGame(), new ReplayDetailsEditedHandler(){
-            /** {@inheritDoc} */
-            @Override
-            public void handleReplayDetailsEdited(Game game) {
-                editReplay(selectedReplay, game);
-            }
-        });
+        EditReplayController controller = new EditReplayController(selectedReplay.getGame(),
+                new ReplayDetailsEditedHandler() {
+                    /** {@inheritDoc} */
+                    @Override
+                    public void handleReplayDetailsEdited(Game game) {
+                        editReplay(selectedReplay, game);
+                    }
+                });
         Popups.showEditReplayPopup(controller);
     }
-    
+
     /**
      * Edits a replay.
      *
      * @param selectedReplay
-     * replay to be edited
+     *            replay to be edited
      * @param game
-     * game, containing the new replay details to be used
+     *            game, containing the new replay details to be used
      */
     private void editReplay(Replay selectedReplay, Game game) {
         try {
@@ -880,7 +915,7 @@ public class Umvc3ReplayManagerController {
             ErrorMessagePopup.show("Unable to save replay.", "The replay could not be saved.", e);
         }
     }
-    
+
     /**
      * Returns the main window of this application.
      *

@@ -27,61 +27,64 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Representation of an Ultimate Marvel vs Capcom 3 replay.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class Replay {
-    
+
     /**
      * Thread-local variable holding the date format. This variable is stored as a thread-local instead of just a single
+     * 
      * constant, because SimpleDateFormat is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>(){
+    private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
         /** {@inheritDoc} */
         @Override
         protected SimpleDateFormat initialValue() {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }
     };
-    
+
     /**
      * Moment the replay was created (meaning when the game was played).
      */
     @NonNull
     private final Date creationTime;
-    
+
     /**
      * Data about the game.
      */
     @NonNull
     private final Game game;
-    
+
     /**
      * Location of the replay video, relative to the data directory.
      */
     @NonNull
     private String videoLocation;
-    
+
     /**
      * Location of the replay's preview image.
      */
     @NonNull
     private String previewImageLocation;
-    
+
     /**
      * Constructor.
-     *
+     * 
      * @param creationTime
-     * moment the replay was created (meaning when the game was played)
+     *            moment the replay was created (meaning when the game was played)
      * @param game
-     * data about the game
+     *            data about the game
      * @param videoLocation
-     * location of the replay video
+     *            location of the replay video
      * @param previewImageLocation
-     * location of the replay's preview image
+     *            location of the replay's preview image
      */
     @JsonCreator
-    public Replay(@JsonProperty("creationTime") @NonNull Date creationTime, @JsonProperty("game") @NonNull Game game, @JsonProperty("videoLocation") @NonNull String videoLocation, @JsonProperty("previewImageLocation") @NonNull String previewImageLocation) {
+    public Replay(@JsonProperty("creationTime") @NonNull Date creationTime, @JsonProperty("game") @NonNull Game game,
+            @JsonProperty("videoLocation") @NonNull String videoLocation,
+            @JsonProperty("previewImageLocation") @NonNull String previewImageLocation) {
         if (creationTime == null) {
             throw new java.lang.NullPointerException("creationTime");
         }
@@ -99,97 +102,97 @@ public class Replay {
         this.videoLocation = videoLocation;
         this.previewImageLocation = previewImageLocation;
     }
-    
+
     /**
      * Returns a string representation of the game's creation time.
-     *
+     * 
      * @return creation time
      */
     @JsonIgnore
     public String getCreationTimeString() {
         return DATE_FORMAT.get().format(creationTime);
     }
-    
+
     /**
      * Delegate getter for player one.
-     *
+     * 
      * @return player one
      */
     @JsonIgnore
     public Player getPlayerOne() {
         return this.game.getPlayerOne();
     }
-    
+
     /**
      * Delegate getter for player two.
-     *
+     * 
      * @return player two
      */
     @JsonIgnore
     public Player getPlayerTwo() {
         return this.game.getPlayerTwo();
     }
-    
+
     /**
      * Delegate getter for the first character on player one's team.
-     *
+     * 
      * @return character
      */
     @JsonIgnore
     public Umvc3Character getTeamOneFirstCharacter() {
         return this.game.getTeamOne().getFirstCharacter();
     }
-    
+
     /**
      * Delegate getter for the second character on player one's team.
-     *
+     * 
      * @return character
      */
     @JsonIgnore
     public Umvc3Character getTeamOneSecondCharacter() {
         return this.game.getTeamOne().getSecondCharacter();
     }
-    
+
     /**
      * Delegate getter for the third character on player one's team.
-     *
+     * 
      * @return character
      */
     @JsonIgnore
     public Umvc3Character getTeamOneThirdCharacter() {
         return this.game.getTeamOne().getThirdCharacter();
     }
-    
+
     /**
      * Delegate getter for the first character on player two's team.
-     *
+     * 
      * @return character
      */
     @JsonIgnore
     public Umvc3Character getTeamTwoFirstCharacter() {
         return this.game.getTeamTwo().getFirstCharacter();
     }
-    
+
     /**
      * Delegate getter for the second character on player two's team.
-     *
+     * 
      * @return character
      */
     @JsonIgnore
     public Umvc3Character getTeamTwoSecondCharacter() {
         return this.game.getTeamTwo().getSecondCharacter();
     }
-    
+
     /**
      * Delegate getter for the third character on player two's team.
-     *
+     * 
      * @return character
      */
     @JsonIgnore
     public Umvc3Character getTeamTwoThirdCharacter() {
         return this.game.getTeamTwo().getThirdCharacter();
     }
-    
+
     /**
      * Moment the replay was created (meaning when the game was played).
      */
@@ -198,7 +201,7 @@ public class Replay {
     public Date getCreationTime() {
         return this.creationTime;
     }
-    
+
     /**
      * Data about the game.
      */
@@ -207,7 +210,7 @@ public class Replay {
     public Game getGame() {
         return this.game;
     }
-    
+
     /**
      * Location of the replay video, relative to the data directory.
      */
@@ -216,7 +219,7 @@ public class Replay {
     public String getVideoLocation() {
         return this.videoLocation;
     }
-    
+
     /**
      * Location of the replay's preview image.
      */
@@ -225,34 +228,42 @@ public class Replay {
     public String getPreviewImageLocation() {
         return this.previewImageLocation;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public boolean equals(final java.lang.Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Replay)) return false;
-        final Replay other = (Replay)o;
-        if (!other.canEqual((java.lang.Object)this)) return false;
+        if (o == this)
+            return true;
+        if (!(o instanceof Replay))
+            return false;
+        final Replay other = (Replay) o;
+        if (!other.canEqual((java.lang.Object) this))
+            return false;
         final java.lang.Object this$creationTime = this.getCreationTime();
         final java.lang.Object other$creationTime = other.getCreationTime();
-        if (this$creationTime == null ? other$creationTime != null : !this$creationTime.equals(other$creationTime)) return false;
+        if (this$creationTime == null ? other$creationTime != null : !this$creationTime.equals(other$creationTime))
+            return false;
         final java.lang.Object this$game = this.getGame();
         final java.lang.Object other$game = other.getGame();
-        if (this$game == null ? other$game != null : !this$game.equals(other$game)) return false;
+        if (this$game == null ? other$game != null : !this$game.equals(other$game))
+            return false;
         final java.lang.Object this$videoLocation = this.getVideoLocation();
         final java.lang.Object other$videoLocation = other.getVideoLocation();
-        if (this$videoLocation == null ? other$videoLocation != null : !this$videoLocation.equals(other$videoLocation)) return false;
+        if (this$videoLocation == null ? other$videoLocation != null : !this$videoLocation.equals(other$videoLocation))
+            return false;
         final java.lang.Object this$previewImageLocation = this.getPreviewImageLocation();
         final java.lang.Object other$previewImageLocation = other.getPreviewImageLocation();
-        if (this$previewImageLocation == null ? other$previewImageLocation != null : !this$previewImageLocation.equals(other$previewImageLocation)) return false;
+        if (this$previewImageLocation == null ? other$previewImageLocation != null : !this$previewImageLocation
+                .equals(other$previewImageLocation))
+            return false;
         return true;
     }
-    
+
     @java.lang.SuppressWarnings("all")
     public boolean canEqual(final java.lang.Object other) {
         return other instanceof Replay;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public int hashCode() {
@@ -268,10 +279,11 @@ public class Replay {
         result = result * PRIME + ($previewImageLocation == null ? 0 : $previewImageLocation.hashCode());
         return result;
     }
-    
+
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public java.lang.String toString() {
-        return "Replay(creationTime=" + this.getCreationTime() + ", game=" + this.getGame() + ", videoLocation=" + this.getVideoLocation() + ", previewImageLocation=" + this.getPreviewImageLocation() + ")";
+        return "Replay(creationTime=" + this.getCreationTime() + ", game=" + this.getGame() + ", videoLocation="
+                + this.getVideoLocation() + ", previewImageLocation=" + this.getPreviewImageLocation() + ")";
     }
 }

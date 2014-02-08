@@ -25,14 +25,13 @@ import org.junit.Test;
 
 /**
  * Test class for {@link Replay}.
- *
+ * 
  * @author Martijn van de Rijdt
  */
 public class ReplayTest {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReplayTest.class);
-    
-    
+
     /**
      * Tests the constructor's behaviour in case of null values for parameters.
      */
@@ -40,7 +39,7 @@ public class ReplayTest {
     public void testNullDate() {
         new Replay(null, createGame(), "video", "preview");
     }
-    
+
     /**
      * Tests the constructor's behaviour in case of null values for parameters.
      */
@@ -48,7 +47,7 @@ public class ReplayTest {
     public void testNullGame() {
         new Replay(new Date(), null, "video", "preview");
     }
-    
+
     /**
      * Tests the constructor's behaviour in case of null values for parameters.
      */
@@ -56,7 +55,7 @@ public class ReplayTest {
     public void testNullVideo() {
         new Replay(new Date(), createGame(), null, "preview");
     }
-    
+
     /**
      * Tests the constructor's behaviour in case of null values for parameters.
      */
@@ -64,11 +63,12 @@ public class ReplayTest {
     public void testNullImage() {
         new Replay(new Date(), createGame(), "video", null);
     }
-    
+
     /**
-     * Tests converting a value to a JSON string and back. 
-     *
-     * @throws IOException unexpected
+     * Tests converting a value to a JSON string and back.
+     * 
+     * @throws IOException
+     *             unexpected
      */
     @Test
     public void testJson() throws IOException {
@@ -83,17 +83,19 @@ public class ReplayTest {
         Assert.assertNotSame(replay, unmarshalled);
         Assert.assertEquals(replay, unmarshalled);
     }
-    
+
     /**
      * Constructs a game.
-     *
+     * 
      * @return game
      */
     private Game createGame() {
         Player djAlbertoLara = new Player("DJ Alberto Lara");
-        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE, AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
+        Team teamDjAlbertoLara = new Team(Umvc3Character.HULK, AssistType.ALPHA, Umvc3Character.WOLVERINE,
+                AssistType.BETA, Umvc3Character.SENTINEL, AssistType.ALPHA);
         Player tinus = new Player("MvdR");
-        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA, Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
+        Team teamTinus = new Team(Umvc3Character.WOLVERINE, AssistType.GAMMA, Umvc3Character.ZERO, AssistType.ALPHA,
+                Umvc3Character.DOCTOR_DOOM, AssistType.ALPHA);
         Game game = new Game(djAlbertoLara, teamDjAlbertoLara, tinus, teamTinus);
         return game;
     }
