@@ -490,13 +490,10 @@ public class Umvc3ReplayManagerController {
         // Set default sort order.
         replayTableView.getSortOrder().add(replayTableView.getColumns().get(0));
         // Set listener for item selection.
-        replayTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Replay>() {
-            /** {@inheritDoc} */
-            @Override
-            public void changed(ObservableValue<? extends Replay> observable, Replay oldValue, Replay newValue) {
-                handleSelectedReplayChanged(newValue);
-            }
-        });
+        replayTableView.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends Replay> observable, Replay oldValue, Replay newValue) -> {
+                    handleSelectedReplayChanged(newValue);
+                });
     }
 
     /**
