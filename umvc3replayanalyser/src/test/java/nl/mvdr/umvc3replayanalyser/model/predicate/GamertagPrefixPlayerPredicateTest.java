@@ -25,9 +25,6 @@ import nl.mvdr.umvc3replayanalyser.model.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-
 /**
  * Test class for {@link GamertagPrefixPlayerPredicate}.
  * 
