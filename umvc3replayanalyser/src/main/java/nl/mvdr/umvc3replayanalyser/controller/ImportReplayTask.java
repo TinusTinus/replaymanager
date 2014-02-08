@@ -131,14 +131,7 @@ class ImportReplayTask extends Task<List<Replay>> {
             try {
                 final Replay replay = importReplay(file);
                 logMessage("Imported replay: " + replay.getGame());
-                Platform.runLater(new Runnable() {
-                    /** {@inheritDoc} */
-
-                    @Override
-                    public void run() {
-                        replays.add(replay);
-                    }
-                });
+                Platform.runLater(() -> replays.add(replay));
             } catch (ReplayAnalysisException | IOException e) {
                 logMessage(String.format("Unable to import file: %s. %s", file, e.getMessage()));
                 log.info("Exception: ", e);
@@ -182,14 +175,7 @@ class ImportReplayTask extends Task<List<Replay>> {
      */
     private Replay importReplay(File file) throws ReplayAnalysisException, IOException {
         GameAndVersusScreen gameAndVersusScreen = this.replayAnalyser.analyse(file.getAbsolutePath());
-        MessageLogger logger = new MessageLogger() {
-            /** {@inheritDoc} */
-
-            @Override
-            public void log(String logMessage) {
-                logMessage(logMessage);
-            }
-        };
+        MessageLogger logger = (String logMessage) -> logMessage(logMessage);
         return this.replaySaver.saveReplay(file, gameAndVersusScreen.getGame(), gameAndVersusScreen.getVersusScreen(),
                 logger);
     }
