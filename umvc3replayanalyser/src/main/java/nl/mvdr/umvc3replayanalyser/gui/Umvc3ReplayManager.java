@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import com.sun.javafx.runtime.VersionInfo;
 
 /**
@@ -31,7 +32,6 @@ public class Umvc3ReplayManager extends Application {
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Umvc3ReplayManager.class);
 
-    
     /**
      * Title of the application.
      */
