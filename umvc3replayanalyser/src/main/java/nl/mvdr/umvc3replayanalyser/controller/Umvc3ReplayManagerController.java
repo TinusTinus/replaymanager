@@ -25,11 +25,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -64,8 +66,10 @@ import nl.mvdr.umvc3replayanalyser.ocr.OCREngine;
 import nl.mvdr.umvc3replayanalyser.ocr.TesseractOCREngine;
 import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyserImpl;
+
 import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.map.ObjectMapper;
+
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
@@ -435,15 +439,11 @@ public class Umvc3ReplayManagerController {
                 }
             }
         }
-        replays.addListener(new ListChangeListener<Replay>() {
-            /** {@inheritDoc} */
-            @Override
-            public void onChanged(Change<? extends Replay> change) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Replay list changed: " + change);
-                }
-                updateReplayTable();
+        replays.addListener((Change<? extends Replay> change) -> {
+            if (log.isDebugEnabled()) {
+                log.debug("Replay list changed: " + change);
             }
+            updateReplayTable();
         });
     }
 
