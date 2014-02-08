@@ -18,6 +18,7 @@ package nl.mvdr.umvc3replayanalyser.model.predicate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nl.mvdr.umvc3replayanalyser.model.Player;
 
@@ -38,7 +39,7 @@ public class GamertagPrefixPlayerPredicateTest {
     public void testExactMatch() {
         Player player = new Player("test");
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("test");
-        Assert.assertTrue(predicate.apply(player));
+        Assert.assertTrue(predicate.test(player));
     }
 
     /** Tests the apply method. */
@@ -46,7 +47,7 @@ public class GamertagPrefixPlayerPredicateTest {
     public void testPrefixMatch() {
         Player player = new Player("test");
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("te");
-        Assert.assertTrue(predicate.apply(player));
+        Assert.assertTrue(predicate.test(player));
     }
     
     /** Tests the apply method. */
@@ -54,7 +55,7 @@ public class GamertagPrefixPlayerPredicateTest {
     public void testPrefixCase() {
         Player player = new Player("test");
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("TE");
-        Assert.assertTrue(predicate.apply(player));
+        Assert.assertTrue(predicate.test(player));
     }
 
     /** Tests the apply method. */
@@ -62,7 +63,7 @@ public class GamertagPrefixPlayerPredicateTest {
     public void testNoMatch() {
         Player player = new Player("test");
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("derp");
-        Assert.assertFalse(predicate.apply(player));
+        Assert.assertFalse(predicate.test(player));
     }
 
     /** Tests the apply method. */
@@ -70,7 +71,7 @@ public class GamertagPrefixPlayerPredicateTest {
     public void testLongerName() {
         Player player = new Player("test");
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("testing");
-        Assert.assertFalse(predicate.apply(player));
+        Assert.assertFalse(predicate.test(player));
     }
 
     /** Tests the constructor with a null argument. */
@@ -90,7 +91,7 @@ public class GamertagPrefixPlayerPredicateTest {
         List<Player> players = Arrays.asList(test, testing, someoneelse, tester, te);
         
         GamertagPrefixPlayerPredicate predicate = new GamertagPrefixPlayerPredicate("test");
-        List<Player> filtered = ImmutableList.copyOf(Iterables.filter(players, predicate));
+        List<Player> filtered = players.stream().filter(predicate).collect(Collectors.toList());
         
         List<Player> expected = Arrays.asList(test, testing, tester);
         

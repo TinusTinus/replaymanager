@@ -17,10 +17,12 @@
  */
 package nl.mvdr.umvc3replayanalyser.model.predicate;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.function.Predicate;
+
 import lombok.NonNull;
 import nl.mvdr.umvc3replayanalyser.model.Player;
-import com.google.common.base.Predicate;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Predicate that checks whether the player's gamertag starts with the given string. * * @author Martijn van de Rijdt
@@ -37,7 +39,7 @@ public class GamertagPrefixPlayerPredicate implements Predicate<Player> {
      * {@inheritDoc}
      */
     @Override
-    public boolean apply(Player player) {
+    public boolean test(Player player) {
         return StringUtils.startsWithIgnoreCase(player.getGamertag(), prefix);
     }
     

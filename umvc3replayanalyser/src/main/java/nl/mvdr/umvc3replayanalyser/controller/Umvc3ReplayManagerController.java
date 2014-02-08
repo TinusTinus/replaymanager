@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -69,10 +70,6 @@ import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyserImpl;
 
 import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Iterables;
 
 /**
  * Main controller class for this JavaFX application. Referenced from the corresponding fxml.
@@ -711,7 +708,7 @@ public class Umvc3ReplayManagerController {
                 playerTwoCharacterTwoComboBox.getValue(), Assist.getType(playerTwoAssistTwoComboBox.getValue()),
                 playerTwoCharacterThreeComboBox.getValue(), Assist.getType(playerTwoAssistThreeComboBox.getValue()),
                 maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
-        Predicate<Replay> predicate = Predicates.and(sideOnePredicate, sideTwoPredicate);
+        Predicate<Replay> predicate = sideOnePredicate.and(sideTwoPredicate);
         if (!maintainPlayerOrderCheckBox.isSelected()) {
             sideOnePredicate = new MatchReplayPredicate(playerTwoTextField.getText(),
                     playerTwoCharacterOneComboBox.getValue(), Assist.getType(playerTwoAssistOneComboBox.getValue()),
@@ -725,17 +722,15 @@ public class Umvc3ReplayManagerController {
                     playerOneCharacterThreeComboBox.getValue(),
                     Assist.getType(playerOneAssistThreeComboBox.getValue()),
                     maintainCharacterOrderCheckBox.isSelected(), Side.PLAYER_TWO);
-            predicate = Predicates.or(predicate, Predicates.and(sideOnePredicate, sideTwoPredicate));
+            predicate = predicate.or(sideOnePredicate.and(sideTwoPredicate));
         }
         if (log.isDebugEnabled()) {
             log.debug("Using predicate to filter replays: " + predicate);
         }
-        Iterable<Replay> filteredReplays = Iterables.filter(replays, predicate);
+        List<Replay> filteredReplays = replays.filtered(predicate);
         List<Replay> viewReplays = replayTableView.getItems();
         viewReplays.clear();
-        for (Replay replay : filteredReplays) {
-            viewReplays.add(replay);
-        }
+        viewReplays.addAll(filteredReplays);
         if (log.isDebugEnabled()) {
             log.debug(String.format("Filtered replays. Displaying %s of %s replays.", "" + viewReplays.size(), ""
                     + this.replays.size()));

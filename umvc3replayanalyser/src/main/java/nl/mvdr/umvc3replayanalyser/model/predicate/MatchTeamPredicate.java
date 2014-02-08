@@ -19,10 +19,11 @@ package nl.mvdr.umvc3replayanalyser.model.predicate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Team;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import com.google.common.base.Predicate;
 
 /**
  * Predicate for matching a team.
@@ -75,7 +76,7 @@ public class MatchTeamPredicate implements Predicate<Team> {
      * {@inheritDoc}
      */
     @Override
-    public boolean apply(Team team) {
+    public boolean test(Team team) {
         boolean result = true;
         int i = 0;
         while (result && i != 3) {

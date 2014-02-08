@@ -52,7 +52,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("test1", null, null, null, null, null, null, false,
                 Side.PLAYER_ONE);
-        Assert.assertTrue(predicate.apply(replay));
+        Assert.assertTrue(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -61,7 +61,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("test2", null, null, null, null, null, null, false,
                 Side.PLAYER_ONE);
-        Assert.assertFalse(predicate.apply(replay));
+        Assert.assertFalse(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -70,7 +70,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("nomatch", null, null, null, null, null, null, false,
                 Side.PLAYER_ONE);
-        Assert.assertFalse(predicate.apply(replay));
+        Assert.assertFalse(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -79,7 +79,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("test", null, null, null, null, null, null, false,
                 Side.PLAYER_ONE);
-        Assert.assertTrue(predicate.apply(replay));
+        Assert.assertTrue(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -88,7 +88,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("test2", null, null, null, null, null, null, false,
                 Side.PLAYER_TWO);
-        Assert.assertTrue(predicate.apply(replay));
+        Assert.assertTrue(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -97,7 +97,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("test1", null, null, null, null, null, null, false,
                 Side.PLAYER_TWO);
-        Assert.assertFalse(predicate.apply(replay));
+        Assert.assertFalse(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -106,7 +106,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("nomatch", null, null, null, null, null, null, false,
                 Side.PLAYER_TWO);
-        Assert.assertFalse(predicate.apply(replay));
+        Assert.assertFalse(predicate.test(replay));
     }
 
     /** Tests the apply method. */
@@ -115,7 +115,7 @@ public class MatchReplayPredicateTest {
         Replay replay = createReplay("test1", "test2");
         MatchReplayPredicate predicate = new MatchReplayPredicate("test", null, null, null, null, null, null, false,
                 Side.PLAYER_TWO);
-        Assert.assertTrue(predicate.apply(replay));
+        Assert.assertTrue(predicate.test(replay));
     }
     
     /**

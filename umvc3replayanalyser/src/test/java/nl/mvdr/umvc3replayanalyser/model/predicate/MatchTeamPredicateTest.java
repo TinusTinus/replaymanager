@@ -36,7 +36,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -46,7 +46,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -57,7 +57,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -68,7 +68,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -79,7 +79,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -90,7 +90,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertFalse(predicate.apply(team));
+        Assert.assertFalse(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -101,7 +101,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -112,7 +112,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -123,7 +123,7 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertTrue(predicate.apply(team));
+        Assert.assertTrue(predicate.test(team));
     }
 
     /** Tests the apply method. */
@@ -134,6 +134,6 @@ public class MatchTeamPredicateTest {
         Team team = new Team(Umvc3Character.WOLVERINE, AssistType.ALPHA, Umvc3Character.ZERO, AssistType.GAMMA,
                 Umvc3Character.DOCTOR_DOOM, AssistType.GAMMA);
 
-        Assert.assertFalse(predicate.apply(team));
+        Assert.assertFalse(predicate.test(team));
     }
 }

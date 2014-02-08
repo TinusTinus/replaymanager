@@ -17,6 +17,8 @@
  */
 package nl.mvdr.umvc3replayanalyser.model.predicate;
 
+import java.util.function.Predicate;
+
 import lombok.NonNull;
 import nl.mvdr.umvc3replayanalyser.model.AssistType;
 import nl.mvdr.umvc3replayanalyser.model.Player;
@@ -24,8 +26,6 @@ import nl.mvdr.umvc3replayanalyser.model.Replay;
 import nl.mvdr.umvc3replayanalyser.model.Side;
 import nl.mvdr.umvc3replayanalyser.model.Team;
 import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 /**
  * Predicate for matching a replay.
@@ -79,12 +79,12 @@ public class MatchReplayPredicate implements Predicate<Replay> {
             throw new java.lang.NullPointerException("side");
         }
         if ("".equals(prefix)) {
-            this.playerPredicate = Predicates.alwaysTrue();
+            this.playerPredicate = (Player) -> true;
         } else {
             this.playerPredicate = new GamertagPrefixPlayerPredicate(prefix);
         }
         if (character1 == null && character2 == null && character3 == null) {
-            this.teamPredicate = Predicates.alwaysTrue();
+            this.teamPredicate = (Team) -> true;
         } else {
             this.teamPredicate = new MatchTeamPredicate(character1, assist1, character2, assist2, character3, assist3,
                     maintainCharacterOrder);
@@ -96,9 +96,9 @@ public class MatchReplayPredicate implements Predicate<Replay> {
      * {@inheritDoc}
      */
     @Override
-    public boolean apply(Replay replay) {
-        return playerPredicate.apply(replay.getGame().getPlayer(side))
-                && teamPredicate.apply(replay.getGame().getTeam(side));
+    public boolean test(Replay replay) {
+        return playerPredicate.test(replay.getGame().getPlayer(side))
+                && teamPredicate.test(replay.getGame().getTeam(side));
     }
 
     @java.lang.Override
