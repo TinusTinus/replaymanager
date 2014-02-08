@@ -805,7 +805,8 @@ public class Umvc3ReplayManagerController {
         final File selectedFile = chooser.showOpenDialog(getApplicationWindow());
         log.info("Selected file: " + selectedFile + ".");
         if (selectedFile != null) {
-            EditReplayController controller = new EditReplayController((Game game) -> addReplay(selectedFile, game));
+            EditReplayController controller = 
+                    new EditReplayController((Game game) -> addReplay(selectedFile, game));
             Popups.showEditReplayPopup(controller);
         }
     }
@@ -873,13 +874,7 @@ public class Umvc3ReplayManagerController {
             throw new IllegalStateException("No replay selected; edit replay button should have been disabled!");
         }
         EditReplayController controller = new EditReplayController(selectedReplay.getGame(),
-                new ReplayDetailsEditedHandler() {
-                    /** {@inheritDoc} */
-                    @Override
-                    public void handleReplayDetailsEdited(Game game) {
-                        editReplay(selectedReplay, game);
-                    }
-                });
+                (Game game) -> editReplay(selectedReplay, game));
         Popups.showEditReplayPopup(controller);
     }
 
