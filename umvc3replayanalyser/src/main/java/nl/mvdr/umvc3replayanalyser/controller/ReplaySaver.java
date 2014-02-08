@@ -145,7 +145,6 @@ class ReplaySaver {
     Replay saveReplay(File file, Game game, String previewImageLocation) throws IOException {
         MessageLogger logger = new MessageLogger() {
             /** {@inheritDoc} */
-
             @Override
             public void log(String message) {
                 log.info(message);
