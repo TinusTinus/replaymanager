@@ -76,18 +76,14 @@ class ImportReplayPopupController {
         log.info("Performing controller initialisation.");
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
-        EventHandler<WorkerStateEvent> eventHandler = new EventHandler<WorkerStateEvent>() {
-            /** {@inheritDoc} */
-            @Override
-            public void handle(WorkerStateEvent event) {
-                try {
-                    task.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    log.error("Unable to perform task succesfully.", e);
-                }
-                working.set(false);
-                getApplicationWindow().hide();
+        EventHandler<WorkerStateEvent> eventHandler = (WorkerStateEvent event) -> {
+            try {
+                task.get();
+            } catch (InterruptedException | ExecutionException e) {
+                log.error("Unable to perform task succesfully.", e);
             }
+            working.set(false);
+            getApplicationWindow().hide();
         };
         task.setOnSucceeded(eventHandler);
         task.setOnCancelled(eventHandler);
