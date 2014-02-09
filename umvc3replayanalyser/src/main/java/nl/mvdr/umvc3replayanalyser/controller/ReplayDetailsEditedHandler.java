@@ -23,6 +23,7 @@ import nl.mvdr.umvc3replayanalyser.model.Game;
  * 
  * @author Martijn van de Rijdt
  */
+@FunctionalInterface
 interface ReplayDetailsEditedHandler {
     /**
      * Handles the event that the user has completed (not cancelled) the edit replay details popup window.
