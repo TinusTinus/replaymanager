@@ -426,7 +426,7 @@ public class Umvc3ReplayManagerController {
         replays = FXCollections.observableList(files
                 .stream()
                 .map(this::loadReplay)
-                .filter((replay) -> replay != null)
+                .filter(replay -> replay != null)
                 .collect(Collectors.toList()));
         replays.addListener((Change<? extends Replay> change) -> {
             if (log.isDebugEnabled()) {
@@ -819,8 +819,7 @@ public class Umvc3ReplayManagerController {
         final File selectedFile = chooser.showOpenDialog(getApplicationWindow());
         log.info("Selected file: " + selectedFile + ".");
         if (selectedFile != null) {
-            EditReplayController controller = 
-                    new EditReplayController((Game game) -> addReplay(selectedFile, game));
+            EditReplayController controller = new EditReplayController(game -> addReplay(selectedFile, game));
             Popups.showEditReplayPopup(controller);
         }
     }
@@ -888,7 +887,7 @@ public class Umvc3ReplayManagerController {
             throw new IllegalStateException("No replay selected; edit replay button should have been disabled!");
         }
         EditReplayController controller = new EditReplayController(selectedReplay.getGame(),
-                (Game game) -> editReplay(selectedReplay, game));
+                game -> editReplay(selectedReplay, game));
         Popups.showEditReplayPopup(controller);
     }
 
