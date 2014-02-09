@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import nl.mvdr.umvc3replayanalyser.config.Configuration;
 import nl.mvdr.umvc3replayanalyser.config.PropertiesConfiguration;
