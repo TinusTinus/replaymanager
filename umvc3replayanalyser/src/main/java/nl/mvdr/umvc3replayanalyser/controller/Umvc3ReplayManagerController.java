@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -77,6 +78,9 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @author Martijn van de Rijdt
  */
 public class Umvc3ReplayManagerController {
+    /** Object mapper. */
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     @java.lang.SuppressWarnings("all")
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Umvc3ReplayManagerController.class);
 
@@ -409,7 +413,7 @@ public class Umvc3ReplayManagerController {
         if (replays != null) {
             throw new IllegalStateException("Replays already loaded: " + replays);
         }
-        replays = FXCollections.observableList(new ArrayList<Replay>());
+
         File dataDirectory = new File(this.configuration.getDataDirectoryPath());
         if (!dataDirectory.exists()) {
             throw new IllegalStateException("Not an existing path: " + dataDirectory + ". Check your configuration.");
@@ -417,31 +421,47 @@ public class Umvc3ReplayManagerController {
         if (!dataDirectory.isDirectory()) {
             throw new IllegalStateException("Not a directory: " + dataDirectory + ". Check your configuration.");
         }
-        ObjectMapper mapper = new ObjectMapper();
-        for (File file : dataDirectory.listFiles()) {
-            if (file.getName().endsWith(".replay")) {
-                try {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Attempting to load: " + file);
-                    }
-                    Replay replay = mapper.readValue(file, Replay.class);
-                    log.info("Loaded from " + file + ": " + replay.getGame());
-                    replays.add(replay);
-                } catch (IOException e) {
-                    log.warn("Failed to import replay from " + file, e);
-                }
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("Skipping file: " + file);
-                }
-            }
-        }
+        
+        List<File> files = Arrays.asList(dataDirectory.listFiles());
+        replays = FXCollections.observableList(files
+                .stream()
+                .map(this::loadReplay)
+                .filter((replay) -> replay != null)
+                .collect(Collectors.toList()));
         replays.addListener((Change<? extends Replay> change) -> {
             if (log.isDebugEnabled()) {
                 log.debug("Replay list changed: " + change);
             }
             updateReplayTable();
         });
+    }
+
+    /**
+     * Loads a replay from the given file.
+     * 
+     * @param file file to be read
+     * @return replay, or null if the replay cannot be loaded
+     */
+    private Replay loadReplay(File file) {
+        Replay replay;
+        if (file.getName().endsWith(".replay")) {
+            try {
+                if (log.isDebugEnabled()) {
+                    log.debug("Attempting to load: " + file);
+                }
+                replay = OBJECT_MAPPER.readValue(file, Replay.class);
+                log.info("Loaded from " + file + ": " + replay.getGame());
+            } catch (IOException e) {
+                replay = null;
+                log.warn("Failed to import replay from " + file, e);
+            }
+        } else {
+            replay = null;
+            if (log.isDebugEnabled()) {
+                log.debug("Skipping file: " + file);
+            }
+        }
+        return replay;
     }
 
     /**
