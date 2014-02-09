@@ -30,6 +30,8 @@ import nl.mvdr.umvc3replayanalyser.model.Umvc3Character;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test class for {@link EditReplayController}.
@@ -37,6 +39,8 @@ import org.junit.Test;
  * @author Martijn van de Rijdt
  */
 public class EditReplayControllerTest {
+    private static final Logger log = LoggerFactory.getLogger(EditReplayControllerTest.class);
+    
     /** Setup method. */
     @Before
     public void setUp() {
@@ -61,12 +65,12 @@ public class EditReplayControllerTest {
         ComboBox<Umvc3Character> characterComboBox = new ComboBox<>();
         ComboBox<Assist> assistComboBox = new ComboBox<>();
 
-        EditReplayController controller = new EditReplayController(defaultContents, new LogReplayDetailsHandler(),
-                new TextField(), new TextField(), characterComboBox, new ComboBox<Umvc3Character>(),
+        EditReplayController controller = new EditReplayController(defaultContents,
+                game -> log.info("Edited game: " + game), new TextField(), new TextField(),
+                characterComboBox, new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(),
                 new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(), new ComboBox<Umvc3Character>(),
-                new ComboBox<Umvc3Character>(), assistComboBox, new ComboBox<Assist>(),
-                new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(),
-                new Button(), null);
+                assistComboBox, new ComboBox<Assist>(), new ComboBox<Assist>(), new ComboBox<Assist>(),
+                new ComboBox<Assist>(), new ComboBox<Assist>(), new Button(), null);
         controller.initialize();
 
         // Check that the first character and first assist have been initialised correctly.
