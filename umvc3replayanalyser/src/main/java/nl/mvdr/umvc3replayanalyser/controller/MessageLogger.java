@@ -21,6 +21,7 @@ package nl.mvdr.umvc3replayanalyser.controller;
  * 
  * @author Martijn van de Rijdt
  */
+@FunctionalInterface
 interface MessageLogger {
     /**
      * Logs the message to a log file, and optionally also to the user interface so the user can read it.
