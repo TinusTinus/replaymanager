@@ -62,14 +62,6 @@ public class VersusScreenAnalyserMock implements VersusScreenAnalyser {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canBeVersusScreen(BufferedImage image) {
-        return true;
-    }
-
-    /**
      * The number of times the analyse method has been called.
      */
     @java.lang.SuppressWarnings("all")

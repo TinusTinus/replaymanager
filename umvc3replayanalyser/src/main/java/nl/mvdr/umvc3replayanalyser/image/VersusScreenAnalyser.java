@@ -27,6 +27,7 @@ import nl.mvdr.umvc3replayanalyser.ocr.OCRException;
  * 
  * @author Martijn van de Rijdt
  */
+@FunctionalInterface
 public interface VersusScreenAnalyser {
     /**
      * Analyses the given image and returns the Game represented by this image.
@@ -48,5 +49,7 @@ public interface VersusScreenAnalyser {
      *            image to be checked
      * @return true if the image could be a versus screen, false if it definitely is not
      */
-    boolean canBeVersusScreen(BufferedImage image);
+    default boolean canBeVersusScreen(BufferedImage image) {
+        return true;
+    }
 }
