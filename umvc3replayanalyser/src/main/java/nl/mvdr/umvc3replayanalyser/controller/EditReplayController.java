@@ -185,16 +185,12 @@ class EditReplayController {
         assistComboBoxes.put(playerTwoCharacterTwoComboBox.valueProperty(), playerTwoAssistTwoComboBox);
         assistComboBoxes.put(playerTwoCharacterThreeComboBox.valueProperty(), playerTwoAssistThreeComboBox);
         // Add a listener, so that whenever a character value is changed, the assist combo box is updated as well.
-        ChangeListener<Umvc3Character> assistListener = new ChangeListener<Umvc3Character>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Umvc3Character> observable, Umvc3Character oldValue,
-                    Umvc3Character newValue) {
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format("Character changed. Old value: %s, new value: %s", oldValue, newValue));
-                }
-                updateAssistComboBox(observable);
+        ChangeListener<Umvc3Character> assistListener = (ObservableValue<? extends Umvc3Character> observable,
+                Umvc3Character oldValue, Umvc3Character newValue) -> {
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("Character changed. Old value: %s, new value: %s", oldValue, newValue));
             }
+            updateAssistComboBox(observable);
         };
         playerOneCharacterOneComboBox.valueProperty().addListener(assistListener);
         playerOneCharacterTwoComboBox.valueProperty().addListener(assistListener);
