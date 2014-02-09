@@ -21,6 +21,7 @@ package nl.mvdr.umvc3replayanalyser.video;
  * 
  * @author Martijn van de Rijdt
  */
+@FunctionalInterface
 public interface ReplayAnalyser {
     /**
      * Analyses a video file.
