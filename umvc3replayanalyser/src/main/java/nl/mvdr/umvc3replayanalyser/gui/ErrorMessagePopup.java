@@ -17,7 +17,6 @@
  */
 package nl.mvdr.umvc3replayanalyser.gui;
 
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
