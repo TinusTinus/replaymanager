@@ -427,6 +427,7 @@ public class Umvc3ReplayManagerController {
                 .stream()
                 .map(this::loadReplay)
                 .filter(replay -> replay != null)
+                .parallel()
                 .collect(Collectors.toList()));
         replays.addListener((Change<? extends Replay> change) -> {
             if (log.isDebugEnabled()) {
