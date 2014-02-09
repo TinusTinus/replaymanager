@@ -79,12 +79,12 @@ public class MatchReplayPredicate implements Predicate<Replay> {
             throw new java.lang.NullPointerException("side");
         }
         if ("".equals(prefix)) {
-            this.playerPredicate = (Player) -> true;
+            this.playerPredicate = (player) -> true;
         } else {
             this.playerPredicate = new GamertagPrefixPlayerPredicate(prefix);
         }
         if (character1 == null && character2 == null && character3 == null) {
-            this.teamPredicate = (Team) -> true;
+            this.teamPredicate = (team) -> true;
         } else {
             this.teamPredicate = new MatchTeamPredicate(character1, assist1, character2, assist2, character3, assist3,
                     maintainCharacterOrder);

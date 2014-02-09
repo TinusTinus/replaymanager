@@ -75,7 +75,7 @@ public class ErrorMessagePopup {
         // Details button for displaying the stack trace.
         Button detailsButton = new Button();
         detailsButton.setText("Details");
-        detailsButton.setOnAction((ActionEvent event) -> {
+        detailsButton.setOnAction(event -> {
             log.info("User clicked Details.");
             stackTraceArea.setVisible(!stackTraceArea.isVisible());
         });
@@ -83,7 +83,7 @@ public class ErrorMessagePopup {
         /** {@inheritDoc} */
         Button okButton = new Button();
         okButton.setText("OK");
-        okButton.setOnAction((ActionEvent event) -> {
+        okButton.setOnAction(event -> {
             log.info("User clicked OK, closing the dialog.");
             stage.close();
         });

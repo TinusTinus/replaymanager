@@ -76,7 +76,7 @@ class ImportReplayPopupController {
         log.info("Performing controller initialisation.");
         progressBar.progressProperty().bind(task.progressProperty());
         textArea.textProperty().bind(task.messageProperty());
-        EventHandler<WorkerStateEvent> eventHandler = (WorkerStateEvent event) -> {
+        EventHandler<WorkerStateEvent> eventHandler = event -> {
             try {
                 task.get();
             } catch (InterruptedException | ExecutionException e) {

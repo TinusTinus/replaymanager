@@ -67,7 +67,7 @@ public class ImportReplayPopupMain extends Application {
         log.info("Starting application.");
         final ArrayList<Replay> replays = new ArrayList<>();
         SimpleBooleanProperty working = new SimpleBooleanProperty();
-        working.addListener((ObservableValue<? extends Boolean> value, Boolean oldValue, Boolean newValue) -> {
+        working.addListener((value, oldValue, newValue) -> {
             log.info("working changed from " + oldValue + " to " + newValue + "; " + replays.size() + " replays: "
                     + replays);
         });
