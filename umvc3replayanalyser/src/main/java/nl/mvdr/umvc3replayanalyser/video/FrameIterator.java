@@ -77,7 +77,6 @@ class FrameIterator implements Iterator<BufferedImage>, Closeable {
                 BufferedImage image = event.getImage();
                 if (image == null) {
                     // This should not occur, since we called setBufferedImageTypeToGenerate on the reader.
-                    /** {@inheritDoc} */
                     log.warn("Buffered image not available for timestamp " + event.getTimeStamp());
                 } else {
                     FrameIterator.this.queue.offer(image);
