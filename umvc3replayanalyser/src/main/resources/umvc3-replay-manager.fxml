@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.mvdr.umvc3replayanalyser.controller.Umvc3ReplayManagerController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="1418.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="nl.mvdr.umvc3replayanalyser.controller.Umvc3ReplayManagerController">
   <children>
     <TitledPane animated="false" collapsible="false" focusTraversable="false" prefHeight="192.0" prefWidth="837.0" text="Filters" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="35.0">
       <content>
@@ -20,9 +17,9 @@
             <Label text="Character 1" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="40.0" />
             <Label text="Character 2" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="67.0" />
             <Label text="Character 3" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="95.0" />
-            <TextField fx:id="playerOneTextField" prefWidth="359.0" promptText="any player" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="11.0" />
-            <TextField fx:id="playerTwoTextField" prefWidth="359.0" promptText="any player" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
-            <ComboBox fx:id="playerOneCharacterOneComboBox" prefHeight="21.0" prefWidth="177.0" promptText="any character" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="38.0" />
+            <TextField fx:id="playerOneTextField" layoutX="87.0" layoutY="11.0" prefWidth="359.0" promptText="any player" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+            <TextField fx:id="playerTwoTextField" layoutX="458.0" layoutY="11.0" prefWidth="359.0" promptText="any player" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+            <ComboBox fx:id="playerOneCharacterOneComboBox" layoutX="89.0" layoutY="39.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
             <ComboBox fx:id="playerOneAssistOneComboBox" disable="true" layoutX="271.0" layoutY="38.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
             <ComboBox fx:id="playerOneCharacterTwoComboBox" layoutX="89.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any character" />
             <ComboBox fx:id="playerOneAssistTwoComboBox" disable="true" layoutX="271.0" layoutY="65.0" prefHeight="21.0" prefWidth="177.0" promptText="any assist" />
@@ -46,7 +43,7 @@
           <children>
             <TableView fx:id="replayTableView" prefHeight="424.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="120.0" text="Date / time" fx:id="creationTimeColumn">
+                <TableColumn fx:id="creationTimeColumn" prefWidth="120.0" text="Date / time">
                   <cellValueFactory>
                     <PropertyValueFactory property="creationTimeString" />
                   </cellValueFactory>
@@ -106,7 +103,7 @@
           <children>
             <ImageView fx:id="previewImageView" pickOnBounds="true">
               <image>
-                <Image url="@ultimate-marvel-vs-capcom-3.jpg" preserveRatio="true" smooth="true" fx:id="defaultPreviewImage" />
+                <Image fx:id="defaultPreviewImage" preserveRatio="true" smooth="true" url="@ultimate-marvel-vs-capcom-3.jpg" />
               </image>
             </ImageView>
           </children>
@@ -119,7 +116,7 @@
           <children>
             <Label fx:id="playerOneLabel" layoutX="90.0" layoutY="14.0" prefWidth="161.0">
               <font>
-                <Font size="20.0" fx:id="playerNameFont" />
+                <Font fx:id="playerNameFont" size="20.0" />
               </font>
             </Label>
             <Label fx:id="playerTwoLabel" font="$playerNameFont" layoutX="340.0" layoutY="14.0" prefWidth="161.0" />
@@ -151,8 +148,8 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#handleImportAction" text="Import New Replays" fx:id="importMenuItem" />
-            <MenuItem mnemonicParsing="false" onAction="#handleAddReplayAction" text="Add Replay Manually" fx:id="addReplayItem" />
+            <MenuItem fx:id="importMenuItem" mnemonicParsing="false" onAction="#handleImportAction" text="Import New Replays" />
+            <MenuItem fx:id="addReplayItem" mnemonicParsing="false" onAction="#handleAddReplayAction" text="Add Replay Manually" />
             <MenuItem mnemonicParsing="false" onAction="#handleExitAction" text="Exit" />
           </items>
         </Menu>
