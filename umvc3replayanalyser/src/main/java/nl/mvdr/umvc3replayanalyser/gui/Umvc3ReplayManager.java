@@ -23,8 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import com.sun.javafx.runtime.VersionInfo;
-
 /**
  * Main class, used to start the application. Defines the JavaFX user interface. * * @author Martijn van de Rijdt
  */
@@ -80,13 +78,6 @@ public class Umvc3ReplayManager extends Application {
         log.info("OS name: " + System.getProperty("os.name"));
         log.info("OS version: " + System.getProperty("os.version"));
         log.info("OS architecture: " + System.getProperty("os.arch"));
-        log.info("Using JavaFX runtime version: " + VersionInfo.getRuntimeVersion());
-        if (log.isDebugEnabled()) {
-            log.debug("Detailed JavaFX version info: ");
-            log.debug("  Version: " + VersionInfo.getVersion());
-            log.debug("  Runtime version: " + VersionInfo.getRuntimeVersion());
-            log.debug("  Build timestamp: " + VersionInfo.getBuildTimestamp());
-        }
     }
 
     /**
