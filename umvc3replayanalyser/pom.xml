@@ -21,12 +21,6 @@
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
 		dependency management in the parent pom instead! -->
 	<dependencies>
-		<!-- GUI -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
-		</dependency>
-
 		<!-- Video decoding -->
 		<dependency>
 			<groupId>xuggle</groupId>
