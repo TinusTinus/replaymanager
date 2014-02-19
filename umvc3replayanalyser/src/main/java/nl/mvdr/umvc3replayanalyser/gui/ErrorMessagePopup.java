@@ -17,6 +17,8 @@
  */
 package nl.mvdr.umvc3replayanalyser.gui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -54,8 +56,10 @@ public class ErrorMessagePopup {
      *            stage in which to show the error message
      * @param exception
      *            exception that caused the error
+     * @param okHandler
+     *            handler for when the user presses the OK button
      */
-    public static void show(String title, String errorMessage, final Stage stage, Exception exception) {
+    public static void show(String title, String errorMessage, final Stage stage, Exception exception, EventHandler<ActionEvent> okHandler) {
         log.info("Showing error message dialog to indicate that startup failed.");
         // Create the error dialog programatically without relying on FXML, to minimize the chances of further failure.
         stage.setTitle(title);
@@ -82,10 +86,7 @@ public class ErrorMessagePopup {
         /** {@inheritDoc} */
         Button okButton = new Button();
         okButton.setText("OK");
-        okButton.setOnAction(event -> {
-            log.info("User clicked OK, closing the dialog.");
-            stage.close();
-        });
+        okButton.setOnAction(okHandler);
         // Horizontal box containing the buttons, to make sure they are always centered.
         HBox buttonsBox = new HBox(5);
         buttonsBox.getChildren().add(detailsButton);
@@ -117,9 +118,31 @@ public class ErrorMessagePopup {
         stage.setMinHeight(stage.getHeight());
         log.info("Error dialog displayed.");
     }
+    
+    /**
+     * Handles an exception that caused program startup to fail, by showing an error message to the user. The OK button
+     * closes the stage.
+     *
+     * @param title
+     *            title for the dialog
+     * @param errorMessage
+     *            error message
+     * @param stage
+     *            stage in which to show the error message
+     * @param exception
+     *            exception that caused the error
+     */
+    public static void show(String title, String errorMessage, final Stage stage, Exception exception) {
+        EventHandler<ActionEvent> okHandler = event -> {
+            log.info("User clicked OK, closing the dialog.");
+            stage.close();
+        };
+        show(title, errorMessage, stage, exception, okHandler);
+    }
 
     /**
      * Handles an exception that caused program startup to fail, by showing an error message to the user in a new stage.
+     * The OK button closes the stage.
      *
      * @param title
      *            title for the dialog
