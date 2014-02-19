@@ -18,6 +18,9 @@
 package nl.mvdr.umvc3replayanalyser.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -49,6 +52,7 @@ public class Umvc3ReplayManager extends Application {
     public void start(Stage stage) {
         try {
             logVersionInfo();
+            registerExceptionHandler();
             log.info("Starting application.");
             Parent root = FXMLLoader.load(getClass().getResource("/umvc3-replay-manager.fxml"));
             log.info("Fxml loaded, performing additional initialisation.");
@@ -78,6 +82,27 @@ public class Umvc3ReplayManager extends Application {
         log.info("OS name: " + System.getProperty("os.name"));
         log.info("OS version: " + System.getProperty("os.version"));
         log.info("OS architecture: " + System.getProperty("os.arch"));
+    }
+    
+    /** Registers an exception handler for the current thread. Should be called from the JavaFX thread. */
+    private void registerExceptionHandler() {
+        if (!Platform.isFxApplicationThread()) {
+            throw new IllegalStateException("This method should be called from the JavaFX application thread!");
+        }
+        
+        Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+            // Log the exception.
+            log.error("Unexpected throwable in JavaFX thread!", throwable);
+
+            // Show the user a popup; shut the JavFX application down if the user clicks OK.
+            EventHandler<ActionEvent> okHandler = event -> {
+                log.info("User clicked OK, stopping the application.");
+                Platform.exit();
+            };
+            ErrorMessagePopup.show("Unexpected problem.",
+                "An unexpected problem occurred. The program will be shut down when you press OK.",
+                throwable, okHandler);
+        });
     }
 
     /**
