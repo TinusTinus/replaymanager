@@ -59,8 +59,8 @@ public class ErrorMessagePopup {
      * @param okHandler
      *            handler for when the user presses the OK button
      */
-    public static void show(String title, String errorMessage, final Stage stage, Exception exception, EventHandler<ActionEvent> okHandler) {
-        log.info("Showing error message dialog to indicate that startup failed.");
+    public static void show(String title, String errorMessage, final Stage stage, Throwable exception, EventHandler<ActionEvent> okHandler) {
+        log.info("Showing error message dialog.");
         // Create the error dialog programatically without relying on FXML, to minimize the chances of further failure.
         stage.setTitle(title);
         // Error message text.
@@ -153,6 +153,22 @@ public class ErrorMessagePopup {
      */
     public static void show(String title, String errorMessage, Exception exception) {
         show(title, errorMessage, new Stage(), exception);
+    }
+    
+    /**
+     * Handles an exception that caused program startup to fail, by showing an error message to the user in a new stage.
+     *
+     * @param title
+     *            title for the dialog
+     * @param errorMessage
+     *            error message
+     * @param exception
+     *            exception that caused the error
+     * @param okHandler
+     *            handler for when the user presses the OK button
+     */
+    public static void show(String title, String errorMessage, Throwable exception, EventHandler<ActionEvent> okHandler) {
+        show(title, errorMessage, new Stage(), exception, okHandler);
     }
 
     @java.lang.SuppressWarnings("all")
