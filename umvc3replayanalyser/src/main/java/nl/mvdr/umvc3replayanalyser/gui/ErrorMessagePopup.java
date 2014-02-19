@@ -113,7 +113,6 @@ public class ErrorMessagePopup {
         }
         stage.show();
         // Default size should also be the minimum size.
-        /** {@inheritDoc} */
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());
         log.info("Error dialog displayed.");
