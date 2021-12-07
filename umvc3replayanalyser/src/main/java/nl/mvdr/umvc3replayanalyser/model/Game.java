@@ -47,7 +47,7 @@ public class Game {
      * Thread-local variable holding the time format for output filenames. This variable is stored as a thread-local
      * instead of just a single constant, because SimpleDateFormat is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<DateFormat>() {
+    private static final ThreadLocal<DateFormat> FILENAME_TIME_FORMAT = new ThreadLocal<>() {
         /** {@inheritDoc} */
         @Override
         protected SimpleDateFormat initialValue() {

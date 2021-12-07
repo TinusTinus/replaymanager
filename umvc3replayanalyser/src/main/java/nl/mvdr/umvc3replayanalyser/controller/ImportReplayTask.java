@@ -45,7 +45,7 @@ class ImportReplayTask extends Task<List<Replay>> {
      * Thread-local variable holding the time format for log messages. This variable is stored as a thread-local instead
      * of just a single constant, because {@link SimpleDateFormat} is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> LOG_MESSAGE_TIME_FORMAT = new ThreadLocal<DateFormat>() {
+    private static final ThreadLocal<DateFormat> LOG_MESSAGE_TIME_FORMAT = new ThreadLocal<>() {
         /** {@inheritDoc} */
         @Override
         protected SimpleDateFormat initialValue() {

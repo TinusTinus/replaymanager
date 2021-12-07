@@ -650,7 +650,7 @@ public class Umvc3ReplayManagerController {
      * Adds listeners to the filter input fields.
      */
     private void initFilterListeners() {
-        ChangeListener<Object> listener = new ChangeListener<Object>() {
+        ChangeListener<Object> listener = new ChangeListener<>() {
             /** Used to prevent infinite recursion. */
             private boolean suspended = false;
 

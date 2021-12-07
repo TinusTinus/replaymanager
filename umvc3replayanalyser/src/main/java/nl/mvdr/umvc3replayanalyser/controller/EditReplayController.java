@@ -198,17 +198,12 @@ class EditReplayController {
         playerTwoCharacterTwoComboBox.valueProperty().addListener(assistListener);
         playerTwoCharacterThreeComboBox.valueProperty().addListener(assistListener);
         // Add another listener to ensure the OK button is enabled when the required fields have been filled in.
-        /** {@inheritDoc} */
-        ChangeListener<Object> okEnabledListener = new ChangeListener<Object>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+        ChangeListener<Object> okEnabledListener = (ObservableValue<? extends Object> observable, Object oldValue, Object newValue) -> {
                 if (log.isDebugEnabled()) {
                     log.debug(String.format("Observable value changed. Old value: %s, new value: %s", oldValue,
                             newValue));
                 }
                 okButton.setDisable(!isFilledIn());
-            }
         };
         playerOneTextField.textProperty().addListener(okEnabledListener);
         playerTwoTextField.textProperty().addListener(okEnabledListener);

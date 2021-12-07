@@ -37,7 +37,7 @@ public class Replay {
      * 
      * constant, because SimpleDateFormat is not threadsafe.
      */
-    private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
+    private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<>() {
         /** {@inheritDoc} */
         @Override
         protected SimpleDateFormat initialValue() {
