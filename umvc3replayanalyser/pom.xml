@@ -14,12 +14,21 @@
 
 	<properties>
 		<!-- Version numbers. Please keep these sorted in alphabetical order. -->
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<!-- Dependencies. Please do not specify version numbers here; refer to 
 		dependency management in the parent pom instead! -->
 	<dependencies>
+		<!-- User interface -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-swing</artifactId>
+		</dependency>
 		<!-- Video decoding -->
 		<dependency>
 			<groupId>xuggle</groupId>

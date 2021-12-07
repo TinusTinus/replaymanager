@@ -19,6 +19,7 @@
 		<commons-io.version>2.11.0</commons-io.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 		<jackson.version>1.9.13</jackson.version>
+		<javafx.version>17.0.1</javafx.version>
 		<junit.version>4.13.2</junit.version>
 		<lombok.version>1.18.22</lombok.version>
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
@@ -32,6 +33,17 @@
 		refer to the properties instead! -->
 	<dependencyManagement>
 		<dependencies>
+			<!-- User interface -->
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-fxml</artifactId>
+				<version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-swing</artifactId>
+				<version>${javafx.version}</version>
+			</dependency>
 			<!-- Video decoding -->
 			<dependency>
 				<groupId>xuggle</groupId>
