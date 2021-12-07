@@ -58,7 +58,8 @@
 			<dependency>
 				<!-- Note that, although this jar is available in the Xuggle repository 
 					directory, its location does not follow Maven conventions. To get this dependency, 
-					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-noarch-5.4.jar 
+					first download it here:
+					https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-noarch-5.4.jar 
 					Then manually install it into your local Maven repository using the following 
 					command: mvn install:install-file -Dfile=xuggle-xuggler-noarch-5.4.jar -DgroupId=xuggle 
 					-DartifactId=xuggle-xuggler-noarch -Dversion=5.4 -Dpackaging=jar -->
@@ -70,7 +71,8 @@
 				<!-- Xuggler implementation for 64-bit Windows -->
 				<!-- Note that, although this jar is available in the Xuggle repository 
 					directory, its location does not follow Maven conventions. To get this dependency, 
-					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-w64-mingw32.jar 
+					first download it here:
+					https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-w64-mingw32.jar 
 					Then manually install it into your local Maven repository using the following 
 					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-x86_64-w64-mingw32.jar 
 					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-x86_64-w64-mingw32 -Dversion=5.4 
@@ -83,7 +85,8 @@
 				<!-- Xuggler implementation for 32-bit Windows -->
 				<!-- Note that, although this jar is available in the Xuggle repository 
 					directory, its location does not follow Maven conventions. To get this dependency, 
-					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-w64-mingw32.jar 
+					first download it here:
+					https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-w64-mingw32.jar 
 					Then manually install it into your local Maven repository using the following 
 					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-w64-mingw32.jar 
 					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-w64-mingw32 -Dversion=5.4 
@@ -96,7 +99,8 @@
 				<!-- Xuggler implementation for 32-bit Linux -->
 				<!-- Note that, although this jar is available in the Xuggle repository 
 					directory, its location does not follow Maven conventions. To get this dependency, 
-					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-pc-linux-gnu.jar 
+					first download it here:
+					https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-i686-pc-linux-gnu.jar 
 					Then manually install it into your local Maven repository using the following 
 					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-i686-pc-linux-gnu.jar 
 					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-i686-pc-linux-gnu -Dversion=5.4 
@@ -109,7 +113,8 @@
 				<!-- Xuggler implementation for 64-bit Linux -->
 				<!-- Note that, although this jar is available in the Xuggle repository 
 					directory, its location does not follow Maven conventions. To get this dependency, 
-					first download it here: http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar 
+					first download it here:
+					https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar 
 					Then manually install it into your local Maven repository using the following 
 					command: mvn install:install-file -Dfile=xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar 
 					-DgroupId=xuggle -DartifactId=xuggle-xuggler-arch-x86_64-pc-linux-gnu -Dversion=5.4 
@@ -208,7 +213,7 @@
 	<repositories>
 		<repository>
 			<id>xuggle repo</id>
-			<url>http://xuggle.googlecode.com/svn/trunk/repo/share/java</url>
+			<url>https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java</url>
 		</repository>
 	</repositories>
 </project>
