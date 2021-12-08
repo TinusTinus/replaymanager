@@ -180,7 +180,7 @@ public enum Umvc3Character {
     /**
      * Ryu.
      */
-    RYU("Ryu", "Ryu", "Shoryuken", "Hadoken", "Tasumaki Senpukyaku"),
+    RYU("Ryu", "Ryu", "Shoryuken", "Hadoken", "Tatsumaki Senpukyaku"),
     
     /**
      * Sentinel.
