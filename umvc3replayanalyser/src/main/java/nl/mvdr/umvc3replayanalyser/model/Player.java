@@ -17,9 +17,10 @@
  */
 package nl.mvdr.umvc3replayanalyser.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.NonNull;
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Player in an Ultimate Marvel vs Capcom 3 online match on XBox Live.

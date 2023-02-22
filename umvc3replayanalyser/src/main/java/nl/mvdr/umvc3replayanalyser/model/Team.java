@@ -21,11 +21,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.NonNull;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
+import lombok.NonNull;
 
 /**
  * A team in Ultimate Marvel vs Capcom 3. Each match has two of these fighting each other.

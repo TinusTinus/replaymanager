@@ -24,11 +24,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import lombok.NonNull;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
+import lombok.NonNull;
 
 /**
  * A game of Ultimate Marvel vs Capcom 3.

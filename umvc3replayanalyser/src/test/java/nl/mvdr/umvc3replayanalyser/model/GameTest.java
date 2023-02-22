@@ -21,9 +21,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import org.codehaus.jackson.map.ObjectMapper;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Test class for {@link Game}.

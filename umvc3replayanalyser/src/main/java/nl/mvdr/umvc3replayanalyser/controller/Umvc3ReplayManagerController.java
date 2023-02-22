@@ -28,6 +28,10 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -68,9 +72,6 @@ import nl.mvdr.umvc3replayanalyser.ocr.OCREngine;
 import nl.mvdr.umvc3replayanalyser.ocr.TesseractOCREngine;
 import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyser;
 import nl.mvdr.umvc3replayanalyser.video.ReplayAnalyserImpl;
-
-import org.apache.commons.io.FilenameUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * Main controller class for this JavaFX application. Referenced from the corresponding fxml.

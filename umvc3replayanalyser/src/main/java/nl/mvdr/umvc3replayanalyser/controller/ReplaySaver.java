@@ -22,15 +22,19 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
+
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
+
+import org.apache.commons.io.FilenameUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import lombok.NonNull;
 import nl.mvdr.umvc3replayanalyser.config.Configuration;
 import nl.mvdr.umvc3replayanalyser.model.Game;
 import nl.mvdr.umvc3replayanalyser.model.Replay;
-import org.apache.commons.io.FilenameUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 /**
  * Responsible for saving replay details.

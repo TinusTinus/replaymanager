@@ -18,9 +18,11 @@
 package nl.mvdr.umvc3replayanalyser.model;
 
 import java.io.IOException;
-import org.codehaus.jackson.map.ObjectMapper;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Test class for {@link Umvc3Character}.
